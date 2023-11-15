@@ -1,0 +1,201 @@
+// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
+// This is a library that provides messages for a en locale. All the
+// messages from the main program should be duplicated here with the same
+// function name.
+
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+
+import 'package:intl/intl.dart';
+import 'package:intl/message_lookup_by_library.dart';
+
+final messages = new MessageLookup();
+
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+
+class MessageLookup extends MessageLookupByLibrary {
+  String get localeName => 'en';
+
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Attempts": MessageLookupByLibrary.simpleMessage("Attempts"),
+        "Change_number": MessageLookupByLibrary.simpleMessage("Change number"),
+        "EnterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
+        "Enter_mobile_number":
+            MessageLookupByLibrary.simpleMessage("Enter mobile number"),
+        "Havent_received_OTP":
+            MessageLookupByLibrary.simpleMessage("Haven’t received OTP?"),
+        "NewUser": MessageLookupByLibrary.simpleMessage("New User"),
+        "Next": MessageLookupByLibrary.simpleMessage("Next"),
+        "OR": MessageLookupByLibrary.simpleMessage("OR"),
+        "OTP_sent_to": MessageLookupByLibrary.simpleMessage("OTP sent to"),
+        "RegisterHere": MessageLookupByLibrary.simpleMessage(" Register Here"),
+        "Resend_OTP": MessageLookupByLibrary.simpleMessage(" Resend OTP"),
+        "Send_OTP": MessageLookupByLibrary.simpleMessage("Send OTP"),
+        "Submit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "aboutCompany": MessageLookupByLibrary.simpleMessage("About company"),
+        "accounts": MessageLookupByLibrary.simpleMessage("Accounts"),
+        "addImagesAt":
+            MessageLookupByLibrary.simpleMessage("Add images at just ₹0"),
+        "addRoutes": MessageLookupByLibrary.simpleMessage(
+            "Add routes for better lead generation"),
+        "agentBroker": MessageLookupByLibrary.simpleMessage("Agent/Broker"),
+        "allRoutes": MessageLookupByLibrary.simpleMessage("All routes"),
+        "allUsers": MessageLookupByLibrary.simpleMessage("All users"),
+        "already_have_account":
+            MessageLookupByLibrary.simpleMessage("Already have an account?"),
+        "appCrash": MessageLookupByLibrary.simpleMessage("App crash"),
+        "appSetting": MessageLookupByLibrary.simpleMessage("App setting"),
+        "businessDetails":
+            MessageLookupByLibrary.simpleMessage("Business details"),
+        "businessInfo": MessageLookupByLibrary.simpleMessage("Business info"),
+        "buy": MessageLookupByLibrary.simpleMessage("Buy"),
+        "buySell": MessageLookupByLibrary.simpleMessage("Vehicle buy/sell"),
+        "call": MessageLookupByLibrary.simpleMessage("Call"),
+        "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
+        "changeLanguage":
+            MessageLookupByLibrary.simpleMessage("Change language"),
+        "charactersMax": MessageLookupByLibrary.simpleMessage("characters max"),
+        "charactersRemaining":
+            MessageLookupByLibrary.simpleMessage("characters remaining"),
+        "chat": MessageLookupByLibrary.simpleMessage("Chat"),
+        "chooseATopic": MessageLookupByLibrary.simpleMessage("Choose a topic"),
+        "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
+            "Click the below button to add routes"),
+        "comment": MessageLookupByLibrary.simpleMessage("Comment"),
+        "companyName": MessageLookupByLibrary.simpleMessage("Company Name"),
+        "contact": MessageLookupByLibrary.simpleMessage("Contact"),
+        "createJobPost":
+            MessageLookupByLibrary.simpleMessage("Create job post"),
+        "createPost": MessageLookupByLibrary.simpleMessage("Create a post"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to delete this post."),
+        "directory": MessageLookupByLibrary.simpleMessage("Directory"),
+        "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "editProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
+        "editYourProfile":
+            MessageLookupByLibrary.simpleMessage("Edit your profile"),
+        "egFristName": MessageLookupByLibrary.simpleMessage("eg.Rahul"),
+        "egJobDes": MessageLookupByLibrary.simpleMessage("Job description"),
+        "egLastName": MessageLookupByLibrary.simpleMessage("eg.Shah"),
+        "egMail": MessageLookupByLibrary.simpleMessage("eg.rahul.gmail.com"),
+        "egManageInquiries":
+            MessageLookupByLibrary.simpleMessage("eg. Manage inquiries"),
+        "egMobile": MessageLookupByLibrary.simpleMessage("9859XXXXX"),
+        "egPune": MessageLookupByLibrary.simpleMessage("eg.Pune"),
+        "egSal": MessageLookupByLibrary.simpleMessage("eg. 1LPA -2 LPA"),
+        "egSeniorManager":
+            MessageLookupByLibrary.simpleMessage("eg. Senior traffic manager"),
+        "egSubTitle": MessageLookupByLibrary.simpleMessage("eg.Sub title"),
+        "egTitleofPost":
+            MessageLookupByLibrary.simpleMessage("eg.title of post"),
+        "email_id": MessageLookupByLibrary.simpleMessage("Email-Id"),
+        "enterQuoteAmount":
+            MessageLookupByLibrary.simpleMessage("Enter quote amount"),
+        "experies": MessageLookupByLibrary.simpleMessage("Experience"),
+        "explainYourConcern":
+            MessageLookupByLibrary.simpleMessage("Explain your concern"),
+        "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
+        "from": MessageLookupByLibrary.simpleMessage("From"),
+        "fromCity": MessageLookupByLibrary.simpleMessage("From City"),
+        "general": MessageLookupByLibrary.simpleMessage("General"),
+        "getVerified": MessageLookupByLibrary.simpleMessage("Get verified"),
+        "helpSupport": MessageLookupByLibrary.simpleMessage("Help & support"),
+        "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "introOneDescription": MessageLookupByLibrary.simpleMessage(
+            "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly."),
+        "introThreeDescription": MessageLookupByLibrary.simpleMessage(
+            "With our wide network, we shall help you reach wider."),
+        "introTwoDescription": MessageLookupByLibrary.simpleMessage(
+            "Your needs are our skills. Let us combine the two and rise up together"),
+        "jobDes": MessageLookupByLibrary.simpleMessage("Job description"),
+        "jobTitle": MessageLookupByLibrary.simpleMessage("Job title"),
+        "jobs": MessageLookupByLibrary.simpleMessage("Jobs"),
+        "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+        "like": MessageLookupByLibrary.simpleMessage("Like"),
+        "loadWeight": MessageLookupByLibrary.simpleMessage("Load Weight"),
+        "loads": MessageLookupByLibrary.simpleMessage("Load"),
+        "location": MessageLookupByLibrary.simpleMessage("Location"),
+        "loginIssue": MessageLookupByLibrary.simpleMessage("Login issue"),
+        "login_to_continue":
+            MessageLookupByLibrary.simpleMessage("Login to continue"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "logoutMsg":
+            MessageLookupByLibrary.simpleMessage("Do you want to Log Out."),
+        "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
+            "Manufacturer/Distributor/Trade"),
+        "message": MessageLookupByLibrary.simpleMessage("Message"),
+        "mobileNumber": MessageLookupByLibrary.simpleMessage("Mobile Number"),
+        "more": MessageLookupByLibrary.simpleMessage("More"),
+        "myPost": MessageLookupByLibrary.simpleMessage("My Posts"),
+        "myQuotes": MessageLookupByLibrary.simpleMessage("MY QUOTES"),
+        "myRoutes": MessageLookupByLibrary.simpleMessage("My routes"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noRecordFound":
+            MessageLookupByLibrary.simpleMessage("No Record Found"),
+        "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "off": MessageLookupByLibrary.simpleMessage("Off"),
+        "on": MessageLookupByLibrary.simpleMessage("On"),
+        "operatingRoutes":
+            MessageLookupByLibrary.simpleMessage("Operating routes"),
+        "packersAndMovers":
+            MessageLookupByLibrary.simpleMessage("Packers and Movers"),
+        "paymentType": MessageLookupByLibrary.simpleMessage("Payment Type"),
+        "personalDetails":
+            MessageLookupByLibrary.simpleMessage("Personal details"),
+        "personalInfo": MessageLookupByLibrary.simpleMessage("Personal info"),
+        "pleaseSelectTopic":
+            MessageLookupByLibrary.simpleMessage("Please Select Topic"),
+        "position": MessageLookupByLibrary.simpleMessage("Position"),
+        "post": MessageLookupByLibrary.simpleMessage("Post"),
+        "postAJob": MessageLookupByLibrary.simpleMessage("Post a job"),
+        "postJob": MessageLookupByLibrary.simpleMessage("Post Job"),
+        "postLoad": MessageLookupByLibrary.simpleMessage("Post Load"),
+        "quotesNow": MessageLookupByLibrary.simpleMessage("Quotes now"),
+        "quotesPrice": MessageLookupByLibrary.simpleMessage("Quotes price"),
+        "quotesYouPlaced":
+            MessageLookupByLibrary.simpleMessage("Quotes you placed"),
+        "quotesYouReceived":
+            MessageLookupByLibrary.simpleMessage("Quotes you received"),
+        "raiseATicket": MessageLookupByLibrary.simpleMessage("Raise a ticket"),
+        "registration": MessageLookupByLibrary.simpleMessage("Registration"),
+        "salary": MessageLookupByLibrary.simpleMessage("Salary"),
+        "sales": MessageLookupByLibrary.simpleMessage("Sales"),
+        "saveChange": MessageLookupByLibrary.simpleMessage("Save changes"),
+        "searchPlace": MessageLookupByLibrary.simpleMessage("Search place"),
+        "searchUsersCompanies":
+            MessageLookupByLibrary.simpleMessage("Search users & companies"),
+        "selectOne": MessageLookupByLibrary.simpleMessage("Select one"),
+        "sell": MessageLookupByLibrary.simpleMessage("Sell"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "showAllQuotes":
+            MessageLookupByLibrary.simpleMessage("Show all quotes"),
+        "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
+        "specialInstruction":
+            MessageLookupByLibrary.simpleMessage("Special Instruction"),
+        "specifyRequiredExperience":
+            MessageLookupByLibrary.simpleMessage("Specify required experience"),
+        "sponsered": MessageLookupByLibrary.simpleMessage("Sponsered"),
+        "submit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "subtitle": MessageLookupByLibrary.simpleMessage("Subtitle"),
+        "textlogin": MessageLookupByLibrary.simpleMessage("Log in"),
+        "title": MessageLookupByLibrary.simpleMessage("Title"),
+        "to": MessageLookupByLibrary.simpleMessage("To"),
+        "toCity": MessageLookupByLibrary.simpleMessage("To City"),
+        "traffic": MessageLookupByLibrary.simpleMessage("Traffic"),
+        "transporter": MessageLookupByLibrary.simpleMessage("Transporter"),
+        "vehicle": MessageLookupByLibrary.simpleMessage("Vehicle"),
+        "vehicleSize": MessageLookupByLibrary.simpleMessage("Vehicle size"),
+        "verifiedUsers": MessageLookupByLibrary.simpleMessage("Verified users"),
+        "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
+        "website": MessageLookupByLibrary.simpleMessage("Website"),
+        "withdrawQuotes":
+            MessageLookupByLibrary.simpleMessage("Withdraw quotes"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
+      };
+}
