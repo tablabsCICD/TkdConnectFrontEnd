@@ -108,7 +108,7 @@ class _MoreScreen extends State<MoreScreen> {
             SizedBox(
               height: 20.h,
             ),
-            BaseWidget().getImage("",width: 80.w,height: 112.h),
+            BaseWidget().getImageclip(user.content!.first.companyLogo!=null?user.content!.first.companyLogo!:"",width: 80.w,height: 112.h),
             selectedPlan(),
             nameWithVerfiyTag(),
             Text(
@@ -200,9 +200,12 @@ class _MoreScreen extends State<MoreScreen> {
 
   button(BuildContext context){
     return InkWell(
-      onTap: (){
-        Navigator.pushNamed(context, AppRoutes.editprofile);
-      },
+      onTap: ()async{
+       var obj=await  Navigator.pushNamed(context, AppRoutes.editprofile);
+          if(obj==1){
+            getLogin();
+          }
+       },
       child: Container(
         width: 117.w,
         height: 27.h,

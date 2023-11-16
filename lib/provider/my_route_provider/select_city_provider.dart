@@ -14,6 +14,7 @@ class SelectCityProvider extends BaseProvider {
   final String sorce;
   SelectCityProvider(super.appState, this.isEdit, this.dest, this.sorce){
       getCallCity();
+      pagenation();
   }
   bool isButtonEnbale=false;
   List<dynamic>cityList=[];
@@ -24,16 +25,21 @@ class SelectCityProvider extends BaseProvider {
   late String _selectedDestinationCity;
   late int _selectedInextStart=-1;
   late int _selectedInextDestination=-1;
-
+  List<CitySelection> temListCity=[];
+  TextEditingController searchController=TextEditingController();
+  int selectedPage=0;
+  ScrollController scrollController = ScrollController();
 
 
   getCallCity()async{
-    var request=await ApiHelper().apiGet(ApiConstant.GET_ALL_CITY);
+    var request=await ApiHelper().apiGet(ApiConstant.GET_ALL_CITY(selectedPage));
      if(request.status==200){
       cityList=request.response;
       for(int i=0;i<cityList.length;i++){
         CitySelection citySelection=CitySelection(cityList[i], false,i);
         listCity.add(citySelection);
+        temListCity.addAll(listCity);
+        selectedPage++;
       }
     }
      if(isEdit){
@@ -42,6 +48,19 @@ class SelectCityProvider extends BaseProvider {
      notifyListeners();
 
   }
+
+
+  pagenation(){
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        getCallCity();
+
+      }
+    });
+  }
+
+
   selectCity(int index){
     clearCity();
     if(isSelectStartLocation){
@@ -109,7 +128,7 @@ class SelectCityProvider extends BaseProvider {
   }
 
   onClickButton(BuildContext context){
-    if(_selectedInextStart==_selectedInextDestination){
+    if(_selectedStartCity==_selectedInextDestination){
       ToastMessage.show(context, "Please select other city");
     }else{
       RouteRequest routeRequest=RouteRequest(_selectedStartCity, _selectedDestinationCity, _selectedInextStart, _selectedInextDestination);
@@ -160,6 +179,26 @@ class SelectCityProvider extends BaseProvider {
     notifyListeners();
 
 
+  }
+
+  searchCity(String name)async{
+    if(name.length>2){
+      var request=await ApiHelper().apiGet(ApiConstant.GET_ALL_CITY_SERACH(name));
+      if(request.status==200){
+        cityList=request.response;
+
+        listCity.clear();
+        for(int i=0;i<cityList.length;i++){
+          CitySelection citySelection=CitySelection(cityList[i], false,i);
+
+          listCity.add(citySelection);
+        }
+      }
+    }else{
+      listCity.clear();
+      listCity.addAll(temListCity);
+    }
+    notifyListeners();
   }
 
 }

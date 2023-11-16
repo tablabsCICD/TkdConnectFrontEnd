@@ -10,6 +10,7 @@ import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
+import '../../constant/app_constant.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/route_model.dart';
 import '../../screen/my_route/select_city.dart';
@@ -35,7 +36,7 @@ class EditProfileProvider extends BaseProvider{
   TextEditingController companyNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController companyTypeController = TextEditingController();
-  String profilePic="";
+  static String profilePic="";
 
 
   EditProfileProvider():super(""){
@@ -72,6 +73,7 @@ class EditProfileProvider extends BaseProvider{
     mobileNameController.text=user.content!.first.mobileNumber.toString()!;
     companyNameController.text=user.content!.first.companyName!;
     locationController.text=user.content!.first.companyAddress!;
+    profilePic=user.content!.first.companyLogo!;
     getRouteListByUserId();
     notifyListeners();
 
@@ -154,19 +156,26 @@ class EditProfileProvider extends BaseProvider{
     notifyListeners();
   }
 
-  saveChanges()async{
+  saveChanges(BuildContext context)async{
     User user =await LocalSharePreferences().getLoginData();
     UserData userData=user.content!.first;
     userData.firstName=firstNameController.text;
     userData.lastName=lastNameController.text;
     userData.companyName=companyNameController.text;
     userData.companyAddress=locationController.text;
-    if(profilePic!=""){
-      userData.profilePicture=profilePic;
-    }
-
+    userData.profilePicture=profilePic;
+    userData.companyLogo=profilePic;
    ApiResponse apiResponse=await ApiHelper().apiPut(ApiConstant.REGISTRATION, userData.toJson());
-    print('the response is ${apiResponse.response}');
+    if(apiResponse.status==200){
+      LocalSharePreferences localSharePreferences=LocalSharePreferences();
+      localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));
+      ToastMessage.show(context, "Profile updated");
+      Navigator.pop(context,1);
+      notifyListeners();
+
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
   }
 
 

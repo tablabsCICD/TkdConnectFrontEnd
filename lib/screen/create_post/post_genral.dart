@@ -41,7 +41,7 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                   height: 20.h,
                 ),
                 SvgPicture.asset(
-                  Images.load_post,
+                  Images.general_post,
                   height: 133.h,
                   width: 200.w,
                 ),

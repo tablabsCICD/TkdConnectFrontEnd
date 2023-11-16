@@ -95,7 +95,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
           fontWeight: FontWeight.w600,
         ),
         onClick: () {
-          provider.saveChanges();
+          provider.saveChanges(context);
         },
         isEnbale: true,
       ),

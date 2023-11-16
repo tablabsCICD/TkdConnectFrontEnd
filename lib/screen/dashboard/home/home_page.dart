@@ -11,17 +11,22 @@ import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 import '../../../model/response/AllCard.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/card/base_widgets.dart';
 import '../../../widgets/card/dashboard_cards.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _HomeScreen();
-  }
-}
+// class HomeScreen extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return _HomeScreen();
+//   }
+// }
 
-class _HomeScreen extends State<HomeScreen> {
+// class _HomeScreen extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget
+{
+  late HomeScreenProvider homeScreenProvider;
+  late BuildContext context;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -31,9 +36,11 @@ class _HomeScreen extends State<HomeScreen> {
   }
 
   _buildPage(BuildContext context) {
+    this.context=context;
     return Scaffold(
       body: Consumer<HomeScreenProvider>(
         builder: (context, provider, child) {
+          homeScreenProvider=provider;
           return Container(
             color: ThemeColor.baground,
             child: Column(
@@ -51,16 +58,19 @@ class _HomeScreen extends State<HomeScreen> {
                 provider.filterisVisible ? routeSelect() : SizedBox(),
                // listCard(),
             Expanded(
-              child: ListView.builder(
-                  controller: provider.scrollController,
-                  itemCount: provider.truckLoadTypeList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin:
-                      EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
-                      child: setCardToList(index, provider,provider.truckLoadTypeList[index]),
-                    );
-                  })),
+              child: RefreshIndicator(
+                onRefresh: _pullRefresh,
+                child: ListView.builder(
+                    controller: provider.scrollController,
+                    itemCount: provider.truckLoadTypeList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin:
+                        EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
+                        child: setCardToList(index, provider,provider.truckLoadTypeList[index]),
+                      );
+                    }),
+              )),
 
               ],
             ),
@@ -69,6 +79,11 @@ class _HomeScreen extends State<HomeScreen> {
       ),
     );
   }
+
+  Future<void> _pullRefresh() async {
+      refreshHome();
+  }
+
 
   listCard() {
     return Consumer<HomeScreenProvider>(
@@ -155,12 +170,18 @@ class _HomeScreen extends State<HomeScreen> {
                         //   width: 40.w,
                         //   height: 40.h,
                         // ),
-                        BaseWidget().getImage(provider.imageUrl,
-                            height: 40.h, width: 40.w),
+                       InkWell(
+                         onTap: (){
+                           Navigator.pushNamed(context, AppRoutes.editprofile);
+                         },
+                         child:  BaseWidget().getImageclip(provider.imageUrl,
+                             height: 40.h, width: 40.w),
+                       ),
+
                         Container(
                           transform:
                               Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                          width: 36.w,
+                          width: 38.w,
                           height: 12.h,
                           padding: EdgeInsets.symmetric(horizontal: 4.h),
                           decoration: ShapeDecoration(
@@ -174,7 +195,7 @@ class _HomeScreen extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
-                                Images.pearls_blue,
+                                Utils().getSelectedPackageImage(provider.ispaid),
                                 height: 8.h,
                                 width: 8.w,
                               ),
@@ -182,7 +203,7 @@ class _HomeScreen extends State<HomeScreen> {
                                 width: 2.w,
                               ),
                               Text(
-                                'Blue',
+                                Utils().getSelectedPackageName(provider.ispaid),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -662,5 +683,10 @@ class _HomeScreen extends State<HomeScreen> {
         );
       },
     );
+  }
+  refreshHome(){
+    if(homeScreenProvider!=null){
+      homeScreenProvider.callDashboradApi(context,0);
+    }
   }
 }

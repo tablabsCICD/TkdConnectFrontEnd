@@ -127,17 +127,17 @@ class _CreatePostBase extends State<CreatePostBase>{
             });
 
           }),
-          tabItem(isSponsered,S().sponsered,(){
-            isLoad=false;
-            isVehicle=false;
-            isGeneral=false;
-            isSponsered=true;
-            //controller.jumpToPage(3);
-            setState(() {
-
-            });
-
-          }),
+          // tabItem(isSponsered,S().sponsered,(){
+          //   isLoad=false;
+          //   isVehicle=false;
+          //   isGeneral=false;
+          //   isSponsered=true;
+          //   //controller.jumpToPage(3);
+          //   setState(() {
+          //
+          //   });
+          //
+          // }),
         ],
       ),
     );

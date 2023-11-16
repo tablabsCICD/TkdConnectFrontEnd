@@ -26,7 +26,7 @@ class AppSettingScreen extends StatelessWidget {
                 color: ThemeColor.baground,
               ),
               changeLanguage(context),
-              notifacyionOnOff(context),
+              //notifacyionOnOff(context),
             ],
 
           ),

@@ -121,9 +121,9 @@ class _BuySellScreen extends State<BuySellScreen>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buyListIteam("Vehicale Model ",true),
-                  buyListIteam("Vehicale Brand",true),
-                  buyListIteam("Prise",true),
+                  buyListIteam("Vehicle Model ",true),
+                  buyListIteam("Vehicle Brand",true),
+                  buyListIteam("Price",true),
                 ],
 
               ),
@@ -313,14 +313,22 @@ class _BuySellScreen extends State<BuySellScreen>{
   listView() {
     return Container(
       child: Expanded(
-        child: ListView.builder(
-            itemCount: buyVehicleList.length,
-            controller: scrollController,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 10.h),child: iteamBuy(buyVehicleList[index]),);
-            }),
+        child:  RefreshIndicator(
+        onRefresh: _pullRefresh,
+          child: ListView.builder(
+              itemCount: buyVehicleList.length,
+              controller: scrollController,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 10.h),child: iteamBuy(buyVehicleList[index]),);
+              }),
+        ),
       ),
     );
+  }
+
+  Future<void> _pullRefresh()async{
+    selectedPage=0;
+    await callBuyApi();
   }
 
 

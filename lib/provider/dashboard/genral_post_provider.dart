@@ -49,7 +49,7 @@ class GenralPostProvider extends BaseProvider{
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.BASE_URL+"GeneralPost/save", generalPost.toJson());
       if(apiResponse.status==200){
         ToastMessage.show(context, "Post saved successfully");
-        Navigator.pop(context);
+        Navigator.pop(context,1);
       } else{
         ToastMessage.show(context, "Please Tye again");
       }
@@ -70,7 +70,7 @@ class GenralPostProvider extends BaseProvider{
     ApiResponse apiResponse=await ApiHelper().postParameter("http://ec2-3-111-144-125.ap-south-1.compute.amazonaws.com:8080/TKDConnect1/api/SponsorShip/save", generalPost.toJson());
     if(apiResponse.status==200){
       ToastMessage.show(context, "Post saved successfully");
-      Navigator.pop(context);
+      Navigator.pop(context,1);
     } else{
       ToastMessage.show(context, "Please Tye again");
     }

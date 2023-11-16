@@ -13,7 +13,9 @@ class ApiConstant {
 
   static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
-  static String GET_ALL_CITY=BASE_URL+"get/cities/db";
+  static String GET_ALL_CITY(page)=>BASE_URL+"get/cities/db/page/search?page=$page";
+  static String GET_ALL_CITY_SERACH(city)=>BASE_URL+"get/cities/db/page/search?city=$city";
+
   static String REGISTRATION = BASE_URL + "companyRegistration";
   static String PLACED_BID=BASE_URL+"biding";
   static String MY_ROUTE(id)=> BASE_URL + "preferredroutes/userId/${id}";
