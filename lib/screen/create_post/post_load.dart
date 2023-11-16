@@ -54,6 +54,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                   onClick: () async {
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                     int a = await itemBottomSheet.showIteam(context, provider.reqirement, "Select Load Type");
+
                     provider.selectedRequrimentType(a);
                   },
                   hint: provider.selectedRequriment,
@@ -117,11 +118,11 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 12.h,
                 ),
-                labelText(S().cargoType),
+                labelText(S().vehicleSize),
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.100",provider.vehicleSizeController,provider),
+                editViewError("eg.100",provider.vehicleSizeController,provider,provider.vehicaleSize),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -129,7 +130,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("In Tons",provider.loadWeightController,provider),
+                editViewError("In Tons",provider.loadWeightController,provider,provider.loadWieght),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -137,7 +138,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.88XXXXXX90",provider.mobileNumberController,provider),
+                editView("eg.88XXXXXX90",provider.mobileNumberController,provider,true),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -145,7 +146,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.abc@gmail.com",provider.emailIdController,provider),
+                editView("eg.abc@gmail.com",provider.emailIdController,provider,true),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -153,7 +154,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.",provider.specialInstructionController,provider),
+                editView("eg.",provider.specialInstructionController,provider,false),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -208,9 +209,10 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                     fontWeight: FontWeight.w600,
 
                   ), onClick: (){
-                    provider.createPost(context);
+                   // provider.createPost(context);
+                    provider.checkValidation(context);
 
-                  },isEnbale: provider.enbleButton,),
+                  },isEnbale: true,),
                 )
               ],
             ),
@@ -241,14 +243,29 @@ class _PostLoadScreen extends State<PostLoadScreen> {
     );
   }
 
-  editView(String hint,TextEditingController controller,PostLoadProvider provider) {
+  editView(String hint,TextEditingController controller,PostLoadProvider provider,bool redOnly) {
     return EditText(
+      readOnly: redOnly,
       width: 335.w,
       height: 52.h,
       hint: hint,
       controller: controller,
       onChange: (val){
           provider.enble();
+      },
+    );
+  }
+
+
+  editViewError(String hint,TextEditingController controller,PostLoadProvider provider,bool valid) {
+    return EditTextError(
+      validate: valid,
+      width: 335.w,
+      height: 52.h,
+      hint: hint,
+      controller: controller,
+      onChange: (val){
+        provider.enble();
       },
     );
   }

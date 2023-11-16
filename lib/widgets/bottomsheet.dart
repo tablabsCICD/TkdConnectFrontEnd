@@ -31,7 +31,7 @@ class ItemBottomSheet{
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Textview(
-                        title: 'Add routes',
+                        title: 'Select Type',
                         TextStyle(
                           color: Colors.black,
                           fontSize: 20.sp,
@@ -54,9 +54,8 @@ class ItemBottomSheet{
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           onTap: (){
-                            count=1;
+                            count=index;
                             Navigator.pop(context);
-
                           },
                           child: Container(
 

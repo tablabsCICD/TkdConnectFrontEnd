@@ -36,7 +36,9 @@ class BaseWidget {
                 //   height: 40.h,
                 //   child: Image.network(profileLink),
                 // ),
-                getImage(profileLink,height: 40.h,width: 40.w)
+                //getImage(profileLink,height: 40.h,width: 40.w)
+                  getImageclip(profileLink,height: 40.h,width: 40.w)
+
               ],
             ),
           ),
@@ -165,7 +167,7 @@ class BaseWidget {
                 //   height: 40.h,
                 //   child: Image.network(profileLink),
                 // ),
-                getImage(profileLink,height: 56.h,width: 40.w)
+                getImageclip(profileLink,height: 56.h,width: 40.w)
               ],
             ),
           ),
@@ -1079,6 +1081,40 @@ class BaseWidget {
             )
         ));
   }
+
+
+  getImageclip(String src, {double? height, double? width}) {
+    return src == "" ?Container(
+        width: height==null ? 35 : height,
+        height: width==null ? 35 : width,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[100],
+            image: new DecorationImage(
+                fit: BoxFit.contain,
+                image: AssetImage('assets/images/my_profile.png')
+            )
+        ))
+        :
+    CircleAvatar(
+      radius: width==null?35:width/2,
+      backgroundColor: Colors.white,
+     // borderRadius: BorderRadius.circular(width==null?35:width),
+
+      child: ClipOval(
+        child: CachedNetworkImage(
+          imageUrl: src,placeholder: (context, url) => CircularProgressIndicator(),
+          fit: BoxFit.cover,
+          width: height==null ? 35 : height,
+          height: width==null ? 35 : width,
+         
+        ),
+      ),
+    );
+  }
+
+
+
 
 
   appBar(BuildContext context,String title) {

@@ -12,15 +12,14 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../../route/app_routes.dart';
 import '../../widgets/button.dart';
 
-class SelectOneCityScreen extends StatefulWidget{
+class SelectOneCityScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _SelectOneCityScreen();
   }
 }
 
-class _SelectOneCityScreen extends State<SelectOneCityScreen>{
-
+class _SelectOneCityScreen extends State<SelectOneCityScreen> {
 
 
   @override
@@ -31,26 +30,28 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
-      create: (BuildContext context) => SelectCityProvider("Ideal",false,"no","no"),
+      create: (BuildContext context) =>
+          SelectCityProvider("Ideal", false, "no", "no"),
       builder: (context, child) => _buildPage(context),
     );
-
   }
 
-  _buildPage(context){
+  _buildPage(context) {
     return Scaffold(
 
       body: Container(
         color: Colors.white,
         child: Container(
-          margin: EdgeInsets.only(left: 20.w,top: 12.h,right: 20.w),
+          margin: EdgeInsets.only(left: 20.w, top: 12.h, right: 20.w),
           child: Column(
             children: [
 
               SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 height: 36.h,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,13 +61,15 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                       TextStyle(
                         color: Colors.black,
                         fontSize: 20.sp,
-                        fontFamily:GoogleFonts.poppins().fontFamily,
+                        fontFamily: GoogleFonts
+                            .poppins()
+                            .fontFamily,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    InkWell(onTap: (){
+                    InkWell(onTap: () {
                       Navigator.of(context).pop();
-                    },child: SvgPicture.asset(Images.close_circle))
+                    }, child: SvgPicture.asset(Images.close_circle))
                   ],
                 ),
               ),
@@ -81,34 +84,44 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
         ),
       ),
       bottomNavigationBar: Container(
-        margin: EdgeInsets.only(bottom: 60.h,left: 20.w,right: 20.w),
+        margin: EdgeInsets.only(bottom: 60.h, left: 20.w, right: 20.w),
         child: button(),
       ),
 
     );
   }
-  button(){
+
+  button() {
     return Consumer<SelectCityProvider>(
       builder: (context, provider, child) {
         return Visibility(
-          visible:provider.isButtonEnbale,
+          visible: provider.isButtonEnbale,
           child: Button(
 
-            isEnbale: provider.isButtonEnbale,title: "Save route", width: MediaQuery.of(context).size.width,height: 52.h,textStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 14.sp,
-            fontFamily: GoogleFonts.poppins().fontFamily,
-            fontWeight: FontWeight.w600,
-          ), onClick: (){
-            provider.onClickOne(context);
-
-          },),
+            isEnbale: provider.isButtonEnbale,
+            title: "Save route",
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: 52.h,
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 14.sp,
+              fontFamily: GoogleFonts
+                  .poppins()
+                  .fontFamily,
+              fontWeight: FontWeight.w600,
+            ),
+            onClick: () {
+              provider.onClickOne(context);
+            },),
         );
       },
     );
   }
 
-  searchBox(){
+  searchBox() {
     return Consumer<SelectCityProvider>(
       builder: (context, provider, child) {
         return Container(
@@ -134,7 +147,10 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -163,21 +179,28 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                           SizedBox(width: 8.w),
                           Expanded(
                             child: SizedBox(
-                              child:TextField(
-                                controller: TextEditingController(),
-                                onChanged: (value){
-
+                              child: TextField(
+                                controller:provider.searchController ,
+                                onChanged: (value) {
+                                  //provider.searchCity(value);
 
                                 },
+                                onSubmitted: (val)async{
+                                  provider.searchCity(val);
+
+                                },
+                                textInputAction: TextInputAction.done,
 
                                 decoration: InputDecoration(
                                     hintText: "Search place",
 
                                     border: InputBorder.none,
-                                    hintStyle:TextStyle(
+                                    hintStyle: TextStyle(
                                       color: Color(0x662C363F),
                                       fontSize: 14.sp,
-                                      fontFamily: GoogleFonts.poppins().fontFamily,
+                                      fontFamily: GoogleFonts
+                                          .poppins()
+                                          .fontFamily,
                                       fontWeight: FontWeight.w400,
                                     )
 
@@ -187,7 +210,9 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.sp,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontFamily: GoogleFonts
+                                      .poppins()
+                                      .fontFamily,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -210,18 +235,23 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
     );
   }
 
-  laguagesList(int index,SelectCityProvider provider){
+  laguagesList(int index, SelectCityProvider provider) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         provider.selectOneCity(index);
       },
       child: Container(
 
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         height: 52.h,
         padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
         decoration: BoxDecoration(
-          color: provider.listCity[index].isSelect?ThemeColor.select_green:ThemeColor.white,
+          color: provider.listCity[index].isSelect
+              ? ThemeColor.select_green
+              : ThemeColor.white,
           border: Border(
 
             bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
@@ -240,14 +270,17 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily:GoogleFonts.poppins().fontFamily,
+                    fontFamily: GoogleFonts
+                        .poppins()
+                        .fontFamily,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
 
             ),
-            provider.listCity[index].isSelect? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):SizedBox()
+            provider.listCity[index].isSelect ? SvgPicture.asset(
+              Images.green_tick, height: 24.h, width: 24.w,) : SizedBox()
           ],
         ),
       ),
@@ -255,7 +288,7 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
   }
 
 
-  selectTab(){
+  selectTab() {
     return Consumer<SelectCityProvider>(
       builder: (context, provider, child) {
         return Container(
@@ -276,14 +309,16 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
             children: [
               Expanded(
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     provider.selectTab("Start");
                   },
                   child: Container(
                     height: double.infinity,
-                    padding:  EdgeInsets.symmetric(horizontal: 12.w),
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
                     decoration: ShapeDecoration(
-                      color: provider.isSelectStartLocation?Colors.white:Color(0x19001E49),
+                      color: provider.isSelectStartLocation
+                          ? Colors.white
+                          : Color(0x19001E49),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
                       ),
@@ -298,7 +333,9 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                           style: TextStyle(
                             color: Color(0xCC001E49),
                             fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontFamily: GoogleFonts
+                                .poppins()
+                                .fontFamily,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -309,14 +346,16 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
               ),
               Expanded(
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     provider.selectTab("Des");
                   },
                   child: Container(
                     height: double.infinity,
-                    padding:  EdgeInsets.symmetric(horizontal: 12.w),
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
                     decoration: ShapeDecoration(
-                      color: provider.isSelectDestination?Colors.white:Color(0x19001E49),
+                      color: provider.isSelectDestination
+                          ? Colors.white
+                          : Color(0x19001E49),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
                       ),
@@ -331,7 +370,9 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
                           style: TextStyle(
                             color: Color(0xCC001E49),
                             fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontFamily: GoogleFonts
+                                .poppins()
+                                .fontFamily,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -345,23 +386,21 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen>{
         );
       },
     );
-
   }
 
   listLang() {
-
-    return   Consumer<SelectCityProvider>(
+    return Consumer<SelectCityProvider>(
       builder: (context, provider, child) {
         return Expanded(
           child: ListView.builder(
+              controller: provider.scrollController,
               itemCount: provider.listCity.length,
               itemBuilder: (BuildContext context, int index) {
-                return laguagesList(index,provider);
+                return laguagesList(index, provider);
               }),
         );
       },
     );
-
   }
 
 }

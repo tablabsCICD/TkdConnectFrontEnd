@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/images.dart';
+import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../provider/edit_profile/edit_profile_provider.dart';
@@ -91,7 +92,7 @@ class _EditProfileState extends State<PersonalInfoScreen>{
       child: Container(
         width: 100.w,
         height: 100.h,
-        child: widget.editProfileProvider.profilePic==""?SvgPicture.asset(Images.edit_profile):Image.network(widget.editProfileProvider.profilePic),
+        child: EditProfileProvider.profilePic==""?SvgPicture.asset(Images.edit_profile):BaseWidget().getImageclip(EditProfileProvider.profilePic,width: 100.w,height: 100.h),
       ),
     );
   }

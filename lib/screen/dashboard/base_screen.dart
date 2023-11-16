@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,27 +34,32 @@ class _BaseDashboard extends State<BaseDashboard>{
    bool isMessage=false;
    bool isMore=false;
    bool isButtonVisible=true;
+   HomeScreen homeScreen=HomeScreen();
 
-  
+    int maintain=0;
   @override
   Widget build(BuildContext context) {
    return Scaffold(
 
-     body:PageView(
-       /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-       /// Use [Axis.vertical] to scroll vertically.
-       controller: controller,
-       onPageChanged: (page){
-         onPageChanges(page);
+     body:WillPopScope(
 
-       },
-       children: <Widget>[
-         HomeScreen(),
-         MyBidsBaseScreen(),
-         DirectoryScreen(),
-        // MessageScreen(),
-         MoreScreen()
-       ],
+       onWillPop: onWillPop,child: PageView(
+         /// [PageView.scrollDirection] defaults to [Axis.horizontal].
+         /// Use [Axis.vertical] to scroll vertically.
+         controller: controller,
+         onPageChanged: (page){
+           onPageChanges(page);
+
+         },
+         children: <Widget>[
+          // HomeScreen(),
+           homeScreen,
+           MyBidsBaseScreen(),
+           DirectoryScreen(),
+          // MessageScreen(),
+           MoreScreen()
+         ],
+       ),
      ),
      
 
@@ -62,8 +68,12 @@ class _BaseDashboard extends State<BaseDashboard>{
      floatingActionButton: Visibility(
        visible: isButtonVisible,
        child: InkWell(
-         onTap: (){
-           Navigator.pushNamed(context,AppRoutes.create_post);
+         onTap: ()async{
+           var ob= await Navigator.pushNamed(context,AppRoutes.create_post);
+           if(ob==1){
+
+              homeScreen.refreshHome();
+           }
          },
          child: Container(
            width: 155.w,
@@ -155,7 +165,7 @@ class _BaseDashboard extends State<BaseDashboard>{
           // )),
           InkWell(
             onTap: (){
-              onPageChanges(4);
+              onPageChanges(3);
             },
             child: selectedTab(isMore,"${S().more}",Images.more),
           )
@@ -166,6 +176,7 @@ class _BaseDashboard extends State<BaseDashboard>{
   }
 
   onPageChanges(int page){
+    maintain=page;
     switch (page){
       case 0:
         isHome=true;
@@ -197,11 +208,18 @@ class _BaseDashboard extends State<BaseDashboard>{
 
 
       case 3:
+        // isHome=false;
+        // isMyBid=false;
+        // isMessage=true;
+        // isDrectory=false;
+        // isMore=false;
+        // isButtonVisible=false;
+
         isHome=false;
         isMyBid=false;
-        isMessage=true;
+        isMessage=false;
         isDrectory=false;
-        isMore=false;
+        isMore=true;
         isButtonVisible=false;
         break;
 
@@ -231,6 +249,7 @@ class _BaseDashboard extends State<BaseDashboard>{
   selectedTab(bool isSelect,String title,String image){
     return  Container(
       height: 55.h,
+      width: 75.w,
       padding:  EdgeInsets.only(top: 9.h),
 
       decoration: BoxDecoration(
@@ -264,8 +283,15 @@ class _BaseDashboard extends State<BaseDashboard>{
     );
 
   }
+   Future<bool> onWillPop() {
+     double? page =controller.page;
+     if(maintain==0){
+       SystemNavigator.pop();
+     }else{
+       onPageChanges(maintain-1);
+     }
 
-
-
+     return Future.value(false);
+   }
 
 }

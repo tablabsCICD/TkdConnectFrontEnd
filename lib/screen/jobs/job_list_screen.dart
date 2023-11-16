@@ -45,16 +45,22 @@ class _JobListState extends State<JobListScreen> {
             Expanded(
               child: Consumer<JobListProvider>(
                 builder: (context, provider, child) {
-                  return ListView.builder(
-                    controller: provider.scrollController,
-                    itemCount: provider.listJobs.length,
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            bottom: 12.h, left: 20.w, right: 20.w),
-                        child: jobCard(provider.listJobs[i]),
-                      );
+                  return RefreshIndicator(
+                    onRefresh: ()async{
+                      provider.selectedPage=0;
+                      provider.getAllJobs();
                     },
+                    child: ListView.builder(
+                      controller: provider.scrollController,
+                      itemCount: provider.listJobs.length,
+                      itemBuilder: (context, i) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 12.h, left: 20.w, right: 20.w),
+                          child: jobCard(provider.listJobs[i]),
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -133,6 +139,7 @@ class _JobListState extends State<JobListScreen> {
       ),
     );
   }
+
 
   jobCard(JobData jobData) {
     return Container(

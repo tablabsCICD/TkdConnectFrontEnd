@@ -16,7 +16,6 @@ class ApiHelper{
 
     EasyLoading.show(status: "Loading");
     var request = await dio.get(URL);
-    print('the response ${request.data}');
     ApiResponse apiResponseHelper = returnResponse(request);
     EasyLoading.dismiss();
     return apiResponseHelper;

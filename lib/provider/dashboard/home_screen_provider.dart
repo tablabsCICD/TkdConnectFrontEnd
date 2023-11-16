@@ -25,6 +25,7 @@ class HomeScreenProvider extends BaseProvider{
   ScrollController scrollController = ScrollController();
   int selectedPage=0;
   String imageUrl='';
+  int ispaid=0;
   bool filterisVisible = false;
   String drooDwonheading="All routes requirements";
   HomeScreenProvider(BuildContext context) : super('Ideal'){
@@ -53,6 +54,11 @@ class HomeScreenProvider extends BaseProvider{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     EasyLoading.show(status: "Loading");
     String url="";
+    if(currentPage==0){
+      truckLoadTypeList.clear();
+      print('the clear the api');
+      notifyListeners();
+    }
     if(fromCity=="All" && toCity=="All"){
       url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}';
 
@@ -88,9 +94,10 @@ class HomeScreenProvider extends BaseProvider{
 
   void callUserData() async{
    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-   if(user.content!.first.profilePicture!=null){
-     imageUrl=user.content!.first.profilePicture!;
+   if(user.content!.first.companyLogo!=null){
+     imageUrl=user.content!.first.companyLogo!;
    }
+   ispaid=user.content!.first.isPaid!;
 
    notifyListeners();
   }

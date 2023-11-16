@@ -42,19 +42,19 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                   height: 20.h,
                 ),
                 SvgPicture.asset(
-                  Images.load_post,
+                  Images.vehicle_load,
                   height: 133.h,
                   width: 200.w,
                 ),
-                labelText(S().loads),
+                labelText(S().vehicle+" "+S().loads),
                 SizedBox(
                   height: 4.h,
                 ),
                 DropDown(
                   onClick: () async {
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                    int a = await itemBottomSheet.showIteam(context, provider.reqirement, "Select Load Type");
-                    provider.selectedRequrimentType(a);
+                    int a = await itemBottomSheet.showIteam(context, provider.reqirementVehicale, "Select Load Type");
+                    provider.selectedRequrimentVehicaleType(a);
                   },
                   hint: provider.selectedRequriment,
                 ),
@@ -121,7 +121,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.100",provider.vehicleSizeController,provider),
+                editViewError("eg.100",provider.vehicleSizeController,provider,provider.vehicaleSize),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -129,7 +129,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("In Tons",provider.loadWeightController,provider),
+                editViewError("In Tons",provider.loadWeightController,provider,provider.loadWieght),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -137,7 +137,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.88XXXXXX90",provider.mobileNumberController,provider),
+                editView("eg.88XXXXXX90",provider.mobileNumberController,provider,true),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -145,7 +145,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.abc@gmail.com",provider.emailIdController,provider),
+                editView("eg.abc@gmail.com",provider.emailIdController,provider,true),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -153,7 +153,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.",provider.specialInstructionController,provider),
+                editView("eg.",provider.specialInstructionController,provider,false),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -208,9 +208,8 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                     fontWeight: FontWeight.w600,
 
                   ), onClick: (){
-                    provider.createVehiclePost(context);
-
-                  },isEnbale: provider.enbleButton,),
+                    provider.checkVehicaleValidation(context);
+                  },isEnbale: true,),
                 )
               ],
             ),
@@ -241,7 +240,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
     );
   }
 
-  editView(String hint,TextEditingController controller,PostLoadProvider provider) {
+  editView(String hint,TextEditingController controller,PostLoadProvider provider,bool redOnly) {
     return EditText(
       width: 335.w,
       height: 52.h,
@@ -252,4 +251,20 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
       },
     );
   }
+
+
+  editViewError(String hint,TextEditingController controller,PostLoadProvider provider,bool valid) {
+    return EditTextError(
+      validate: valid,
+      width: 335.w,
+      height: 52.h,
+      hint: hint,
+      controller: controller,
+      onChange: (val){
+        provider.enble();
+      },
+    );
+  }
+
+
 }

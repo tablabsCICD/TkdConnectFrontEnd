@@ -48,8 +48,7 @@ class MyPostProvider extends BaseProvider{
     String myUrl = ApiConstant.BASE_URL+'fullTruckLoad?id=${listOwnBid[index].genericCardsDto!.id!}';
 
     ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
-    print('the url is ${apiResponse.status}');
-    if(apiResponse==200){
+    if(apiResponse.status==200){
       listOwnBid.removeAt(index);
       notifyListeners();
     }else{
