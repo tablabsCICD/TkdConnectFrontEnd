@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
+import 'package:tkd_connect/screen/my_route/select_one_city.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../model/api_response.dart';
+import '../../model/request/route_request.dart';
 import '../../model/response/transport_directory_search.dart';
 import '../../network/api_helper.dart';
+import '../../screen/my_route/select_city.dart';
 
 class DirectoryProvider extends  BaseProvider{
   DirectoryProvider() : super('Ideal'){
@@ -23,11 +27,24 @@ class DirectoryProvider extends  BaseProvider{
   ScrollController scrollControllerVertical = ScrollController();
   ScrollController scrollControllerHorizantal = ScrollController();
   TextEditingController searchController=TextEditingController();
-
+  bool filterisVisible = false;
+  String fromCity="All";
+  String toCity="All";
 
   getAllData() async {
     String myUrl = ApiConstant.DIRECTORYALL(selectedPage);
+    if(filterisVisible){
+      if(fromCity != "All" && toCity!="All"){
+        myUrl=ApiConstant.DIRECTORYFILTER+"source=$fromCity&destination=$toCity";
+      }else if(fromCity != "All" && toCity=="All"){
+        myUrl=ApiConstant.DIRECTORYFILTER+"source=$fromCity";
+      }else{
+        myUrl=ApiConstant.DIRECTORYFILTER+"destination=$toCity";
+      }
+
+    }
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
+
     if(apiResponse.status==200){TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
     user.addAll(transportSearchData.content);
     userTemp.addAll(transportSearchData.content);
@@ -81,6 +98,50 @@ class DirectoryProvider extends  BaseProvider{
 
 
 
+  onCliclFilter(BuildContext context){
+    if(filterisVisible){
+      filterisVisible=false;
+      truckLoadTypeList.clear();
+      notifyListeners();
+      selectedPage=0;
+      fromCity="All";
+      toCity="All";
+     getAllData();
+    }else{
+      filterisVisible=true;
+    }
+    notifyListeners();
+  }
 
+
+  selectCityFromFilter(BuildContext context)async{
+    RouteRequest routeRequest = await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.9, child: SelectOneCityScreen());
+        });
+    fromCity=routeRequest.startLocation;
+    selectedPage=0;
+    user.clear();
+    notifyListeners();
+    getAllData();
+    }
+
+  selectToCityFilter(BuildContext context)async{
+    RouteRequest routeRequest = await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.9, child: SelectOneCityScreen());
+        });
+    toCity=routeRequest.startLocation;
+    selectedPage=0;
+    user.clear();
+    notifyListeners();
+    getAllData();
+  }
 
 }

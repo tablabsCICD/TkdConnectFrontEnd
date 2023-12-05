@@ -1,154 +1,279 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../constant/app_constant.dart';
-import '../../constant/images.dart';
-import '../../model/response/userdata.dart';
-import '../../route/app_routes.dart';
-import '../../utils/colors.dart';
-import '../../utils/sharepreferences.dart';
-import '../../utils/utils.dart';
+import 'package:provider/provider.dart';
+import 'package:tkd_connect/provider/buy_sell_provider/create_buy_sell_provider.dart';
+import '../../generated/l10n.dart';
+import '../../model/request/route_request.dart';
+import '../../widgets/bottomsheet.dart';
+import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
-import '../kyc/kyc_screen_one.dart';
+import '../../widgets/drop_down.dart';
+import '../../widgets/editText.dart';
+import '../my_route/select_one_city.dart';
 
-class CreateBuySell extends StatelessWidget{
-  late User user;
-  bool isLoad=true;
-
-
-  getLogin()async{
-    user=await LocalSharePreferences().getLoginData();
-
-  }
-
+class CreateBuySell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => CreateBuySellProvider(),
+      builder: (context, child) => _buildPage(context),
+    );
+  }
 
+  _buildPage(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: isLoad?Container():Column(
-          children: [
-            topBar(context),
-            item("My Posts",(){
-              Navigator.pushNamed(context, AppRoutes.mypost);
-
-            },FontWeight.w600),
-            item("Jobs",(){
-              Navigator.pushNamed(context, AppRoutes.job);
-
-            },FontWeight.w600),
-            item("Vehicle buy/sell",(){
-              Navigator.pushNamed(context, AppRoutes.buysell);
-
-            },FontWeight.w600),
-            item("Get verified",(){
-              showBootomSheet(context);
-
-            },FontWeight.w600),
-            item("App setting",(){
-              Navigator.pushNamed(context, AppRoutes.appsetting);
-            },FontWeight.w400),
-            item("Help & support",(){
-              Navigator.pushNamed(context, AppRoutes.helpsupport);
-
-            },FontWeight.w400),
-
-            itemLogout("Logout",(){
-
-            },)
-          ],
-        ),
+      body: Consumer<CreateBuySellProvider>(
+        builder: (context, provider, child) {
+          return Container(
+              child: Column(
+            children: [
+              SizedBox(
+                height: 30.h,
+              ),
+              BaseWidget().appBar(context, "Post Buy/Sell"),
+              Expanded(
+                  child: ListView(
+                      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                      children: [
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    labelText(S().buySell),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    DropDown(
+                      onClick: () async {
+                        ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                        int a = await itemBottomSheet.showIteam(
+                            context, provider.reqirement, "${S().selectOne}");
+                        provider.selectedRequrimentType(a);
+                      },
+                      hint: provider.selectedRequriment,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText(S().companyName),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    editView("eg.TKD", provider.companyNameController, provider,
+                        true),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText(S().mobileNumber),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    editView("eg.88XXXXXX90", provider.mobileNumberController,
+                        provider, true),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText(S().email_id),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    editView("eg.abc@gmail.com", provider.emailIdController,
+                        provider, true),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Select City"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    DropDown(
+                      onClick: () async {
+                        RouteRequest routeRequest = await showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return FractionallySizedBox(
+                                  heightFactor: 0.9,
+                                  child: SelectOneCityScreen());
+                            });
+                        provider.selectedDestinationCity(
+                            routeRequest.startLocation);
+                      },
+                      hint: provider.destinationCity,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Select Maker Name"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    DropDown(
+                      onClick: () async {
+                        ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                        int a = await itemBottomSheet.showIteam(
+                            context, provider.makerList, "${S().selectOne}");
+                        provider.selectedMakerType(a);
+                      },
+                      hint: provider.selectedMakerName,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Model Name"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                        editViewError(
+                        "eg.Tata SCV", provider.modelName, provider, provider.isModelName),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Visibility(
+                        visible: provider.isSellSelected,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            labelText("Kilometer driven"),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            editViewError("eg.5000 Km", provider.kiloMeter, provider,
+                                provider.isKilo),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                          ],
+                        )),
+                    Visibility(
+                        visible: provider.isSellSelected,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            labelText("Register Number"),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            editViewError("eg.MH09 EG 0000", provider.vehicleRno,
+                                provider, provider.isrlNo),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                          ],
+                        )),
+                    labelText("Select Manufacturing Year"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    DropDown(
+                      onClick: () async {
+                        ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                        int a = await itemBottomSheet.showIteam(
+                            context, provider.yearList, "${S().selectOne}");
+                        provider.selectedyearType(a);
+                      },
+                      hint: provider.selectedYear,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Vehicle Size"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    DropDown(
+                      onClick: () async {
+                        ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                        int a = await itemBottomSheet.showIteam(context,
+                            provider.vehicleSizeList, "${S().selectOne}");
+                        provider.selectedvehicleSizeType(a);
+                      },
+                      hint: provider.selectedVehicleSize,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Condition Of Vehicle"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    DropDown(
+                      onClick: () async {
+                        ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                        int a = await itemBottomSheet.showIteam(context,
+                            provider.conditionList, "${S().selectOne}");
+                        provider.selectedConditionType(a);
+                      },
+                      hint: provider.selectedCondition,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Approx prise"),
+                    SizedBox(
+                      height: 4.h,
+                    ), editViewError("eg.1000", provider.price, provider, provider.isPrise),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    labelText("Additional Info"),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    editView("eg.Info", provider.specialInstructionController,
+                        provider, false),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                  ]))
+            ],
+          ));
+        },
+      ),
+      bottomNavigationBar: Consumer<CreateBuySellProvider>(
+        builder: (context, provider, child) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
+            child: Button(
+              width: MediaQuery.of(context).size.width,
+              height: 49.h,
+              title: "Post Buy/Sell",
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,
+              ),
+              onClick: () {
+                provider.checkValidation(context);
+              },
+              isEnbale: true,
+            ),
+          );
+        },
       ),
     );
   }
 
-
-  topBar(BuildContext context) {
+  labelText(String label) {
     return Container(
-        width: 375.w,
-        height:  266.h ,
-        padding: EdgeInsets.symmetric(horizontal: 24.h),
-        decoration: ShapeDecoration(
-          color: ThemeColor.red,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16),
-            ),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            BaseWidget().getImage("",width: 80.w,height: 112.h),
-            selectedPlan(),
-            nameWithVerfiyTag(),
-            Text(
-              user.content!.first.companyName!,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontFamily: AppConstant.FONTFAMILY,
-                fontWeight: FontWeight.w400,
-                height: 0,
-              ),
-            ),
-            SizedBox(height:12.h,),
-            Text(
-              user.content!.first.city!+","+user.content!.first.state!,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontFamily: AppConstant.FONTFAMILY,
-                fontWeight: FontWeight.w700,
-                height: 0,
-              ),
-            ),
-            SizedBox(height:12.h,),
-            button(context)
-          ],
-        ));
-  }
-
-  selectedPlan(){
-    return  Container(
-      transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
-      // width: 36.w,
-      // height: 12.h,
-      padding: EdgeInsets.symmetric(horizontal: 4.h),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      width: 332.w,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgPicture.asset(
-            Utils().getSelectedPackageImage(user.content!.first.isPaid!),
-            height: 8.h,
-            width: 8.w,
-          ),
-          SizedBox(width: 4.w,),
           Text(
-            Utils().getSelectedPackageName(user.content!.first.isPaid!),
-            textAlign: TextAlign.center,
+            label,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 8.sp,
-              fontFamily: AppConstant.FONTFAMILY,
-              fontWeight: FontWeight.w600,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ],
@@ -156,190 +281,31 @@ class CreateBuySell extends StatelessWidget{
     );
   }
 
-  nameWithVerfiyTag(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          user.content!.first.firstName!+" "+user.content!.first.lastName!,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.sp,
-            fontFamily: AppConstant.FONTFAMILY,
-            fontWeight: FontWeight.w600,
-            height: 0,
-          ),
-        ),
-        SizedBox(width: 8.w,),
-        Visibility(visible:user.content!.first.isPaid!=0?true:false,child: SvgPicture.asset(Images.verified))
-      ],
-    );
-  }
-
-  button(BuildContext context){
-    return InkWell(
-      onTap: (){
-        Navigator.pushNamed(context, AppRoutes.editprofile);
+  editView(String hint, TextEditingController controller,
+      CreateBuySellProvider provider, bool redOnly) {
+    return EditText(
+      readOnly: redOnly,
+      width: 335.w,
+      height: 52.h,
+      hint: hint,
+      controller: controller,
+      onChange: (val) {
+        // provider.enble();
       },
-      child: Container(
-        width: 117.w,
-        height: 27.h,
-        padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.w, color: Colors.white),
-            borderRadius: BorderRadius.circular(4.r),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Edit your profile',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 10.sp,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
-
-  item(String  title,Function onClick,FontWeight fontWeight){
-    return InkWell(
-      onTap: (){
-        onClick();
+  editViewError(String hint, TextEditingController controller,
+      CreateBuySellProvider provider, bool valid) {
+    return EditTextError(
+      validate: valid,
+      width: 335.w,
+      height: 52.h,
+      hint: hint,
+      controller: controller,
+      onChange: (val) {
+        // provider.enble();
       },
-      child: Container(
-        width: 327.w,
-        height: 60.h,
-        decoration: BoxDecoration(
-          border: Border(
-
-            bottom: BorderSide(width: 1, color: Color(0x192C363F)),
-          ),
-        ),
-        child: Row(
-
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: double.infinity,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: fontWeight,
-
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: 24.w,
-              height: 24.h,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 24.w,
-                    height: 24.h,
-                    child: Stack(children: [
-                      SvgPicture.asset(Images.arrow_right)
-                    ]),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
-
-
-  itemLogout(String  title,Function onClick){
-    return InkWell(
-      onTap: (){
-        onClick();
-      },
-      child: Container(
-        width: 327.w,
-        height: 60.h,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: double.infinity,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w400,
-
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: 24.w,
-              height: 24.h,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 24.w,
-                    height: 24.h,
-                    child: Stack(children: [
-                      //  SvgPicture.asset(Images.arrow_right)
-                    ]),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-  void showBootomSheet(BuildContext context) {
-
-    showModalBottomSheet<void>(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child: KYCScreenOne());
-        });
-
-  }
-
 }

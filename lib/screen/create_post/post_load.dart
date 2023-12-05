@@ -41,11 +41,11 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                SvgPicture.asset(
-                  Images.load_post,
-                  height: 133.h,
-                  width: 200.w,
-                ),
+                // SvgPicture.asset(
+                //   Images.load_post,
+                //   height: 133.h,
+                //   width: 200.w,
+                // ),
                 labelText(S().loads),
                 SizedBox(
                   height: 4.h,

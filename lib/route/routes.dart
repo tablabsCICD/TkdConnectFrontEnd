@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
+import 'package:tkd_connect/screen/buy_sell/create_buy_sell.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_one.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_three.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_two.dart';
@@ -21,6 +22,7 @@ import '../screen/help_support/HelpSupportScreen.dart';
 import '../screen/laguage/select_language.dart';
 import '../screen/login/login_screen.dart';
 import '../screen/more/edit_profile/edit_profile_base_screen.dart';
+import '../screen/my_post/my_post_base_scrren.dart';
 import '../screen/my_route/select_city.dart';
 import '../screen/notification/notification_list_screen.dart';
 import '../screen/otp/otp_screen.dart';
@@ -102,6 +104,9 @@ class RouteGenerator {
         return buildRoute(BuySellScreen(), settings: settings);
       case AppRoutes.createjob:
         return buildRoute(CreateJobScreen(), settings: settings);
+
+      case AppRoutes.createbuysell:
+        return buildRoute(CreateBuySell(), settings: settings);
 
 
       default:

@@ -9,6 +9,7 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
+import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
@@ -63,10 +64,10 @@ class _MoreScreen extends State<MoreScreen> {
               Navigator.pushNamed(context, AppRoutes.buysell);
 
             },FontWeight.w600),
-            // item(S().getVerified,(){
-            //   showBootomSheet(context);
-            //
-            // },FontWeight.w600),
+            item(S().getVerified,(){
+
+              openVerifiedTag();
+            },FontWeight.w600),
             item(S().appSetting,(){
               Navigator.pushNamed(context, AppRoutes.appsetting);
             },FontWeight.w400),
@@ -84,6 +85,16 @@ class _MoreScreen extends State<MoreScreen> {
         ),
       ),
     );
+  }
+
+
+  openVerifiedTag(){
+
+    if(user.content!.first.verified==1){
+      ToastMessage.show(context, "You Already Verified");
+    }else{
+      showBootomSheet(context);
+    }
   }
 
 

@@ -6,10 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
+import 'package:tkd_connect/provider/dashboard/delete_interface.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
+import '../../../generated/l10n.dart';
 import '../../../model/response/AllCard.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/card/base_widgets.dart';
@@ -23,7 +25,7 @@ import '../../../widgets/card/dashboard_cards.dart';
 // }
 
 // class _HomeScreen extends State<HomeScreen> {
-class HomeScreen extends StatelessWidget
+class HomeScreen extends StatelessWidget implements DeletePostInf
 {
   late HomeScreenProvider homeScreenProvider;
   late BuildContext context;
@@ -65,6 +67,8 @@ class HomeScreen extends StatelessWidget
                     itemCount: provider.truckLoadTypeList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
+                        transform: Matrix4.translationValues(
+                            0.0,-30.0.h, 0.0),
                         margin:
                         EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
                         child: setCardToList(index, provider,provider.truckLoadTypeList[index]),
@@ -106,7 +110,7 @@ class HomeScreen extends StatelessWidget
 
   setCardToList(int index,HomeScreenProvider provider,TruckLoad truckLoad){
     if(truckLoad.type=="Full Load" || truckLoad.type=="Part Load"){
-     return AllCards().cardLoad(index, context, provider.truckLoadTypeList[index]);
+     return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
     }else if(truckLoad.type=="General Post"){
       return AllCards().generalPost(truckLoad);
     }else{
@@ -414,11 +418,17 @@ class HomeScreen extends StatelessWidget
                     alignment: Alignment.bottomLeft,
                     child: InkWell(
                       onTap: () {
-                        provider.selectCityFilter(context);
+                       // provider.selectCityFilter(context);
+                        provider.selectCityFromFilter(context);
                       },
                       child: fromRoute(provider.fromCity),
                     )),
-                Align(alignment: Alignment.bottomRight, child: fromRoute(provider.toCity)),
+                Align(alignment: Alignment.bottomRight, child: InkWell(
+                  onTap: (){
+                    provider.selectToCityFilter(context);
+                  },
+                  child: fromRoute(provider.toCity),
+                )),
                 Align(
                     alignment: Alignment.center,
                     child: Container(
@@ -637,7 +647,7 @@ class HomeScreen extends StatelessWidget
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Full load Vehicle available ';
+                  provider.drooDwonheading = 'Full load  Required ';
                   provider.falseAllFilter();
                   provider.flr = true;
                   provider.notifyListeners();
@@ -646,7 +656,7 @@ class HomeScreen extends StatelessWidget
                 child: Row(
                   children: [
                     Text(
-                      'Full load Vehicle available ',
+                      'Full load  Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -659,7 +669,7 @@ class HomeScreen extends StatelessWidget
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Part Load Vehicle available ';
+                  provider.drooDwonheading = 'Part Load Required ';
                   provider.falseAllFilter();
                   provider.plr = true;
                   provider.notifyListeners();
@@ -668,7 +678,7 @@ class HomeScreen extends StatelessWidget
                 child: Row(
                   children: [
                     Text(
-                      'Part Load Vehicle available ',
+                      'Part Load Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -689,4 +699,46 @@ class HomeScreen extends StatelessWidget
       homeScreenProvider.callDashboradApi(context,0);
     }
   }
+
+  @override
+  void deleteOwnPost(int postId,int index,) {
+    _showMyDialog(index, postId,homeScreenProvider);
+  }
+
+
+  Future<void> _showMyDialog(int index,int id,HomeScreenProvider myPostProvider) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          content:  SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(S().deleteMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              onPressed: () {
+                myPostProvider.deletePost(index,id,context);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
 }

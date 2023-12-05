@@ -25,6 +25,7 @@ class MyPostProvider extends BaseProvider{
     if(apiResponse.status==200){
       MyPostBids bidPlaced=MyPostBids.fromJson(apiResponse.response);
       listOwnBid.addAll(bidPlaced.content!);
+      listOwnBid.reversed;
       selectedPage++;
       notifyListeners();
     }else{

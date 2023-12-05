@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
@@ -10,8 +11,10 @@ import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
+import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/AllCard.dart';
+import '../../route/app_routes.dart';
 
 class BuySellScreen extends StatefulWidget {
   @override
@@ -52,6 +55,61 @@ class _BuySellScreen extends State<BuySellScreen>{
 
 
           ],
+        ),
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: InkWell(
+        onTap: ()async{
+
+          Navigator.pushNamed(context, AppRoutes.createbuysell);
+        },
+        child: Container(
+          width: 155.w,
+          height: 38.h,
+          padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+          decoration: ShapeDecoration(
+            color: ThemeColor.theme_blue,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Create Post',
+                style: TextStyle(
+                  color: ThemeColor.progress_color,
+                  fontSize: 12.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(
+                width: 2.w,
+              ),
+              Container(
+                width: 16.w,
+                height: 16.w,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 16.w,
+                      height: 16.w,
+                      child: Stack(children: [
+                        SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
+
+                      ]),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

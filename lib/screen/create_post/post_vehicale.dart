@@ -41,11 +41,11 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                SvgPicture.asset(
-                  Images.vehicle_load,
-                  height: 133.h,
-                  width: 200.w,
-                ),
+                // SvgPicture.asset(
+                //   Images.vehicle_load,
+                //   height: 133.h,
+                //   width: 200.w,
+                // ),
                 labelText(S().vehicle+" "+S().loads),
                 SizedBox(
                   height: 4.h,

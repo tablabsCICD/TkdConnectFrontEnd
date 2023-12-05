@@ -52,12 +52,34 @@ class ApiHelper{
   }
 
   Future<ApiResponse>  apiPost(String URL) async{
-    EasyLoading.show(status: "Loading");
-    var request = await dio.post(URL);
-    ApiResponse apiResponseHelper = returnResponse(request);
-    EasyLoading.dismiss();
-    return apiResponseHelper;
-  }
+
+    try{
+      EasyLoading.show(status: "Loading");
+      var request = await dio.post(URL);
+      ApiResponse apiResponseHelper = returnResponse(request);
+      EasyLoading.dismiss();
+      return apiResponseHelper;
+    }catch (e){
+      print('$e');
+      EasyLoading.dismiss();
+      return ApiResponse(500, null);
+    }
+
+
+  }Future<ApiResponse>  apiDecodePost(String URL) async{
+
+    try{
+      EasyLoading.show(status: "Loading");
+      var request = await dio.post(URL);
+      ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
+      EasyLoading.dismiss();
+      return apiResponseHelper;
+    }catch (e){
+      print('$e');
+      EasyLoading.dismiss();
+      return ApiResponse(500, null);
+    }
+   }
 
   Future<ApiResponse>  apiPut(String URL,Map<String,dynamic>data) async{
     var body = json.encode(data);

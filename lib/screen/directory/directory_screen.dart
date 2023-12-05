@@ -35,34 +35,30 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
 
   _buildPage(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Consumer<DirectoryProvider>(
+  builder: (context, provider, child) {
+  return Container(
         color: ThemeColor.baground,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            top_bar(context),
-            serachBar(),
-            tabBar(),
-            SizedBox(
-              height: 16.h,
-            ),
-            tagVerifiedUser(),
-            SizedBox(
-              height: 16.h,
-            ),
-            //itemVerified(),
-            verifyUserData(),
-            SizedBox(
-              height: 16.h,
-            ),
+            top_bar(context,provider),
+            //serachBar(),
+            provider.filterisVisible ? SizedBox(): searchBoxFilter(),
+            provider.filterisVisible ? routeSelect() : SizedBox(),
             allUserTag(),
-
+            provider.user.length==0?Center(child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text("No Record Found"),
+            )):SizedBox(),
             allUserData()
 
           ],
         ),
-      ),
+      );
+  },
+),
     );
   }
 
@@ -100,10 +96,11 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
     );
   }
 
-  top_bar(BuildContext context) {
+  top_bar(BuildContext context,provider) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 87.h,
+     // height: 87.h,
+      height: provider.filterisVisible ? 170.h : 87.h,
       //padding: const EdgeInsets.only(bottom: 16),
       decoration: ShapeDecoration(
         color: Color(0xFFC3262C),
@@ -114,7 +111,34 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           ),
         ),
       ),
-      child: SizedBox(),
+      child: provider.filterisVisible ? searchBoxFilter(): SizedBox(),
+    );
+  }
+
+  searchBoxFilter() {
+    return Consumer<DirectoryProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          transform: Matrix4.translationValues(
+              0.0, provider.filterisVisible ? 00 : -25.0.h, 0.0),
+          width: MediaQuery.of(context).size.width,
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              serachBarFilter(),
+              SizedBox(
+                width: 8.w,
+              ),
+
+              filterIcon(),
+
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -212,6 +236,96 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
     );
   },
 );
+  }
+
+
+  serachBarFilter() {
+    return Consumer<DirectoryProvider>(
+      builder: (context, provider, child) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 260.w,
+              height: 52.h,
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 24.w,
+                          height: 24.h,
+                          margin: EdgeInsets.only(left: 10.w),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 24.w,
+                                height: 24.h,
+                                child: Stack(children: [
+                                  SvgPicture.asset(Images.search_normal)
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: SizedBox(
+                            child: TextField(
+                              controller: provider.searchController,
+                              onChanged: (value) {
+                                provider.getBySearchData();
+                              },
+                              decoration: InputDecoration(
+                                  hintText: S().searchUsersCompanies,
+                                  border: InputBorder.none,
+                                  hintStyle: TextStyle(
+                                    color: Color(0x662C363F),
+                                    fontSize: 14.sp,
+                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+        );
+      },
+    );
   }
 
   tabBar() {
@@ -465,7 +579,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
 
   allUserTag() {
     return Container(
-      margin: EdgeInsets.only(left: 20.w,top: 5.h),
+      margin: EdgeInsets.only(left: 20.w,top: 0.h),
       child: Text(
         S().allUsers,
         style: TextStyle(
@@ -581,6 +695,159 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           ),
         ],
       ),
+    );
+  }
+
+
+
+  routeSelect() {
+    return Consumer<DirectoryProvider>(
+      builder: (context, provider, child) {
+        return Center(
+          child: Container(
+            transform: Matrix4.translationValues(0.0, -25.0.h, 00),
+            width: 330.w,
+            child: Stack(
+              //  mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: InkWell(
+                      onTap: () {
+                        provider.selectCityFromFilter(context);
+                      },
+                      child: fromRoute(provider.fromCity),
+                    )),
+                Align(alignment: Alignment.bottomRight, child: InkWell(
+                  onTap: (){
+                    provider.selectToCityFilter(context);
+                  },
+                  child: fromRoute(provider.toCity),
+                )),
+                Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: SvgPicture.asset(Images.route_return_home))),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  fromRoute(String cityName) {
+    return Container(
+      width: 161.50.w,
+      height: 52.h,
+      //  transform: Matrix4.translationValues(20, 0.0.h, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Opacity(
+                  opacity: 0.40,
+                  child: Container(
+                    width: 24.w,
+                    height: 24.h,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 24.w,
+                          height: 24.h,
+                          child: Stack(
+                              children: [SvgPicture.asset(Images.location)]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: SizedBox(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '$cityName',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w700,
+                              height: 1.33,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w400,
+                              height: 1.33,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  filterIcon() {
+    return Consumer<DirectoryProvider>(
+      builder: (context, provider, child) {
+        return InkWell(
+          onTap: () {
+            provider.onCliclFilter(context);
+          },
+          child: Container(
+              width: 52.w,
+              height: 52.h,
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  Images.filter,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+              )),
+        );
+      },
     );
   }
 

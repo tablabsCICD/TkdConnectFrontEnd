@@ -156,12 +156,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "postAJob": MessageLookupByLibrary.simpleMessage("Post a job"),
         "postJob": MessageLookupByLibrary.simpleMessage("Post Job"),
         "postLoad": MessageLookupByLibrary.simpleMessage("Post Load"),
-        "quotesNow": MessageLookupByLibrary.simpleMessage("Quotes now"),
-        "quotesPrice": MessageLookupByLibrary.simpleMessage("Quotes price"),
+        "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
+        "quotesPrice": MessageLookupByLibrary.simpleMessage("Quote price"),
         "quotesYouPlaced":
-            MessageLookupByLibrary.simpleMessage("Quotes you placed"),
+            MessageLookupByLibrary.simpleMessage("Quote you placed"),
         "quotesYouReceived":
-            MessageLookupByLibrary.simpleMessage("Quotes you received"),
+            MessageLookupByLibrary.simpleMessage("Quote you received"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("Raise a ticket"),
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
@@ -173,8 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectOne": MessageLookupByLibrary.simpleMessage("Select one"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
-        "showAllQuotes":
-            MessageLookupByLibrary.simpleMessage("Show all quotes"),
+        "showAllQuotes": MessageLookupByLibrary.simpleMessage("Show all quote"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "specialInstruction":
             MessageLookupByLibrary.simpleMessage("Special Instruction"),
@@ -195,7 +194,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
         "website": MessageLookupByLibrary.simpleMessage("Website"),
         "withdrawQuotes":
-            MessageLookupByLibrary.simpleMessage("Withdraw quotes"),
+            MessageLookupByLibrary.simpleMessage("Withdraw quote"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

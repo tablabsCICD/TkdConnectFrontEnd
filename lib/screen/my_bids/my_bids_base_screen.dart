@@ -388,7 +388,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'Full load Vehicle available ',
+                      'Full load Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -406,7 +406,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'Part Load Vehicle available ',
+                      'Part Load Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

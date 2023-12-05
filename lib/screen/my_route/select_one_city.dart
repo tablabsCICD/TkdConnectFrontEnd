@@ -182,7 +182,7 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
                               child: TextField(
                                 controller:provider.searchController ,
                                 onChanged: (value) {
-                                  //provider.searchCity(value);
+                                  provider.searchCity(value);
 
                                 },
                                 onSubmitted: (val)async{

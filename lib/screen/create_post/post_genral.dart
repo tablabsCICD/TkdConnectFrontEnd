@@ -40,11 +40,11 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                 SizedBox(
                   height: 20.h,
                 ),
-                SvgPicture.asset(
-                  Images.general_post,
-                  height: 133.h,
-                  width: 200.w,
-                ),
+                // SvgPicture.asset(
+                //   Images.general_post,
+                //   height: 133.h,
+                //   width: 200.w,
+                // ),
 
                 labelText(S().title),
                 SizedBox(

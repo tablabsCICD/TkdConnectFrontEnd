@@ -20,30 +20,33 @@ class ViewProfileDirectory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: ThemeColor.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            topBar(),
-            SizedBox(
-              height: 22.h,
-            ),
-            marginContainer(aboutCompany(), 22.h, 0),
-            marginContainer(discriptionCompny(), 4.h, 0),
-            marginContainer(operatingRouteTag(), 24.h, 0),
-            marginContainer(cityChip(), 6.h, 0),
-            marginContainer(titleTag(S().sales), 24.h, 0),
-            marginContainer(
-                emailLink(data.emailId!), 6.h, 0),
-            marginContainer(titleTag(S().traffic), 24.h, 0),
-            marginContainer(
-                emailLink("traffic@shreejitranslogistics.com"), 6.h, 0),
-            marginContainer(titleTag(S().accounts), 24.h, 0),
-            marginContainer(
-                emailLink(data.emailId!), 6.h, 0),
-          ],
+      body: SingleChildScrollView(
+
+        child: Container(
+          color: ThemeColor.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              topBar(),
+              SizedBox(
+                height: 22.h,
+              ),
+              // marginContainer(aboutCompany(), 22.h, 0),
+              // marginContainer(discriptionCompny(), 4.h, 0),
+              marginContainer(operatingRouteTag(), 24.h, 0),
+              marginContainer(cityChip(), 6.h, 0),
+              marginContainer(titleTag(S().sales), 24.h, 0),
+              marginContainer(
+                  emailLink(data.emailId!), 6.h, 0),
+              marginContainer(titleTag(S().traffic), 24.h, 0),
+              marginContainer(
+                  emailLink("traffic@shreejitranslogistics.com"), 6.h, 0),
+              marginContainer(titleTag(S().accounts), 24.h, 0),
+              marginContainer(
+                  emailLink(data.emailId!), 6.h, 0),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: marginContainer(callButton(), 10.h, 20.h),

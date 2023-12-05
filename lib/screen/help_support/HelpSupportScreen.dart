@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
@@ -60,7 +61,23 @@ class HelpSupportScreen extends StatelessWidget {
                     SizedBox(
                       height: 2.h,
                     ),
-                    subTitle('(+91) 98200 06969'),
+                    Row(
+                      children: [
+                        InkWell(
+
+                          onTap: (){
+                            Utils().callFunction("8123006888");
+                          },child: subTitle('(+91)  8123006888 '),
+                        ),
+                        Text(" / "),
+                        InkWell(
+
+                          onTap: (){
+                            Utils().callFunction("8123004666");
+                          },child:   subTitle('(+91)  8123004666 '),
+                        ),
+                     ],
+                    ),
                     SizedBox(
                       height: 8.h,
                     ),

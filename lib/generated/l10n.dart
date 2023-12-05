@@ -620,10 +620,10 @@ class S {
     );
   }
 
-  /// `Show all quotes`
+  /// `Show all quote`
   String get showAllQuotes {
     return Intl.message(
-      'Show all quotes',
+      'Show all quote',
       name: 'showAllQuotes',
       desc: '',
       args: [],
@@ -1160,40 +1160,40 @@ class S {
     );
   }
 
-  /// `Quotes you placed`
+  /// `Quote you placed`
   String get quotesYouPlaced {
     return Intl.message(
-      'Quotes you placed',
+      'Quote you placed',
       name: 'quotesYouPlaced',
       desc: '',
       args: [],
     );
   }
 
-  /// `Quotes you received`
+  /// `Quote you received`
   String get quotesYouReceived {
     return Intl.message(
-      'Quotes you received',
+      'Quote you received',
       name: 'quotesYouReceived',
       desc: '',
       args: [],
     );
   }
 
-  /// `Quotes price`
+  /// `Quote price`
   String get quotesPrice {
     return Intl.message(
-      'Quotes price',
+      'Quote price',
       name: 'quotesPrice',
       desc: '',
       args: [],
     );
   }
 
-  /// `Withdraw quotes`
+  /// `Withdraw quote`
   String get withdrawQuotes {
     return Intl.message(
-      'Withdraw quotes',
+      'Withdraw quote',
       name: 'withdrawQuotes',
       desc: '',
       args: [],
@@ -1230,10 +1230,10 @@ class S {
     );
   }
 
-  /// `Quotes now`
+  /// `Quote now`
   String get quotesNow {
     return Intl.message(
-      'Quotes now',
+      'Quote now',
       name: 'quotesNow',
       desc: '',
       args: [],

@@ -193,6 +193,7 @@ class SelectCityProvider extends BaseProvider {
 
           listCity.add(citySelection);
         }
+        notifyListeners();
       }
     }else{
       listCity.clear();

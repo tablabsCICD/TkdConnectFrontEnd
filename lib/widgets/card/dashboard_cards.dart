@@ -6,13 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
+import '../../provider/dashboard/delete_interface.dart';
 import '../../utils/utils.dart';
 import 'base_widgets.dart';
 
 class AllCards {
 
 
-  cardLoad(int index, BuildContext context, TruckLoad load) {
+  cardLoad(int index, BuildContext context, TruckLoad load,{int userId=0}) {
     return Container(
       width: 335.w,
       // height: 255.h,
@@ -71,13 +72,101 @@ class AllCards {
           imageLoad(load),
           BaseWidget().heading(load.topicName!, load.postingTime!.split(" ").first, load.content!),
 
-          BaseWidget().bidButton((val) {
+
+         load.userId==userId ?BaseWidget().deleteButton((val) {
+           if(val==10){
+
+           }else{
+             Utils().openMenu(val, load, context);
+           }
+
+         }) :BaseWidget().bidButton((val) {
             Utils().openMenu(val, load, context);
           })
         ],
       ),
     );
   }
+
+
+
+
+
+  cardLoadHome(int index, BuildContext context, TruckLoad load,int userId,DeletePostInf postDelete) {
+    return Container(
+      width: 335.w,
+      // height: 255.h,
+      padding: EdgeInsets.all(12.r),
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        shadows: [
+          BoxShadow(
+            color: Color(0x114A5568),
+            blurRadius: 8.r,
+            offset: Offset(0, 3),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 100.w,
+              height: 18.h,
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+              decoration: ShapeDecoration(
+                color: Color(0xFF2C8FEA),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r)),
+              ),
+              child: Center(
+                child: Text(
+                  load.mainTag!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 8.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          BaseWidget().profile(
+              load.companyLogo!, load.nameOfPerson!, load.companyName!,
+              verify: load.isPaid!),
+          BaseWidget().routes(load.source!, load.destination!),
+          SizedBox(
+            height: 12.h,
+          ),
+          imageLoad(load),
+          BaseWidget().heading(load.topicName!, load.postingTime!.split(" ").first, load.content!),
+
+
+          load.userId==userId ?BaseWidget().deleteButton((val) {
+            if(val==10){
+                postDelete.deleteOwnPost(load.id!,index);
+            }else{
+              Utils().openMenu(val, load, context);
+            }
+
+          }) :BaseWidget().bidButton((val) {
+            Utils().openMenu(val, load, context);
+          })
+        ],
+      ),
+    );
+  }
+
 
   imageLoad(TruckLoad load){
     if(load.postImages!.length==0){

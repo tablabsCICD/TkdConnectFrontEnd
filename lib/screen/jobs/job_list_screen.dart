@@ -166,7 +166,7 @@ class _JobListState extends State<JobListScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Container(
-              width: 62.w,
+              width: 70.w,
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
@@ -177,7 +177,7 @@ class _JobListState extends State<JobListScreen> {
               child: Center(
                 child: Text(
                   jobData.postJob!.experience != null
-                      ? jobData.postJob!.experience! + " Year"
+                      ? "Exp: "+jobData.postJob!.experience! + " Year"
                       : "No Info",
                   style: TextStyle(
                     color: Colors.white,

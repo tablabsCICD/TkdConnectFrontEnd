@@ -10,6 +10,8 @@ class ApiConstant {
   static String USER_FIND_BY_MOBILE(mobile) => BASE_URL + "DeleteUser/getByMobileNumber?mobileNumber=$mobile";
   static String DIRECTORY(search) => BASE_URL + "directory?search=$search";
   static String DIRECTORYALL(page) => BASE_URL + "directory?page=$page";
+  static String DIRECTORYFILTER = BASE_URL + "directory?";
+
 
   static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
@@ -25,11 +27,11 @@ class ApiConstant {
   static String BUY_SELL_ALL_CARD (type,currentPage)=> BASE_URL + "allCards/buySell?type=${type}&&page=${currentPage}";
   static String POST_JOB = BASE_URL + "/postJob";
   static String GET_CURRENT_VERSION = BASE_URL + 'GetLatestVaersion';
+  static String ADHAR_CREATE_TOKEN = BASE_URL + 'Aadhaar/authenticate';
+  static String ADHAR_SEND_OTP = BASE_URL + 'Aadhaar/sendOpt';
+  static String ADHAR_VERFIY_OTP = BASE_URL + 'Aadhaar/verifyOtp';
 
-
-
-
-
+  static String POST_BUY_SELL = BASE_URL + "buySell";
 
 
 }

@@ -6,6 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tkd_connect/utils/colors.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -482,6 +483,60 @@ class BaseWidget {
                     ),
                   ),
                   SvgPicture.asset(Images.bid)
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(onTap:(){
+
+
+          },child: popUpmenu(onMenuTap))
+        ],
+      ),
+    );
+  }
+
+
+  Widget deleteButton(Function(int) onMenuTap){
+    return Container(
+      width: double.infinity,
+      padding:  EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: (){
+              onMenuTap(10);
+            },
+            child: Container(
+              height: 38.h,
+              width: 253.w,
+              padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    S().delete,
+                    style: TextStyle(
+                      color: ThemeColor.red,
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SvgPicture.asset(Images.delete)
                 ],
               ),
             ),
@@ -1103,7 +1158,7 @@ class BaseWidget {
 
       child: ClipOval(
         child: CachedNetworkImage(
-          imageUrl: src,placeholder: (context, url) => CircularProgressIndicator(),
+          imageUrl: src,placeholder: (context, url) => Image.asset("assets/images/my_profile.png"),
           fit: BoxFit.cover,
           width: height==null ? 35 : height,
           height: width==null ? 35 : width,

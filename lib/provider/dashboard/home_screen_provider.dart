@@ -6,11 +6,15 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:http/http.dart' as http;
+import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/AllCard.dart';
 import '../../model/response/userdata.dart';
+import '../../network/api_helper.dart';
 import '../../screen/my_route/select_city.dart';
+import '../../screen/my_route/select_one_city.dart';
 import '../../utils/sharepreferences.dart';
+import '../../utils/toast.dart';
 class HomeScreenProvider extends BaseProvider{
 
 
@@ -25,13 +29,15 @@ class HomeScreenProvider extends BaseProvider{
   ScrollController scrollController = ScrollController();
   int selectedPage=0;
   String imageUrl='';
+ late User user ;
   int ispaid=0;
   bool filterisVisible = false;
   String drooDwonheading="All routes requirements";
   HomeScreenProvider(BuildContext context) : super('Ideal'){
+    callUserData();
     callDashboradApi(context,selectedPage);
     pagenation(context);
-    callUserData();
+
   }
 
   onCliclFilter(BuildContext context){
@@ -63,9 +69,19 @@ class HomeScreenProvider extends BaseProvider{
       url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}';
 
     }else{
-      url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
+
+      if(fromCity != "All" && toCity!="All"){
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
+      }else if(fromCity != "All" && toCity=="All"){
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity';
+           }else{
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity';
+      }
+
+
+   //   url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
     }
-   // print('the url $url');
+    print('the url $url');
 
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
@@ -93,7 +109,7 @@ class HomeScreenProvider extends BaseProvider{
   }
 
   void callUserData() async{
-   User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    user=await LocalSharePreferences.localSharePreferences.getLoginData();
    if(user.content!.first.companyLogo!=null){
      imageUrl=user.content!.first.companyLogo!;
    }
@@ -137,5 +153,50 @@ class HomeScreenProvider extends BaseProvider{
   //
   // }
 
+
+  deletePost(int index,int id,BuildContext context)async{
+    String myUrl = ApiConstant.BASE_URL+'fullTruckLoad?id=${id}';
+
+    ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
+    if(apiResponse.status==200){
+      truckLoadTypeList .removeAt(index);
+      notifyListeners();
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+
+  selectCityFromFilter(BuildContext context)async{
+    RouteRequest routeRequest = await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.9, child: SelectOneCityScreen());
+        });
+    fromCity=routeRequest.startLocation;
+    selectedPage=0;
+    truckLoadTypeList.clear();
+    notifyListeners();
+    callDashboradApi(context,0);
+
+  }
+
+  selectToCityFilter(BuildContext context)async{
+    RouteRequest routeRequest = await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.9, child: SelectOneCityScreen());
+        });
+    toCity=routeRequest.startLocation;
+    selectedPage=0;
+    truckLoadTypeList.clear();
+    notifyListeners();
+    callDashboradApi(context,0);
+
+  }
 
 }
