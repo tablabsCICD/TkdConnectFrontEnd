@@ -11,6 +11,7 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
 import '../../constant/app_constant.dart';
+import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/route_model.dart';
 import '../../screen/my_route/select_city.dart';
@@ -73,7 +74,20 @@ class EditProfileProvider extends BaseProvider{
     mobileNameController.text=user.content!.first.mobileNumber.toString()!;
     companyNameController.text=user.content!.first.companyName!;
     locationController.text=user.content!.first.companyAddress!;
+    if(user.content!.first.transporterOrAgent==0){
+      companyTypeController.text=S().agentBroker;
+    }else if(user.content!.first.transporterOrAgent==1){
+      companyTypeController.text= S().transporter;
+    }else if(user.content!.first.transporterOrAgent==2){
+      companyTypeController.text= S().packersAndMovers;
+    }else if(user.content!.first.transporterOrAgent==4){
+      companyTypeController.text= S().manufacturerDistributorTrade;
+    }else{
+      companyTypeController.text= S().truckDriver;
+    }
     profilePic=user.content!.first.companyLogo!;
+
+
     getRouteListByUserId();
     notifyListeners();
 

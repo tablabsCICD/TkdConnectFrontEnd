@@ -112,8 +112,9 @@ class _MyPostState extends State<MyPostScreen> {
             ),
           ),
           SizedBox(height: 8.h,),
-          BaseWidget().headingWithoutDate(
+          BaseWidget().heading(
               postBidData.genericCardsDto!.topicName!,
+              postBidData.genericCardsDto!.postingTime!=null?postBidData.genericCardsDto!.postingTime!.split(" ").first:"",
               postBidData.genericCardsDto!.content!),
           SizedBox(height: 8.h,),
           BaseWidget().routes(postBidData.genericCardsDto!.source!,

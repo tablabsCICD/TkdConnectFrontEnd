@@ -8,6 +8,7 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/job_list.dart';
 import 'package:tkd_connect/provider/jobs/job_list_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
@@ -199,16 +200,16 @@ class _JobListState extends State<JobListScreen> {
           BaseWidget().jobHeading(jobData.postJob!.salary!),
           BaseWidget().heading(
               jobData.postJob!.jobDepartment!,
-              jobData.postingDate != null ? jobData.postingDate! : "",
+              jobData.postingDate != null ? jobData.postingDate!.split(" ").first : "",
               jobData.postJob!.jobDescription!),
           SizedBox(width: 8.w),
-          jobApply(),
+          jobApply(jobData),
         ],
       ),
     );
   }
 
-  Widget jobApply() {
+  Widget jobApply(JobData jobData) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(right: 8.w),
@@ -217,38 +218,49 @@ class _JobListState extends State<JobListScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: 38.h,
-            width: 203.w,
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
-                borderRadius: BorderRadius.circular(8),
+          InkWell(
+            onTap: (){
+              Utils().callFunction(jobData.postJob!.contactNumber.toString());
+            },
+            child: Container(
+              height: 38.h,
+              //width: 203.w,//for save job
+              width: 240.w,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Call now',
+                    style: TextStyle(
+                      color: Color(0xFF001E49),
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Apply now',
-                  style: TextStyle(
-                    color: Color(0xFF001E49),
-                    fontSize: 12.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
           ),
+        //  SizedBox(width: 12.w),
+         // SvgPicture.asset(Images.savejob),
           SizedBox(width: 12.w),
-          SvgPicture.asset(Images.savejob),
-          SizedBox(width: 12.w),
-          SvgPicture.asset(Images.message_job),
+          InkWell(
+              onTap: (){
+                String Message="I am writing to express my strong interest in the "+jobData.postJob!.jobDepartment!+" From TKD Connect Application";
+                Utils().openwhatsapp(context, jobData.postJob!.contactNumber!, Message);
+              },
+              child: SvgPicture.asset(Images.message_job)),
         ],
       ),
     );

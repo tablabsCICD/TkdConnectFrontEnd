@@ -143,6 +143,7 @@ class PostLoadProvider extends BaseProvider {
     }
   }
   selectedRequrimentType(int index){
+
     selectedRequriment=reqirement[index];
     enble();
     notifyListeners();

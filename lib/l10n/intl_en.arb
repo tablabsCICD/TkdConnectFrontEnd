@@ -154,7 +154,13 @@
   "postLoad": "Post Load",
   "vehicle": "Vehicle",
   "general": "General",
-  "sponsered": "Sponsered"
+  "sponsered": "Sponsered",
+
+  "truckDriver": "Truck Driver",
+  "createPostLoadIssue": "Load Post Issue",
+  "buysellIssue": "Buy/Sell Issue",
+  "jobIssue": "Create Job Issue"
+
 
 
 

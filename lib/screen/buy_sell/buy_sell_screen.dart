@@ -8,15 +8,19 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
+import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/AllCard.dart';
+import '../../model/response/userdata.dart';
 import '../../route/app_routes.dart';
 
 class BuySellScreen extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _BuySellScreen();
@@ -27,12 +31,14 @@ class _BuySellScreen extends State<BuySellScreen>{
   bool isTabBuy=true;
   int selectedPage=0;
   ScrollController scrollController=ScrollController();
+  late User _user;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     callBuyApi();
+    callData();
     pagination();
   }
   @override
@@ -115,7 +121,7 @@ class _BuySellScreen extends State<BuySellScreen>{
     );
   }
 
-  iteamBuy(TruckLoad truckLoad){
+  iteamBuy(TruckLoad truckLoad,int index){
     return Container(
         width: 335.w,
 
@@ -198,8 +204,20 @@ class _BuySellScreen extends State<BuySellScreen>{
 
               ),
 
+
+
             ],
           ),
+          SizedBox(
+            height: 5.h,
+          ),
+          BaseWidget().buyDeleteButton(((val){
+            if(val==10){
+              _showMyDialog(truckLoad.id!,index);
+            }else{
+              Utils().openMenu(val, truckLoad, context);
+            }
+          }),_user.content!.first.id==truckLoad.userId),
           SizedBox(
             height: 5.h,
           ),
@@ -377,7 +395,7 @@ class _BuySellScreen extends State<BuySellScreen>{
               itemCount: buyVehicleList.length,
               controller: scrollController,
               itemBuilder: (BuildContext context, int index) {
-                return Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 10.h),child: iteamBuy(buyVehicleList[index]),);
+                return Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 10.h),child: iteamBuy(buyVehicleList[index],index),);
               }),
         ),
       ),
@@ -419,6 +437,58 @@ class _BuySellScreen extends State<BuySellScreen>{
 
       }
     });
+  }
+
+  void callData() async{
+    _user=await LocalSharePreferences().getLoginData();
+  }
+
+  void callDeleteApi(int id,int index)async {
+    String myUrl = ApiConstant.POST_BUY_SELL+'?id=${id}';
+    ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
+    if(apiResponse.status==200){
+      buyVehicleList .removeAt(index);
+      setState(() {
+
+      });
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+  Future<void> _showMyDialog(int id,int index) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          content:  SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(S().deleteMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              onPressed: () {
+                callDeleteApi(id,index);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
 }

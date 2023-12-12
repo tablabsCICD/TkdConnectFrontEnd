@@ -217,7 +217,7 @@ class CreateBuySell extends StatelessWidget {
                     labelText("Approx prise"),
                     SizedBox(
                       height: 4.h,
-                    ), editViewError("eg.1000", provider.price, provider, provider.isPrise),
+                    ), editViewErrorNumber("eg.1000", provider.price, provider, provider.isPrise),
                     SizedBox(
                       height: 12.h,
                     ),
@@ -303,6 +303,22 @@ class CreateBuySell extends StatelessWidget {
       height: 52.h,
       hint: hint,
       controller: controller,
+      onChange: (val) {
+        // provider.enble();
+      },
+    );
+  }
+
+
+  editViewErrorNumber(String hint, TextEditingController controller,
+      CreateBuySellProvider provider, bool valid,) {
+    return EditTextError(
+      validate: valid,
+      width: 335.w,
+      height: 52.h,
+      hint: hint,
+      controller: controller,
+      keybordType: TextInputType.number,
       onChange: (val) {
         // provider.enble();
       },

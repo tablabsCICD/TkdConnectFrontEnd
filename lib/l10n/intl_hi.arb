@@ -157,7 +157,12 @@
   "postLoad": "पोस्ट लोड",
   "vehicle": "वाहन",
   "general": "सामान्य",
-  "sponsered": "प्रायोजित"
+  "sponsered": "प्रायोजित",
+  "truckDriver": "ट्रक चालक",
+
+  "createPostLoadIssue": "लोड पोस्ट अंक",
+  "buysellIssue": "खरीदें/बेचें मुद्दा",
+  "jobIssue": "नौकरी समस्या बनाएँ"
 
 
 }

@@ -68,7 +68,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
 
                 labelText("Type of Company"),
                 SizedBox(height: 4.h,),
-                editView("eg.Software", TextEditingController()),
+                editView("eg.Software", provider.companyNameController),
                 SizedBox(height: 28.h,),
 
                 SizedBox(

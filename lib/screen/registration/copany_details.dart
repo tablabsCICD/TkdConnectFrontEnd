@@ -500,6 +500,24 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                     )
                   ],
                 )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("${S().manufacturerDistributorTrade}",6);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      '${S().manufacturerDistributorTrade}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                ))
           ],
         );
       },

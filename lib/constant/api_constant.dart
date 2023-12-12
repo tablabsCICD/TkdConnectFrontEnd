@@ -30,8 +30,5 @@ class ApiConstant {
   static String ADHAR_CREATE_TOKEN = BASE_URL + 'Aadhaar/authenticate';
   static String ADHAR_SEND_OTP = BASE_URL + 'Aadhaar/sendOpt';
   static String ADHAR_VERFIY_OTP = BASE_URL + 'Aadhaar/verifyOtp';
-
   static String POST_BUY_SELL = BASE_URL + "buySell";
-
-
 }

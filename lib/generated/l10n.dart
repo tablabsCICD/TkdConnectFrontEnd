@@ -1449,6 +1449,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Truck Driver`
+  String get truckDriver {
+    return Intl.message(
+      'Truck Driver',
+      name: 'truckDriver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Load Post Issue`
+  String get createPostLoadIssue {
+    return Intl.message(
+      'Load Post Issue',
+      name: 'createPostLoadIssue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy/Sell Issue`
+  String get buysellIssue {
+    return Intl.message(
+      'Buy/Sell Issue',
+      name: 'buysellIssue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Job Issue`
+  String get jobIssue {
+    return Intl.message(
+      'Create Job Issue',
+      name: 'jobIssue',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -252,7 +252,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
 
                 labelText("Type of Company"),
                 SizedBox(height: 4.h,),
-                editView("eg.Software", TextEditingController()),
+                editView("eg.Software", provider.companyTypeController,redOnly: true),
                 SizedBox(height: 28.h,),
 
                 SizedBox(
@@ -327,7 +327,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
     );
   }
 
-  editView(String hint, TextEditingController controller) {
+  editView(String hint, TextEditingController controller,{bool redOnly=false}) {
     return Consumer<EditProfileProvider>(
   builder: (context, provider, child) {
   return EditText(
@@ -335,6 +335,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
       height: 52.h,
       hint: hint,
       controller: controller,
+      readOnly: redOnly,
       onChange: (val) {
         // provider.checkValidation();
       },

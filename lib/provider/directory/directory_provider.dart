@@ -23,6 +23,7 @@ class DirectoryProvider extends  BaseProvider{
   List<TransportSearchData> userTemp=[];
   List<TransportSearchData> user=[];
   List<TransportSearchData> userVerify=[];
+  bool isLoadDone=false;
 
   ScrollController scrollControllerVertical = ScrollController();
   ScrollController scrollControllerHorizantal = ScrollController();
@@ -52,7 +53,7 @@ class DirectoryProvider extends  BaseProvider{
     userVerify.addAll(user.where((element) => element.isPaid!=0));
     selectedPage++;
     }
-
+    isLoadDone=true;
     notifyListeners();
   }
 

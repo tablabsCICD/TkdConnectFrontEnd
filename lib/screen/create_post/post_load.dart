@@ -122,7 +122,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editViewError("eg.100",provider.vehicleSizeController,provider,provider.vehicaleSize),
+                editViewError("eg.100 Tons",provider.vehicleSizeController,provider,provider.vehicaleSize),
                 SizedBox(
                   height: 12.h,
                 ),

@@ -397,14 +397,14 @@ class HelpSupportScreen extends StatelessWidget {
           itemBuilder: (context) => [
             PopupMenuItem(
               onTap: () {
-                provider.changeDropDown(S().loginIssue);
+                provider.changeDropDown(S().createPostLoadIssue);
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [
                     Text(
-                      S().loginIssue,
+                      S().createPostLoadIssue,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -422,7 +422,7 @@ class HelpSupportScreen extends StatelessWidget {
             ),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown(S().registration);
+                  provider.changeDropDown(S().appCrash);
                 },
                 child: Row(
                   children: [
@@ -440,12 +440,30 @@ class HelpSupportScreen extends StatelessWidget {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown(S().registration);
+                  provider.changeDropDown(S().createJobPost);
                 },
                 child: Row(
                   children: [
                     Text(
-                      S().registration,
+                      S().createJobPost,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown(S().buysellIssue);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      S().buysellIssue,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

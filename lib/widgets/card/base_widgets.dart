@@ -551,6 +551,63 @@ class BaseWidget {
     );
   }
 
+
+  Widget buyDeleteButton(Function(int) onMenuTap,bool isDeleteVisible){
+    return Container(
+      width: double.infinity,
+      padding:  EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: isDeleteVisible,
+            child: InkWell(
+              onTap: (){
+                onMenuTap(10);
+              },
+              child: Container(
+                height: 38.h,
+                width: 253.w,
+                padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      S().delete,
+                      style: TextStyle(
+                        color: ThemeColor.red,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SvgPicture.asset(Images.delete)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(onTap:(){
+
+
+          },child: popUpmenu(onMenuTap))
+        ],
+      ),
+    );
+  }
+
   Widget showBidButton(Function(int) onMenuTap,bool isBid){
     return Container(
       width: double.infinity,

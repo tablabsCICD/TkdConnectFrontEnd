@@ -58,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("व्यावसायिक जानकारी"),
         "buy": MessageLookupByLibrary.simpleMessage("खरीदना"),
         "buySell": MessageLookupByLibrary.simpleMessage("वाहन खरीदना/बेचना"),
+        "buysellIssue":
+            MessageLookupByLibrary.simpleMessage("खरीदें/बेचें मुद्दा"),
         "call": MessageLookupByLibrary.simpleMessage("कॉल"),
         "cargoType": MessageLookupByLibrary.simpleMessage("कार्गो प्रकार"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("भाषा बदलें"),
@@ -73,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("जॉब पोस्ट बनाएं"),
         "createPost": MessageLookupByLibrary.simpleMessage("एक पोस्ट बनाएं"),
+        "createPostLoadIssue":
+            MessageLookupByLibrary.simpleMessage("लोड पोस्ट अंक"),
         "delete": MessageLookupByLibrary.simpleMessage("मिटाना"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "क्या आप इस पोस्ट को डिलीट करना चाहते हैं।"),
@@ -115,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "introTwoDescription": MessageLookupByLibrary.simpleMessage(
             "Your needs are our skills. Let us combine the two and rise up together"),
         "jobDes": MessageLookupByLibrary.simpleMessage("नौकरी का विवरण"),
+        "jobIssue": MessageLookupByLibrary.simpleMessage("नौकरी समस्या बनाएँ"),
         "jobTitle": MessageLookupByLibrary.simpleMessage("नौकरी का नाम"),
         "jobs": MessageLookupByLibrary.simpleMessage("नौकरियां"),
         "lastName": MessageLookupByLibrary.simpleMessage("अंतिम नाम"),
@@ -192,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toCity": MessageLookupByLibrary.simpleMessage("शहर के लिए"),
         "traffic": MessageLookupByLibrary.simpleMessage("ट्रैफ़िक"),
         "transporter": MessageLookupByLibrary.simpleMessage("ट्रांसपोर्टर"),
+        "truckDriver": MessageLookupByLibrary.simpleMessage("ट्रक चालक"),
         "vehicle": MessageLookupByLibrary.simpleMessage("वाहन"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहन का आकार"),
         "verifiedUsers":

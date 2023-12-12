@@ -238,6 +238,10 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
   laguagesList(int index, SelectCityProvider provider) {
     return InkWell(
       onTap: () {
+        if(FocusScope.of(context).hasFocus){
+          FocusScope.of(context).unfocus();
+        }
+
         provider.selectOneCity(index);
       },
       child: Container(

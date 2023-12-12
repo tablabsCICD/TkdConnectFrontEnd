@@ -48,7 +48,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             provider.filterisVisible ? SizedBox(): searchBoxFilter(),
             provider.filterisVisible ? routeSelect() : SizedBox(),
             allUserTag(),
-            provider.user.length==0?Center(child: Padding(
+            provider.user.length==0 && provider.isLoadDone?Center(child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text("No Record Found"),
             )):SizedBox(),

@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessInfo": MessageLookupByLibrary.simpleMessage("Business info"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "buySell": MessageLookupByLibrary.simpleMessage("Vehicle buy/sell"),
+        "buysellIssue": MessageLookupByLibrary.simpleMessage("Buy/Sell Issue"),
         "call": MessageLookupByLibrary.simpleMessage("Call"),
         "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
         "changeLanguage":
@@ -72,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("Create job post"),
         "createPost": MessageLookupByLibrary.simpleMessage("Create a post"),
+        "createPostLoadIssue":
+            MessageLookupByLibrary.simpleMessage("Load Post Issue"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "Do you want to delete this post."),
@@ -114,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "introTwoDescription": MessageLookupByLibrary.simpleMessage(
             "Your needs are our skills. Let us combine the two and rise up together"),
         "jobDes": MessageLookupByLibrary.simpleMessage("Job description"),
+        "jobIssue": MessageLookupByLibrary.simpleMessage("Create Job Issue"),
         "jobTitle": MessageLookupByLibrary.simpleMessage("Job title"),
         "jobs": MessageLookupByLibrary.simpleMessage("Jobs"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
@@ -188,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toCity": MessageLookupByLibrary.simpleMessage("To City"),
         "traffic": MessageLookupByLibrary.simpleMessage("Traffic"),
         "transporter": MessageLookupByLibrary.simpleMessage("Transporter"),
+        "truckDriver": MessageLookupByLibrary.simpleMessage("Truck Driver"),
         "vehicle": MessageLookupByLibrary.simpleMessage("Vehicle"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("Vehicle size"),
         "verifiedUsers": MessageLookupByLibrary.simpleMessage("Verified users"),

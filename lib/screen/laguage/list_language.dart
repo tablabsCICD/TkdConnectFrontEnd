@@ -53,12 +53,16 @@ class _ListLanguageState extends State<ListLanguage>{
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SvgPicture.asset(Images.close_circle)
+                  InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: SvgPicture.asset(Images.close_circle))
                 ],
               ),
             ),
             SizedBox(height: 24.h,),
-            searchBox(),
+           // searchBox(),
             Expanded(
               child: ListView.builder(
                   itemCount: listLaugaes.length,
