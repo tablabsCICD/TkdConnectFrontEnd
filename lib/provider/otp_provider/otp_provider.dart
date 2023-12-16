@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
@@ -82,8 +84,16 @@ class OtpProvider extends BaseProvider{
   }
 
   verifyOtp(BuildContext context) async{
+    String  _deviceId="null";
+    try {
+      _deviceId = (await FirebaseMessaging.instance.getToken())!;
+    } on PlatformException {
+      _deviceId = 'Failed to get deviceId.';
+    }
+    print('the device id is $_deviceId');
     String otp=textControllerOne.text+textControllerTwo.text+textControllerThree.text+textControllerFour.text+textControllerFive.text+textControllerSix.text;
-    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp,"abc");
+
+    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp,_deviceId);
 
     var req = await ApiHelper().apiPost(myUrl);
     print('the response is ${req.response}');

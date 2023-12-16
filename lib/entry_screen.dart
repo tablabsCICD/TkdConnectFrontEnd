@@ -4,27 +4,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:notification_permissions/notification_permissions.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/api_response.dart';
-import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'generated/l10n.dart';
 import 'model/response/version.dart';
 
-class EntryScreen extends StatefulWidget{
+class EntryScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _EntryScreen();
   }
 
 }
-class _EntryScreen extends State<EntryScreen> {
+class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   @override
   void initState() {
     // TODO: implement initState
@@ -143,6 +143,152 @@ class _EntryScreen extends State<EntryScreen> {
     );
     launchUrl(url,mode:LaunchMode.externalApplication);
 
+  }
+
+
+
+  late Future<String> permissionStatusFuture;
+
+  var permGranted = "granted";
+  var permDenied = "denied";
+  var permUnknown = "unknown";
+  var permProvisional = "provisional";
+
+  void inPermision() async{
+
+    //await repeatProvider.checkRepeatTim();
+
+
+    permissionStatusFuture =  getCheckNotificationPermStatus();
+    String permissionStatusFutures= await getCheckNotificationPermStatus();
+    //permissionStatusFuture=permissionStatusFutures.toString() as Future<String>;
+    WidgetsBinding.instance.addObserver(this);
+    if(permissionStatusFutures.toString().compareTo(permGranted)==0 || permissionStatusFutures.toString().compareTo(permProvisional)==0){
+        versionControllApi();
+
+    }else {
+      permissionDialog();
+
+    }
+  }
+
+  Widget permissionNotification(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        //textWidget,
+        SizedBox(
+          height: 20,
+        ),
+        TextButton(
+          //color: Colors.amber,
+          child: Text("Ask for notification status".toUpperCase()),
+          onPressed: () {
+            // show the dialog/open settings screen
+            NotificationPermissions.requestNotificationPermissions(
+
+                iosSettings: const NotificationSettingsIos(
+                    sound: true, badge: true, alert: true))
+                .then((_) {
+              // when finished, check the permission status
+              setState(() {
+                permissionStatusFuture =
+                    getCheckNotificationPermStatus();
+              });
+            });
+          },
+        )
+      ],
+    );
+  }
+
+
+  void permissionDialog() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title:  Text('Notification Permission',style:  TextStyle(
+          color: Colors.black,
+          fontSize: 18.sp,
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          fontWeight: FontWeight.w600,
+        ),
+        ),
+        content:  Text('Please Enable Notification permission',style:  TextStyle(
+          color: Colors.black,
+          fontSize: 16.sp,
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          fontWeight: FontWeight.w600,
+        ),),
+        actions: <Widget>[
+          TextButton(
+            onPressed:(){
+
+              NotificationPermissions.requestNotificationPermissions(
+                  iosSettings: const NotificationSettingsIos(
+                      sound: true, badge: true, alert: true))
+                  .then((_) {
+                // when finished, check the permission status
+                setState(() {
+                  permissionStatusFuture =getCheckNotificationPermStatus();
+                });
+
+
+              });
+
+
+            } ,
+            child:  Text('Enable Permission',style: TextStyle(
+              color: Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+            ),),
+          ),
+
+          TextButton(
+            onPressed:(){
+
+                versionControllApi();
+
+            } ,
+            child:  Text('Close',style: TextStyle(
+              color: Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+            ),),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+  Future<String> getCheckNotificationPermStatus() {
+    return NotificationPermissions.getNotificationPermissionStatus()
+        .then((status) {
+      switch (status) {
+        case PermissionStatus.denied:
+          return permDenied;
+        case PermissionStatus.granted:
+          return permGranted;
+        case PermissionStatus.unknown:
+          return permUnknown;
+        case PermissionStatus.provisional:
+          return permProvisional;
+      }
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setState(() {
+        permissionStatusFuture = getCheckNotificationPermStatus();
+      });
+    }
   }
 
 }

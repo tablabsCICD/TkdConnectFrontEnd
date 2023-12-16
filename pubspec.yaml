@@ -55,6 +55,10 @@ dependencies:
   whatsapp_unilink: ^2.1.0
   share:
   cached_network_image: ^3.3.0
+  firebase_messaging:
+  firebase_core:
+  flutter_local_notifications: ^9.3.2
+  notification_permissions: ^0.6.1
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24675079714",
+    "project_id": "tkdost-50f52",
+    "storage_bucket": "tkdost-50f52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24675079714:android:42f78f78215191b7471c7b",
+        "android_client_info": {
+          "package_name": "com.pdk.tkd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24675079714-qarff6eup0reok8l418ll4iirentig18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWKkzTGCX53nAzzyFYgeJ9op4dajnDqF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24675079714-qarff6eup0reok8l418ll4iirentig18.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
