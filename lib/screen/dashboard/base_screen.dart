@@ -56,7 +56,7 @@ class _BaseDashboard extends State<BaseDashboard>{
            homeScreen,
            MyBidsBaseScreen(),
            DirectoryScreen(),
-          // MessageScreen(),
+           MessageScreen(),
            MoreScreen()
          ],
        ),
@@ -157,15 +157,15 @@ class _BaseDashboard extends State<BaseDashboard>{
             },
             child: selectedTab(isDrectory,"${S().directory}",Images.directory),
           ),
-          // Expanded(child: InkWell(
-          //   onTap: (){
-          //     onPageChanges(3);
-          //   },
-          //   child: selectedTab(isMessage,"${S().message}",Images.message),
-          // )),
-          InkWell(
+          Expanded(child: InkWell(
             onTap: (){
               onPageChanges(3);
+            },
+            child: selectedTab(isMessage,"${S().message}",Images.message),
+          )),
+          InkWell(
+            onTap: (){
+              onPageChanges(4);
             },
             child: selectedTab(isMore,"${S().more}",Images.more),
           )
