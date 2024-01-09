@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
@@ -299,7 +300,7 @@ class AllCards {
 
           Container(
               transform: Matrix4.translationValues(0.0, -10.0.h, 00),
-              child: BaseWidget().likeComment())
+              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load))
         ],
       );
     }else if(load.postImages!.length==1){
@@ -311,7 +312,7 @@ class AllCards {
           ),
           Container(
             //transform: Matrix4.translationValues(0.0, -5.0.h, 00),
-              child: BaseWidget().likeComment())
+              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load))
         ],
       );
     }else{
@@ -326,7 +327,7 @@ class AllCards {
           ),
           Container(
               transform: Matrix4.translationValues(0.0, -10.0.h, 00),
-              child: BaseWidget().likeComment())
+              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load))
         ],
       );
     }

@@ -1,8 +1,8 @@
 class ApiConstant {
 
 
-  static final String BASE_URL="https://api.tkdost.com/tkd3/api/";
-  //static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080/tkdConnect1/api/";
+ // static final String BASE_URL="https://api.tkdost.com/tkd3/api/";
+  static final String BASE_URL="http://ec2-13-201-134-254.ap-south-1.compute.amazonaws.com:8080/tkd3/api/";
 
  // static String FULL_LOAD_ALL_CARD=BASE_URL + "allcards/fullLoad3";
   static String FULL_LOAD_ALL_CARD=BASE_URL + "dashboard/homepage/posts";

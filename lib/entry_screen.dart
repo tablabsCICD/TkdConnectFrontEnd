@@ -106,7 +106,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     if(version.version! == AppConstant.APP_VERSION){
       callNextScreen();
     }else{
-      upDateDailog();
+      //upDateDailog();
+      callNextScreen();
     }
 
     try{

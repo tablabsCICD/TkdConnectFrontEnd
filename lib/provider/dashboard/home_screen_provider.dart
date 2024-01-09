@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -97,6 +96,64 @@ class HomeScreenProvider extends BaseProvider{
     }
 
   }
+
+  likeIncreamentApi(int postId, BuildContext context)async{
+
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    EasyLoading.show(status: "Loading");
+    String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}";
+
+    print('the url $url');
+
+    var req = await http.post(Uri.parse(url));
+   if(req.statusCode == 200) {
+      response = json.decode(req.body);
+      if(response['success']==true){
+        print(response['message']);
+        callDashboradApi(context, 0);
+      }else{
+        print(response['message']);
+      }
+      EasyLoading.dismiss();
+      notifyListeners();
+    }
+  }
+
+  TextEditingController commentController = TextEditingController();
+
+  createCommentApi(int postId, String comment)async{
+
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    EasyLoading.show(status: "Loading");
+    String url=ApiConstant.BASE_URL+"comments";
+
+    print('the url $url');
+
+    Map<String, dynamic> requestParameter = {
+      "comment": comment,
+      "date": "string",
+      "discussionId": postId,
+      "firstName": user.first,
+      "lastName": user.last,
+      "userId": 83
+    };
+    print(requestParameter);
+  /*  ApiResponse apiResponse=await ApiHelper().postParameter(url, requestParameter);
+    print(apiResponse.status);*/
+    var response = await http.post(Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestParameter));
+    EasyLoading.dismiss();
+    if(response.statusCode==200){
+     print("Comment save successfully");
+     commentController.clear();
+    } else{
+      print("Comment not save successfully");
+    }
+    notifyListeners();
+
+  }
+
   pagenation(BuildContext context){
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
