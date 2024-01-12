@@ -110,7 +110,7 @@ class HomeScreenProvider extends BaseProvider{
       response = json.decode(req.body);
       if(response['success']==true){
         print(response['message']);
-        callDashboradApi(context, 0);
+        callDashboradApi(context, selectedPage);
       }else{
         print(response['message']);
       }
