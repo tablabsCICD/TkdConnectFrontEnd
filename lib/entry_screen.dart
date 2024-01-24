@@ -84,11 +84,9 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
     String val=await localSharePreferences.getLangCode();
     if(isLogin){
-     // S.load(Locale("hi"));
       S.load(Locale(val));
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     }else{
-
       if(val=="no"){
         Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
       }else{
@@ -100,7 +98,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   }
 
   versionControllApi() async{
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
+   /* ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
     Version version=Version.fromJson(apiResponse.response);
     print('the version is ${version.version}');
     if(version.version! == AppConstant.APP_VERSION){
@@ -108,8 +106,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     }else{
       //upDateDailog();
       callNextScreen();
-    }
-
+    }*/
+    callNextScreen();
     try{
 
     }catch (e){

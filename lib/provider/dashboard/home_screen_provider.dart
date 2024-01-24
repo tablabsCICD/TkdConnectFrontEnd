@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
+import 'package:tkd_connect/model/response/comment_response.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:http/http.dart' as http;
 import '../../model/api_response.dart';
@@ -133,9 +134,9 @@ class HomeScreenProvider extends BaseProvider{
       "comment": comment,
       "date": "string",
       "discussionId": postId,
-      "firstName": user.first,
-      "lastName": user.last,
-      "userId": 83
+      "firstName": user.content!.first.firstName,
+      "lastName": user.content!.first.lastName,
+      "userId": user.content!.first.id!
     };
     print(requestParameter);
   /*  ApiResponse apiResponse=await ApiHelper().postParameter(url, requestParameter);
@@ -254,6 +255,20 @@ class HomeScreenProvider extends BaseProvider{
     notifyListeners();
     callDashboradApi(context,0);
 
+  }
+
+  List<Comments> commentList = [];
+  getCommentByPostId(BuildContext context,int PostId) async {
+    User user=await LocalSharePreferences().getLoginData();
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage));
+    if(apiResponse.status==200){
+      CommentResponse commentResponse=CommentResponse.fromJson(apiResponse.response);
+      commentList.addAll(commentResponse.data!.comments as Iterable<Comments>);
+      selectedPage++;
+      notifyListeners();
+    }else{
+      ToastMessage.show(context, "Please Try Again");
+    }
   }
 
 }

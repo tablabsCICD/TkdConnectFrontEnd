@@ -21,6 +21,7 @@ import '../../generated/l10n.dart';
 import '../../route/app_routes.dart';
 
 class PostCommentList extends StatefulWidget {
+
   TruckLoad truckLoad;
   PostCommentList(this.truckLoad);
 
@@ -31,8 +32,11 @@ class PostCommentList extends StatefulWidget {
 }
 
 class _PostCommentListState extends State<PostCommentList> {
+
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeScreenProvider>(context).getCommentByPostId(context, widget.truckLoad.id!);
     return ChangeNotifierProvider(
       create: (BuildContext context) => HomeScreenProvider(context),
       builder: (context, child) => _buildPage(context),
@@ -56,7 +60,7 @@ class _PostCommentListState extends State<PostCommentList> {
                       return RefreshIndicator(
                         onRefresh: ()async{
                           provider.selectedPage=0;
-                        //  provider.getCommentList(widget.truckLoad.id!);
+                          provider.getCommentByPostId(context, widget.truckLoad.id!);
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -93,14 +97,14 @@ class _PostCommentListState extends State<PostCommentList> {
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   controller: provider.scrollController,
-                                  itemCount: 9,
+                                  itemCount: provider.commentList.length,
                                   itemBuilder: (context, i) {
                                     return Column(
                                       children: [
                                         ListTile(
                                           //leading: getImage("${generalPost.images==[]?'':generalPost.images![0]}"),
                                           title: Text(
-                                            "${"Title"}",
+                                            "${provider.commentList[i].comment}",
                                             style: TextStyle(
                                               fontSize:15.sp,
                                               fontWeight: FontWeight.w600,
@@ -108,7 +112,7 @@ class _PostCommentListState extends State<PostCommentList> {
                                             ),
                                           ),
                                           subtitle: Text(
-                                            "${"description"}",
+                                            "${provider.commentList[i].date}",
                                             style: TextStyle(
                                               fontSize:15.sp,
                                               fontWeight: FontWeight.w600,
