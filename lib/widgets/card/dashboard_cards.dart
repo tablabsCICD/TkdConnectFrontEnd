@@ -298,7 +298,7 @@ class AllCards {
           BoxShadow(
             color: Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
