@@ -102,4 +102,26 @@ class Utils {
 
   }
 
+ String getTranport(int val){
+    switch(val){
+      case 0:
+        return "Transporters";
+
+      case 1:
+        return "Agents/Brokers";
+
+      case 2:
+        return "PACKERS AND MOVERS";
+      case 3:
+        return "MANUFACTURERS";
+      case 4:
+        return "DISTRIBUTORS";
+      case 5:
+        return "CLEARING AND FORWARDING AGENTS";
+      default:
+        return "";
+    }
+
+  }
+
 }

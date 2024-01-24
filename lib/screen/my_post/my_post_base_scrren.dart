@@ -12,6 +12,10 @@ import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_bar.dart';
+import 'my_buy_sell.dart';
+import 'my_genral_post.dart';
+import 'my_jobs.dart';
+import 'my_post_two.dart';
 
 class MyPostBase extends StatefulWidget {
   @override
@@ -46,11 +50,11 @@ class _MyPostBase extends State<MyPostBase>{
             ApplicationAppBar().appBarWithBack(context, S().myPost),
             SizedBox(height: 20.h,),
             tabs(),
-            SizedBox(height: 20.h,),
-            Visibility(visible: isLoad,child: MyPostScreen()),
-            Visibility(visible: isGeneralPost,child: PostVehicleScreen()) ,
-            Visibility(visible: isBuySell,child: PostGenralScreen()),
-            Visibility(visible: isJob,child: PostSponseredScreen())
+            SizedBox(height: 4.h,),
+            Visibility(visible: isLoad,child: Expanded(child: MyPostScreenTwo())),
+            Visibility(visible: isGeneralPost,child: Expanded(child: MyGenralPostScreen())),
+            Visibility(visible: isBuySell,child: Expanded(child: MyBuySellPostScreen())),
+            Visibility(visible: isJob,child: Expanded(child: MyJobPostScreen()))
 
 
           ],

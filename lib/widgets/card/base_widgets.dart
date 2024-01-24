@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/utils.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -92,6 +93,149 @@ class BaseWidget {
                                           width: double.infinity,
                                           child: Textview(
                                             title: companyName,
+                                            TextStyle(
+                                              color: Color(0x99001E49),
+                                              fontSize: 10.sp,
+                                              fontFamily: GoogleFonts.poppins().fontFamily,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        RatingBar.builder(
+                                          itemSize: 10,
+
+                                          initialRating: 3,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                            size: 5,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 4.h),
+
+
+
+                        ],
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+  }
+
+
+  Widget profileWithUser(String profileLink,String name,String companyName,{int verify=0,int transporterOrAgent=0}){
+    return  Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Container(
+                //   width: 40.w,
+                //   height: 40.h,
+                //   child: Image.network(profileLink),
+                // ),
+                //getImage(profileLink,height: 40.h,width: 40.w)
+                getImageclip(profileLink,height: 40.h,width: 40.w)
+
+              ],
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Expanded(
+            child: Container(
+             // height: 52.h,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Textview(
+                                              title: name,
+                                              TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14.sp,
+                                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            SizedBox(width: 4.w,),
+                                            Visibility(visible: verify !=0?true:false,child: SvgPicture.asset(Images.verified,height: 12.h,width: 12.w,))
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Textview(
+                                            title: companyName,
+                                            TextStyle(
+                                              color: Color(0x99001E49),
+                                              fontSize: 10.sp,
+                                              fontFamily: GoogleFonts.poppins().fontFamily,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Textview(
+                                            title: Utils().getTranport(transporterOrAgent),
                                             TextStyle(
                                               color: Color(0x99001E49),
                                               fontSize: 10.sp,
@@ -552,6 +696,114 @@ class BaseWidget {
   }
 
 
+  Widget deleteMyPostButton(Function(int) onMenuTap){
+    return Container(
+      width: double.infinity,
+      padding:  EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: (){
+              onMenuTap(10);
+            },
+            child: Container(
+              height: 38.h,
+              width: 253.w,
+              padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    S().delete,
+                    style: TextStyle(
+                      color: ThemeColor.red,
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SvgPicture.asset(Images.delete)
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(onTap:(){
+
+
+          },child: popUpmenuOwnPost(onMenuTap))
+        ],
+      ),
+    );
+  }
+
+
+  Widget buyOnlyDeleteButton(Function(int) onMenuTap,bool isDeleteVisible){
+    return Container(
+      width: double.infinity,
+      padding:  EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: isDeleteVisible,
+            child: InkWell(
+              onTap: (){
+                onMenuTap(10);
+              },
+              child: Container(
+                height: 38.h,
+                width: 253.w,
+                padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      S().delete,
+                      style: TextStyle(
+                        color: ThemeColor.red,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SvgPicture.asset(Images.delete)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+
+        ],
+      ),
+    );
+  }
+
+
   Widget buyDeleteButton(Function(int) onMenuTap,bool isDeleteVisible){
     return Container(
       width: double.infinity,
@@ -607,6 +859,7 @@ class BaseWidget {
       ),
     );
   }
+
 
   Widget showBidButton(Function(int) onMenuTap,bool isBid){
     return Container(
@@ -731,6 +984,154 @@ class BaseWidget {
       ],
     );
   }
+
+  Widget showBidRepostButton(Function(int) onMenuTap,bool isBid){
+    return Container(
+      width: double.infinity,
+      padding:  EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: (){
+              onMenuTap(0);
+            },
+            child: Container(
+              height: 38.h,
+              width: 253.w,
+              padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    S().showAllQuotes,
+                    style: TextStyle(
+                      color: Color(0xFF001E49),
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(onTap:(){
+
+
+          },child: isBid?popUpmenuOwnBid(onMenuTap):popUpmenuOwnRepostPost(onMenuTap))
+        ],
+      ),
+    );
+  }
+  popUpmenuOwnRepostPost(Function(int) onMenuTap){
+    return PopupMenuButton(
+
+
+      shape: RoundedRectangleBorder(
+        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Center(child: SvgPicture.asset(Images.post_menu)),
+      onSelected: (dynamic val){
+
+        onMenuTap(val);
+
+
+      },
+
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          onTap: (){
+            onMenuTap(1);
+
+          },
+
+          child: Row(
+            children: [
+              SvgPicture.asset(Images.delete,color: Colors.black,width: 20.w,height: 20.h,),
+              SizedBox(width: 12.w,),
+              Text(
+                S().delete,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+
+
+              ),
+              SizedBox(width: 13.w,),
+            ],
+          ),
+        ),
+
+        PopupMenuItem(
+            onTap: (){
+              onMenuTap(3);
+            },
+
+            child: Row(
+              children: [
+                SvgPicture.asset(Images.share_white,color: Colors.black,width: 20.w,height: 20.h,),
+                SizedBox(width: 12.w,),
+                Text(
+                  S().share,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )
+        ),
+
+        PopupMenuItem(
+            onTap: (){
+              onMenuTap(4);
+            },
+
+            child: Row(
+              children: [
+                SvgPicture.asset(Images.share_white,color: Colors.black,width: 20.w,height: 20.h,),
+                SizedBox(width: 12.w,),
+                Text(
+                  "Re-post",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )
+        ),
+
+      ],
+    );
+  }
+
+
   popUpmenuOwnBid(Function(int) onMenuTap){
     return PopupMenuButton(
 

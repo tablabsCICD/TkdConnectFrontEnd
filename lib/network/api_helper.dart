@@ -117,6 +117,22 @@ class ApiHelper{
     }
    }
 
+
+  Future<ApiResponse> postParameterDecode(String url,Map<String,dynamic>data) async{
+    EasyLoading.show(status: "Loading");
+    try{
+      var body = json.encode(data);
+      final request = await dio.post(url,data: body);
+      ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
+      EasyLoading.dismiss();
+      return apiResponseHelper;
+    }catch(e){
+      print(e);
+      EasyLoading.dismiss();
+      return ApiResponse(800, null);
+    }
+  }
+
   ApiResponse returnResponse<T>(Response request){
     if(request.statusCode==200){
      var response = json.decode(request.data);

@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tkd_connect/provider/message/chat_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/route/routes.dart';
 import 'generated/l10n.dart';
@@ -28,7 +33,8 @@ void main() async{
         storageBucket: "tkdost-50f52.appspot.com",
         messagingSenderId: "24675079714",
         appId: "1:24675079714:android:42f78f78215191b7471c7b",
-        measurementId: "G-HT44YEF6PL"
+
+
 
     ));
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
@@ -37,14 +43,20 @@ void main() async{
     LocalNotificationService.initialize();
     getFCMToken();
   }
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  runApp(const MyApp());
+  runApp( MyApp(prefs: prefs,));
 
 
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+  final SharedPreferences prefs;
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+
+   MyApp({super.key, required this.prefs});
 
   // This widget is the root of your application.
   @override
@@ -55,30 +67,44 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
     splitScreenMode: true,
     builder: (context , child) {
-      return MaterialApp(
+      return MultiProvider(
+        providers: [
 
-        localizationsDelegates: [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+          Provider<ChatProvider>(
+            create: (_) => ChatProvider(
+              prefs: this.prefs,
+              firebaseFirestore: this.firebaseFirestore,
+              firebaseStorage: this.firebaseStorage,
+            ),
+          ),
         ],
+        child: MaterialApp(
 
-        supportedLocales: S.delegate.supportedLocales,
-        title: 'TKD Connect',
-        //showPerformanceOverlay: true,
-       theme:    ThemeData(
-         primarySwatch: Colors.blue,
-       fontFamily: GoogleFonts.poppins().fontFamily),
-        initialRoute: AppRoutes.entryScreen,
-        onGenerateRoute: RouteGenerator.generateRoute,
-        builder: EasyLoading.init(),
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
 
+          supportedLocales: S.delegate.supportedLocales,
+          title: 'TKD Connect',
+//showPerformanceOverlay: true,
+          theme:    ThemeData(
+              primarySwatch: Colors.blue,
+              fontFamily: GoogleFonts.poppins().fontFamily),
+          initialRoute: AppRoutes.entryScreen,
+          onGenerateRoute: RouteGenerator.generateRoute,
+          builder: EasyLoading.init(),
+
+        ),
       );
     }
     );
   }
 }
+
+
 
 late Stream<String> _tokenStream;
 getFCMToken(){

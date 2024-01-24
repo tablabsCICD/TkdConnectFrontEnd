@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -32,11 +33,13 @@ class HomeScreenProvider extends BaseProvider{
  late User user ;
   int ispaid=0;
   bool filterisVisible = false;
+
   String drooDwonheading="All routes requirements";
   HomeScreenProvider(BuildContext context) : super('Ideal'){
     callUserData();
     callDashboradApi(context,selectedPage);
     pagenation(context);
+    //callToken();
 
   }
 
@@ -115,6 +118,7 @@ class HomeScreenProvider extends BaseProvider{
    }
    ispaid=user.content!.first.isPaid!;
 
+    //callToken();
    notifyListeners();
   }
 
@@ -198,5 +202,17 @@ class HomeScreenProvider extends BaseProvider{
     callDashboradApi(context,0);
 
   }
+
+  callToken()async {
+   // user=await LocalSharePreferences.localSharePreferences.getLoginData();
+     String? token=await FirebaseMessaging.instance.getToken();
+    ApiResponse result=await ApiHelper().apiPost(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
+    if(result.status==200){
+      return "Success";
+    }
+    return "Fail";
+
+  }
+
 
 }

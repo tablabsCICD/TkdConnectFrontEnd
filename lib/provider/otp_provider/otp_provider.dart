@@ -93,7 +93,7 @@ class OtpProvider extends BaseProvider{
     print('the device id is $_deviceId');
     String otp=textControllerOne.text+textControllerTwo.text+textControllerThree.text+textControllerFour.text+textControllerFive.text+textControllerSix.text;
 
-    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp,_deviceId);
+    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp);
 
     var req = await ApiHelper().apiPost(myUrl);
     print('the response is ${req.response}');

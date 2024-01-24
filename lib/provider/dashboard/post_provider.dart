@@ -32,6 +32,8 @@ class PostLoadProvider extends BaseProvider {
   bool enbleButton=false;
   bool vehicaleSize=true;
   bool loadWieght=true;
+  bool dnd=false;
+  bool hideMyID=false;
   PostLoadProvider() : super('Ideal'){
 
     initData();
@@ -53,7 +55,7 @@ class PostLoadProvider extends BaseProvider {
     PostLoad postLoad=PostLoad();
     postLoad.contactNumber= user.content!.first!.mobileNumber! ;
     postLoad.destination= destinationCity;
-    postLoad.dnd=0;
+    postLoad.dnd =dnd?0:1;
     postLoad.emailId=user.content!.first!.emailId!;
     postLoad.fullLoadChoice="I Have Vehicle";
 
@@ -65,7 +67,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.otherDetails= specialInstructionController.text;
     postLoad.source=sourceCity;
     postLoad.partLoad= selectedRequriment == 'Part Load' ? 1 : 0;
-    postLoad.privatePost= 0;
+    postLoad.privatePost= hideMyID ? 1 : 0;
     postLoad.rating= 5;
   //  postLoad.customerName= '${authProvider.userDetailList[0].firstName} ${authProvider.userDetailList[0].lastName}';
     postLoad.type= selectedRequriment;
@@ -93,7 +95,7 @@ class PostLoadProvider extends BaseProvider {
     PostLoad postLoad=PostLoad();
     postLoad.contactNumber= user.content!.first.mobileNumber! ;
     postLoad.destination= destinationCity;
-    postLoad.dnd =0;
+    postLoad.dnd =dnd?0:1;
     postLoad.emailId=user.content!.first.emailId!;
     postLoad.fullLoadChoice="I Want Vehicle";
 
@@ -105,7 +107,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.otherDetails= specialInstructionController.text;
     postLoad.source=sourceCity;
     postLoad.partLoad=selectedRequriment == 'Part Load Vehicle' ? 1 : 0;
-    postLoad.privatePost= 0;
+    postLoad.privatePost= hideMyID ? 1 : 0;
     postLoad.rating= 5;
     //  postLoad.customerName= '${authProvider.userDetailList[0].firstName} ${authProvider.userDetailList[0].lastName}';
     postLoad.type=selectedRequriment;
@@ -117,8 +119,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.image=images;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){
-      print('the response is ${response.response}');
-      ToastMessage.show(context, "Post submitted successfully!");
+        ToastMessage.show(context, "Post submitted successfully!");
       Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
@@ -253,6 +254,17 @@ class PostLoadProvider extends BaseProvider {
       }
 
     }
+    notifyListeners();
+  }
+
+  dndChange(bool val){
+    dnd=val;
+    notifyListeners();
+  }
+
+
+  hideMyId(bool val){
+    hideMyID=val;
     notifyListeners();
   }
 

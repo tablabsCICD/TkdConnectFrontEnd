@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
@@ -69,7 +71,7 @@ class CreateJobProvider extends BaseProvider{
       "contactNumber":user.content!.first.mobileNumber,
       "emailId": user.content!.first.emailId,
       "experience": expTo+"-"+expFrom,
-      "id": user.content!.first.id,
+
       "isSalaryNegotiable":  1 ,
       "isSelected": 0,
       "jobDepartment": JobTitileController.text,
@@ -88,9 +90,10 @@ class CreateJobProvider extends BaseProvider{
       "salary": salController.text,
       "tableName": " ",
       "topicName": " ",
-      "type": "Job Seeker"
+      "type": "Job Seeker",
+      "userId":user.content!.first.id
     };
-
+    print('the respo ${json.encode(data)}');
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.POST_JOB, data);
     if(apiResponse.status==200){
       ToastMessage.show(context, "Post job successfull");

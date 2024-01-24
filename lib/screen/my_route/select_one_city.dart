@@ -242,7 +242,7 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
           FocusScope.of(context).unfocus();
         }
 
-        provider.selectOneCity(index);
+        provider.selectOneCity(index,context);
       },
       child: Container(
 

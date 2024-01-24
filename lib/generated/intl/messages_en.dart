@@ -177,6 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectOne": MessageLookupByLibrary.simpleMessage("Select one"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "shareapp": MessageLookupByLibrary.simpleMessage("Share application"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage("Show all quote"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "specialInstruction":

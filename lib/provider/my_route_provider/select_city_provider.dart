@@ -138,14 +138,16 @@ class SelectCityProvider extends BaseProvider {
   }
 
 
-  selectOneCity(int index){
+  selectOneCity(int index,BuildContext context){
     clearCity();
     if(isSelectStartLocation){
       listCity[index].isSelect=true;
       _selectedStartCity=listCity[index].name;
       _selectedInextStart=listCity[index].id;
     }
-    buttonEnableOne();
+    RouteRequest routeRequest=RouteRequest(_selectedStartCity, "Mumbai", _selectedInextStart, 0);
+    Navigator.of(context).pop(routeRequest);
+    //buttonEnableOne();
     notifyListeners();
   }
 

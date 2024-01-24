@@ -110,8 +110,19 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
 
   setCardToList(int index,HomeScreenProvider provider,TruckLoad truckLoad){
     if(truckLoad.type=="Full Load" || truckLoad.type=="Part Load"){
-     return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
-    }else if(truckLoad.type=="General Post"){
+
+      if(truckLoad.privatePost ==1){
+        return AllCards().cardLoadPrivateHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
+
+      }else{
+        return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
+
+      }
+
+    }else if(truckLoad.type=="Advertisement"){
+      return AllCards().cardAdd(index, context, provider.truckLoadTypeList[index]);
+    }
+    else if(truckLoad.type=="General Post"){
       return AllCards().generalPost(truckLoad);
     }else{
       return AllCards().generalPost(truckLoad);

@@ -502,12 +502,12 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().manufacturerDistributorTrade}",6);
+                  provider.changeDropDown("${S().truckDriver}",6);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().manufacturerDistributorTrade}',
+                      '${S().truckDriver}',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

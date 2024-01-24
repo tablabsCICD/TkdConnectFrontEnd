@@ -43,6 +43,7 @@ class SearchProvider extends BaseProvider{
     isFirstLoading= false;
     isLoading = false;
     if(req.statusCode == 200) {
+
       response = json.decode(req.body);
       var type = TruckLoadType.fromJson(response);
       totalPages = type.totalPages;

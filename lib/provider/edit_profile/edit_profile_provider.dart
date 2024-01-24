@@ -80,7 +80,8 @@ class EditProfileProvider extends BaseProvider{
       companyTypeController.text= S().transporter;
     }else if(user.content!.first.transporterOrAgent==2){
       companyTypeController.text= S().packersAndMovers;
-    }else if(user.content!.first.transporterOrAgent==4){
+    }
+    else if(user.content!.first.transporterOrAgent==3){
       companyTypeController.text= S().manufacturerDistributorTrade;
     }else{
       companyTypeController.text= S().truckDriver;

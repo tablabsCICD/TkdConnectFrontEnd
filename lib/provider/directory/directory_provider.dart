@@ -47,9 +47,11 @@ class DirectoryProvider extends  BaseProvider{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
 
     if(apiResponse.status==200){TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
+    user.clear();
+    userTemp.clear();
+    userVerify.clear();
     user.addAll(transportSearchData.content);
     userTemp.addAll(transportSearchData.content);
-
     userVerify.addAll(user.where((element) => element.isPaid!=0));
     selectedPage++;
     }

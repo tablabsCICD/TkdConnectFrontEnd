@@ -103,7 +103,7 @@ class IntroScreenOne extends StatelessWidget{
           children: [
             InkWell(
               onTap: (){
-                Navigator.pushReplacementNamed(context, AppRoutes.login);
+                Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
               },
               child: Text(
                 'Skip',

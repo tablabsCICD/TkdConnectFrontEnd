@@ -5,10 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/widgets/button.dart';
+import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
 import '../../provider/dashboard/post_provider.dart';
+import '../../utils/colors.dart';
 import '../../widgets/bottomsheet.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/drop_down.dart';
@@ -171,6 +173,14 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                   hint: provider.selectedPayment,
                 ),
                 SizedBox(
+                  height: 12.h,
+                ),
+                dnd(context),
+                SizedBox(
+                  height: 12.h,
+                ),
+                hideMyIden(context),
+                SizedBox(
                   height: 30.h,
                 ),
                 provider.images.length>0? BaseWidget().carouseImageDelete(provider.images,(item){
@@ -262,6 +272,199 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
       controller: controller,
       onChange: (val){
         provider.enble();
+      },
+    );
+  }
+
+
+  dnd(context){
+    return Consumer<PostLoadProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 52.h,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 33.h,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "DND",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontFamily: AppConstant.FONTFAMILY,
+                                        fontWeight: FontWeight.w600,
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  '',
+                                  style: TextStyle(
+                                    color: Color(0x99001E49),
+                                    fontSize: 10,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 129),
+              Container(
+                width: 100.w,
+                height: 40.sp,
+                child:Switch.adaptive(
+                  // This bool value toggles the switch.
+                  value: provider.dnd,
+                  splashRadius: 10,
+                  activeColor: ThemeColor.theme_blue,
+                  onChanged: (bool value) {
+                    provider.dndChange(value);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  hideMyIden(context){
+    return Consumer<PostLoadProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 52.h,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 33.h,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Hide my identity",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontFamily: AppConstant.FONTFAMILY,
+                                        fontWeight: FontWeight.w600,
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  '',
+                                  style: TextStyle(
+                                    color: Color(0x99001E49),
+                                    fontSize: 10,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Container(
+                width: 100.w,
+                height: 40.sp,
+                child:Switch.adaptive(
+                  // This bool value toggles the switch.
+                  value: provider.hideMyID,
+                  splashRadius: 10,
+                  activeColor: ThemeColor.theme_blue,
+                  onChanged: (bool value) {
+                    provider.hideMyId(value);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }

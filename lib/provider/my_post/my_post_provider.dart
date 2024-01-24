@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
+import '../../model/request/post_load.dart';
 import '../../model/response/my_post_bid_list.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
@@ -21,6 +24,7 @@ class MyPostProvider extends BaseProvider{
   getReceviedBids(BuildContext context)async{
 
     User user=await LocalSharePreferences().getLoginData();
+    print('the link is ${ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage)}');
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage));
     if(apiResponse.status==200){
       MyPostBids bidPlaced=MyPostBids.fromJson(apiResponse.response);
@@ -56,6 +60,95 @@ class MyPostProvider extends BaseProvider{
       ToastMessage.show(context, "Please try again");
     }
   }
+
+
+  reSendPost(BuildContext context,PostBidData postBidData){
+    createPost(context,postBidData);
+
+  }
+
+
+
+  createPost(BuildContext context,PostBidData postBidData)async{
+
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    PostLoad postLoad=PostLoad();
+    postLoad.contactNumber= user.content!.first!.mobileNumber! ;
+    postLoad.destination=postBidData.genericCardsDto!.destination;
+    postLoad.dnd =postBidData.genericCardsDto!.dnd;
+    postLoad.emailId=user.content!.first!.emailId!;
+    postLoad.fullLoadChoice= postBidData.genericCardsDto!.mainTag =="Full load required"?"I Have Vehicle":"I Want Vehicle";
+
+    postLoad.instructions= postBidData.genericCardsDto!.content;
+    postLoad.loadWeight= postBidData.genericCardsDto!.vehicleWeight.toString();
+    postLoad.loggedUserName= user.content!.first!.userName;
+    postLoad.mainTag= postBidData.genericCardsDto!.mainTag;
+    postLoad.os= 'App';
+    postLoad.otherDetails= postBidData.genericCardsDto!.content;
+    postLoad.source=postBidData.genericCardsDto!.source;
+    postLoad.partLoad=  postBidData.genericCardsDto!.partLoadOrNot;
+    postLoad.privatePost= postBidData.genericCardsDto!.privatePost;
+    postLoad.rating= 5;
+    postLoad.type= postBidData.genericCardsDto!.type;
+    postLoad.typeOfCargo=postBidData.genericCardsDto!.cargoType;
+    postLoad.typeOfPayment=postBidData.genericCardsDto!.typeOfPayment;
+    postLoad.vehicleSize= postBidData.genericCardsDto!.vehicleSize;
+    postLoad.tableName="Full Load";
+    postLoad.topicName= "Full Load Truck";
+    postLoad.image= [];
+    postLoad.partLoad=postBidData.genericCardsDto!.partLoadOrNot!;
+    postLoad.listOfUserIds=[];
+
+    postLoad.id=0;
+    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
+    print('the resopnse is ${json.encode(postLoad.toJson())}');
+    print('the resopnse is ${response.status}');
+    if(response.status==200){
+      ToastMessage.show(context, "Re-post submitted successfully!");
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+  // createVehiclePost(BuildContext context)async{
+  //   User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+  //   PostLoad postLoad=PostLoad();
+  //   postLoad.contactNumber= user.content!.first.mobileNumber! ;
+  //   postLoad.destination= destinationCity;
+  //   postLoad.dnd =dnd?0:1;
+  //   postLoad.emailId=user.content!.first.emailId!;
+  //   postLoad.fullLoadChoice="I Want Vehicle";
+  //
+  //   postLoad.instructions= specialInstructionController.text;
+  //   postLoad.loadWeight= loadWeightController.text;
+  //   postLoad.loggedUserName= user.content!.first.userName;
+  //   postLoad.mainTag= selectedRequriment;
+  //   postLoad.os= 'App';
+  //   postLoad.otherDetails= specialInstructionController.text;
+  //   postLoad.source=sourceCity;
+  //   postLoad.partLoad=selectedRequriment == 'Part Load Vehicle' ? 1 : 0;
+  //   postLoad.privatePost= 0;
+  //   postLoad.rating= 5;
+  //   //  postLoad.customerName= '${authProvider.userDetailList[0].firstName} ${authProvider.userDetailList[0].lastName}';
+  //   postLoad.type=selectedRequriment;
+  //   postLoad.typeOfCargo= selectedCargo;
+  //   postLoad.typeOfPayment=selectedPayment;
+  //   postLoad.vehicleSize= vehicleSizeController.text;
+  //   postLoad.tableName="Full Load";
+  //   postLoad.topicName= "Full Load Truck";
+  //   postLoad.image=images;
+  //   ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
+  //   if(response.status==200){
+  //     print('the response is ${response.response}');
+  //     ToastMessage.show(context, "Post submitted successfully!");
+  //     Navigator.pop(context,1);
+  //   }else{
+  //     ToastMessage.show(context, "Please try again");
+  //   }
+  // }
+
+
 
 
 

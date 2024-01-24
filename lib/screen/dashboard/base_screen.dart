@@ -208,20 +208,20 @@ class _BaseDashboard extends State<BaseDashboard>{
 
 
       case 3:
-        // isHome=false;
-        // isMyBid=false;
-        // isMessage=true;
-        // isDrectory=false;
-        // isMore=false;
-        // isButtonVisible=false;
-
         isHome=false;
         isMyBid=false;
-        isMessage=false;
+        isMessage=true;
         isDrectory=false;
-        isMore=true;
+        isMore=false;
         isButtonVisible=false;
-        break;
+
+        // isHome=false;
+        // isMyBid=false;
+        // isMessage=false;
+        // isDrectory=false;
+        // isMore=true;
+        // isButtonVisible=false;
+        // break;
 
 
       case 4:

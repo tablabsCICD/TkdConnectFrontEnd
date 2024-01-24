@@ -44,7 +44,7 @@ class IntroScreenThree extends StatelessWidget{
           children: [
             SvgPicture.asset(Images.intro_progress_three,width: 40.w,height: 6.h,)   ,
             InkWell(onTap:(){
-              Navigator.pushReplacementNamed(context, AppRoutes.login);
+              Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
 
 
             },child: SvgPicture.asset(Images.red_next_button,height: 56.h,width: 80.w,))          ],

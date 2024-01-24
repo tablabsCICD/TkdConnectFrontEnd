@@ -177,6 +177,7 @@ class CreateBuySellProvider extends BaseProvider{
       "tableName": "Buy/Sell",
       "topicName": "string",
       "type": selectedRequriment,
+      "userId":user.content!.first.id,
       "vehicleRegistrationNumber": vehicleRno.text,
       "yearOfBuying": selectedYear
     };

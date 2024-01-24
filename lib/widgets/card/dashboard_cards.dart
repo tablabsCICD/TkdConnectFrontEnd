@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tkd_connect/utils/toast.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
@@ -141,9 +142,9 @@ class AllCards {
             ),
           ),
           SizedBox(width: 8.w),
-          BaseWidget().profile(
+          BaseWidget().profileWithUser(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
-              verify: load.isPaid!),
+              verify: load.isPaid!,transporterOrAgent: load.transporterOrAgent!),
           BaseWidget().routes(load.source!, load.destination!),
           SizedBox(
             height: 12.h,
@@ -161,6 +162,84 @@ class AllCards {
 
           }) :BaseWidget().bidButton((val) {
             Utils().openMenu(val, load, context);
+          })
+        ],
+      ),
+    );
+  }
+
+  cardLoadPrivateHome(int index, BuildContext context, TruckLoad load,int userId,DeletePostInf postDelete) {
+    return Container(
+      width: 335.w,
+      // height: 255.h,
+      padding: EdgeInsets.all(12.r),
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        shadows: [
+          BoxShadow(
+            color: Color(0x114A5568),
+            blurRadius: 8.r,
+            offset: Offset(0, 3),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 100.w,
+              height: 18.h,
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+              decoration: ShapeDecoration(
+                color: Color(0xFF2C8FEA),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r)),
+              ),
+              child: Center(
+                child: Text(
+                  load.mainTag!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 8.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          // BaseWidget().profileWithUser(
+          //     "load.companyLogo!", load.nameOfPerson!, load.companyName!,
+          //     verify: load.isPaid!),
+          BaseWidget().routes(load.source!, load.destination!),
+          SizedBox(
+            height: 12.h,
+          ),
+          imageLoad(load),
+          BaseWidget().heading(load.topicName!, load.postingTime!.split(" ").first, load.content!),
+
+
+          load.userId==userId ?BaseWidget().deleteButton((val) {
+            if(val==10){
+              postDelete.deleteOwnPost(load.id!,index);
+            }else{
+
+                ToastMessage.show(context, "This is Private Post");
+              //Utils().openMenu(val, load, context);
+            }
+
+          }) :BaseWidget().bidButton((val) {
+           // Utils().openMenu(val, load, context);
+            ToastMessage.show(context, "This is Private Post");
           })
         ],
       ),
@@ -331,6 +410,66 @@ class AllCards {
       );
     }
 
+  }
+
+
+
+  cardAdd(int index, BuildContext context, TruckLoad load,{int userId=0}) {
+    return Container(
+      width: 335.w,
+      // height: 255.h,
+      padding: EdgeInsets.all(12.r),
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        shadows: [
+          BoxShadow(
+            color: Color(0x114A5568),
+            blurRadius: 8.r,
+            offset: Offset(0, 3),
+            spreadRadius: 0,
+          )
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 100.w,
+              height: 18.h,
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+              decoration: ShapeDecoration(
+                color: Color(0xFFD9462A),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r)),
+              ),
+              child: Center(
+                child: Text(
+                  load.type!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 8.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 8.w),
+
+          imageLoad(load),
+          BaseWidget().heading(load.companyName!, "", load.website!),
+
+        ],
+      ),
+    );
   }
 
 }

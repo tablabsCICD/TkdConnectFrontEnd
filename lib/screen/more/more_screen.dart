@@ -49,39 +49,52 @@ class _MoreScreen extends State<MoreScreen> {
 
     return Scaffold(
       body: Container(
-        child: isLoad?Container():Column(
-          children: [
-            topBar(context),
-            item(S().myPost,(){
-              Navigator.pushNamed(context, AppRoutes.mypost);
+        child: isLoad?Container():SingleChildScrollView(
+          child: Column(
+            children: [
+              topBar(context),
+              item(S().myPost,(){
+                Navigator.pushNamed(context, AppRoutes.mypost);
 
-            },FontWeight.w600),
-            item(S().jobs,(){
-              Navigator.pushNamed(context, AppRoutes.job);
+              },FontWeight.w600),
+              item(S().jobs,(){
+                Navigator.pushNamed(context, AppRoutes.job);
 
-            },FontWeight.w600),
-            item(S().buySell,(){
-              Navigator.pushNamed(context, AppRoutes.buysell);
+              },FontWeight.w600),
+              item(S().buySell,(){
+                Navigator.pushNamed(context, AppRoutes.buysell);
 
-            },FontWeight.w600),
-            item(S().getVerified,(){
+              },FontWeight.w600),
+              item(S().getVerified,(){
 
-              openVerifiedTag();
-            },FontWeight.w600),
-            item(S().appSetting,(){
-              Navigator.pushNamed(context, AppRoutes.appsetting);
-            },FontWeight.w400),
-            item(S().helpSupport,(){
-              Navigator.pushNamed(context, AppRoutes.helpsupport);
+                openVerifiedTag();
+              },FontWeight.w600),
+              item(S().appSetting,(){
+                Navigator.pushNamed(context, AppRoutes.appsetting);
+              },FontWeight.w400),
+              item(S().helpSupport,(){
+                Navigator.pushNamed(context, AppRoutes.helpsupport);
 
-            },FontWeight.w400),
+              },FontWeight.w400),
 
-            itemLogout(S().logout,(){
+              item(S().shareapp,(){
 
-              _showMyDialog();
+                String meesage="Download TKD Connect now and use it to \n "
+                    "We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly. \n \n "
+                "https://play.google.com/store/apps/details?id=com.pdk.tkd";
+                Utils().callShareFunction(meesage);
 
-            },)
-          ],
+
+
+              },FontWeight.w400),
+
+              itemLogout(S().logout,(){
+
+                _showMyDialog();
+
+              },)
+            ],
+          ),
         ),
       ),
     );

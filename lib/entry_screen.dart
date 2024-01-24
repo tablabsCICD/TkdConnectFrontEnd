@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
         Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
       }else{
         S.load(Locale(val));
-        Navigator.pushReplacementNamed(context, AppRoutes.login);
+        Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
       }
 
     }
@@ -101,6 +102,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
   versionControllApi() async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
+    print('the version is ${apiResponse.response}');
     Version version=Version.fromJson(apiResponse.response);
     print('the version is ${version.version}');
     if(version.version! == AppConstant.APP_VERSION){
@@ -109,11 +111,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
       upDateDailog();
     }
 
-    try{
-
-    }catch (e){
-
-    }
+    callNextScreen();
   }
 
 

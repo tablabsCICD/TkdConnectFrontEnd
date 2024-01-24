@@ -1489,6 +1489,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Share application`
+  String get shareapp {
+    return Intl.message(
+      'Share application',
+      name: 'shareapp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -1498,6 +1508,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
       Locale.fromSubtags(languageCode: 'hi'),
+      Locale.fromSubtags(languageCode: 'kn', countryCode: 'IN'),
+      Locale.fromSubtags(languageCode: 'mr'),
     ];
   }
 

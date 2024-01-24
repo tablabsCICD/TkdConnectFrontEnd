@@ -98,7 +98,7 @@ class RouteGenerator {
       case AppRoutes.job:
         return buildRoute(JobListScreen(), settings: settings);
       case AppRoutes.mypost:
-        return buildRoute(MyPostScreen(), settings: settings);
+        return buildRoute(MyPostBase(), settings: settings);
 
       case AppRoutes.buysell:
         return buildRoute(BuySellScreen(), settings: settings);

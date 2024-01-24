@@ -81,7 +81,8 @@ class _ListLanguageChange extends State<ListLanguageChange>{
           fontWeight: FontWeight.w600,
         ), onClick: ()async{
           if(isLangSelect){
-            S.load(Locale(selectLanguage));
+            print('the selected lang is ${selectLanguage}');
+              S.load(Locale(selectLanguage));
             LocalSharePreferences sharePreferences=LocalSharePreferences();
             await sharePreferences.setLanguage(selectLanguage);
             Navigator.popAndPushNamed(context, AppRoutes.home);

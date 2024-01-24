@@ -181,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectOne": MessageLookupByLibrary.simpleMessage("एक का चयन करें"),
         "sell": MessageLookupByLibrary.simpleMessage("बेचना"),
         "share": MessageLookupByLibrary.simpleMessage("शेयर करना"),
+        "shareapp": MessageLookupByLibrary.simpleMessage("ऐप शेयर करें"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("सभी उद्धरण दिखाएँ"),
         "signIn": MessageLookupByLibrary.simpleMessage("दाखिल करना"),

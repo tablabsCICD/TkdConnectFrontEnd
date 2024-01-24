@@ -108,7 +108,7 @@ class PostJob {
   int? isSalaryNegotiable;
   String? message;
   int? isSelected;
-  String? removedDate;
+  int? removedDate;
   String? os;
   String? loggedUserName;
   int? loggedTime;
