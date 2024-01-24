@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
+import 'package:tkd_connect/model/response/comment_response.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:http/http.dart' as http;
 import '../../model/api_response.dart';
@@ -100,6 +101,64 @@ class HomeScreenProvider extends BaseProvider{
     }
 
   }
+
+  likeIncreamentApi(int postId, BuildContext context)async{
+
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    EasyLoading.show(status: "Loading");
+    String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}";
+
+    print('the url $url');
+
+    var req = await http.post(Uri.parse(url));
+   if(req.statusCode == 200) {
+      response = json.decode(req.body);
+      if(response['success']==true){
+        print(response['message']);
+        callDashboradApi(context, selectedPage);
+      }else{
+        print(response['message']);
+      }
+      EasyLoading.dismiss();
+      notifyListeners();
+    }
+  }
+
+  TextEditingController commentController = TextEditingController();
+
+  createCommentApi(int postId, String comment)async{
+
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    EasyLoading.show(status: "Loading");
+    String url=ApiConstant.BASE_URL+"comments";
+
+    print('the url $url');
+
+    Map<String, dynamic> requestParameter = {
+      "comment": comment,
+      "date": "string",
+      "discussionId": postId,
+      "firstName": user.content!.first.firstName,
+      "lastName": user.content!.first.lastName,
+      "userId": user.content!.first.id!
+    };
+    print(requestParameter);
+  /*  ApiResponse apiResponse=await ApiHelper().postParameter(url, requestParameter);
+    print(apiResponse.status);*/
+    var response = await http.post(Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestParameter));
+    EasyLoading.dismiss();
+    if(response.statusCode==200){
+     print("Comment save successfully");
+     commentController.clear();
+    } else{
+      print("Comment not save successfully");
+    }
+    notifyListeners();
+
+  }
+
   pagenation(BuildContext context){
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -214,5 +273,19 @@ class HomeScreenProvider extends BaseProvider{
 
   }
 
+
+  List<Comments> commentList = [];
+  getCommentByPostId(BuildContext context,int PostId) async {
+    User user=await LocalSharePreferences().getLoginData();
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage));
+    if(apiResponse.status==200){
+      CommentResponse commentResponse=CommentResponse.fromJson(apiResponse.response);
+      commentList.addAll(commentResponse.data!.comments as Iterable<Comments>);
+      selectedPage++;
+      notifyListeners();
+    }else{
+      ToastMessage.show(context, "Please Try Again");
+    }
+  }
 
 }

@@ -13,7 +13,9 @@ class LoginProvider extends BaseProvider{
   LoginProvider(super.appState);
 
   void callOtp(BuildContext context,String mobileNumber) async{
+    print(ApiConstant.SEND_OTP(mobileNumber));
     var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(mobileNumber));
+    print(req);
     if(req.status==200){
       Navigator.pushNamed(context,AppRoutes.otp,arguments: mobileNumber);
     }else{
@@ -21,6 +23,7 @@ class LoginProvider extends BaseProvider{
     }
     notifyListeners();
   }
+
 
   void callSwitch(DeleteUser user,BuildContext context,String mobileNumber) {
     switch (user.errorCode){
@@ -37,7 +40,6 @@ class LoginProvider extends BaseProvider{
   }
 
   isUserDeleted(String mobileNumber,BuildContext context)async{
-
     if(Validation().isValidPhoneNumber(mobileNumber)){
       ApiHelper apiHelper=ApiHelper();
       var response= await apiHelper.apiGet(ApiConstant.USER_FIND_BY_MOBILE(mobileNumber));
@@ -56,9 +58,5 @@ class LoginProvider extends BaseProvider{
   isMobileValide(String mobile){
     isMobileNumberValid= Validation().isValidPhoneNumber(mobile);
     notifyListeners();
-
   }
-
-
-
 }

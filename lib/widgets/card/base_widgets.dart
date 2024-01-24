@@ -6,6 +6,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
+import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
 
@@ -1439,132 +1443,147 @@ class BaseWidget {
     return image(image: link);
   }
 
- Widget likeComment({int likeCount=0,int commentCount=0}){
-    return Container(
-      height: 20.h,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            width: 155.50.w,
-            height: 18.h,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 16.w,
-                  height: 16.h,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 16.w,
-                        height: 16.h,
-                        child: Stack(children: [
-                          SvgPicture.asset(Images.like)
+ Widget likeComment(TruckLoad truckLoad, {int likeCount=0,int commentCount=0}){
+    return  Consumer<HomeScreenProvider>(
+        builder: (context, provider, child) {
+          return Container(
+        height: 20.h,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              width: 155.50.w,
+              height: 18.h,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 16.w,
+                    height: 16.h,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap:(){
+                            print("on tap on like button");
+                             provider.likeIncreamentApi(truckLoad.id!,context);
+                           },
+                          child: Container(
+                            width: 16.w,
+                            height: 16.h,
+                            child: Stack(children: [
+                              SvgPicture.asset(Images.like)
 
-                        ]),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 8),
-                Container(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        S().like,
-                        style: TextStyle(
-                          color: Color(0xFF001E49),
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
+                            ]),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        '($likeCount)',
-                        style: TextStyle(
-                          color: Color(0xFF001E49),
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(width: 8),
+                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          S().like,
+                          style: TextStyle(
+                            color: Color(0xFF001E49),
+                            fontSize: 12.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          '( ${truckLoad.likes} )',
+                          style: TextStyle(
+                            color: Color(0xFF001E49),
+                            fontSize: 12.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            width: 155.50.w,
-            height: 18.h,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 16.w,
-                  height: 16.h,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 16.w,
-                        height: 16.h,
-                        child: Stack(children: [
-                          SvgPicture.asset(Images.message)
-                        ]),
+            InkWell(
+              onTap: (){
+               // provider.createCommentApi(4);
+                Navigator.of(context).push(MaterialPageRoute(builder: (builder)=>PostCommentList(truckLoad)));
+              },
+              child: Container(
+                width: 155.50.w,
+                height: 18.h,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 16.w,
+                      height: 16.h,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 16.w,
+                            height: 16.h,
+                            child: Stack(children: [
+                              SvgPicture.asset(Images.message)
+                            ]),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            S().comment,
+                            style: TextStyle(
+                              color: Color(0xFF001E49),
+                              fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            '( ${truckLoad.comment} )',
+                            style: TextStyle(
+                              color: Color(0xFF001E49),
+                              fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 8),
-                Container(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        S().comment,
-                        style: TextStyle(
-                          color: Color(0xFF001E49),
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        '($commentCount)',
-                        style: TextStyle(
-                          color: Color(0xFF001E49),
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      );}
     );
   }
 
