@@ -116,10 +116,15 @@ class _SearchResultScreen extends State<SearchResultScreen> {
           Spacer(),
           Visibility(
               visible: isCloseVisible,
-              child: SvgPicture.asset(
-                Images.close_circle,
-                height: 24.h,
-                width: 24.w,
+              child: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: SvgPicture.asset(
+                  Images.close_circle,
+                  height: 24.h,
+                  width: 24.w,
+                ),
               ))
         ],
       ),

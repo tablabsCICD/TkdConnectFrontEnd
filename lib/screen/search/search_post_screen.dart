@@ -37,8 +37,12 @@ class _SearchPostState extends State<SearchPostScreen>{
   }
 
   _buildPage(BuildContext context){
-    return Container(
-      child:widget.searchProvider.truckLoadTypeList.length==0?Center(
+    return Consumer<SearchProvider>(
+  builder: (context, provider, child) {
+  return Container(
+      child:
+
+      provider.truckLoadTypeList.length==0 && !provider.isLoading?Center(
         child: Text(
           "No Data found",
           style: TextStyle(
@@ -50,6 +54,8 @@ class _SearchPostState extends State<SearchPostScreen>{
         ),
       ) :listCard(),
     );
+  },
+);
   }
   listCard() {
 
@@ -70,9 +76,9 @@ class _SearchPostState extends State<SearchPostScreen>{
     if(truckLoad.type=="Full Load" || truckLoad.type=="Part Load"){
       return AllCards().cardLoad(index, context, truckLoad);
     }else if(truckLoad.type=="General Post"){
-      return AllCards().generalPost(truckLoad);
+      return AllCards().generalPost(truckLoad,context);
     }else{
-      return AllCards().generalPost(truckLoad);
+      return AllCards().generalPost(truckLoad,context);
     }
   }
 }

@@ -33,6 +33,8 @@
    "addRoutes": "Add routes for better lead generation",
   "clickAddRoutes": "Click the below button to add routes",
    "selectOne": "Select one",
+  "business_type": "Select Business Type",
+
   "agentBroker": "Agent/Broker",
   "transporter": "Transporter",
   "packersAndMovers": "Packers and Movers",

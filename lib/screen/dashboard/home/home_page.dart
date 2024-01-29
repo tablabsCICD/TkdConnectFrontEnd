@@ -123,9 +123,9 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
       return AllCards().cardAdd(index, context, provider.truckLoadTypeList[index]);
     }
     else if(truckLoad.type=="General Post"){
-      return AllCards().generalPost(truckLoad);
+      return AllCards().generalPost(truckLoad,context);
     }else{
-      return AllCards().generalPost(truckLoad);
+      return AllCards().generalPost(truckLoad,context);
     }
   }
 
@@ -177,60 +177,65 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        // SvgPicture.asset(
-                        //   Images.profilepicture,
-                        //   color: Colors.white,
-                        //   width: 40.w,
-                        //   height: 40.h,
-                        // ),
-                       InkWell(
-                         onTap: (){
-                           Navigator.pushNamed(context, AppRoutes.editprofile);
-                         },
-                         child:  BaseWidget().getImageclip(provider.imageUrl,
-                             height: 40.h, width: 40.w),
-                       ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, AppRoutes.editprofile);
+                      },
+                      child: Column(
+                        children: [
+                          // SvgPicture.asset(
+                          //   Images.profilepicture,
+                          //   color: Colors.white,
+                          //   width: 40.w,
+                          //   height: 40.h,
+                          // ),
+                         InkWell(
+                           onTap: (){
+                             Navigator.pushNamed(context, AppRoutes.editprofile);
+                           },
+                           child:  BaseWidget().getImageclip(provider.imageUrl,
+                               height: 40.h, width: 40.w),
+                         ),
 
-                        Container(
-                          transform:
-                              Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                          width: 38.w,
-                          height: 12.h,
-                          padding: EdgeInsets.symmetric(horizontal: 4.h),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r)),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                Utils().getSelectedPackageImage(provider.ispaid),
-                                height: 8.h,
-                                width: 8.w,
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              Text(
-                                Utils().getSelectedPackageName(provider.ispaid),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 8.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w600,
+                          Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -10.0.h, 0.0),
+                            width: 38.w,
+                            height: 12.h,
+                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  Utils().getSelectedPackageImage(provider.ispaid),
+                                  height: 8.h,
+                                  width: 8.w,
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                                SizedBox(
+                                  width: 2.w,
+                                ),
+                                Text(
+                                  Utils().getSelectedPackageName(provider.ispaid),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 8.sp,
+                                    fontFamily: AppConstant.FONTFAMILY,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(
                       width: 55.5.w,

@@ -380,6 +380,16 @@ class S {
     );
   }
 
+  /// `Select Business Type`
+  String get business_type {
+    return Intl.message(
+      'Select Business Type',
+      name: 'business_type',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Agent/Broker`
   String get agentBroker {
     return Intl.message(

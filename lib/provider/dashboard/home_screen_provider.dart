@@ -70,16 +70,16 @@ class HomeScreenProvider extends BaseProvider{
       notifyListeners();
     }
     if(fromCity=="All" && toCity=="All"){
-      url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}';
+      url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}';
 
     }else{
 
       if(fromCity != "All" && toCity!="All"){
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}';
       }else if(fromCity != "All" && toCity=="All"){
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity';
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&loggedUserId=${user.content!.first.id}';
            }else{
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity';
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity&loggedUserId=${user.content!.first.id}';
       }
 
 
@@ -112,10 +112,11 @@ class HomeScreenProvider extends BaseProvider{
 
     var req = await http.post(Uri.parse(url));
    if(req.statusCode == 200) {
-      response = json.decode(req.body);
+     var response = json.decode(req.body);
       if(response['success']==true){
-        print(response['message']);
-        callDashboradApi(context, selectedPage);
+        //
+
+
       }else{
         print(response['message']);
       }
@@ -124,40 +125,7 @@ class HomeScreenProvider extends BaseProvider{
     }
   }
 
-  TextEditingController commentController = TextEditingController();
 
-  createCommentApi(int postId, String comment)async{
-
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    EasyLoading.show(status: "Loading");
-    String url=ApiConstant.BASE_URL+"comments";
-
-    print('the url $url');
-
-    Map<String, dynamic> requestParameter = {
-      "comment": comment,
-      "date": "string",
-      "discussionId": postId,
-      "firstName": user.content!.first.firstName,
-      "lastName": user.content!.first.lastName,
-      "userId": user.content!.first.id!
-    };
-    print(requestParameter);
-  /*  ApiResponse apiResponse=await ApiHelper().postParameter(url, requestParameter);
-    print(apiResponse.status);*/
-    var response = await http.post(Uri.parse(url),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(requestParameter));
-    EasyLoading.dismiss();
-    if(response.statusCode==200){
-     print("Comment save successfully");
-     commentController.clear();
-    } else{
-      print("Comment not save successfully");
-    }
-    notifyListeners();
-
-  }
 
   pagenation(BuildContext context){
     scrollController.addListener(() {
@@ -274,18 +242,6 @@ class HomeScreenProvider extends BaseProvider{
   }
 
 
-  List<Comments> commentList = [];
-  getCommentByPostId(BuildContext context,int PostId) async {
-    User user=await LocalSharePreferences().getLoginData();
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage));
-    if(apiResponse.status==200){
-      CommentResponse commentResponse=CommentResponse.fromJson(apiResponse.response);
-      commentList.addAll(commentResponse.data!.comments as Iterable<Comments>);
-      selectedPage++;
-      notifyListeners();
-    }else{
-      ToastMessage.show(context, "Please Try Again");
-    }
-  }
+
 
 }

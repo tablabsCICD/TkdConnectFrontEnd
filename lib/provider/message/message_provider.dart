@@ -123,7 +123,7 @@ class MessageProvider extends BaseProvider{
           builder: (context) => ChatPage(
             arguments: ChatPageArguments(
               peerId: data.mobileNumber!.toString(),
-              peerAvatar: data.companyLogo!,
+              peerAvatar: "",
               peerNickname: data.firstName!+" "+data.lastName!,
             ),
           ),

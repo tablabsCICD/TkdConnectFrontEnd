@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
@@ -284,7 +285,7 @@ class AllCards {
   }
 
 
-  generalPost(TruckLoad truckLoad) {
+  generalPost(TruckLoad truckLoad,BuildContext context) {
     return Container(
       width: 335.w,
 
@@ -339,14 +340,14 @@ class AllCards {
             height: 5.h,
           ),
 
-          imagePost(truckLoad),
+          imagePost(truckLoad,context),
 
         ],
       ),
     );
   }
 
-  imagePost(TruckLoad load){
+  imagePost(TruckLoad load,BuildContext context){
     if(load.postImages!.length==0){
       return    Column(
         children: [
@@ -379,7 +380,7 @@ class AllCards {
 
           Container(
               transform: Matrix4.translationValues(0.0, -10.0.h, 00),
-              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load))
+              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load,context))
         ],
       );
     }else if(load.postImages!.length==1){
@@ -391,7 +392,7 @@ class AllCards {
           ),
           Container(
             //transform: Matrix4.translationValues(0.0, -5.0.h, 00),
-              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load))
+              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load,context))
         ],
       );
     }else{
@@ -406,7 +407,7 @@ class AllCards {
           ),
           Container(
               transform: Matrix4.translationValues(0.0, -10.0.h, 00),
-              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load))
+              child: BaseWidget().likeComment(likeCount: 0,commentCount: 0,load,context))
         ],
       );
     }
@@ -466,7 +467,15 @@ class AllCards {
           SizedBox(height: 8.w),
 
           imageLoad(load),
-          BaseWidget().heading(load.companyName!, "", load.website!),
+          InkWell(
+            onTap: ()async{
+              final url = Uri.parse(
+                'http://${load.website}',
+              );
+             await  launchUrl(url);
+            },
+            child: BaseWidget().heading(load.companyName!, "", load.website!),
+          )
 
         ],
       ),

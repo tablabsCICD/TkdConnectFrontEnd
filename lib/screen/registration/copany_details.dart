@@ -59,7 +59,9 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SvgPicture.asset(Images.arrow_back),
+                      InkWell(onTap: (){
+                        Navigator.pop(context);
+                      },child: SvgPicture.asset(Images.arrow_back)),
                       Textview(
                         title: '${S().businessDetails}',
                         TextStyle(

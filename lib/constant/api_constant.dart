@@ -32,6 +32,8 @@ class ApiConstant {
   static String MY_ROUTE(id)=> BASE_URL + "preferredroutes/userId/${id}";
   static String ROUTE = BASE_URL + "preferredroutes";
   static String MYPOSTBID(id,page) => BASE_URL + "getOwnPostAndBid?userName=$id&page=$page";
+  static String GETCOMMENTS(id) => BASE_URL + "/getGerenalPostComments?generalPostId=$id";
+
   static String HELPSUPPORTIKET = BASE_URL + "HelpAndSupportTicket";
   static String BUY_SELL_ALL_CARD (type,currentPage)=> BASE_URL + "allCards/buySell?type=${type}&&page=${currentPage}";
   static String POST_JOB = BASE_URL + "/postJob";

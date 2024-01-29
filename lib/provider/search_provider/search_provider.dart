@@ -16,7 +16,7 @@ class SearchProvider extends BaseProvider{
   bool tabPost=true;
   SearchProvider(super.appState);
 
-  bool isLoading = false;
+  bool isLoading = true;
   var response;
   bool isFirstLoading = false;
   int totalPages = 0;
@@ -26,6 +26,7 @@ class SearchProvider extends BaseProvider{
   List truckLoadTypeList=[];
   List<TransportSearchData> user=[];
   ScrollController scrollController = ScrollController();
+
 
   changeTab(){
     if(tabPost){
@@ -37,17 +38,20 @@ class SearchProvider extends BaseProvider{
   }
 
   callPostApiSearch(BuildContext context,int currentPage,String search)async{
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+
     EasyLoading.show(status: "Loading");
-    String url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&search=${search}';
+    String url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&search=${search}&loggedUserId=${user.content!.first.id}';
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
-    isLoading = false;
+
     if(req.statusCode == 200) {
 
       response = json.decode(req.body);
       var type = TruckLoadType.fromJson(response);
       totalPages = type.totalPages;
       truckLoadTypeList.addAll(type.content);
+      isLoading = false;
       EasyLoading.dismiss();
       notifyListeners();
     }

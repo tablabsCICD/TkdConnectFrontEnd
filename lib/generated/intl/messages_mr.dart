@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessDetails":
             MessageLookupByLibrary.simpleMessage("व्यवसाय तपशील"),
         "businessInfo": MessageLookupByLibrary.simpleMessage("व्यवसाय माहिती"),
+        "business_type":
+            MessageLookupByLibrary.simpleMessage("व्यवसाय प्रकार निवडा"),
         "buy": MessageLookupByLibrary.simpleMessage("खरेदी"),
         "buySell": MessageLookupByLibrary.simpleMessage("वाहन खरेदी/विक्री"),
         "buysellIssue":

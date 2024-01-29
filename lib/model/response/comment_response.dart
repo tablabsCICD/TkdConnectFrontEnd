@@ -64,18 +64,18 @@ class GeneralPost {
   int? likes;
   String? comment;
   int? userId;
-  int? loggedTime;
+  var loggedTime;
 
   GeneralPost(
       {this.id,
-        this.typeName,
-        this.images,
-        this.description,
-        this.title,
-        this.likes,
-        this.comment,
-        this.userId,
-        this.loggedTime});
+      this.typeName,
+      this.images,
+      this.description,
+      this.title,
+      this.likes,
+      this.comment,
+      this.userId,
+      this.loggedTime});
 
   GeneralPost.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -110,15 +110,26 @@ class Comments {
   int? userId;
   String? comment;
   int? date;
+  String? profileImage;
+  String? userName;
 
-  Comments({this.id, this.discussionId, this.userId, this.comment, this.date});
+  Comments(
+      {this.id,
+      this.discussionId,
+      this.userId,
+      this.comment,
+      this.date,
+      this.profileImage,
+      this.userName});
 
   Comments.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    discussionId = json['discussionId']??'';
-    userId = json['userId']??'';
-    comment = json['comment']??'';
-    date = json['date']??'';
+    discussionId = json['discussionId'] ?? '';
+    userId = json['userId'] ?? '';
+    comment = json['comment'] ?? '';
+    date = json['date'] ?? '';
+    profileImage = json['profileImage'] ?? '';
+    userName = json['userName'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -128,6 +139,9 @@ class Comments {
     data['userId'] = this.userId;
     data['comment'] = this.comment;
     data['date'] = this.date;
+    data['profileImage'] = this.profileImage;
+    data['userName'] = this.userName;
+
     return data;
   }
 }

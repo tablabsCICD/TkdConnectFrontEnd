@@ -27,6 +27,8 @@ class AppRoutes {
   static const buysell = '/buysell';
   static const createjob = '/createjob';
   static const createbuysell="/createbuysell";
+  static const commentscreen="/commentscreen";
+
 
 
 

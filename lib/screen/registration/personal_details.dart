@@ -46,7 +46,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                         height: 21.5.h,
                       ),
                       Textview(
-                        title: 'Personal details',
+                        title: 'Registration - Personal details',
                         TextStyle(
                           color: Colors.black,
                           fontSize: 14.sp,

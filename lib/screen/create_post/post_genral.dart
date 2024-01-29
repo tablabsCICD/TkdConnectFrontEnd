@@ -69,16 +69,16 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                       provider.uploadImage(context);
                     },
                     child: SvgPicture.asset(Images.add_image)),
-                Text(
-                  S().addImagesAt,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF001E49),
-                    fontSize: 12.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                // Text(
+                //   S().addImagesAt,
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     color: Color(0xFF001E49),
+                //     fontSize: 12.sp,
+                //     fontFamily: GoogleFonts.poppins().fontFamily,
+                //     fontWeight: FontWeight.w600,
+                //   ),
+                // ),
                 SizedBox(
                   height: 30.h,
                 ),

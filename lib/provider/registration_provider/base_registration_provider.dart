@@ -25,14 +25,14 @@ class BaseRegistartionProvider extends BaseProvider{
     ApiResponse apiResponse=await apiHelper.postParameter(ApiConstant.REGISTRATION,AppConstant.registerCompany.toJson());
     print('the status code is ${apiResponse.response}${apiResponse.status}');
     if(apiResponse.status==200){
-      var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(AppConstant.registerCompany.mobileNumber));
-      if(req.status==200){
-
-        Navigator.pushReplacementNamed(context, AppRoutes.otp,arguments:AppConstant.registerCompany.mobileNumber);
-      }else{
-        ToastMessage.show(context, " Please try to login ");
-      }
-
+     // var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(AppConstant.registerCompany.mobileNumber));
+     //  if(req.status==200){
+     //
+     //
+     //  }else{
+     //    ToastMessage.show(context, " Please try to login ");
+     //  }
+      Navigator.pushReplacementNamed(context, AppRoutes.otp,arguments:AppConstant.registerCompany.mobileNumber);
 
       // User user=User.fromJson(apiResponse.response);
       // if(user.content!.length>0){

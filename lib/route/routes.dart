@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
 import 'package:tkd_connect/screen/buy_sell/create_buy_sell.dart';
 import 'package:tkd_connect/screen/general_post/general_post_list.dart';
+import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_one.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_three.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_two.dart';
@@ -14,6 +15,8 @@ import 'package:tkd_connect/screen/my_post/my_post.dart';
 import 'package:tkd_connect/screen/search/search_edit_screen.dart';
 import 'package:tkd_connect/screen/search/search_result_screen.dart';
 import '../entry_screen.dart';
+import '../model/request/comment_screen.dart';
+import '../model/response/AllCard.dart';
 import '../model/response/transport_directory_search.dart';
 import '../screen/app_setting/app_setting_screen.dart';
 import '../screen/create_post/create_post_base_screen.dart';
@@ -97,8 +100,8 @@ class RouteGenerator {
         return buildRoute(AppSettingScreen(), settings: settings);
 
       case AppRoutes.job:
-       // return buildRoute(JobListScreen(), settings: settings);
-        return buildRoute(GeneralPostScreen(), settings: settings);
+        return buildRoute(JobListScreen(), settings: settings);
+       // return buildRoute(GeneralPostScreen(), settings: settings);
       case AppRoutes.mypost:
         return buildRoute(MyPostBase(), settings: settings);
 
@@ -109,6 +112,11 @@ class RouteGenerator {
 
       case AppRoutes.createbuysell:
         return buildRoute(CreateBuySell(), settings: settings);
+
+      case AppRoutes.commentscreen:
+        TruckLoad commentParmeters=settings.arguments as TruckLoad;
+
+        return buildRoute(PostCommentList(commentParmeters), settings: settings);
 
 
       default:

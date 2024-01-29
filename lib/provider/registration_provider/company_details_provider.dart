@@ -16,7 +16,7 @@ class CompanyDetailsProvider extends BaseRegistartionProvider{
   TextEditingController locationController = TextEditingController();
   TextEditingController companyTypeController = TextEditingController();
   bool isEnbale=false;
-  String valName="${S().selectOne}";
+  String valName="${S().business_type}";
   int selectType=-1;
 
   addRoute(RouteRequest routeRequest){

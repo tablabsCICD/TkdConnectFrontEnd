@@ -163,7 +163,6 @@
   "createPostLoadIssue": "लोड पोस्ट अंक",
   "buysellIssue": "खरीदें/बेचें मुद्दा",
   "jobIssue": "नौकरी समस्या बनाएँ",
-  "shareapp": "ऐप शेयर करें"
-
-
+  "shareapp": "ऐप शेयर करें",
+  "business_type": "व्यवसाय प्रकार चुनें"
 }

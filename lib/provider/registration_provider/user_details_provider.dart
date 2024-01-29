@@ -39,7 +39,7 @@ class UserDetailsProvider extends BaseRegistartionProvider {
     AppConstant.registerCompany.lastName=lastNameController.text.toString();
     AppConstant.registerCompany.emailId=emailNameController.text.toString();
     AppConstant.registerCompany.mobileNumber=mobileNameController.text.toString();
-    Navigator.pushReplacementNamed(context, AppRoutes.registration_company_details);
+    Navigator.pushNamed(context, AppRoutes.registration_company_details);
 
   }
 }

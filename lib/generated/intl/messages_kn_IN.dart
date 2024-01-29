@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "OR": MessageLookupByLibrary.simpleMessage("OR"),
+        "business_type": MessageLookupByLibrary.simpleMessage(
+            "ವ್ಯಾಪಾರ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ"),
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ"),
         "shareapp":
