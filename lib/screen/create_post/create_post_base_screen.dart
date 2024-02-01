@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/screen/create_post/post_genral.dart';
 import 'package:tkd_connect/screen/create_post/post_load.dart';
 import 'package:tkd_connect/screen/create_post/post_sponsered.dart';
 import 'package:tkd_connect/screen/create_post/post_vehicale.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
+import 'package:tkd_connect/utils/utils.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
+import '../../model/response/userdata.dart';
 import '../../utils/colors.dart';
 import '../../widgets/app_bar.dart';
 
@@ -29,6 +33,14 @@ class _CreatePostBase extends State<CreatePostBase>{
   PageController controller = PageController();
   int currentPage=0;
   List<String>listImages=[Images.load_post,Images.vehicle_load,Images.general_post];
+  late User user;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+  }
   @override
   Widget build(BuildContext context) {
    return Scaffold(
@@ -115,7 +127,7 @@ class _CreatePostBase extends State<CreatePostBase>{
 
              });
           }),
-          tabItem(isVehicle,S().vehicle,(){
+          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==1 ?   tabItem(isVehicle,S().vehicle,(){
             isLoad=false;
             isVehicle=true;
             isGeneral=false;
@@ -127,7 +139,7 @@ class _CreatePostBase extends State<CreatePostBase>{
             });
 
 
-          }),
+          }):SizedBox(),
           tabItem(isGeneral,S().general,(){
             isLoad=false;
             isVehicle=false;
@@ -191,6 +203,8 @@ class _CreatePostBase extends State<CreatePostBase>{
       ),
     );
   }
+
+
 
 
 

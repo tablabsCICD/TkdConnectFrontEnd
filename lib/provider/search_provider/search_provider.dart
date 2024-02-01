@@ -22,6 +22,7 @@ class SearchProvider extends BaseProvider{
   int totalPages = 0;
   bool fla = false,pla = false,flr = false,plr = false;
   int selectedPage=0;
+  bool isLoadingUser=false;
 
   List truckLoadTypeList=[];
   List<TransportSearchData> user=[];
@@ -67,11 +68,13 @@ class SearchProvider extends BaseProvider{
     });
   }
   callUser(String search)async{
+
     String myUrl = ApiConstant.DIRECTORY(search);
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
     if(apiResponse.status==200){TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
       user.addAll(transportSearchData.content);
     }
+    isLoadingUser=true;
     notifyListeners();
   }
 

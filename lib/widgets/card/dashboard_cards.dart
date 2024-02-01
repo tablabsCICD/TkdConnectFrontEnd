@@ -132,7 +132,7 @@ class AllCards {
               ),
               child: Center(
                 child: Text(
-                  load.mainTag!,
+                  Utils().mainTag(load.mainTag!),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 8.sp,

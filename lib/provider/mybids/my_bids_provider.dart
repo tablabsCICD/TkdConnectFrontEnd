@@ -22,13 +22,18 @@ class MyBidsProvider extends BaseProvider{
   ScrollController scrollController = ScrollController();
   int selectedPage=0;
   int selectedPageAllBids=0;
+  String selectedString="All Bids";
+
+  bool fla = false,pla = false,flr = false,plr = false;
 
 
   getAllBids(BuildContext context,bool tabChang)async{
     if(isLoad && tabChang){
     }else{
       User user=await LocalSharePreferences().getLoginData();
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids));
+      print('the link is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}"}');
+
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}");
       print('the response is ${apiResponse.response}');
       if(apiResponse.status==200){
         BidPlaced bidPlaced=BidPlaced.fromJson(apiResponse.response);
@@ -50,9 +55,12 @@ class MyBidsProvider extends BaseProvider{
       notifyListeners();
     }else{
       User user=await LocalSharePreferences().getLoginData();
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content![0].userName,selectedPage));
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content![0].userName,selectedPage)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}");
        if(apiResponse.status==200){
         MyPostBids bidPlaced=MyPostBids.fromJson(apiResponse.response);
+        if(selectedPage==0){
+          listOwnBid.clear();
+        }
         listOwnBid.addAll(bidPlaced.content!);
         notifyListeners();
         selectedPage++;
@@ -63,6 +71,8 @@ class MyBidsProvider extends BaseProvider{
     }
 
   }
+
+
 
 
   changeTab(){
@@ -107,5 +117,42 @@ class MyBidsProvider extends BaseProvider{
     });
   }
 
-  
+  changeDropDown(String tab,BuildContext context){
+    selectedString=tab;
+    if(tab.contains("All bids")){
+      fla = false;pla = false;flr = false;plr = false;
+    }
+
+    if(tab.contains("Full load available")){
+      fla = true;pla = false;flr = false;plr = false;
+    }
+
+    if(tab.contains("Part load available")){
+      fla = false;pla = true;flr = false;plr = false;
+    }
+    if(tab.contains("Full load Required")){
+      fla = false;pla = false;flr = true;plr = false;
+    }
+
+    if(tab.contains("Part load Required")){
+      fla = false;pla = false;flr = false;plr = true;
+    }
+    if(isLoadMyPlacedBid){
+
+        selectedPage=0;
+        notifyListeners();
+      getReceviedBids(context,false);
+      notifyListeners();
+
+    }else{
+
+      selectedPageAllBids=0;
+      notifyListeners();
+      getAllBids(context, false);
+      notifyListeners();
+
+    }
+
+  }
+
 }

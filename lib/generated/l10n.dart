@@ -1509,6 +1509,16 @@ class S {
       args: [],
     );
   }
+
+  /// `other`
+  String get other {
+    return Intl.message(
+      'other',
+      name: 'other',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -1517,9 +1527,12 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'gu'),
       Locale.fromSubtags(languageCode: 'hi'),
       Locale.fromSubtags(languageCode: 'kn', countryCode: 'IN'),
       Locale.fromSubtags(languageCode: 'mr'),
+      Locale.fromSubtags(languageCode: 'ta'),
+      Locale.fromSubtags(languageCode: 'te'),
     ];
   }
 

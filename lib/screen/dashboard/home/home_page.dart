@@ -663,7 +663,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Full load  Required ';
+                  provider.drooDwonheading = 'Full vehicle  required ';
                   provider.falseAllFilter();
                   provider.flr = true;
                   provider.notifyListeners();
@@ -672,7 +672,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Full load  Required ',
+                      'Full vehicle  required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -685,7 +685,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Part Load Required ';
+                  provider.drooDwonheading = 'Part vehicle Required ';
                   provider.falseAllFilter();
                   provider.plr = true;
                   provider.notifyListeners();
@@ -694,7 +694,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Part Load Required ',
+                      'Part vehicle Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

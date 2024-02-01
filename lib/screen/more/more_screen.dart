@@ -61,10 +61,11 @@ class _MoreScreen extends State<MoreScreen> {
                 Navigator.pushNamed(context, AppRoutes.job);
 
               },FontWeight.w600),
+              AppConstant.USERTYPE==AppConstant.TRANSPOTER ?
               item(S().buySell,(){
                 Navigator.pushNamed(context, AppRoutes.buysell);
 
-              },FontWeight.w600),
+              },FontWeight.w600):SizedBox(),
               item(S().getVerified,(){
 
                 openVerifiedTag();

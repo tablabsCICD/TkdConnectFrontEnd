@@ -151,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "on": MessageLookupByLibrary.simpleMessage("चालू"),
         "operatingRoutes":
             MessageLookupByLibrary.simpleMessage("परिचालन मार्ग"),
+        "other": MessageLookupByLibrary.simpleMessage("other"),
         "packersAndMovers":
             MessageLookupByLibrary.simpleMessage("पैकर्स और मोवेर्स"),
         "paymentType": MessageLookupByLibrary.simpleMessage("भुगतान प्रकार"),

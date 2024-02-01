@@ -68,10 +68,22 @@ class MessageProvider extends BaseProvider{
           //userChat.add(userAdded(list[i]["name2"], list[i]["loggedUserName2"], "https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1702020994041-5dbfe0b8-3474-4351-b00a-813d8bb4a92e2170825283657788568.jpg"));
 
            if(list[i]["mobileNumber1"]==user.content!.first.mobileNumber){
-             map[list[i]["connectionKey"]]=userAdded(list[i]["name2"], list[i]["mobileNumber2"].toString(),  list[i]["userProfile2"]);
+             String profile="";
+             if(list[i]["userProfile2"]==null){
+               profile="";
+             }else{
+               profile=list[i]["userProfile2"];
+             }
+             map[list[i]["connectionKey"]]=userAdded(list[i]["name2"], list[i]["mobileNumber2"].toString(),  profile);
 
            }else{
-             map[list[i]["connectionKey"]]=userAdded(list[i]["name1"], list[i]["mobileNumber1"].toString(), list[i]["userProfile1"]);
+             String profile="";
+             if(list[i]["userProfile1"]==null){
+               profile="";
+             }else{
+               profile=list[i]["userProfile1"];
+             }
+             map[list[i]["connectionKey"]]=userAdded(list[i]["name1"], list[i]["mobileNumber1"].toString(),profile );
 
            }
         }

@@ -14,6 +14,14 @@ class AppConstant{
  
   static RegisterCompany registerCompany=RegisterCompany();
   static String? FONTFAMILY=GoogleFonts.poppins().fontFamily;
+  static int USERTYPE=0;
+
+  static int AGENT=0;
+  static int TRANSPOTER=1;
+  static int MOVERSANDPACKeR=2;
+  static int MANUFACTURE=3;
+  static int TRUCKDRIVER=6;
+
 
 
 

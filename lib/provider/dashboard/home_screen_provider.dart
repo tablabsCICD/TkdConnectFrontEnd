@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
+import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/comment_response.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:http/http.dart' as http;
@@ -144,6 +145,9 @@ class HomeScreenProvider extends BaseProvider{
      imageUrl=user.content!.first.companyLogo!;
    }
    ispaid=user.content!.first.isPaid!;
+
+   AppConstant.USERTYPE=user.content!.first.transporterOrAgent!;
+    //print('${AppConstant.USERTYPE} the my usertype ${user.content!.first.transporterOrAgent!}');
 
     //callToken();
    notifyListeners();

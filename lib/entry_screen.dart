@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/api_response.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -86,6 +88,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     String val=await localSharePreferences.getLangCode();
     if(isLogin){
      // S.load(Locale("hi"));
+      callToken();
       S.load(Locale(val));
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     }else{
@@ -287,6 +290,18 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
         permissionStatusFuture = getCheckNotificationPermStatus();
       });
     }
+  }
+
+
+  callToken()async {
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    String? token=await FirebaseMessaging.instance.getToken();
+    ApiResponse result=await ApiHelper().apiPost(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
+    if(result.status==200){
+      return "Success";
+    }
+    return "Fail";
+
   }
 
 }

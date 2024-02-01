@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -125,7 +124,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
               if (postBidData.bidings!.length > 0) {
                 showBootomSheet(context,postBidData.bidings);
               } else {
-                ToastMessage.show(context, "No any Bids to show");
+                ToastMessage.show(context, "There are no bids to show ");
               }
             }
             if(val==3){

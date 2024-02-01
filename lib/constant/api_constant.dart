@@ -12,7 +12,7 @@ class ApiConstant {
   static String USER_FIND_BY_MOBILE(mobile) => BASE_URL + "DeleteUser/getByMobileNumber?mobileNumber=$mobile";
   static String DIRECTORY(search) => BASE_URL + "directory?search=$search";
   static String DIRECTORYALL(page) => BASE_URL + "directory?page=$page";
-  static String CHAT_USER_LIST(id) => BASE_URL + "chatBackup/userId/list?userId=$id";
+  static String CHAT_USER_LIST(id) => BASE_URL + "chatBackup/userId?userId=$id";
   static String CHAT_USER_LIST_COMPANY(name) => BASE_URL + "companyRegistration/ByName8?firstName=$name";
 
   static String POST_CHAT = BASE_URL + "chatBackup";
@@ -23,7 +23,9 @@ class ApiConstant {
  // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String OTP_VERIFICATION(mobile,otp) => BASE_URL + "VerifyOtp?mobileNumber=$mobile&otp=$otp";
 
-  static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
+  //static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
+  static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUserWithFilter?userName=$userName&privatePost=0&page=$page";
+
   static String GET_ALL_CITY(page)=>BASE_URL+"get/cities/db/page/search?page=$page";
   static String GET_ALL_CITY_SERACH(city)=>BASE_URL+"get/cities/db/page/search?city=$city";
 
@@ -32,6 +34,7 @@ class ApiConstant {
   static String MY_ROUTE(id)=> BASE_URL + "preferredroutes/userId/${id}";
   static String ROUTE = BASE_URL + "preferredroutes";
   static String MYPOSTBID(id,page) => BASE_URL + "getOwnPostAndBid?userName=$id&page=$page";
+
   static String GETCOMMENTS(id) => BASE_URL + "/getGerenalPostComments?generalPostId=$id";
 
   static String HELPSUPPORTIKET = BASE_URL + "HelpAndSupportTicket";

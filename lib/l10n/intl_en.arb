@@ -162,7 +162,8 @@
   "createPostLoadIssue": "Load Post Issue",
   "buysellIssue": "Buy/Sell Issue",
   "jobIssue": "Create Job Issue",
-  "shareapp": "Share application"
+  "shareapp": "Share application",
+  "other": "other"
 
 
 

@@ -223,7 +223,9 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
   }
 
   dropDwon() {
-    return Container(
+    return Consumer<MyBidsProvider>(
+  builder: (context, provider, child) {
+  return Container(
       //transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -265,7 +267,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                               Expanded(
                                 child: SizedBox(
                                   child: Text(
-                                    'All bids',
+                                    '${provider.selectedString}',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -299,6 +301,8 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
         ],
       ),
     );
+  },
+);
   }
 
 
@@ -322,7 +326,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
           itemBuilder: (context) => [
             PopupMenuItem(
               onTap: () {
-               // provider.changeDropDown("Login issue");
+                provider.changeDropDown("All bids",context);
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -347,7 +351,8 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
             ),
             PopupMenuItem(
                 onTap: () {
-                 // provider.changeDropDown("App crash");
+                  provider.changeDropDown("Full load available",context);
+
                 },
                 child: Row(
                   children: [
@@ -365,7 +370,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  //provider.changeDropDown("Registration");
+                  provider.changeDropDown("Part load available ",context);
                 },
                 child: Row(
                   children: [
@@ -383,7 +388,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  //provider.changeDropDown("Registration");
+                  provider.changeDropDown("Full load Required",context);
                 },
                 child: Row(
                   children: [
@@ -401,12 +406,12 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  //provider.changeDropDown("Registration");
+                  provider.changeDropDown("Part load Required",context);
                 },
                 child: Row(
                   children: [
                     Text(
-                      'Part Load Required ',
+                      'Part load Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

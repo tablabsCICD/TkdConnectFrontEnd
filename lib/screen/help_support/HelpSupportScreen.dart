@@ -474,6 +474,25 @@ class HelpSupportScreen extends StatelessWidget {
                     )
                   ],
                 )),
+
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown(S().other);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      S().other,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
           ],
         );
       },

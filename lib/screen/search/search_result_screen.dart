@@ -37,48 +37,48 @@ class _SearchResultScreen extends State<SearchResultScreen> {
     return Scaffold(
       backgroundColor: ThemeColor.baground,
       body: SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                color: ThemeColor.white,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 15.h,
+        child: Consumer<SearchProvider>(
+          builder: (context, provider, child) {
+            return Container(
+              child: Column(
+                children: [
+                  Container(
+                    color: ThemeColor.white,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 15.h,
+                        ),
+                        searchBar(),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        tabSearch(),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                      ],
                     ),
-                    searchBar(),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    tabSearch(),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 14,
-              ),
-              Consumer<SearchProvider>(
-                builder: (context, provider, child) {
-                  return Visibility(
+                  ),
+                  SizedBox(
+                    height: 14,
+                  ),
+                  Visibility(
                       visible: provider.tabPost,
                       child: SearchPostScreen(
-                        searchProvider: provider,
+                        searchProvider: SearchProvider(""),
                         serach: widget.searchVal,
-                      ));
-                },
+                      )),
+                  Visibility(
+                      visible: !provider.tabPost,
+                      child: SearchUserScreen(
+                        searchProvider: SearchProvider(""),
+                        serachVal: widget.searchVal,
+                      ))
+                ],
               ),
-              Consumer<SearchProvider>(
-                builder: (context, provider, child) {
-                  return Visibility(
-                      visible: !provider.tabPost, child: SearchUserScreen(searchProvider: provider,serachVal: widget.searchVal,));
-                },
-              )
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -117,7 +117,7 @@ class _SearchResultScreen extends State<SearchResultScreen> {
           Visibility(
               visible: isCloseVisible,
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
                 child: SvgPicture.asset(
@@ -175,17 +175,19 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                   child: Container(
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.h),
-                    decoration: provider.tabPost?ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0x332C363F)),
-                      ),
-                    ): ShapeDecoration(
-                      color: Color(0x19001E49),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0x332C363F)),
-                      ),
-                    ),
+                    decoration: provider.tabPost
+                        ? ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Color(0x332C363F)),
+                            ),
+                          )
+                        : ShapeDecoration(
+                            color: Color(0x19001E49),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Color(0x332C363F)),
+                            ),
+                          ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -193,19 +195,21 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                       children: [
                         Text(
                           'Posts',
-                          style: provider.tabPost?TextStyle(
-                            color: Color(0xCC001E49),
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ):TextStyle(
-                            color: Color(0xCC001E49),
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
+                          style: provider.tabPost
+                              ? TextStyle(
+                                  color: Color(0xCC001E49),
+                                  fontSize: 12.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                )
+                              : TextStyle(
+                                  color: Color(0xCC001E49),
+                                  fontSize: 12.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
                         ),
                       ],
                     ),
@@ -220,19 +224,19 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                   child: Container(
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.h),
-                    decoration:
-                    !provider.tabPost?ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0x332C363F)),
-                      ),
-                    ):
-                    ShapeDecoration(
-                      color: Color(0x19001E49),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0x332C363F)),
-                      ),
-                    ),
+                    decoration: !provider.tabPost
+                        ? ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Color(0x332C363F)),
+                            ),
+                          )
+                        : ShapeDecoration(
+                            color: Color(0x19001E49),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Color(0x332C363F)),
+                            ),
+                          ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -240,19 +244,21 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                       children: [
                         Text(
                           'Users',
-                          style: !provider.tabPost? TextStyle(
-                            color: Color(0xCC001E49),
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ):TextStyle(
-                            color: Color(0xCC001E49),
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
+                          style: !provider.tabPost
+                              ? TextStyle(
+                                  color: Color(0xCC001E49),
+                                  fontSize: 12.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                )
+                              : TextStyle(
+                                  color: Color(0xCC001E49),
+                                  fontSize: 12.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
                         ),
                       ],
                     ),

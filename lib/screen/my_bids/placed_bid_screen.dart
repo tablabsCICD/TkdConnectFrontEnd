@@ -132,7 +132,8 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
           ),
           BaseWidget().heading(bids.topicName!, bids.postingTime!.split(" ").first, bids.content!),
           BaseWidget().onlyBidButton((){
-            widget.provider.deleteBid(index, bids, context);
+             //provider.deleteBid(index, bids, context);
+
           })
         ],
       ),

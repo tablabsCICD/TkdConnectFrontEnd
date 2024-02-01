@@ -90,7 +90,7 @@ class CommentProvider extends BaseProvider {
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     EasyLoading.show(status: "Loading");
-    String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}";
+    String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}&userId=${user.content!.first.id}";
 
     print('the url $url');
 
@@ -106,7 +106,14 @@ class CommentProvider extends BaseProvider {
       }
       EasyLoading.dismiss();
       notifyListeners();
+    }else{
+      if(req.statusCode==405){
+        ToastMessage.show(context, "You already like this post");
+      }
+      //print('the status code is ${req.statusCode}');
+      EasyLoading.dismiss();
     }
+
   }
 
 

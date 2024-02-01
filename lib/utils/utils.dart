@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:tkd_connect/constant/images.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
@@ -122,6 +124,30 @@ class Utils {
         return "";
     }
 
+
+
   }
+
+  String mainTag(String tag){
+    switch(tag){
+      case 'Full load available':
+        return 'Full load available';
+      case 'Part load available':
+        return 'Part load available';
+      case 'Full load required':
+        return 'Full vehicle required';
+      case 'Part load required':
+        return 'Part vehicle required';
+
+
+      case '':
+
+    }
+
+
+    return "";
+  }
+
+
 
 }

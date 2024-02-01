@@ -9,6 +9,7 @@ import 'package:tkd_connect/utils/utils.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/transport_directory_search.dart';
+import '../../route/app_routes.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class SearchUserScreen extends StatefulWidget {
@@ -45,7 +46,9 @@ class _SearchUserState extends State<SearchUserScreen> {
       builder: (context, provider, child) {
         return Container(
           child: Expanded(
-            child: ListView.builder(
+            child:
+            provider.user.length==0 && provider.isLoadingUser ? Text("No User Found"):
+            ListView.builder(
                 itemCount: widget.searchProvider.user.length,
                 itemBuilder: (BuildContext context, int index) {
                   return userItem(widget.searchProvider.user[index]);
@@ -141,7 +144,10 @@ class _SearchUserState extends State<SearchUserScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+
+                      Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: user);
+                    },
                     child: SvgPicture.asset(Images.profilepicture)),
                 SizedBox(width: 12.w),
                 InkWell(
