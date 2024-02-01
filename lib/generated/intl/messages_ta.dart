@@ -1,0 +1,160 @@
+// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
+// This is a library that provides messages for a ta locale. All the
+// messages from the main program should be duplicated here with the same
+// function name.
+
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+
+import 'package:intl/intl.dart';
+import 'package:intl/message_lookup_by_library.dart';
+
+final messages = new MessageLookup();
+
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+
+class MessageLookup extends MessageLookupByLibrary {
+  String get localeName => 'ta';
+
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Change_number": MessageLookupByLibrary.simpleMessage("எண்ணை மாற்று"),
+        "EnterOTP": MessageLookupByLibrary.simpleMessage("OTP ஐ உள்ளிடவும்"),
+        "Enter_mobile_number":
+            MessageLookupByLibrary.simpleMessage("மொபைல் எண்ணை உள்ளிடவும்"),
+        "Havent_received_OTP":
+            MessageLookupByLibrary.simpleMessage("OTP பெறவில்லையா?"),
+        "Next": MessageLookupByLibrary.simpleMessage("அடுத்து"),
+        "OR": MessageLookupByLibrary.simpleMessage("அல்லது"),
+        "OTP_sent_to":
+            MessageLookupByLibrary.simpleMessage("OTP அனுப்பப்பட்டது"),
+        "Resend_OTP":
+            MessageLookupByLibrary.simpleMessage(" OTPயை மீண்டும் அனுப்பு"),
+        "Send_OTP": MessageLookupByLibrary.simpleMessage("அனுப்பு_OTP"),
+        "Submit": MessageLookupByLibrary.simpleMessage("சமர்ப்பி"),
+        "aboutCompany": MessageLookupByLibrary.simpleMessage("நிறுவனம் பற்றி"),
+        "addImagesAt": MessageLookupByLibrary.simpleMessage(
+            "வெறும் ₹0க்கு படங்களைச் சேர்"),
+        "addRoutes": MessageLookupByLibrary.simpleMessage(
+            "சிறந்த முன்னணி உருவாக்கத்திற்கான வழிகளைச் சேர்"),
+        "agentBroker": MessageLookupByLibrary.simpleMessage("முகவர்/தரகர்"),
+        "allRoutes": MessageLookupByLibrary.simpleMessage("அனைத்து வழிகளும்"),
+        "allUsers": MessageLookupByLibrary.simpleMessage("அனைத்து பயனர்கள்"),
+        "already_have_account":
+            MessageLookupByLibrary.simpleMessage("ஏற்கனவே கணக்கு உள்ளதா?"),
+        "appCrash": MessageLookupByLibrary.simpleMessage("ஆப் கிராஷ்"),
+        "appSetting":
+            MessageLookupByLibrary.simpleMessage("பயன்பாட்டு அமைப்பு"),
+        "businessDetails":
+            MessageLookupByLibrary.simpleMessage("வணிக விவரங்கள்"),
+        "businessInfo": MessageLookupByLibrary.simpleMessage("வணிக தகவல்"),
+        "buy": MessageLookupByLibrary.simpleMessage("வாங்க"),
+        "buySell": MessageLookupByLibrary.simpleMessage("வாகனம் வாங்க/விற்க"),
+        "buysellIssue":
+            MessageLookupByLibrary.simpleMessage("வெளியீடு வாங்க/விற்க"),
+        "call": MessageLookupByLibrary.simpleMessage("அழை"),
+        "cargoType": MessageLookupByLibrary.simpleMessage("சரக்கு வகை"),
+        "chooseATopic":
+            MessageLookupByLibrary.simpleMessage("ஒரு தலைப்பைத் தேர்ந்தெடு"),
+        "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
+            "வழிகளைச் சேர்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்"),
+        "companyName":
+            MessageLookupByLibrary.simpleMessage("நிறுவனத்தின் பெயர்"),
+        "createJobPost":
+            MessageLookupByLibrary.simpleMessage("வேலை இடுகையை உருவாக்கு"),
+        "createPost":
+            MessageLookupByLibrary.simpleMessage("ஒரு இடுகையை உருவாக்கு"),
+        "createPostLoadIssue":
+            MessageLookupByLibrary.simpleMessage("Load Post Issue"),
+        "deleteMsg": MessageLookupByLibrary.simpleMessage(
+            "இந்த இடுகையை நீக்க விரும்புகிறீர்களா."),
+        "directory": MessageLookupByLibrary.simpleMessage("அடைவு"),
+        "editProfile":
+            MessageLookupByLibrary.simpleMessage("சுயவிவரத்தைத் திருத்து"),
+        "editYourProfile": MessageLookupByLibrary.simpleMessage(
+            "உங்கள் சுயவிவரத்தைத் திருத்தவும்"),
+        "egFristName": MessageLookupByLibrary.simpleMessage("எ.கா. ராகுல்"),
+        "egJobDes": MessageLookupByLibrary.simpleMessage("வேலை விளக்கம்"),
+        "egLastName": MessageLookupByLibrary.simpleMessage("எ.கா. கடைசி பெயர்"),
+        "egMail": MessageLookupByLibrary.simpleMessage(
+            "ஜிமெயில் எ.கா.rahul.gmail.com"),
+        "egManageInquiries":
+            MessageLookupByLibrary.simpleMessage("எ.கா. விசாரணைகளை நிர்வகி"),
+        "egMobile":
+            MessageLookupByLibrary.simpleMessage(" எ.கா.மொபைல் 9859XXXX "),
+        "egPune": MessageLookupByLibrary.simpleMessage("எ.கா.புனே"),
+        "egSal": MessageLookupByLibrary.simpleMessage("எ.கா. 1LPA -2 LPA"),
+        "egSeniorManager": MessageLookupByLibrary.simpleMessage(
+            "எ.கா. மூத்த போக்குவரத்து மேலாளர்"),
+        "egSubTitle":
+            MessageLookupByLibrary.simpleMessage("எ.கா. துணை தலைப்பு"),
+        "egTitleofPost":
+            MessageLookupByLibrary.simpleMessage("எ.கா. இடுகையின் தலைப்பு"),
+        "email_id": MessageLookupByLibrary.simpleMessage("Email-Id"),
+        "enterQuoteAmount":
+            MessageLookupByLibrary.simpleMessage("மேற்கோள் தொகையை உள்ளிடவும்"),
+        "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
+        "from": MessageLookupByLibrary.simpleMessage("இருந்து"),
+        "getVerified": MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்படு"),
+        "helpSupport": MessageLookupByLibrary.simpleMessage("உதவி & ஆதரவு"),
+        "introOneDescription": MessageLookupByLibrary.simpleMessage(
+            "வணக்கம்! உங்கள் தளவாட அனுபவத்தை மேம்படுத்த நாங்கள் இங்கு வந்துள்ளோம். உங்களின் தளவாட உதவியாக இருக்கட்டும், உங்கள் வணிகத் தேவைகள் தடையின்றி நிறைவேற்றப்படும்."),
+        "introThreeDescription": MessageLookupByLibrary.simpleMessage(
+            "எங்கள் பரந்த நெட்வொர்க்குடன், நீங்கள் பரந்த அளவில் அடைய உதவுவோம்."),
+        "introTwoDescription": MessageLookupByLibrary.simpleMessage(
+            "உங்கள் தேவைகள் எங்கள் திறமைகள். இரண்டையும் இணைத்து ஒன்றாக எழுவோம்"),
+        "jobDes": MessageLookupByLibrary.simpleMessage("வேலை விளக்கம்"),
+        "jobTitle": MessageLookupByLibrary.simpleMessage("வேலை தலைப்பு"),
+        "jobs": MessageLookupByLibrary.simpleMessage("வேலைகள்"),
+        "like": MessageLookupByLibrary.simpleMessage("Like"),
+        "loadWeight": MessageLookupByLibrary.simpleMessage("சுமை எடை"),
+        "loginIssue": MessageLookupByLibrary.simpleMessage("உள்நுழைவு சிக்கல்"),
+        "login_to_continue":
+            MessageLookupByLibrary.simpleMessage("தொடர உள்நுழை"),
+        "logout": MessageLookupByLibrary.simpleMessage("வெளியேறு"),
+        "logoutMsg": MessageLookupByLibrary.simpleMessage(
+            "நீங்கள் வெளியேற விரும்புகிறீர்களா"),
+        "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
+            "உற்பத்தியாளர்/விநியோகஸ்தர்/வர்த்தகம்"),
+        "mobileNumber": MessageLookupByLibrary.simpleMessage("மொபைல் எண்"),
+        "myPost": MessageLookupByLibrary.simpleMessage("எனது இடுகைகள்"),
+        "myQuotes": MessageLookupByLibrary.simpleMessage("என் மேற்கோள்கள்"),
+        "myRoutes": MessageLookupByLibrary.simpleMessage("எனது வழிகள்"),
+        "no": MessageLookupByLibrary.simpleMessage("இல்லை"),
+        "noRecordFound":
+            MessageLookupByLibrary.simpleMessage("பதிவு எதுவும் கிடைக்கவில்லை"),
+        "pleaseSelectTopic": MessageLookupByLibrary.simpleMessage(
+            "தயவுசெய்து தலைப்பைத் தேர்ந்தெடுக்கவும்"),
+        "postAJob":
+            MessageLookupByLibrary.simpleMessage("ஒரு வேலையை இடுகையிடு"),
+        "postJob": MessageLookupByLibrary.simpleMessage("Post Job"),
+        "postLoad": MessageLookupByLibrary.simpleMessage("Post Load"),
+        "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
+        "quotesYouPlaced":
+            MessageLookupByLibrary.simpleMessage("நீங்கள் வைத்த மேற்கோள்"),
+        "raiseATicket":
+            MessageLookupByLibrary.simpleMessage("ஒரு டிக்கெட்டை உயர்த்தவும்"),
+        "saveChange": MessageLookupByLibrary.simpleMessage("மாற்றங்களைச் சேமி"),
+        "searchPlace": MessageLookupByLibrary.simpleMessage("தேடல் இடம்"),
+        "searchUsersCompanies": MessageLookupByLibrary.simpleMessage(
+            "பயனர்கள் மற்றும் நிறுவனங்களைத் தேடுங்கள்"),
+        "selectOne": MessageLookupByLibrary.simpleMessage("ஒன்றை தேர்ந்தெடு"),
+        "showAllQuotes": MessageLookupByLibrary.simpleMessage(
+            "அனைத்து மேற்கோள்களையும் காட்டு"),
+        "specifyRequiredExperience": MessageLookupByLibrary.simpleMessage(
+            "தேவையான அனுபவத்தைக் குறிப்பிடவும்"),
+        "subtitle": MessageLookupByLibrary.simpleMessage("Subtitle"),
+        "textlogin": MessageLookupByLibrary.simpleMessage("உள்நுழை"),
+        "title": MessageLookupByLibrary.simpleMessage("தலைப்பு"),
+        "toCity": MessageLookupByLibrary.simpleMessage("To City"),
+        "verifiedUsers":
+            MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்பட்ட பயனர்கள்"),
+        "viewProfile":
+            MessageLookupByLibrary.simpleMessage("சுயவிவரத்தைக் காண்க"),
+        "yes": MessageLookupByLibrary.simpleMessage("ஆம்")
+      };
+}
