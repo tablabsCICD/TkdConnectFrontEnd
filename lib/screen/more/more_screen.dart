@@ -1,10 +1,14 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/route/app_routes.dart';
@@ -12,6 +16,7 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/userdata.dart';
@@ -30,10 +35,14 @@ class _MoreScreen extends State<MoreScreen> {
   late User user;
   bool isLoad=true;
 
+
+
+
   @override
   void initState() {
     super.initState();
     getLogin();
+
   }
 
   getLogin()async{
@@ -89,6 +98,11 @@ class _MoreScreen extends State<MoreScreen> {
                 Utils().callShareFunction(meesage);
 
 
+
+              },FontWeight.w400),
+
+              item(S().rateAndReviewApp,() async {
+                Utils().requestReview(context);
 
               },FontWeight.w400),
 
