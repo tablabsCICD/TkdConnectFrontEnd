@@ -1510,6 +1510,15 @@ class S {
     );
   }
 
+  String get rateAndReviewApp {
+    return Intl.message(
+      'Rate and review app',
+      name: 'rateAndReviewApp',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `other`
   String get other {
     return Intl.message(
