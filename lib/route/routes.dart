@@ -61,6 +61,16 @@ class RouteGenerator {
         return buildRoute(
           OTPScreen(
             mobileNumber: mobile,
+            isRegistration: false,
+          ),
+          settings: settings,
+        );
+        case AppRoutes.otp_registration:
+        String mobile = settings.arguments as String;
+        return buildRoute(
+          OTPScreen(
+            mobileNumber: mobile,
+            isRegistration: true,
           ),
           settings: settings,
         );

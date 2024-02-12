@@ -39,7 +39,7 @@ class LocalNotificationService{
 
   static void createanddisplaynotification(RemoteMessage message) async {
 
-    print('the notification is ${message.notification!.body}');
+   // print('the notification is ${message.notification!.body}');
     try {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       const NotificationDetails notificationDetails = NotificationDetails(

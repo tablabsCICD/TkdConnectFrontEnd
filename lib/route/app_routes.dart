@@ -3,6 +3,7 @@ class AppRoutes {
   static const login = '/login';
   static const register = '/register';
   static const otp = '/OTP';
+  static const otp_registration = '/OTP_REGI';
   static const select_lang = '/select';
   static const entryScreen = '/entryScreen';
   static const intro_one = '/intro_one';

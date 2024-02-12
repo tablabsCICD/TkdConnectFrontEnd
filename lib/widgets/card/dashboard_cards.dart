@@ -6,13 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:intl/intl.dart';
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
 import '../../provider/dashboard/delete_interface.dart';
 import '../../utils/utils.dart';
 import 'base_widgets.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
 class AllCards {
 
 
@@ -73,7 +73,7 @@ class AllCards {
             height: 12.h,
           ),
           imageLoad(load),
-          BaseWidget().heading(load.topicName!, load.postingTime!.split(" ").first, load.content!),
+          BaseWidget().heading(load.topicName!, getDateObject(load.postingTime), load.content!),
 
 
          load.userId==userId ?BaseWidget().deleteButton((val) {
@@ -152,22 +152,47 @@ class AllCards {
             height: 12.h,
           ),
           imageLoad(load),
-          BaseWidget().heading(load.topicName!, load.postingTime!.split(" ").first, load.content!),
+          BaseWidget().heading(load.topicName!, getDateObject(load.postingTime), load.content!),
 
 
           load.userId==userId ?BaseWidget().deleteButton((val) {
             if(val==10){
                 postDelete.deleteOwnPost(load.id!,index);
             }else{
-              Utils().openMenu(val, load, context);
+              if(load.dnd==0){
+                ToastMessage.show(context, "This is DND Post");
+              }else{
+                Utils().openMenu(val, load, context);
+              }
+
             }
 
           }) :BaseWidget().bidButton((val) {
-            Utils().openMenu(val, load, context);
+            if(load.dnd==0){
+              ToastMessage.show(context, "This is DND Post");
+            }else{
+              Utils().openMenu(val, load, context);
+            }
           })
         ],
       ),
     );
+  }
+
+  getDateObject(String? dateTime){
+    try{
+      DateTime formatedDate = DateTime.parse(dateTime!);
+      print(formatedDate);
+      var date1 = DateFormat("yyyy-MM-dd").format(formatedDate);
+      var todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+      if(date1 == todayDate){
+        date1 = DateFormat("H:mm").format(formatedDate);
+      }
+      return date1;
+    }catch(e){
+      return dateTime;
+    }
+
   }
 
   cardLoadPrivateHome(int index, BuildContext context, TruckLoad load,int userId,DeletePostInf postDelete) {
@@ -227,7 +252,7 @@ class AllCards {
             height: 12.h,
           ),
           imageLoad(load),
-          BaseWidget().heading(load.topicName!, load.postingTime!.split(" ").first, load.content!),
+          BaseWidget().heading(load.topicName!, getDateObject(load.postingTime), load.content!),
 
 
           load.userId==userId ?BaseWidget().deleteButton((val) {
@@ -335,7 +360,7 @@ class AllCards {
           // ),
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
-              child: BaseWidget().heading(truckLoad.topicName!, "", truckLoad.content!)),
+              child: BaseWidget().heading(truckLoad.topicName!, getDateObject(truckLoad.postingTime), truckLoad.content!)),
           SizedBox(
             height: 5.h,
           ),

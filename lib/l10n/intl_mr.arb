@@ -162,5 +162,15 @@
   "jobIssue": "नोकरी समस्या तयार करा",
   "shareapp": "अॅप शेअर करा",
   "business_type": "व्यवसाय प्रकार निवडा",
-  "other": "other"
+  "other": "इतर",
+
+
+  "registration_personal": "नोंदणी - वैयक्तिक तपशील",
+  "Re_post": "पुन्हा पोस्ट",
+  "change_plan": "योजना बदला",
+  "type_of_company": "कंपनी चा प्रकार",
+  "recent_search": "अलीकडील शोध",
+  "search_here": "येथे शोधा",
+  "posts": "पोस्ट",
+  "users": "वापरकर्ते"
 }

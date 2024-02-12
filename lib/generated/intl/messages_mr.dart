@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "OR": MessageLookupByLibrary.simpleMessage("किंवा"),
         "OTP_sent_to":
             MessageLookupByLibrary.simpleMessage("ओटीपी यांना पाठवले"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("पुन्हा पोस्ट"),
         "RegisterHere": MessageLookupByLibrary.simpleMessage("येथे नोंदणी करा"),
         "Resend_OTP": MessageLookupByLibrary.simpleMessage(" OTP पुन्हा पाठवा"),
         "Send_OTP": MessageLookupByLibrary.simpleMessage("OTP पाठवा"),
@@ -62,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "call": MessageLookupByLibrary.simpleMessage("कॉल करा"),
         "cargoType": MessageLookupByLibrary.simpleMessage("कार्गो प्रकार"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("भाषा बदला"),
+        "change_plan": MessageLookupByLibrary.simpleMessage("योजना बदला"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("कमाल वर्ण"),
         "charactersRemaining":
             MessageLookupByLibrary.simpleMessage("उर्वरित वर्ण"),
@@ -151,7 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "on": MessageLookupByLibrary.simpleMessage("चालू"),
         "operatingRoutes":
             MessageLookupByLibrary.simpleMessage("ऑपरेटिंग मार्ग"),
-        "other": MessageLookupByLibrary.simpleMessage("other"),
+        "other": MessageLookupByLibrary.simpleMessage("इतर"),
         "packersAndMovers":
             MessageLookupByLibrary.simpleMessage("पॅकर्स आणि मूव्हर्स"),
         "paymentType": MessageLookupByLibrary.simpleMessage("पेमेंट प्रकार"),
@@ -163,6 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post": MessageLookupByLibrary.simpleMessage("पोस्ट"),
         "postAJob": MessageLookupByLibrary.simpleMessage("नोकरी पोस्ट करा"),
         "postLoad": MessageLookupByLibrary.simpleMessage("पोस्ट लोड"),
+        "posts": MessageLookupByLibrary.simpleMessage("पोस्ट"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("आता कोट करा"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("कोट किंमत"),
         "quotesYouPlaced":
@@ -170,13 +173,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("तुम्हाला मिळालेले कोट"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("तिकीट वाढवा"),
+        "recent_search": MessageLookupByLibrary.simpleMessage("अलीकडील शोध"),
         "registration": MessageLookupByLibrary.simpleMessage("नोंदणी"),
+        "registration_personal":
+            MessageLookupByLibrary.simpleMessage("नोंदणी - वैयक्तिक तपशील"),
         "salary": MessageLookupByLibrary.simpleMessage("पगार"),
         "sales": MessageLookupByLibrary.simpleMessage("विक्री"),
         "saveChange": MessageLookupByLibrary.simpleMessage("बदल जतन करा"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("स्थळ शोधा"),
         "searchUsersCompanies":
             MessageLookupByLibrary.simpleMessage("वापरकर्ते आणि कंपन्या शोधा"),
+        "search_here": MessageLookupByLibrary.simpleMessage("येथे शोधा"),
         "selectOne": MessageLookupByLibrary.simpleMessage("एक निवडा"),
         "sell": MessageLookupByLibrary.simpleMessage("विका"),
         "share": MessageLookupByLibrary.simpleMessage("शेअर करा"),
@@ -197,6 +204,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "traffic": MessageLookupByLibrary.simpleMessage("वाहतूक"),
         "transporter": MessageLookupByLibrary.simpleMessage("वाहतूक"),
         "truckDriver": MessageLookupByLibrary.simpleMessage("ट्रक ड्रायव्हर"),
+        "type_of_company":
+            MessageLookupByLibrary.simpleMessage("कंपनी चा प्रकार"),
+        "users": MessageLookupByLibrary.simpleMessage("वापरकर्ते"),
         "vehicle": MessageLookupByLibrary.simpleMessage("वाहन"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहनाचा आकार"),
         "verifiedUsers":

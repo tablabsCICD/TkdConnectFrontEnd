@@ -10,6 +10,8 @@ import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../generated/l10n.dart';
+import '../../widgets/bottomsheet.dart';
+import '../../widgets/drop_down.dart';
 import '../../widgets/editText.dart';
 import 'experience_screen.dart';
 
@@ -69,8 +71,18 @@ class CreateJobScreen extends StatelessWidget {
                         SizedBox(
                           height: 4,
                         ),
-                        editView(
-                            S().egSal, provider.salController),
+                        // editView(
+                        //     S().egSal, provider.salController),
+
+                        DropDown(
+                          onClick: () async {
+                            ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                            int a = await itemBottomSheet.showIteam(context, provider.salary, provider.selectSal);
+                            provider.selectedJob(a);
+                          },
+                          hint: provider.selectSal,
+                        ),
+
                         SizedBox(
                           height: 12,
                         ),

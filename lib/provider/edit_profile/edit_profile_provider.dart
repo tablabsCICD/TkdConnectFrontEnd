@@ -73,7 +73,7 @@ class EditProfileProvider extends BaseProvider{
     emailNameController.text=user.content!.first.emailId!;
     mobileNameController.text=user.content!.first.mobileNumber.toString()!;
     companyNameController.text=user.content!.first.companyName!;
-    locationController.text=user.content!.first.companyAddress!;
+    locationController.text=user.content!.first.city!;
     if(user.content!.first.transporterOrAgent==0){
       companyTypeController.text=S().agentBroker;
     }else if(user.content!.first.transporterOrAgent==1){

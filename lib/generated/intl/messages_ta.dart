@@ -28,10 +28,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("மொபைல் எண்ணை உள்ளிடவும்"),
         "Havent_received_OTP":
             MessageLookupByLibrary.simpleMessage("OTP பெறவில்லையா?"),
+        "NewUser": MessageLookupByLibrary.simpleMessage("புதிய பயனர்"),
         "Next": MessageLookupByLibrary.simpleMessage("அடுத்து"),
         "OR": MessageLookupByLibrary.simpleMessage("அல்லது"),
         "OTP_sent_to":
             MessageLookupByLibrary.simpleMessage("OTP அனுப்பப்பட்டது"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("மறு இடுகை"),
+        "RegisterHere":
+            MessageLookupByLibrary.simpleMessage(" இங்கே பதிவு செய்யுங்கள்"),
         "Resend_OTP":
             MessageLookupByLibrary.simpleMessage(" OTPயை மீண்டும் அனுப்பு"),
         "Send_OTP": MessageLookupByLibrary.simpleMessage("அனுப்பு_OTP"),
@@ -58,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("வெளியீடு வாங்க/விற்க"),
         "call": MessageLookupByLibrary.simpleMessage("அழை"),
         "cargoType": MessageLookupByLibrary.simpleMessage("சரக்கு வகை"),
+        "change_plan":
+            MessageLookupByLibrary.simpleMessage("திட்டத்தை மாற்றவும்"),
         "chooseATopic":
             MessageLookupByLibrary.simpleMessage("ஒரு தலைப்பைத் தேர்ந்தெடு"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
@@ -69,7 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createPost":
             MessageLookupByLibrary.simpleMessage("ஒரு இடுகையை உருவாக்கு"),
         "createPostLoadIssue":
-            MessageLookupByLibrary.simpleMessage("Load Post Issue"),
+            MessageLookupByLibrary.simpleMessage("இடுகைச் சிக்கலை ஏற்றவும்"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "இந்த இடுகையை நீக்க விரும்புகிறீர்களா."),
         "directory": MessageLookupByLibrary.simpleMessage("அடைவு"),
@@ -94,10 +100,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("எ.கா. துணை தலைப்பு"),
         "egTitleofPost":
             MessageLookupByLibrary.simpleMessage("எ.கா. இடுகையின் தலைப்பு"),
-        "email_id": MessageLookupByLibrary.simpleMessage("Email-Id"),
+        "email_id": MessageLookupByLibrary.simpleMessage("மின்னஞ்சல் முகவரி"),
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("மேற்கோள் தொகையை உள்ளிடவும்"),
-        "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
+        "firstName": MessageLookupByLibrary.simpleMessage("முதல் பெயர்"),
         "from": MessageLookupByLibrary.simpleMessage("இருந்து"),
         "getVerified": MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்படு"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("உதவி & ஆதரவு"),
@@ -110,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "jobDes": MessageLookupByLibrary.simpleMessage("வேலை விளக்கம்"),
         "jobTitle": MessageLookupByLibrary.simpleMessage("வேலை தலைப்பு"),
         "jobs": MessageLookupByLibrary.simpleMessage("வேலைகள்"),
-        "like": MessageLookupByLibrary.simpleMessage("Like"),
+        "like": MessageLookupByLibrary.simpleMessage("பிடிக்கும்"),
         "loadWeight": MessageLookupByLibrary.simpleMessage("சுமை எடை"),
         "loginIssue": MessageLookupByLibrary.simpleMessage("உள்நுழைவு சிக்கல்"),
         "login_to_continue":
@@ -131,26 +137,38 @@ class MessageLookup extends MessageLookupByLibrary {
             "தயவுசெய்து தலைப்பைத் தேர்ந்தெடுக்கவும்"),
         "postAJob":
             MessageLookupByLibrary.simpleMessage("ஒரு வேலையை இடுகையிடு"),
-        "postJob": MessageLookupByLibrary.simpleMessage("Post Job"),
-        "postLoad": MessageLookupByLibrary.simpleMessage("Post Load"),
-        "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
+        "postJob": MessageLookupByLibrary.simpleMessage("பதவிக்கான வேலை"),
+        "postLoad": MessageLookupByLibrary.simpleMessage("போஸ்ட் லோட்"),
+        "posts": MessageLookupByLibrary.simpleMessage("இடுகைகள்"),
+        "quotesNow": MessageLookupByLibrary.simpleMessage("இப்போது மேற்கோள்"),
         "quotesYouPlaced":
             MessageLookupByLibrary.simpleMessage("நீங்கள் வைத்த மேற்கோள்"),
+        "quotesYouReceived":
+            MessageLookupByLibrary.simpleMessage("நீங்கள் பெற்ற மேற்கோள்"),
         "raiseATicket":
             MessageLookupByLibrary.simpleMessage("ஒரு டிக்கெட்டை உயர்த்தவும்"),
+        "recent_search":
+            MessageLookupByLibrary.simpleMessage("சமீபத்திய தேடல்கள்"),
+        "registration_personal":
+            MessageLookupByLibrary.simpleMessage("பதிவு - தனிப்பட்ட விவரங்கள்"),
         "saveChange": MessageLookupByLibrary.simpleMessage("மாற்றங்களைச் சேமி"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("தேடல் இடம்"),
         "searchUsersCompanies": MessageLookupByLibrary.simpleMessage(
             "பயனர்கள் மற்றும் நிறுவனங்களைத் தேடுங்கள்"),
+        "search_here": MessageLookupByLibrary.simpleMessage("இங்கே தேடவும்"),
         "selectOne": MessageLookupByLibrary.simpleMessage("ஒன்றை தேர்ந்தெடு"),
+        "sell": MessageLookupByLibrary.simpleMessage("விற்க"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage(
             "அனைத்து மேற்கோள்களையும் காட்டு"),
         "specifyRequiredExperience": MessageLookupByLibrary.simpleMessage(
             "தேவையான அனுபவத்தைக் குறிப்பிடவும்"),
-        "subtitle": MessageLookupByLibrary.simpleMessage("Subtitle"),
+        "subtitle": MessageLookupByLibrary.simpleMessage("வசனம்"),
         "textlogin": MessageLookupByLibrary.simpleMessage("உள்நுழை"),
         "title": MessageLookupByLibrary.simpleMessage("தலைப்பு"),
-        "toCity": MessageLookupByLibrary.simpleMessage("To City"),
+        "toCity": MessageLookupByLibrary.simpleMessage("நகரத்திற்கு"),
+        "type_of_company":
+            MessageLookupByLibrary.simpleMessage("நிறுவனத்தின் வகை"),
+        "users": MessageLookupByLibrary.simpleMessage("பயனர்கள்"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்பட்ட பயனர்கள்"),
         "viewProfile":

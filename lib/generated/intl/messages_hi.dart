@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Next": MessageLookupByLibrary.simpleMessage("अगला"),
         "OR": MessageLookupByLibrary.simpleMessage("या"),
         "OTP_sent_to": MessageLookupByLibrary.simpleMessage("ओटीपी भेजा गया"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("पुन: पोस्ट"),
         "RegisterHere":
             MessageLookupByLibrary.simpleMessage(" यहां रजिस्टर करें"),
         "Resend_OTP": MessageLookupByLibrary.simpleMessage(" ओटीपी पुनः भेजें"),
@@ -65,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "call": MessageLookupByLibrary.simpleMessage("कॉल"),
         "cargoType": MessageLookupByLibrary.simpleMessage("कार्गो प्रकार"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("भाषा बदलें"),
+        "change_plan": MessageLookupByLibrary.simpleMessage("योजना बदलें"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("अक्षर अधिकतम"),
         "charactersRemaining": MessageLookupByLibrary.simpleMessage("शेष वर्ण"),
         "chat": MessageLookupByLibrary.simpleMessage("गपशप"),
@@ -115,11 +117,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "helpSupport": MessageLookupByLibrary.simpleMessage("मदद समर्थन"),
         "home": MessageLookupByLibrary.simpleMessage("मुखपृष्ठ"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
-            "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly."),
+            "नमस्ते! हम यहां आपके लॉजिस्टिक्स अनुभव को बेहतर बनाने के लिए हैं। आइए हम आपकी लॉजिस्टिक सहायता बनें और आपकी व्यावसायिक ज़रूरतें निर्बाध रूप से पूरी होंगी।"),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
-            "With our wide network, we shall help you reach wider."),
+            "अपने विस्तृत नेटवर्क के साथ, हम आपको व्यापक स्तर तक पहुँचने में मदद करेंगे।"),
         "introTwoDescription": MessageLookupByLibrary.simpleMessage(
-            "Your needs are our skills. Let us combine the two and rise up together"),
+            "आपकी जरूरतें हमारी कुशलताएं हैं। आइए हम दोनों को मिलाएं और एक साथ आगे बढ़ें"),
         "jobDes": MessageLookupByLibrary.simpleMessage("नौकरी का विवरण"),
         "jobIssue": MessageLookupByLibrary.simpleMessage("नौकरी समस्या बनाएँ"),
         "jobTitle": MessageLookupByLibrary.simpleMessage("नौकरी का नाम"),
@@ -151,7 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "on": MessageLookupByLibrary.simpleMessage("चालू"),
         "operatingRoutes":
             MessageLookupByLibrary.simpleMessage("परिचालन मार्ग"),
-        "other": MessageLookupByLibrary.simpleMessage("other"),
+        "other": MessageLookupByLibrary.simpleMessage("अन्य"),
         "packersAndMovers":
             MessageLookupByLibrary.simpleMessage("पैकर्स और मोवेर्स"),
         "paymentType": MessageLookupByLibrary.simpleMessage("भुगतान प्रकार"),
@@ -166,6 +168,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "postAJob": MessageLookupByLibrary.simpleMessage("नौकरी पोस्ट करो"),
         "postJob": MessageLookupByLibrary.simpleMessage("नौकरी के पोस्ट"),
         "postLoad": MessageLookupByLibrary.simpleMessage("पोस्ट लोड"),
+        "posts": MessageLookupByLibrary.simpleMessage("पदों"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("अब उद्धरण"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("उद्धरण मूल्य"),
         "quotesYouPlaced":
@@ -173,7 +176,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("आपको प्राप्त उद्धरण"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("एक टिकट उठाएँ"),
+        "recent_search": MessageLookupByLibrary.simpleMessage("हाल की खोजें"),
         "registration": MessageLookupByLibrary.simpleMessage("पंजीकरण समस्या"),
+        "registration_personal":
+            MessageLookupByLibrary.simpleMessage("पंजीकरण - व्यक्तिगत विवरण"),
         "salary": MessageLookupByLibrary.simpleMessage("वेतन"),
         "sales": MessageLookupByLibrary.simpleMessage("बिक्री"),
         "saveChange":
@@ -181,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchPlace": MessageLookupByLibrary.simpleMessage("स्थान खोजें"),
         "searchUsersCompanies": MessageLookupByLibrary.simpleMessage(
             "उपयोगकर्ता और कंपनियां खोजें"),
+        "search_here": MessageLookupByLibrary.simpleMessage("यहां तलाश करो"),
         "selectOne": MessageLookupByLibrary.simpleMessage("एक का चयन करें"),
         "sell": MessageLookupByLibrary.simpleMessage("बेचना"),
         "share": MessageLookupByLibrary.simpleMessage("शेयर करना"),
@@ -202,6 +209,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "traffic": MessageLookupByLibrary.simpleMessage("ट्रैफ़िक"),
         "transporter": MessageLookupByLibrary.simpleMessage("ट्रांसपोर्टर"),
         "truckDriver": MessageLookupByLibrary.simpleMessage("ट्रक चालक"),
+        "type_of_company":
+            MessageLookupByLibrary.simpleMessage("कंपनी के प्रकार"),
+        "users": MessageLookupByLibrary.simpleMessage("उपयोगकर्ताओं"),
         "vehicle": MessageLookupByLibrary.simpleMessage("वाहन"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहन का आकार"),
         "verifiedUsers":

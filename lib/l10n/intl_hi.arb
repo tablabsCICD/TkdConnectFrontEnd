@@ -48,9 +48,9 @@
   "createPost": "एक पोस्ट बनाएं",
 
 
-  "introOneDescription": "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly.",
-  "introTwoDescription": "Your needs are our skills. Let us combine the two and rise up together",
-  "introThreeDescription": "With our wide network, we shall help you reach wider.",
+  "introOneDescription": "नमस्ते! हम यहां आपके लॉजिस्टिक्स अनुभव को बेहतर बनाने के लिए हैं। आइए हम आपकी लॉजिस्टिक सहायता बनें और आपकी व्यावसायिक ज़रूरतें निर्बाध रूप से पूरी होंगी।",
+  "introTwoDescription": "आपकी जरूरतें हमारी कुशलताएं हैं। आइए हम दोनों को मिलाएं और एक साथ आगे बढ़ें",
+  "introThreeDescription": "अपने विस्तृत नेटवर्क के साथ, हम आपको व्यापक स्तर तक पहुँचने में मदद करेंगे।",
 
 
   "myPost": "मेरी पोस्ट",
@@ -165,5 +165,14 @@
   "jobIssue": "नौकरी समस्या बनाएँ",
   "shareapp": "ऐप शेयर करें",
   "business_type": "व्यवसाय प्रकार चुनें",
-  "other": "other"
+  "other": "अन्य",
+
+  "registration_personal": "पंजीकरण - व्यक्तिगत विवरण",
+  "Re_post": "पुन: पोस्ट",
+  "change_plan": "योजना बदलें",
+  "type_of_company": "कंपनी के प्रकार",
+  "recent_search": "हाल की खोजें",
+  "search_here": "यहां तलाश करो",
+  "posts": "पदों",
+  "users": "उपयोगकर्ताओं"
 }

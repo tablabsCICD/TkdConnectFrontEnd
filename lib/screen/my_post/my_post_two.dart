@@ -42,7 +42,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
             builder: (context, provider, child) {
               return
                 provider.listOwnBid.length==0?Center(
-                  child: Text("No Post Found"),
+                  child: Text(S().noRecordFound),
                 ):
                 ListView.builder(
                 controller: provider.scrollController,

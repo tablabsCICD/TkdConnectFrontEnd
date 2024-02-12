@@ -3,7 +3,7 @@ class User {
   bool? last;
   int? totalPages;
   int? totalElements;
-  Null? sort;
+  dynamic? sort;
   bool? first;
   int? numberOfElements;
   int? size;
@@ -73,7 +73,7 @@ class UserData {
   String? companyLogo;
   String? aadharCard;
   String? otp;
-  double? ratings;
+  dynamic? ratings;
   int? numberOfTimesRating;
   String? password;
   String? deviceId;

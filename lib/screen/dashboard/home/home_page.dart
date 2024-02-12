@@ -705,6 +705,28 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                     )
                   ],
                 )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.drooDwonheading = 'General Post ';
+                  provider.falseAllFilter();
+                  provider.gp = true;
+                  provider.notifyListeners();
+                  provider.applyDropDwonFilter(context);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'General Post ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                ))
           ],
         );
       },

@@ -323,7 +323,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "DND",
+                                  "Do Not Disturb",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 12.sp,

@@ -1500,10 +1500,10 @@ class S {
     );
   }
 
-  /// `Share application`
+  /// `Share application and Earn Surprise Gift`
   String get shareapp {
     return Intl.message(
-      'Share application',
+      'Share application and Earn Surprise Gift',
       name: 'shareapp',
       desc: '',
       args: [],
@@ -1515,6 +1515,86 @@ class S {
     return Intl.message(
       'other',
       name: 'other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration - Personal details`
+  String get registration_personal {
+    return Intl.message(
+      'Registration - Personal details',
+      name: 'registration_personal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-post`
+  String get Re_post {
+    return Intl.message(
+      'Re-post',
+      name: 'Re_post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Plan`
+  String get change_plan {
+    return Intl.message(
+      'Change Plan',
+      name: 'change_plan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type of Company`
+  String get type_of_company {
+    return Intl.message(
+      'Type of Company',
+      name: 'type_of_company',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent searches`
+  String get recent_search {
+    return Intl.message(
+      'Recent searches',
+      name: 'recent_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search here`
+  String get search_here {
+    return Intl.message(
+      'Search here',
+      name: 'search_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Posts`
+  String get posts {
+    return Intl.message(
+      'Posts',
+      name: 'posts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users`
+  String get users {
+    return Intl.message(
+      'Users',
+      name: 'users',
       desc: '',
       args: [],
     );

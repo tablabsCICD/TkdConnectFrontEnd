@@ -22,7 +22,7 @@
   "mobileNumber": "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
   "egFristName": "ಉದಾ.ರಾಹುಲ್",
   "egLastName": "ಉದಾ. ಶಾ",
-  "egMail": "eg.rahul.gmail.com",
+  "egMail": "ಉದಾ.rahul.gmail.com",
   "egMobile": "ಉದಾಮೊಬೈಲ್",
   "already_have_account": "ಈಗಾಗಲೇ ಖಾತೆಯನ್ನು ಹೊಂದಿರುವಿರಾ?",
 
@@ -59,6 +59,7 @@
   "logoutMsg": "ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ.",
    "yes":"ಹೌದು ಹೌದು",
   "no":"ಇಲ್ಲ ಇಲ್ಲ",
+  "quotesYouReceived": "ನೀವು ಸ್ವೀಕರಿಸಿದ ಉಲ್ಲೇಖಗಳು",
 
   "editYourProfile": "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸಿ",
 
@@ -164,5 +165,26 @@
 
   "shareapp": "ಅಪ್ಲಿಕೇಶನ್ ಹಂಚಿಕೊಳ್ಳಿ",
   "business_type": "ವ್ಯಾಪಾರ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
-  "other": "other"
+  "other": "ಇತರೆ",
+
+  "home": "ಮುಖಪುಟ",
+
+  "registration_personal": "ನೋಂದಣಿ - ವೈಯಕ್ತಿಕ ವಿವರಗಳು",
+  "logout": "ಲಾಗ್ ಔಟ್",
+  "more": "ಇನ್ನಷ್ಟು",
+  "loads": "ಲೋಡ್ ಮಾಡಿ",
+  "general": "ಸಾಮಾನ್ಯ",
+  "buy": "ಖರೀದಿಸಿ",
+  "sell": "ಮಾರಾಟ",
+  "share": "ಹಂಚಿಕೊಳ್ಳಿ",
+  "Re_post": "ಮರು ಪೋಸ್ಟ್ ಮಾಡಿ",
+
+  "NewUser": "ಹೊಸ ಬಳಕೆದಾರರು",
+  "RegisterHere": " ಇಲ್ಲಿ ನೋಂದಾಯಿಸಿं",
+  "change_plan": "ಯೋಜನೆಯನ್ನು ಬದಲಾಯಿಸಿ",
+  "type_of_company": "ಕಂಪನಿಯ ಪ್ರಕಾರ",
+  "recent_search": "ಇತ್ತೀಚಿನ ಹುಡುಕಾಟಗಳು",
+  "search_here": "ಇಲ್ಲಿ ಹುಡುಕಿ",
+  "posts": "ಪೋಸ್ಟ್\u200Cಗಳು",
+  "users": "ಬಳಕೆದಾರರು"
 }

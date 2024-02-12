@@ -319,7 +319,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "DND",
+                                      "Do Not Disturb",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12.sp,

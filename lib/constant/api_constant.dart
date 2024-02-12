@@ -46,6 +46,7 @@ class ApiConstant {
   static String ADHAR_VERFIY_OTP = BASE_URL + 'Aadhaar/verifyOtp';
   static String POST_BUY_SELL = BASE_URL + "buySell";
   static String UPDATE_DEVICE_ID = BASE_URL + 'updateDeviceId';
+  static String UPDATE_YOUR_PLAN(id,planId) =>BASE_URL+"updateValidTill?id=$id&plan=$planId";
 
 
 }

@@ -24,8 +24,9 @@ class CreateJobProvider extends BaseProvider{
   String expFrom=S().from;
   String expTo=S().to;
   bool expUpdate=false;
+  String selectSal="Select salary";
 
-
+  List<String>salary=["1 LPA ","1LAP - 2LPA","2LAP - 3LPA","4LAP - 5LPA","6LAP - 7LPA","8LAP - 9LPA","9LAP - 10LPA","10LAP - Above"];
 
 
   showExpDialog(BuildContext context)async{
@@ -37,7 +38,6 @@ class CreateJobProvider extends BaseProvider{
               heightFactor: 0.9,
               child: ExperienceScreen());
         });
-    print('the cityName is $cityName');
     if(cityName!=null){
       expFrom=cityName!.split(",").first;
       expTo=cityName!.split(",").last;
@@ -104,6 +104,12 @@ class CreateJobProvider extends BaseProvider{
     }
 
 
+  }
+
+  selectedJob(a){
+    selectSal=salary[a];
+    salController.text=salary[a];
+    notifyListeners();
   }
 
 

@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "OR": MessageLookupByLibrary.simpleMessage("અથવા"),
         "OTP_sent_to":
             MessageLookupByLibrary.simpleMessage("ઓટીપી આને મોકલ્યો"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("ફરીથી પોસ્ટ કરો"),
         "RegisterHere": MessageLookupByLibrary.simpleMessage("અહીં નોંધણી કરો"),
         "Resend_OTP": MessageLookupByLibrary.simpleMessage(" OTP ફરીથી મોકલો"),
         "Send_OTP": MessageLookupByLibrary.simpleMessage("OTP મોકલો"),
@@ -58,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "call": MessageLookupByLibrary.simpleMessage("કૉલ કરો"),
         "cargoType": MessageLookupByLibrary.simpleMessage("કાર્ગો પ્રકાર"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("ભાષા બદલો"),
+        "change_plan": MessageLookupByLibrary.simpleMessage("પ્લાન બદલો"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("અક્ષર મહત્તમ"),
         "charactersRemaining":
             MessageLookupByLibrary.simpleMessage("બાકી રહેલા અક્ષરો"),
@@ -157,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post": MessageLookupByLibrary.simpleMessage("પોસ્ટ"),
         "postAJob": MessageLookupByLibrary.simpleMessage("જોબ પોસ્ટ કરો"),
         "postLoad": MessageLookupByLibrary.simpleMessage("પોસ્ટ લોડ"),
+        "posts": MessageLookupByLibrary.simpleMessage("પોસ્ટ્સ"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("હવે અવતરણ કરો"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("ક્વોટ કિંમત"),
         "quotesYouPlaced":
@@ -164,13 +167,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("તમે પ્રાપ્ત કરેલ અવતરણ"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("ટિકિટ વધારો"),
+        "recent_search": MessageLookupByLibrary.simpleMessage("તાજેતરની શોધ"),
         "registration": MessageLookupByLibrary.simpleMessage("નોંધણી"),
+        "registration_personal":
+            MessageLookupByLibrary.simpleMessage("નોંધણી - વ્યક્તિગત વિગતો"),
         "salary": MessageLookupByLibrary.simpleMessage("પગાર"),
         "sales": MessageLookupByLibrary.simpleMessage("વેચાણ"),
         "saveChange": MessageLookupByLibrary.simpleMessage("ફેરફારો સાચવો"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("સ્થળ શોધો"),
         "searchUsersCompanies":
             MessageLookupByLibrary.simpleMessage("વપરાશકર્તાઓ અને કંપનીઓ શોધો"),
+        "search_here": MessageLookupByLibrary.simpleMessage("અહીં શોધો"),
         "selectOne": MessageLookupByLibrary.simpleMessage("એક પસંદ કરો"),
         "sell": MessageLookupByLibrary.simpleMessage("વેચવું"),
         "share": MessageLookupByLibrary.simpleMessage("શેર કરો"),
@@ -188,6 +195,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "traffic": MessageLookupByLibrary.simpleMessage("ટ્રાફિક"),
         "transporter": MessageLookupByLibrary.simpleMessage("ટ્રાન્સપોર્ટર"),
         "truckDriver": MessageLookupByLibrary.simpleMessage("ટ્રક ડ્રાઈવર"),
+        "type_of_company":
+            MessageLookupByLibrary.simpleMessage("કંપનીનો પ્રકાર"),
+        "users": MessageLookupByLibrary.simpleMessage("વપરાશકર્તાઓ"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("વાહનનું કદ"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("ચકાસાયેલ વપરાશકર્તાઓ"),

@@ -29,10 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ"),
         "Havent_received_OTP":
             MessageLookupByLibrary.simpleMessage("OTP ಸ್ವೀಕರಿಸಿಲ್ಲವೇ?"),
+        "NewUser": MessageLookupByLibrary.simpleMessage("ಹೊಸ ಬಳಕೆದಾರರು"),
         "Next": MessageLookupByLibrary.simpleMessage("ಮುಂದೆ"),
         "OR": MessageLookupByLibrary.simpleMessage("ಅಥವಾ"),
         "OTP_sent_to":
             MessageLookupByLibrary.simpleMessage("OTP ಅವರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("ಮರು ಪೋಸ್ಟ್ ಮಾಡಿ"),
+        "RegisterHere":
+            MessageLookupByLibrary.simpleMessage(" ಇಲ್ಲಿ ನೋಂದಾಯಿಸಿं"),
         "Resend_OTP": MessageLookupByLibrary.simpleMessage(" OTP ಮರುಕಳುಹಿಸಿ"),
         "Send_OTP": MessageLookupByLibrary.simpleMessage("OTP ಕಳುಹಿಸಿ"),
         "aboutCompany": MessageLookupByLibrary.simpleMessage("ಕಂಪನಿಯ ಬಗ್ಗೆ"),
@@ -53,11 +57,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessInfo": MessageLookupByLibrary.simpleMessage("ವ್ಯಾಪಾರ ಮಾಹಿತಿ"),
         "business_type": MessageLookupByLibrary.simpleMessage(
             "ವ್ಯಾಪಾರ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ"),
+        "buy": MessageLookupByLibrary.simpleMessage("ಖರೀದಿಸಿ"),
         "buySell": MessageLookupByLibrary.simpleMessage("ವಾಹನ ಖರೀದಿ/ಮಾರಾಟ"),
         "buysellIssue":
             MessageLookupByLibrary.simpleMessage("ಖರೀದಿ/ಮಾರಾಟ ಸಂಚಿಕೆ"),
         "call": MessageLookupByLibrary.simpleMessage("ಕರೆ"),
         "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
+        "change_plan":
+            MessageLookupByLibrary.simpleMessage("ಯೋಜನೆಯನ್ನು ಬದಲಾಯಿಸಿ"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "ಮಾರ್ಗಗಳನ್ನು ಸೇರಿಸಲು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ"),
         "companyName": MessageLookupByLibrary.simpleMessage("ಕಂಪನಿ ಹೆಸರು"),
@@ -78,7 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "egFristName": MessageLookupByLibrary.simpleMessage("ಉದಾ.ರಾಹುಲ್"),
         "egJobDes": MessageLookupByLibrary.simpleMessage("ಉದ್ಯೋಗ ವಿವರಣೆ"),
         "egLastName": MessageLookupByLibrary.simpleMessage("ಉದಾ. ಶಾ"),
-        "egMail": MessageLookupByLibrary.simpleMessage("eg.rahul.gmail.com"),
+        "egMail": MessageLookupByLibrary.simpleMessage("ಉದಾ.rahul.gmail.com"),
         "egManageInquiries": MessageLookupByLibrary.simpleMessage(
             "ಉದಾ. ವಿಚಾರಣೆಗಳನ್ನು ನಿರ್ವಹಿಸಿ"),
         "egMobile": MessageLookupByLibrary.simpleMessage("ಉದಾಮೊಬೈಲ್"),
@@ -93,8 +100,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("ಉಲ್ಲೇಖದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ"),
         "from": MessageLookupByLibrary.simpleMessage("ಇಂದ"),
+        "general": MessageLookupByLibrary.simpleMessage("ಸಾಮಾನ್ಯ"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ಪರಿಶೀಲಿಸಿ"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ"),
+        "home": MessageLookupByLibrary.simpleMessage("ಮುಖಪುಟ"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "ಹಲೋ! ನಿಮ್ಮ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಅನುಭವವನ್ನು ಉನ್ನತೀಕರಿಸಲು ನಾವು ಇಲ್ಲಿದ್ದೇವೆ. ನಿಮ್ಮ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಸಹಾಯ ನಮಗೆ ಇರಲಿ ಮತ್ತು ನಿಮ್ಮ ವ್ಯಾಪಾರದ ಅಗತ್ಯಗಳನ್ನು ಮನಬಂದಂತೆ ಪೂರೈಸಲಾಗುವುದು."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -105,23 +114,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "jobTitle": MessageLookupByLibrary.simpleMessage("ಉದ್ಯೋಗ ಶೀರ್ಷಿಕೆ"),
         "jobs": MessageLookupByLibrary.simpleMessage("ಉದ್ಯೋಗಗಳು"),
         "like": MessageLookupByLibrary.simpleMessage("ಇಷ್ಟ"),
+        "loads": MessageLookupByLibrary.simpleMessage("ಲೋಡ್ ಮಾಡಿ"),
         "location": MessageLookupByLibrary.simpleMessage("ಸ್ಥಳ"),
         "loginIssue": MessageLookupByLibrary.simpleMessage("ಲಾಗಿನ್ ಸಮಸ್ಯೆ"),
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ"),
+        "logout": MessageLookupByLibrary.simpleMessage("ಲಾಗ್ ಔಟ್"),
         "logoutMsg": MessageLookupByLibrary.simpleMessage(
             "ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ."),
         "manufacturerDistributorTrade":
             MessageLookupByLibrary.simpleMessage("ತಯಾರಕ/ವಿತರಕ/ವ್ಯಾಪಾರ"),
         "message": MessageLookupByLibrary.simpleMessage("ಸಂದೇಶ"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("ಮೊಬೈಲ್ ಸಂಖ್ಯೆ"),
+        "more": MessageLookupByLibrary.simpleMessage("ಇನ್ನಷ್ಟು"),
         "myPost": MessageLookupByLibrary.simpleMessage("ನನ್ನ ಪೋಸ್ಟ್‌ಗಳು"),
         "myQuotes": MessageLookupByLibrary.simpleMessage("ನನ್ನ ಉಲ್ಲೇಖಗಳು"),
         "myRoutes": MessageLookupByLibrary.simpleMessage("ನನ್ನ ಮಾರ್ಗಗಳು"),
         "no": MessageLookupByLibrary.simpleMessage("ಇಲ್ಲ ಇಲ್ಲ"),
         "noRecordFound":
             MessageLookupByLibrary.simpleMessage("ಯಾವುದೇ ದಾಖಲೆ ಕಂಡುಬಂದಿಲ್ಲ"),
-        "other": MessageLookupByLibrary.simpleMessage("other"),
+        "other": MessageLookupByLibrary.simpleMessage("ಇತರೆ"),
         "pleaseSelectTopic": MessageLookupByLibrary.simpleMessage(
             "ದಯವಿಟ್ಟು ವಿಷಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ"),
         "position": MessageLookupByLibrary.simpleMessage("ಸ್ಥಾನ"),
@@ -129,18 +141,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ಉದ್ಯೋಗವನ್ನು ಪೋಸ್ಟ್ ಮಾಡಿ"),
         "postJob": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಜಾಬ್"),
         "postLoad": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಲೋಡ್"),
+        "posts": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್‌ಗಳು"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("ಈಗ ಉಲ್ಲೇಖಿಸಿ"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("quote price"),
         "quotesYouPlaced":
             MessageLookupByLibrary.simpleMessage("ನೀವು ಇರಿಸಿರುವ ಉಲ್ಲೇಖ"),
+        "quotesYouReceived":
+            MessageLookupByLibrary.simpleMessage("ನೀವು ಸ್ವೀಕರಿಸಿದ ಉಲ್ಲೇಖಗಳು"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("ಟಿಕೆಟ್ ಹೆಚ್ಚಿಸಿ"),
+        "recent_search":
+            MessageLookupByLibrary.simpleMessage("ಇತ್ತೀಚಿನ ಹುಡುಕಾಟಗಳು"),
+        "registration_personal":
+            MessageLookupByLibrary.simpleMessage("ನೋಂದಣಿ - ವೈಯಕ್ತಿಕ ವಿವರಗಳು"),
         "salary": MessageLookupByLibrary.simpleMessage("ಸಂಬಳ"),
         "saveChange":
             MessageLookupByLibrary.simpleMessage("ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("ಹುಡುಕಾಟ ಸ್ಥಳ"),
         "searchUsersCompanies": MessageLookupByLibrary.simpleMessage(
             "ಹುಡುಕಿ ಬಳಕೆದಾರರು ಮತ್ತು ಕಂಪನಿಗಳು"),
+        "search_here": MessageLookupByLibrary.simpleMessage("ಇಲ್ಲಿ ಹುಡುಕಿ"),
         "selectOne": MessageLookupByLibrary.simpleMessage("ಒಂದನ್ನು ಆಯ್ಕೆಮಾಡಿ"),
+        "sell": MessageLookupByLibrary.simpleMessage("ಮಾರಾಟ"),
+        "share": MessageLookupByLibrary.simpleMessage("ಹಂಚಿಕೊಳ್ಳಿ"),
         "shareapp":
             MessageLookupByLibrary.simpleMessage("ಅಪ್ಲಿಕೇಶನ್ ಹಂಚಿಕೊಳ್ಳಿ"),
         "showAllQuotes":
@@ -155,6 +177,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "to": MessageLookupByLibrary.simpleMessage("ಗೆ"),
         "toCity": MessageLookupByLibrary.simpleMessage("To City"),
         "traffic": MessageLookupByLibrary.simpleMessage("ಸಂಚಾರ"),
+        "type_of_company":
+            MessageLookupByLibrary.simpleMessage("ಕಂಪನಿಯ ಪ್ರಕಾರ"),
+        "users": MessageLookupByLibrary.simpleMessage("ಬಳಕೆದಾರರು"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("ಪರಿಶೀಲಿಸಿದ ಬಳಕೆದಾರರು"),
         "viewProfile":

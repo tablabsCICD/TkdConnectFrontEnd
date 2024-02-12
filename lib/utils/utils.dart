@@ -77,12 +77,12 @@ class Utils {
       case 0:
             return Images.pearls;
 
-      case 20:
+      case 10:
         return Images.pearls_blue;
 
-      case 30:
+      case 20:
         return Images.pearls_red;
-      case 40:
+      case 30:
         return Images.pearls_black;
     }
 
@@ -93,12 +93,12 @@ class Utils {
       case 0:
         return "Clear";
 
-      case 20:
+      case 10:
         return "Blue";
 
-      case 30:
+      case 20:
         return "Red";
-      case 40:
+      case 30:
         return "Black";
     }
 

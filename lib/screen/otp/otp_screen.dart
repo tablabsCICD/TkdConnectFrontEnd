@@ -16,8 +16,9 @@ import '../../widgets/otp_textview.dart';
 class OTPScreen extends StatefulWidget {
 
   final String mobileNumber;
+  final bool isRegistration;
 
-  const OTPScreen({super.key, required this.mobileNumber});
+  const OTPScreen({super.key, required this.mobileNumber, required this.isRegistration});
 
   @override
   State<StatefulWidget> createState() {
@@ -38,7 +39,7 @@ class _OTPScreen extends State<OTPScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => OtpProvider("Ideal",widget.mobileNumber),
+      create: (BuildContext context) => OtpProvider("Ideal",widget.mobileNumber,widget.isRegistration),
       builder: (context, child) => _buildPage(context),
     );
 

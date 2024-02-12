@@ -27,7 +27,7 @@ class HomeScreenProvider extends BaseProvider{
   var response;
   bool isFirstLoading = false;
   int totalPages = 0;
-  bool fla = false,pla = false,flr = false,plr = false;
+  bool fla = false,pla = false,flr = false,plr = false,gp=false;
   List truckLoadTypeList=[];
   ScrollController scrollController = ScrollController();
   int selectedPage=0;
@@ -71,16 +71,16 @@ class HomeScreenProvider extends BaseProvider{
       notifyListeners();
     }
     if(fromCity=="All" && toCity=="All"){
-      url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}';
+      url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp';
 
     }else{
 
       if(fromCity != "All" && toCity!="All"){
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}';
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp';
       }else if(fromCity != "All" && toCity=="All"){
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&loggedUserId=${user.content!.first.id}';
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&loggedUserId=${user.content!.first.id}&generalPost=$gp';
            }else{
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity&loggedUserId=${user.content!.first.id}';
+        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp';
       }
 
 
@@ -141,7 +141,8 @@ class HomeScreenProvider extends BaseProvider{
 
   void callUserData() async{
     user=await LocalSharePreferences.localSharePreferences.getLoginData();
-   if(user.content!.first.companyLogo!=null){
+    print('the is paid is ${user.content!.first.isPaid}');
+    if(user.content!.first.companyLogo!=null){
      imageUrl=user.content!.first.companyLogo!;
    }
    ispaid=user.content!.first.isPaid!;
@@ -160,7 +161,7 @@ class HomeScreenProvider extends BaseProvider{
     callDashboradApi(context,0);
   }
   falseAllFilter(){
-    fla = false;pla = false;flr = false;plr = false;
+    fla = false;pla = false;flr = false;plr = false;gp=false;
   }
 
   selectCityFilter(BuildContext context)async{

@@ -11,6 +11,7 @@ class AppConstant{
   static final String LOGIN_BOOl="loginbool";
 
   static final String RESENT_SEARCH="search";
+  static String PHONE_PAY_TRANSCATION_ID="";
  
   static RegisterCompany registerCompany=RegisterCompany();
   static String? FONTFAMILY=GoogleFonts.poppins().fontFamily;

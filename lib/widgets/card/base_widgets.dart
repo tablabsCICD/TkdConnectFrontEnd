@@ -1152,7 +1152,7 @@ class BaseWidget {
                   width: 12.w,
                 ),
                 Text(
-                  "Re-post",
+                  S().Re_post,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.sp,

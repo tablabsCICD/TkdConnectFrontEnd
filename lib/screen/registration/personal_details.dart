@@ -2,14 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/registration_provider/user_details_provider.dart';
+import 'package:tkd_connect/utils/phone_pay_payment.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 import 'package:tkd_connect/widgets/sign_in_widget.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 import '../../utils/colors.dart';
+import '../../utils/phone_pay_demo.dart';
 
 class PersonalDetailsScreen extends StatefulWidget {
   @override
@@ -46,7 +49,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                         height: 21.5.h,
                       ),
                       Textview(
-                        title: 'Registration - Personal details',
+                        title: S().registration_personal,
                         TextStyle(
                           color: Colors.black,
                           fontSize: 14.sp,
@@ -105,10 +108,11 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w600,
                               ),
-                              isEnbale: provider.isEnbale,
-                              onClick: () {
+                              isEnbale: true,
+                              onClick: () async{
 
                                 provider.saveData(context);
+
                               });
                         },
                       ),
@@ -126,6 +130,9 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
       ),
     );
   }
+
+
+
 
   labelText(String label) {
     return Container(
@@ -198,4 +205,5 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
       ),
     );
   }
+
 }

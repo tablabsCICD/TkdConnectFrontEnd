@@ -157,6 +157,17 @@
   "truckDriver": "ટ્રક ડ્રાઈવર",
   "createPostLoadIssue": "પોસ્ટની સમસ્યા લોડ કરો",
   "buysellIssue": "ઇશ્યૂ ખરીદો/વેચાવો",
-  "jobIssue": "નોકરીની સમસ્યા બનાવો"
+  "jobIssue": "નોકરીની સમસ્યા બનાવો",
+
+
+  "registration_personal": "નોંધણી - વ્યક્તિગત વિગતો",
+
+  "Re_post": "ફરીથી પોસ્ટ કરો",
+  "change_plan": "પ્લાન બદલો",
+  "type_of_company": "કંપનીનો પ્રકાર",
+  "recent_search": "તાજેતરની શોધ",
+  "search_here": "અહીં શોધો",
+  "posts": "પોસ્ટ્સ",
+  "users": "વપરાશકર્તાઓ"
 
 }

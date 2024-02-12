@@ -17,6 +17,8 @@ static Color subColor=Color(0xCC001E49);
 
 static Color green=Color(0xFF1DD19E);
 
+ static Color select_green_plan=Color(0xFFC2E7E0);
+
 
 
 

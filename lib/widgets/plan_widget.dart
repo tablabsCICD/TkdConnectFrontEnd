@@ -14,8 +14,9 @@ class PlanWidget extends StatelessWidget{
   String amount;
   String image;
   String subtitle;
+  Function? onClick;
 
-  PlanWidget({super.key, required this.isSelected, required this.title, required this.amount, required this.image,required this.subtitle});
+  PlanWidget({super.key, required this.isSelected, required this.title, required this.amount, required this.image,required this.subtitle,this.onClick});
 
 
   @override
@@ -26,9 +27,9 @@ class PlanWidget extends StatelessWidget{
      padding: EdgeInsets.only(left: 12.w,right: 12.w,top: 12.h,bottom: 12.h),
      clipBehavior: Clip.antiAlias,
      decoration: ShapeDecoration(
-       color: isSelected ? ThemeColor.select_green:ThemeColor.white,
+       color: isSelected ? ThemeColor.select_green_plan:ThemeColor.white,
        shape: RoundedRectangleBorder(
-         side: BorderSide(width: 0.50.w, color: isSelected ?ThemeColor.select_green:ThemeColor.white),
+         side: BorderSide(width: 0.50.w, color: isSelected ?ThemeColor.select_green_plan:ThemeColor.white),
          borderRadius: BorderRadius.circular(16.r),
        ),
      ),
@@ -68,12 +69,14 @@ class PlanWidget extends StatelessWidget{
                          SizedBox(height: 4.h),
                          InkWell(
                            onTap: (){
-                             showModalBottomSheet<void>(
-                                 isScrollControlled: true,
-                                 context: context,
-                                 builder: (BuildContext context) {
-                                   return FractionallySizedBox(heightFactor: 0.9,child: PlanDetailsScreen());
-                                 });
+
+                             onClick!();
+                             // showModalBottomSheet<void>(
+                             //     isScrollControlled: true,
+                             //     context: context,
+                             //     builder: (BuildContext context) {
+                             //       return FractionallySizedBox(heightFactor: 0.9,child: PlanDetailsScreen());
+                             //     });
                            },
                            child: Text(
                              'Click here',
@@ -114,7 +117,7 @@ class PlanWidget extends StatelessWidget{
                                  ),
                                ),
                                Text(
-                                 amount,
+                                 amount+"/Month",
                                  textAlign: TextAlign.right,
                                  style: TextStyle(
                                    color: Colors.black,
@@ -128,7 +131,7 @@ class PlanWidget extends StatelessWidget{
                          ),
                          const SizedBox(height: 4),
                          Visibility(
-                           visible: true,
+                           visible: isSelected,
                            child: Container(
                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                              decoration: ShapeDecoration(

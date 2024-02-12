@@ -10,6 +10,8 @@ import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
+import '../../generated/l10n.dart';
+
 class SearchEditScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -57,7 +59,7 @@ class _SearchEditState extends State<SearchEditScreen> {
               Container(
                 width: 320.w,
                 child: Textview(
-                  title: 'Recent searches',
+                  title: S().recent_search,
                   TextStyle(
                     color: Colors.black,
                     fontSize: 12.sp,
@@ -168,7 +170,7 @@ class _SearchEditState extends State<SearchEditScreen> {
         cursorColor: ThemeColor.red,
 
         decoration: InputDecoration(
-            hintText: "Search here",
+            hintText: S().search_here,
             border: InputBorder.none,
             hintStyle: TextStyle(
               color: Color(0x662C363F),

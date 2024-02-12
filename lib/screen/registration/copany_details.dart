@@ -467,7 +467,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().packersAndMovers}",2);
+                  provider.changeDropDown("${S().packersAndMovers}",0);
                 },
                 child: Row(
                   children: [

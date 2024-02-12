@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Next": MessageLookupByLibrary.simpleMessage("Next"),
         "OR": MessageLookupByLibrary.simpleMessage("OR"),
         "OTP_sent_to": MessageLookupByLibrary.simpleMessage("OTP sent to"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("Re-post"),
         "RegisterHere": MessageLookupByLibrary.simpleMessage(" Register Here"),
         "Resend_OTP": MessageLookupByLibrary.simpleMessage(" Resend OTP"),
         "Send_OTP": MessageLookupByLibrary.simpleMessage("Send OTP"),
@@ -62,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change language"),
+        "change_plan": MessageLookupByLibrary.simpleMessage("Change Plan"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("characters max"),
         "charactersRemaining":
             MessageLookupByLibrary.simpleMessage("characters remaining"),
@@ -163,6 +165,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "postAJob": MessageLookupByLibrary.simpleMessage("Post a job"),
         "postJob": MessageLookupByLibrary.simpleMessage("Post Job"),
         "postLoad": MessageLookupByLibrary.simpleMessage("Post Load"),
+        "posts": MessageLookupByLibrary.simpleMessage("Posts"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("Quote price"),
         "quotesYouPlaced":
@@ -170,17 +173,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("Quote you received"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("Raise a ticket"),
+        "recent_search":
+            MessageLookupByLibrary.simpleMessage("Recent searches"),
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),
+        "registration_personal": MessageLookupByLibrary.simpleMessage(
+            "Registration - Personal details"),
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sales": MessageLookupByLibrary.simpleMessage("Sales"),
         "saveChange": MessageLookupByLibrary.simpleMessage("Save changes"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("Search place"),
         "searchUsersCompanies":
             MessageLookupByLibrary.simpleMessage("Search users & companies"),
+        "search_here": MessageLookupByLibrary.simpleMessage("Search here"),
         "selectOne": MessageLookupByLibrary.simpleMessage("Select one"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
-        "shareapp": MessageLookupByLibrary.simpleMessage("Share application"),
+        "shareapp": MessageLookupByLibrary.simpleMessage(
+            "Share application and Earn Surprise Gift"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage("Show all quote"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "specialInstruction":
@@ -197,6 +206,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "traffic": MessageLookupByLibrary.simpleMessage("Traffic"),
         "transporter": MessageLookupByLibrary.simpleMessage("Transporter"),
         "truckDriver": MessageLookupByLibrary.simpleMessage("Truck Driver"),
+        "type_of_company":
+            MessageLookupByLibrary.simpleMessage("Type of Company"),
+        "users": MessageLookupByLibrary.simpleMessage("Users"),
         "vehicle": MessageLookupByLibrary.simpleMessage("Vehicle"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("Vehicle size"),
         "verifiedUsers": MessageLookupByLibrary.simpleMessage("Verified users"),

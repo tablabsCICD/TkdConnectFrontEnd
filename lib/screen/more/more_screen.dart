@@ -70,6 +70,9 @@ class _MoreScreen extends State<MoreScreen> {
 
                 openVerifiedTag();
               },FontWeight.w600),
+              // item(S().change_plan,(){
+              //   Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+              // },FontWeight.w400),
               item(S().appSetting,(){
                 Navigator.pushNamed(context, AppRoutes.appsetting);
               },FontWeight.w400),

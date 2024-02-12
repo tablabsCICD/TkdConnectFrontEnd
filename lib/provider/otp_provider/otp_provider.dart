@@ -25,9 +25,10 @@ class OtpProvider extends BaseProvider{
   bool isButtonEnbale=false;
   bool resendButtonEnble=false;
   String mobileNumber;
+  bool isRegistration;
 
 
-  OtpProvider(super.appState,this.mobileNumber){
+  OtpProvider(super.appState,this.mobileNumber,this.isRegistration){
     startTimer();
   }
   late Timer _timer;
@@ -104,7 +105,12 @@ class OtpProvider extends BaseProvider{
           LocalSharePreferences localSharePreferences=LocalSharePreferences();
           localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
           localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(req.response));
-          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home,(Route<dynamic> route) => false);
+
+          if(isRegistration){
+            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home,(Route<dynamic> route) => false);
+          }else{
+            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home,(Route<dynamic> route) => false);
+          }
         }else{
           ToastMessage.show(context,"Please try again");
         }

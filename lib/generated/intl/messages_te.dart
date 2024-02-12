@@ -28,10 +28,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "మొబైల్ నంబర్‌ని నమోదు చేయండి"),
         "Havent_received_OTP":
             MessageLookupByLibrary.simpleMessage("OTPని అందుకోలేదా?"),
+        "NewUser": MessageLookupByLibrary.simpleMessage("కొత్త వినియోగదారు"),
         "Next": MessageLookupByLibrary.simpleMessage("తదుపరి"),
         "OR": MessageLookupByLibrary.simpleMessage("లేక"),
         "OTP_sent_to":
             MessageLookupByLibrary.simpleMessage("OTP వీరికి పంపబడింది"),
+        "Re_post": MessageLookupByLibrary.simpleMessage("మళ్లీ పోస్ట్ చేయండి"),
+        "RegisterHere":
+            MessageLookupByLibrary.simpleMessage(" ఇక్కడ నమోదు చేసుకోండి"),
         "Resend_OTP": MessageLookupByLibrary.simpleMessage(" OTPని మళ్లీ పంపు"),
         "Send_OTP": MessageLookupByLibrary.simpleMessage("OTPని పంపు"),
         "aboutCompany": MessageLookupByLibrary.simpleMessage("కంపని విశేష"),
@@ -52,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buysellIssue":
             MessageLookupByLibrary.simpleMessage("సమస్యను కొనండి/అమ్మండి"),
         "call": MessageLookupByLibrary.simpleMessage("కాల్"),
+        "change_plan": MessageLookupByLibrary.simpleMessage("ప్లాన్ మార్చండి"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("అక్షర మహత్తం"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "మార్గాలను జోడించడానికి దిగువ బటన్‌ను క్లిక్ చేయండి"),
@@ -74,8 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("మీ ప్రొఫైల్‌ని సవరించండి"),
         "egFristName": MessageLookupByLibrary.simpleMessage("ఉదా. రాహుల్"),
         "egJobDes": MessageLookupByLibrary.simpleMessage("ఉద్యోగ వివరణ"),
-        "egLastName": MessageLookupByLibrary.simpleMessage("eg.Shah"),
-        "egMail": MessageLookupByLibrary.simpleMessage("eg.rahul.gmail.com"),
+        "egLastName": MessageLookupByLibrary.simpleMessage("ఉదా.షా"),
+        "egMail": MessageLookupByLibrary.simpleMessage("ఉదా.rahul.gmail.com"),
         "egManageInquiries":
             MessageLookupByLibrary.simpleMessage("ఉదా. విచారణలను నిర్వహించండి"),
         "egMobile": MessageLookupByLibrary.simpleMessage("ఉదా మొబైల్"),
@@ -127,15 +132,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ఉద్యోగాన్ని పోస్ట్ చేయండి"),
         "postJob": MessageLookupByLibrary.simpleMessage("పోస్ట్ జాబ్"),
         "postLoad": MessageLookupByLibrary.simpleMessage("పోస్ట్ లోడ్"),
+        "posts": MessageLookupByLibrary.simpleMessage("పోస్ట్‌లు"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("ఇప్పుడే కోట్ చేయి"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("క్వాట్ కింమత్"),
         "quotesYouPlaced": MessageLookupByLibrary.simpleMessage("మీ మూలాధారం"),
+        "quotesYouReceived":
+            MessageLookupByLibrary.simpleMessage("పోస్ట్ జాబ్"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("టికిట్ వధారో"),
+        "recent_search": MessageLookupByLibrary.simpleMessage("ఇటీవలి శోధనలు"),
+        "registration_personal":
+            MessageLookupByLibrary.simpleMessage("నమోదు - వ్యక్తిగత వివరాలు"),
         "salary": MessageLookupByLibrary.simpleMessage("జీతం"),
         "saveChange": MessageLookupByLibrary.simpleMessage("ఫెరఫారో సాచవో"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("శోధన స్థలం"),
         "searchUsersCompanies":
             MessageLookupByLibrary.simpleMessage("వపరాశకర్త మరియు కంపెనీ శోధో"),
+        "search_here": MessageLookupByLibrary.simpleMessage("ఇక్కడ వెతకండి"),
         "selectOne": MessageLookupByLibrary.simpleMessage("ఒకటి ఎంచుకోండి"),
         "sell": MessageLookupByLibrary.simpleMessage("అమ్మండి"),
         "share": MessageLookupByLibrary.simpleMessage("షేర్"),
@@ -151,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "to": MessageLookupByLibrary.simpleMessage("కు"),
         "toCity": MessageLookupByLibrary.simpleMessage("నగరానికి"),
         "traffic": MessageLookupByLibrary.simpleMessage("ట్రాఫిక్"),
+        "type_of_company": MessageLookupByLibrary.simpleMessage("కంపెనీ రకం"),
+        "users": MessageLookupByLibrary.simpleMessage("వినియోగదారులు"),
         "vehicle": MessageLookupByLibrary.simpleMessage("వాహనం"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("చకాసాయెల్ విస్తరణ")

@@ -50,7 +50,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             allUserTag(),
             provider.user.length==0 && provider.isLoadDone?Center(child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text("No Record Found"),
+              child: Text(S().noRecordFound),
             )):SizedBox(),
             allUserData()
 

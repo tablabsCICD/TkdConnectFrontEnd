@@ -250,7 +250,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                 editView(S().egPune, provider.locationController),
                 SizedBox(height: 12.h,),
 
-                labelText("Type of Company"),
+                labelText(S().type_of_company),
                 SizedBox(height: 4.h,),
                 editView("eg.Software", provider.companyTypeController,redOnly: true),
                 SizedBox(height: 28.h,),

@@ -11,6 +11,8 @@ import 'package:tkd_connect/screen/search/search_user_screen.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
+import '../../generated/l10n.dart';
+
 class SearchResultScreen extends StatefulWidget {
   final String searchVal;
 
@@ -194,7 +196,7 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Posts',
+                          S().posts,
                           style: provider.tabPost
                               ? TextStyle(
                                   color: Color(0xCC001E49),
@@ -243,7 +245,7 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Users',
+                          S().users,
                           style: !provider.tabPost
                               ? TextStyle(
                                   color: Color(0xCC001E49),

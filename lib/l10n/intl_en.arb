@@ -162,8 +162,21 @@
   "createPostLoadIssue": "Load Post Issue",
   "buysellIssue": "Buy/Sell Issue",
   "jobIssue": "Create Job Issue",
-  "shareapp": "Share application",
-  "other": "other"
+  "shareapp": "Share application and Earn Surprise Gift",
+  "other": "other",
+
+
+  "registration_personal": "Registration - Personal details",
+
+  "Re_post": "Re-post",
+  "change_plan": "Change Plan",
+  "type_of_company": "Type of Company",
+
+
+  "recent_search": "Recent searches",
+  "search_here": "Search here",
+  "posts": "Posts",
+  "users": "Users"
 
 
 

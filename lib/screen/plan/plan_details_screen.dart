@@ -12,6 +12,14 @@ import '../../widgets/plan_widget.dart';
 import '../../widgets/textview.dart';
 
 class PlanDetailsScreen extends StatefulWidget{
+ final List<String>listLaugaes;
+ final List<bool>selectLang;
+ final String image;
+ final String subtitle;
+ final String amount;
+
+  const PlanDetailsScreen({super.key, required this.listLaugaes, required this.selectLang, required this.image, required this.subtitle, required this.amount});
+
   @override
   State<StatefulWidget> createState() {
    return _PlanDetailsScreen();
@@ -20,9 +28,7 @@ class PlanDetailsScreen extends StatefulWidget{
 }
 
 class _PlanDetailsScreen extends State<PlanDetailsScreen>{
-  List<String>listLaugaes=["Heading",'Heading 1','Heading 2','Heading 3','Heading 4','Heading 5','Heading 6'];
 
-  List<bool>selectLang=[false,false,true,false,false,false,false];
 
 
   @override
@@ -51,16 +57,18 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SvgPicture.asset(Images.close_circle)
+                    InkWell(onTap:(){
+                      Navigator.pop(context);
+                    },child: SvgPicture.asset(Images.close_circle))
                   ],
                 ),
               ),
               SizedBox(height: 24.h,),
-              selectedPlan( Images.pearls, "Clear Peral", "0"),
+              selectedPlan( widget.image, widget.subtitle, widget.amount),
 
               Expanded(
                 child: ListView.builder(
-                    itemCount: listLaugaes.length,
+                    itemCount: widget.listLaugaes.length,
                     itemBuilder: (BuildContext context, int index) {
                       return laguagesList(index);
                     }),
@@ -88,83 +96,7 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
     );
   }
 
-  searchBox(){
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 52.h,
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50, color: Color(0x332C363F)),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24.w,
-                        height: 24.h,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24.w,
-                              height: 24.h,
-                              child: Stack(children: [
-                                SvgPicture.asset(Images.search_normal)
 
-                              ]),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Search a language',
-                            style: TextStyle(
-                              color: Color(0x662C363F),
-                              fontSize: 14.sp,
-                              fontFamily:GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 327,
-            padding: const EdgeInsets.only(top: 4),
-          ),
-        ],
-      ),
-    );
-  }
 
   laguagesList(int index){
     return Container(
@@ -188,7 +120,7 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
             child: SizedBox(
               height: 52.h,
               child: Text(
-                listLaugaes[index],
+                widget.listLaugaes[index],
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 12,
@@ -199,12 +131,12 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
             ),
 
           ),
-          selectLang[index]? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):Textview(TextStyle(
+          widget.selectLang[index]? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):Textview(TextStyle(
             color: Colors.black,
             fontSize: 12.sp,
             fontFamily: GoogleFonts.poppins().fontFamily,
             fontWeight: FontWeight.w600,
-          ), title: "15")
+          ), title: "No")
         ],
       ),
     );
@@ -229,7 +161,7 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
-          SvgPicture.asset(image),
+         SvgPicture.asset(image),
 
           Expanded(
             child: Container(

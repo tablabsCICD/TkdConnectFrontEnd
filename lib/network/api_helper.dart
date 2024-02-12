@@ -66,7 +66,31 @@ class ApiHelper{
     }
 
 
-  }Future<ApiResponse>  apiDecodePost(String URL) async{
+
+
+  }
+
+  Future<ApiResponse>  apiPutDat(String URL) async{
+
+    try{
+      EasyLoading.show(status: "Loading");
+      var request = await dio.put(URL);
+      ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
+      EasyLoading.dismiss();
+      return apiResponseHelper;
+    }catch (e){
+      print('$e');
+      EasyLoading.dismiss();
+      return ApiResponse(500, null);
+    }
+
+
+
+
+  }
+
+
+  Future<ApiResponse>  apiDecodePost(String URL) async{
 
     try{
       EasyLoading.show(status: "Loading");
@@ -134,14 +158,22 @@ class ApiHelper{
   }
 
   ApiResponse returnResponse<T>(Response request){
-    if(request.statusCode==200){
-     var response = json.decode(request.data);
-     ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, response);
-     return apiResponseHelper;
-    }else{
-      ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, null);
+    try{
+      if(request.statusCode==200){
+        var response = json.decode(request.data);
+        ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, response);
+        return apiResponseHelper;
+      }else{
+        ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, null);
+        return apiResponseHelper;
+      }
+    }catch(e) {
+
+      print('$e');
+      ApiResponse apiResponseHelper = ApiResponse(500, null);
       return apiResponseHelper;
     }
+
   }
 
   ApiResponse returnNotDecodeResponse<T>(Response request){
