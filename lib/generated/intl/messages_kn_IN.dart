@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "business_type": MessageLookupByLibrary.simpleMessage(
             "ವ್ಯಾಪಾರ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ"),
         "buy": MessageLookupByLibrary.simpleMessage("ಖರೀದಿಸಿ"),
-        "buySell": MessageLookupByLibrary.simpleMessage("ವಾಹನ ಖರೀದಿ/ಮಾರಾಟ"),
+        "buySell": MessageLookupByLibrary.simpleMessage("ವಾಹನ ಮಾರಾಟ/ಖರೀದಿ"),
         "buysellIssue":
             MessageLookupByLibrary.simpleMessage("ಖರೀದಿ/ಮಾರಾಟ ಸಂಚಿಕೆ"),
         "call": MessageLookupByLibrary.simpleMessage("ಕರೆ"),
@@ -104,6 +104,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getVerified": MessageLookupByLibrary.simpleMessage("ಪರಿಶೀಲಿಸಿ"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ"),
         "home": MessageLookupByLibrary.simpleMessage("ಮುಖಪುಟ"),
+        "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
+            "ನಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ನೀವು ಹೇಗೆ ರೇಟ್ ಮಾಡುತ್ತೀರಿ?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "ಹಲೋ! ನಿಮ್ಮ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಅನುಭವವನ್ನು ಉನ್ನತೀಕರಿಸಲು ನಾವು ಇಲ್ಲಿದ್ದೇವೆ. ನಿಮ್ಮ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಸಹಾಯ ನಮಗೆ ಇರಲಿ ಮತ್ತು ನಿಮ್ಮ ವ್ಯಾಪಾರದ ಅಗತ್ಯಗಳನ್ನು ಮನಬಂದಂತೆ ಪೂರೈಸಲಾಗುವುದು."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -124,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಬಯಸುವಿರಾ."),
         "manufacturerDistributorTrade":
             MessageLookupByLibrary.simpleMessage("ತಯಾರಕ/ವಿತರಕ/ವ್ಯಾಪಾರ"),
+        "may_be_letter": MessageLookupByLibrary.simpleMessage("ನಂತರ"),
         "message": MessageLookupByLibrary.simpleMessage("ಸಂದೇಶ"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("ಮೊಬೈಲ್ ಸಂಖ್ಯೆ"),
         "more": MessageLookupByLibrary.simpleMessage("ಇನ್ನಷ್ಟು"),
@@ -149,6 +152,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("ನೀವು ಸ್ವೀಕರಿಸಿದ ಉಲ್ಲೇಖಗಳು"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("ಟಿಕೆಟ್ ಹೆಚ್ಚಿಸಿ"),
+        "rate": MessageLookupByLibrary.simpleMessage("ಮೌಲ್ಯ"),
+        "rateAndReviewApp":
+            MessageLookupByLibrary.simpleMessage("ದರ ಮತ್ತು ವಿಮರ್ಶೆ"),
+        "rate_this_app": MessageLookupByLibrary.simpleMessage(
+            "ಈ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ರೇಟ್ ಮಾಡಿ."),
         "recent_search":
             MessageLookupByLibrary.simpleMessage("ಇತ್ತೀಚಿನ ಹುಡುಕಾಟಗಳು"),
         "registration_personal":

@@ -52,7 +52,7 @@
 
   "myPost": "माझ्या पोस्ट",
   "jobs": "नोकरी",
-  "buySell": "वाहन खरेदी/विक्री",
+  "buySell": "वाहन विक्री/खरेदी",
   "getVerified": "सत्यापित करा",
   "appSetting": "अ‍ॅप सेटिंग",
   "helpSupport": "मदत आणि समर्थन",
@@ -172,5 +172,10 @@
   "recent_search": "अलीकडील शोध",
   "search_here": "येथे शोधा",
   "posts": "पोस्ट",
-  "users": "वापरकर्ते"
+  "users": "वापरकर्ते",
+  "rateAndReviewApp": "रेट आणि पुनरावलोकन",
+  "rate_this_app": "या ॲपला रेट करा.",
+  "how_do_you_rate_app": "तुम्ही आमच्या ॲपला कसे रेट करता?",
+  "rate": "मूल्य",
+  "may_be_letter":"नंतर"
 }

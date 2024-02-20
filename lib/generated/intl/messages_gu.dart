@@ -53,7 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessInfo":
             MessageLookupByLibrary.simpleMessage("વ્યવસાયની માહિતી"),
         "buy": MessageLookupByLibrary.simpleMessage("ખરીદો"),
-        "buySell": MessageLookupByLibrary.simpleMessage("વાહન ખરીદ/વેચાણ"),
+        "buySell": MessageLookupByLibrary.simpleMessage("વાહન વેચાણ/ખરીદ"),
         "buysellIssue":
             MessageLookupByLibrary.simpleMessage("ઇશ્યૂ ખરીદો/વેચાવો"),
         "call": MessageLookupByLibrary.simpleMessage("કૉલ કરો"),
@@ -111,6 +111,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getVerified": MessageLookupByLibrary.simpleMessage("ચકાસણી કરો"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("સહાય અને સમર્થન"),
         "home": MessageLookupByLibrary.simpleMessage("ઘર"),
+        "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
+            "Hતમે અમારી એપ્લિકેશનને કેવી રીતે રેટ કરો છો?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "હેલો! અમે તમારા લોજિસ્ટિક્સ અનુભવને વધારવા માટે અહીં છીએ. અમને તમારી લોજિસ્ટિક્સ સહાયતા બનવા દો અને તમારી વ્યવસાયિક જરૂરિયાતો એકીકૃત રીતે પૂર્ણ થશે."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -135,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "શું તમે લોગ આઉટ કરવા માંગો છો."),
         "manufacturerDistributorTrade":
             MessageLookupByLibrary.simpleMessage("ઉત્પાદક/વિતરક/વેપાર"),
+        "may_be_letter": MessageLookupByLibrary.simpleMessage("બાદમાં"),
         "message": MessageLookupByLibrary.simpleMessage("સંદેશ"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("મોબાઇલ નંબર"),
         "myPost": MessageLookupByLibrary.simpleMessage("મારી પોસ્ટ્સ"),
@@ -167,6 +170,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("તમે પ્રાપ્ત કરેલ અવતરણ"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("ટિકિટ વધારો"),
+        "rate": MessageLookupByLibrary.simpleMessage("મૂલ્ય"),
+        "rateAndReviewApp":
+            MessageLookupByLibrary.simpleMessage("દર અને સમીક્ષા"),
+        "rate_this_app":
+            MessageLookupByLibrary.simpleMessage("આ એપ્લિકેશનને રેટ કરો."),
         "recent_search": MessageLookupByLibrary.simpleMessage("તાજેતરની શોધ"),
         "registration": MessageLookupByLibrary.simpleMessage("નોંધણી"),
         "registration_personal":

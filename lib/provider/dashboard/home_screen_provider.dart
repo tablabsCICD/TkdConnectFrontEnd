@@ -67,7 +67,7 @@ class HomeScreenProvider extends BaseProvider{
     String url="";
     if(currentPage==0){
       truckLoadTypeList.clear();
-      print('the clear the api');
+     // print('the clear the api');
       notifyListeners();
     }
     if(fromCity=="All" && toCity=="All"){
@@ -86,7 +86,7 @@ class HomeScreenProvider extends BaseProvider{
 
    //   url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
     }
-    print('the url $url');
+   // print('the url $url');
 
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
@@ -109,7 +109,7 @@ class HomeScreenProvider extends BaseProvider{
     EasyLoading.show(status: "Loading");
     String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}";
 
-    print('the url $url');
+   // print('the url $url');
 
     var req = await http.post(Uri.parse(url));
    if(req.statusCode == 200) {
@@ -119,7 +119,7 @@ class HomeScreenProvider extends BaseProvider{
 
 
       }else{
-        print(response['message']);
+       // print(response['message']);
       }
       EasyLoading.dismiss();
       notifyListeners();
@@ -141,7 +141,7 @@ class HomeScreenProvider extends BaseProvider{
 
   void callUserData() async{
     user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    print('the is paid is ${user.content!.first.isPaid}');
+    //print('the is paid is ${user.content!.first.isPaid}');
     if(user.content!.first.companyLogo!=null){
      imageUrl=user.content!.first.companyLogo!;
    }

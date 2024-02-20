@@ -9,7 +9,6 @@ import 'package:tkd_connect/provider/my_route_provider/select_city_provider.dart
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
-import '../../route/app_routes.dart';
 import '../../widgets/button.dart';
 
 class SelectCityScreen extends StatefulWidget {

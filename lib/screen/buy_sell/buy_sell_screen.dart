@@ -28,7 +28,7 @@ class BuySellScreen extends StatefulWidget {
 
 }
 class _BuySellScreen extends State<BuySellScreen>{
-  bool isTabBuy=true;
+  bool isTabBuy=false;
   int selectedPage=0;
   ScrollController scrollController=ScrollController();
   late User _user;
@@ -272,62 +272,6 @@ class _BuySellScreen extends State<BuySellScreen>{
             child: InkWell(
               onTap: () {
                 if(isTabBuy){
-
-                }else{
-                  isTabBuy=true;
-                  selectedPage=0;
-                  setState(() {
-
-                  });
-
-                  callBuyApi();
-                }
-
-              },
-              child: Container(
-                height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 12.h),
-                decoration: isTabBuy?ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Color(0x332C363F)),
-                  ),
-                ): ShapeDecoration(
-                  color: Color(0x19001E49),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Color(0x332C363F)),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      S().buy,
-                      style: isTabBuy?TextStyle(
-                        color: Color(0xCC001E49),
-                        fontSize: 12.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ):TextStyle(
-                        color: Color(0xCC001E49),
-                        fontSize: 12.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                if(isTabBuy){
                   isTabBuy=false;
                   selectedPage=0;
                   setState(() {
@@ -381,6 +325,63 @@ class _BuySellScreen extends State<BuySellScreen>{
               ),
             ),
           ),
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                if(isTabBuy){
+
+                }else{
+                  isTabBuy=true;
+                  selectedPage=0;
+                  setState(() {
+
+                  });
+
+                  callBuyApi();
+                }
+
+              },
+              child: Container(
+                height: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 12.h),
+                decoration: isTabBuy?ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Color(0x332C363F)),
+                  ),
+                ): ShapeDecoration(
+                  color: Color(0x19001E49),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Color(0x332C363F)),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      S().buy,
+                      style: isTabBuy?TextStyle(
+                        color: Color(0xCC001E49),
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ):TextStyle(
+                        color: Color(0xCC001E49),
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
         ],
       ),
     );

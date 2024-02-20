@@ -159,7 +159,7 @@ class AllCards {
             if(val==10){
                 postDelete.deleteOwnPost(load.id!,index);
             }else{
-              if(load.dnd==0){
+              if(load.dnd==1){
                 ToastMessage.show(context, "This is DND Post");
               }else{
                 Utils().openMenu(val, load, context);
@@ -168,7 +168,7 @@ class AllCards {
             }
 
           }) :BaseWidget().bidButton((val) {
-            if(load.dnd==0){
+            if(load.dnd==1){
               ToastMessage.show(context, "This is DND Post");
             }else{
               Utils().openMenu(val, load, context);
@@ -182,7 +182,7 @@ class AllCards {
   getDateObject(String? dateTime){
     try{
       DateTime formatedDate = DateTime.parse(dateTime!);
-      print(formatedDate);
+     // print(formatedDate);
       var date1 = DateFormat("yyyy-MM-dd").format(formatedDate);
       var todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
       if(date1 == todayDate){

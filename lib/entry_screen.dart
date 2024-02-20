@@ -59,28 +59,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
    );
   }
 
-  late Timer _timer;
-  int _start = 5;
-
-  void startTimer() {
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
-      oneSec,
-          (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-
-              callNextScreen();
-              timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
-  }
 
   void callNextScreen() async{
     LocalSharePreferences localSharePreferences=LocalSharePreferences();
@@ -105,16 +83,14 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
   versionControllApi() async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
-    print('the version is ${apiResponse.response}');
     Version version=Version.fromJson(apiResponse.response);
     print('the version is ${version.version}');
-    if(version.version! == AppConstant.APP_VERSION){
+    if(version.version == AppConstant.APP_VERSION){
       callNextScreen();
     }else{
       upDateDailog();
     }
 
-    callNextScreen();
   }
 
 
@@ -296,7 +272,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   callToken()async {
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     String? token=await FirebaseMessaging.instance.getToken();
-    ApiResponse result=await ApiHelper().apiPost(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
+    ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
     if(result.status==200){
       return "Success";
     }

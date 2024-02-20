@@ -540,10 +540,10 @@ class S {
     );
   }
 
-  /// `Vehicle buy/sell`
+  /// `Vehicle sell/buy`
   String get buySell {
     return Intl.message(
-      'Vehicle buy/sell',
+      'Vehicle sell/buy',
       name: 'buySell',
       desc: '',
       args: [],
@@ -1510,15 +1510,6 @@ class S {
     );
   }
 
-  String get rateAndReviewApp {
-    return Intl.message(
-      'Rate and review app',
-      name: 'rateAndReviewApp',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `other`
   String get other {
     return Intl.message(
@@ -1604,6 +1595,56 @@ class S {
     return Intl.message(
       'Users',
       name: 'users',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate and Review`
+  String get rateAndReviewApp {
+    return Intl.message(
+      'Rate and Review',
+      name: 'rateAndReviewApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate This App.`
+  String get rate_this_app {
+    return Intl.message(
+      'Rate This App.',
+      name: 'rate_this_app',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do you rate our app ?`
+  String get how_do_you_rate_app {
+    return Intl.message(
+      'How do you rate our app ?',
+      name: 'how_do_you_rate_app',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RATE`
+  String get rate {
+    return Intl.message(
+      'RATE',
+      name: 'rate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MAYBE LATER`
+  String get may_be_letter {
+    return Intl.message(
+      'MAYBE LATER',
+      name: 'may_be_letter',
       desc: '',
       args: [],
     );

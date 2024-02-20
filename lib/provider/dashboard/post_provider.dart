@@ -55,7 +55,7 @@ class PostLoadProvider extends BaseProvider {
     PostLoad postLoad=PostLoad();
     postLoad.contactNumber= user.content!.first!.mobileNumber! ;
     postLoad.destination= destinationCity;
-    postLoad.dnd =dnd?0:1;
+    postLoad.dnd =dnd?1:0;
     postLoad.emailId=user.content!.first!.emailId!;
     postLoad.fullLoadChoice="I Have Vehicle";
 
@@ -95,7 +95,7 @@ class PostLoadProvider extends BaseProvider {
     PostLoad postLoad=PostLoad();
     postLoad.contactNumber= user.content!.first.mobileNumber! ;
     postLoad.destination= destinationCity;
-    postLoad.dnd =dnd?0:1;
+    postLoad.dnd =dnd?1:0;
     postLoad.emailId=user.content!.first.emailId!;
     postLoad.fullLoadChoice="I Want Vehicle";
 

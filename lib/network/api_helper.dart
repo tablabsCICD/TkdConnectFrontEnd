@@ -70,6 +70,25 @@ class ApiHelper{
 
   }
 
+  Future<ApiResponse>  apiPostWithoutDialog(String URL) async{
+
+    try{
+     // EasyLoading.show(status: "Loading");
+      var request = await dio.post(URL);
+      ApiResponse apiResponseHelper = returnResponse(request);
+      EasyLoading.dismiss();
+      return apiResponseHelper;
+    }catch (e){
+      print('$e');
+     // EasyLoading.dismiss();
+      return ApiResponse(500, null);
+    }
+
+
+
+
+  }
+
   Future<ApiResponse>  apiPutDat(String URL) async{
 
     try{

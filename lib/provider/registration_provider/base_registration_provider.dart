@@ -27,7 +27,9 @@ class BaseRegistartionProvider extends BaseProvider{
 
     ApiHelper apiHelper=ApiHelper();
     ApiResponse apiResponse=await apiHelper.postParameter(ApiConstant.REGISTRATION,AppConstant.registerCompany.toJson());
+    print('the response ${apiResponse.response}');
     if(apiResponse.status==200){
+
       Navigator.pushReplacementNamed(context, AppRoutes.otp_registration,arguments:AppConstant.registerCompany.mobileNumber);
 
       // User user=User.fromJson(apiResponse.response);
@@ -43,7 +45,7 @@ class BaseRegistartionProvider extends BaseProvider{
       // notifyListeners();
 
     }else{
-      ToastMessage.show(context, apiResponse.response);
+      ToastMessage.show(context, "Mobile number or Email id should be used already please change");
     }
 
   }

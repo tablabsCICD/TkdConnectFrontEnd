@@ -57,7 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("வணிக விவரங்கள்"),
         "businessInfo": MessageLookupByLibrary.simpleMessage("வணிக தகவல்"),
         "buy": MessageLookupByLibrary.simpleMessage("வாங்க"),
-        "buySell": MessageLookupByLibrary.simpleMessage("வாகனம் வாங்க/விற்க"),
+        "buySell": MessageLookupByLibrary.simpleMessage("வாகனம் விற்க/வாங்க"),
         "buysellIssue":
             MessageLookupByLibrary.simpleMessage("வெளியீடு வாங்க/விற்க"),
         "call": MessageLookupByLibrary.simpleMessage("அழை"),
@@ -107,6 +107,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "from": MessageLookupByLibrary.simpleMessage("இருந்து"),
         "getVerified": MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்படு"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("உதவி & ஆதரவு"),
+        "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
+            "எங்கள் பயன்பாட்டை எப்படி மதிப்பிடுகிறீர்கள்?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "வணக்கம்! உங்கள் தளவாட அனுபவத்தை மேம்படுத்த நாங்கள் இங்கு வந்துள்ளோம். உங்களின் தளவாட உதவியாக இருக்கட்டும், உங்கள் வணிகத் தேவைகள் தடையின்றி நிறைவேற்றப்படும்."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -126,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "நீங்கள் வெளியேற விரும்புகிறீர்களா"),
         "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
             "உற்பத்தியாளர்/விநியோகஸ்தர்/வர்த்தகம்"),
+        "may_be_letter": MessageLookupByLibrary.simpleMessage("பின்னர்"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("மொபைல் எண்"),
         "myPost": MessageLookupByLibrary.simpleMessage("எனது இடுகைகள்"),
         "myQuotes": MessageLookupByLibrary.simpleMessage("என் மேற்கோள்கள்"),
@@ -147,6 +150,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("நீங்கள் பெற்ற மேற்கோள்"),
         "raiseATicket":
             MessageLookupByLibrary.simpleMessage("ஒரு டிக்கெட்டை உயர்த்தவும்"),
+        "rate": MessageLookupByLibrary.simpleMessage("மதிப்பு"),
+        "rateAndReviewApp": MessageLookupByLibrary.simpleMessage(
+            "மதிப்பீடு மற்றும் மதிப்பாய்வு"),
+        "rate_this_app": MessageLookupByLibrary.simpleMessage(
+            "இந்த பயன்பாட்டை மதிப்பிடவும்."),
         "recent_search":
             MessageLookupByLibrary.simpleMessage("சமீபத்திய தேடல்கள்"),
         "registration_personal":

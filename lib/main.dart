@@ -19,7 +19,7 @@ import 'notification/local_notification.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print("Notification Received ::::::"+message.data.toString());
-  //print(message.notification!.title);
+ // print(message.notification!.title);
   LocalNotificationService.createanddisplaynotification(message);
 }
 
@@ -113,7 +113,7 @@ getFCMToken(){
   _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
   _tokenStream.listen(setToken);
   print("Fcm toke: ${FirebaseMessaging.instance
-      .getToken().toString()}");
+     .getToken().toString()}");
 }
 
 void setToken(String? token) {

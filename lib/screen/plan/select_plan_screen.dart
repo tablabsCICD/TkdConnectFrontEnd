@@ -310,11 +310,12 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
 
   startTran(SelectPlanProvider provider) async {
 
+    // await PhonePayPayment().getTranscation();
+    // if(AppConstant.PHONE_PAY_TRANSCATION_ID==""){
+    //   ToastMessage.show(context, "Please Try Again");
+    //   return null;
+    // }
     await PhonePayPayment().getTranscation();
-    if(AppConstant.PHONE_PAY_TRANSCATION_ID==""){
-      ToastMessage.show(context, "Please Try Again");
-      return null;
-    }
 
     bool init = await PhonePayPayment().initPhonePay();
     if (init) {

@@ -57,7 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "business_type":
             MessageLookupByLibrary.simpleMessage("Select Business Type"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
-        "buySell": MessageLookupByLibrary.simpleMessage("Vehicle buy/sell"),
+        "buySell": MessageLookupByLibrary.simpleMessage("Vehicle sell/buy"),
         "buysellIssue": MessageLookupByLibrary.simpleMessage("Buy/Sell Issue"),
         "call": MessageLookupByLibrary.simpleMessage("Call"),
         "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
@@ -114,6 +114,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getVerified": MessageLookupByLibrary.simpleMessage("Get verified"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("Help & support"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "how_do_you_rate_app":
+            MessageLookupByLibrary.simpleMessage("How do you rate our app ?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -137,6 +139,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Do you want to Log Out."),
         "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
             "Manufacturer/Distributor/Trade"),
+        "may_be_letter": MessageLookupByLibrary.simpleMessage("MAYBE LATER"),
         "message": MessageLookupByLibrary.simpleMessage("Message"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("Mobile Number"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
@@ -173,6 +176,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("Quote you received"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("Raise a ticket"),
+        "rate": MessageLookupByLibrary.simpleMessage("RATE"),
+        "rateAndReviewApp":
+            MessageLookupByLibrary.simpleMessage("Rate and Review"),
+        "rate_this_app": MessageLookupByLibrary.simpleMessage("Rate This App."),
         "recent_search":
             MessageLookupByLibrary.simpleMessage("Recent searches"),
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),

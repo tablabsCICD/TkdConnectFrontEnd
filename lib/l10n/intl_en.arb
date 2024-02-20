@@ -53,7 +53,7 @@
 
   "myPost": "My Posts",
   "jobs": "Jobs",
-  "buySell": "Vehicle buy/sell",
+  "buySell": "Vehicle sell/buy",
   "getVerified": "Get verified",
   "appSetting": "App setting",
   "helpSupport": "Help & support",
@@ -176,7 +176,13 @@
   "recent_search": "Recent searches",
   "search_here": "Search here",
   "posts": "Posts",
-  "users": "Users"
+  "users": "Users",
+  "rateAndReviewApp": "Rate and Review",
+  "rate_this_app": "Rate This App.",
+  "how_do_you_rate_app": "How do you rate our app ?",
+  "rate": "RATE",
+  "may_be_letter": "MAYBE LATER"
+
 
 
 

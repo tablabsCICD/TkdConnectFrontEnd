@@ -31,15 +31,15 @@ class MyBidsProvider extends BaseProvider{
     if(isLoad && tabChang){
     }else{
       User user=await LocalSharePreferences().getLoginData();
-      print('the link is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}"}');
+      //print('the link is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}"}');
 
       ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}");
-      print('the response is ${apiResponse.response}');
+     // print('the response is ${apiResponse.response}');
       if(apiResponse.status==200){
         BidPlaced bidPlaced=BidPlaced.fromJson(apiResponse.response);
         listBids.clear();
         listBids.addAll(bidPlaced.content!);
-        print('the size is ${listBids.length}');
+       // print('the size is ${listBids.length}');
         selectedPageAllBids++;
         isLoad=true;
         notifyListeners();

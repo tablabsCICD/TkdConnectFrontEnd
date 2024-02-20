@@ -6,7 +6,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
+
 import 'package:tkd_connect/network/api_helper.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 
 import '../constant/api_constant.dart';
 import '../model/response/phone_pay_model.dart';
@@ -71,6 +74,7 @@ class PhonePayPayment {
   }
 
   String getBody(int amount) {
+    print('the transcation id is ${AppConstant.PHONE_PAY_TRANSCATION_ID}');
 
     var body = {
       "merchantId": "M22YOFUNC8SHQ",
@@ -120,9 +124,13 @@ class PhonePayPayment {
     Map<String,dynamic>parameter={
       "userId ":31
     };
-    ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.BASE_URL+"phonepe/phonepay/UUID?userId=31", parameter);
+    LocalSharePreferences localSharePreferences=LocalSharePreferences();
+       User user= await localSharePreferences.getLoginData();
+    ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.BASE_URL+"phonepe/phonepay/UUID?userId=${user.content!.first.id}", parameter);
     try{
+      print('the api response $apiResponse');
       if(apiResponse.status==200){
+
         PhonePayModel payModel=PhonePayModel.fromJson(apiResponse.response);
         AppConstant.PHONE_PAY_TRANSCATION_ID=payModel.data!.uuid!;
       }

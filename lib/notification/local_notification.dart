@@ -54,6 +54,8 @@ class LocalNotificationService{
         ),
       );
 
+      print('the massage data value is ${message.data}');
+      print('the massage data value is ${message.data.toString()}');
       await _notificationsPlugin.show(
         id,
         message.data.values.last,

@@ -52,7 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "appSetting": MessageLookupByLibrary.simpleMessage("యాప్ సెట్టింగ్"),
         "buy": MessageLookupByLibrary.simpleMessage("కొను"),
         "buySell":
-            MessageLookupByLibrary.simpleMessage("వాహనం కొనుగోలు/అమ్మకం"),
+            MessageLookupByLibrary.simpleMessage("వాహనం అమ్మకం/కొనుగోలు"),
         "buysellIssue":
             MessageLookupByLibrary.simpleMessage("సమస్యను కొనండి/అమ్మండి"),
         "call": MessageLookupByLibrary.simpleMessage("కాల్"),
@@ -97,6 +97,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "from": MessageLookupByLibrary.simpleMessage("నుండి"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ధృవీకరించబడండి"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("సహాయం & మద్దతు"),
+        "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
+            "మీరు మా యాప్‌ను ఎలా రేట్ చేస్తారు?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "హలో! మేము మీ లాజిస్టిక్స్ అనుభవాన్ని మెరుగుపరచడానికి ఇక్కడ ఉన్నాము. మేము మీ లాజిస్టిక్స్ సహాయాన్ని అందిస్తాము మరియు మీ వ్యాపార అవసరాలు సజావుగా నెరవేరుతాయి."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -115,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "మీరు లాగ్ అవుట్ చేయాలనుకుంటున్నారా."),
         "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
             "తయారీదారు/డిస్ట్రిబ్యూటర్/ట్రేడ్"),
+        "may_be_letter": MessageLookupByLibrary.simpleMessage("తరువాత"),
         "message": MessageLookupByLibrary.simpleMessage("సందేశం"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("మొబైల్ నంబర్"),
         "myPost": MessageLookupByLibrary.simpleMessage("నా పోస్ట్‌లు"),
@@ -139,6 +142,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "quotesYouReceived":
             MessageLookupByLibrary.simpleMessage("పోస్ట్ జాబ్"),
         "raiseATicket": MessageLookupByLibrary.simpleMessage("టికిట్ వధారో"),
+        "rate": MessageLookupByLibrary.simpleMessage("విలువ"),
+        "rateAndReviewApp": MessageLookupByLibrary.simpleMessage(
+            "రేట్ చేయండి మరియు సమీక్షించండి"),
+        "rate_this_app":
+            MessageLookupByLibrary.simpleMessage("ఈ యాప్‌ను రేట్ చేయండి."),
         "recent_search": MessageLookupByLibrary.simpleMessage("ఇటీవలి శోధనలు"),
         "registration_personal":
             MessageLookupByLibrary.simpleMessage("నమోదు - వ్యక్తిగత వివరాలు"),

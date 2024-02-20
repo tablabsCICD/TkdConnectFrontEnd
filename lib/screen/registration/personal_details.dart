@@ -108,7 +108,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w600,
                               ),
-                              isEnbale: true,
+                              isEnbale: provider.isEnbale,
                               onClick: () async{
 
                                 provider.saveData(context);

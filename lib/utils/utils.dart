@@ -13,6 +13,7 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
+import '../generated/l10n.dart';
 import '../model/response/AllCard.dart';
 import '../screen/dashboard/home/place_bid_screen.dart';
 
@@ -38,10 +39,10 @@ class Utils {
           });
           rateMyApp.showRateDialog(
               context,
-              title: 'Rate This App.',
-              message: 'If you like this app, please take a little bit of your time to review it! \nIt really help us and it shouldn\'t take you more than a minute',
-              rateButton: "RATE",
-              laterButton: "MAYBE LATER",
+              title: '${S().rate_this_app}',
+              message: '${S().how_do_you_rate_app}',
+              rateButton: "${S().rate}",
+              laterButton: "${S().may_be_letter}",
               ignoreNativeDialog: true,
               dialogStyle: DialogStyle(titleStyle: TextStyle(color: Colors.green)),
               onDismissed: (){
