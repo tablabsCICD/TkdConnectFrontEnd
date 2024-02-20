@@ -177,10 +177,7 @@ class SelectCityProvider extends BaseProvider {
         _selectedInextDestination=i;
       }
     }
-
     notifyListeners();
-
-
   }
 
   searchCity(String name)async{
@@ -203,5 +200,18 @@ class SelectCityProvider extends BaseProvider {
     }
     notifyListeners();
   }
+
+  addCity(String state,String city)async{
+    var request=await ApiHelper().apiGet(ApiConstant.ADD_CITY(state,city));
+    if(request.status==200) {
+      print(request.response);
+      if (request.response["successfull"] == "true") {
+        print(request.response["messages"]);
+      }
+      notifyListeners();
+    }
+    return request.response;
+  }
+
 
 }

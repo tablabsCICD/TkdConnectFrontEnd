@@ -1305,6 +1305,32 @@ class BaseWidget {
                 )
               ],
             )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(4);
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star_border,
+                  color: Colors.black,
+                  size: 20.w,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().rating,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
       ],
     );
   }

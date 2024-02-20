@@ -660,6 +660,16 @@ class S {
     );
   }
 
+  /// `Rating and Review`
+  String get rating {
+    return Intl.message(
+      'Rating And Review',
+      name: 'rating',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want to delete this post.`
   String get deleteMsg {
     return Intl.message(

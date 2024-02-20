@@ -168,7 +168,7 @@ class AllCards {
             }
 
           }) :BaseWidget().bidButton((val) {
-            if(load.dnd==0){
+            if(load.dnd==1){
               ToastMessage.show(context, "This is DND Post");
             }else{
               Utils().openMenu(val, load, context);
