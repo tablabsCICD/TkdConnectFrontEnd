@@ -322,4 +322,5 @@ class CreateJobScreen extends StatelessWidget {
       },
     );
   }
+
 }
