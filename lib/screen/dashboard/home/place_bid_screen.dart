@@ -100,7 +100,8 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
               ),
               SizedBox(height: 8.h,),
-              Container(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "\u{20B9}", controller: controller,keybordType: TextInputType.number,onChange: (val){
+              Container(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "\u{20B9}", controller: controller,keybordType: TextInputType.number,
+                onChange: (val){
                 if(val==0){
                   buttonEnable=false;
                 }else{

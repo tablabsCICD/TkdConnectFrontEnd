@@ -3,12 +3,15 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
+import 'package:tkd_connect/widgets/rating_dailog.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
@@ -28,7 +31,7 @@ class Utils {
           minDays: 0,
           minLaunches: 1,
           remindDays: 0,
-          remindLaunches: 2,
+          remindLaunches: 1,
           googlePlayIdentifier: 'com.pdk.tkd'
       );
       rateMyApp.init().then((value) {
@@ -44,7 +47,13 @@ class Utils {
               rateButton: "${S().rate}",
               laterButton: "${S().may_be_letter}",
               ignoreNativeDialog: true,
-              dialogStyle: DialogStyle(titleStyle: TextStyle(color: Colors.green)),
+              dialogStyle: DialogStyle(titleStyle: TextStyle(color: Colors.green,
+                fontSize: 16.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,),messageStyle: TextStyle(color: Colors.black,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w400,)),
               onDismissed: (){
                 rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed);
               },
@@ -94,6 +103,17 @@ class Utils {
   }
 
 
+  callRatingAndReview(context,TruckLoad load){
+
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.58, child: RatingDialog(load));
+        });
+
+  }
 
   Future openwhatsapp(BuildContext context,int number,String text,) async{
     final link = WhatsAppUnilink(
@@ -130,6 +150,11 @@ class Utils {
         case 3:
           Utils().callShareFunction(description);
           return;
+
+        case 4:
+          User user=await LocalSharePreferences().getLoginData();
+          Utils().callRatingAndReview(context,load);
+          return;  
       }
     }
 

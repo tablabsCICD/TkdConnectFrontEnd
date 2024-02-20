@@ -12,7 +12,7 @@ import 'package:tkd_connect/widgets/sign_in_widget.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 import '../../utils/colors.dart';
-import '../../utils/phone_pay_demo.dart';
+
 
 class PersonalDetailsScreen extends StatefulWidget {
   @override

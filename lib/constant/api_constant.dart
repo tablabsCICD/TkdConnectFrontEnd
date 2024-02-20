@@ -29,6 +29,7 @@ class ApiConstant {
 
   static String GET_ALL_CITY(page)=>BASE_URL+"get/cities/db/page/search?page=$page";
   static String GET_ALL_CITY_SERACH(city)=>BASE_URL+"get/cities/db/page/search?city=$city";
+  static String ADD_CITY(state,city)=>BASE_URL+"set/cities/db?state=$state&city=$city";
 
   static String REGISTRATION = BASE_URL + "companyRegistration";
   static String PLACED_BID=BASE_URL+"biding";
@@ -37,6 +38,7 @@ class ApiConstant {
   static String MYPOSTBID(id,page) => BASE_URL + "getOwnPostAndBid?userName=$id&page=$page";
 
   static String GETCOMMENTS(id) => BASE_URL + "/getGerenalPostComments?generalPostId=$id";
+  static String GIVE_RATING_REVIEWS = BASE_URL + "/ratings-reviews/save";
 
   static String HELPSUPPORTIKET = BASE_URL + "HelpAndSupportTicket";
   static String BUY_SELL_ALL_CARD (type,currentPage)=> BASE_URL + "allCards/buySell?type=${type}&&page=${currentPage}";
