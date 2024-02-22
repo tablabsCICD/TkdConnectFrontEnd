@@ -24,6 +24,7 @@ class AppRoutes {
   static const helpsupport = '/helpsupport';
   static const appsetting = '/appsetting';
   static const job = '/job';
+  static const group = '/group';
   static const mypost = '/mypost';
   static const buysell = '/buysell';
   static const createjob = '/createjob';

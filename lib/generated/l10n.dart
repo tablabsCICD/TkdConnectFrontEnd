@@ -550,6 +550,16 @@ class S {
     );
   }
 
+  /// `group`
+  String get group {
+    return Intl.message(
+      'Group',
+      name: 'group',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Get verified`
   String get getVerified {
     return Intl.message(

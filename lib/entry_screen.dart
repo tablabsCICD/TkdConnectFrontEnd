@@ -32,7 +32,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   void initState() {
     // TODO: implement initState
    // startTimer();
-    versionControllApi();
+    //versionControllApi();
+    callNextScreen();
     super.initState();
   }
   @override

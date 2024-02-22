@@ -6,6 +6,7 @@ import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
 import 'package:tkd_connect/screen/buy_sell/create_buy_sell.dart';
 import 'package:tkd_connect/screen/general_post/general_post_list.dart';
 import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
+import 'package:tkd_connect/screen/group/group_screen.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_one.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_three.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_two.dart';
@@ -111,6 +112,14 @@ class RouteGenerator {
 
       case AppRoutes.job:
         return buildRoute(JobListScreen(), settings: settings);
+
+      case AppRoutes.group:
+        int userId = settings.arguments as int;
+        return buildRoute(
+            GroupScreen(
+              userId: userId,
+            ),
+            settings: settings);
        // return buildRoute(GeneralPostScreen(), settings: settings);
       case AppRoutes.mypost:
         return buildRoute(MyPostBase(), settings: settings);

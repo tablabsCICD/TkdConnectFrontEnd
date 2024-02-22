@@ -75,6 +75,11 @@ class _MoreScreen extends State<MoreScreen> {
                 Navigator.pushNamed(context, AppRoutes.buysell);
 
               },FontWeight.w600):SizedBox(),
+              item(S().group,(){
+
+                Navigator.pushNamed(context, AppRoutes.group,arguments: user.content!.first.id);
+
+              },FontWeight.w600),
               item(S().getVerified,(){
 
                 openVerifiedTag();

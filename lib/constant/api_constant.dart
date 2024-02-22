@@ -1,13 +1,12 @@
 class ApiConstant {
 
 
-  static final String BASE_URL="https://api.tkdost.com/tkd2/api/";
- // static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080//tkd3/api/";
-//static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080/tkd3/api/";
+   static final String BASE_URL="https://api.tkdost.com/tkd3/api/";
+  //static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080//tkd3/api/";
 
   //static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080/tkdConnect1/api/";
 
- // static String FULL_LOAD_ALL_CARD=BASE_URL + "allcards/fullLoad3";
+  // static String FULL_LOAD_ALL_CARD=BASE_URL + "allcards/fullLoad3";
   static String FULL_LOAD_ALL_CARD=BASE_URL + "dashboard/homepage/posts";
   static String SEND_OTP(mobile) => BASE_URL + "sendOtp?mobileNos=$mobile";
   static String USER_FIND_BY_MOBILE(mobile) => BASE_URL + "DeleteUser/getByMobileNumber?mobileNumber=$mobile";
@@ -20,8 +19,17 @@ class ApiConstant {
 
   static String DIRECTORYFILTER = BASE_URL + "directory?";
 
+  static String CREATE_GROUP = BASE_URL + "groups";
+  static String UPDATE_GROUP = BASE_URL + "groups";
+  static String DELETE_GROUP(id) => BASE_URL + "groups?id=$id";
 
- // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
+  static String GET_GROUP_LIST(userId) => BASE_URL + "groups/byUser/$userId";
+
+  static String ADD_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
+  static String REMOVE_GROUP_MEMBER (memberId) => BASE_URL + "groupMembers?id=$memberId";
+  static String EDIT_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
+
+  // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String OTP_VERIFICATION(mobile,otp) => BASE_URL + "VerifyOtp?mobileNumber=$mobile&otp=$otp";
 
   //static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
