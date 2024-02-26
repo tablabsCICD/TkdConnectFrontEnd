@@ -363,16 +363,16 @@ class GroupProvider extends  BaseProvider{
       'listOfUsers':selectedUserId,
 
     };
+    print("Create Group Url : ${ApiConstant.ADD_GROUP_MEMBER}");
     var response=await apiHelper.postParameter(ApiConstant.ADD_GROUP_MEMBER,parameter);
-    if(response==200){
-      isLoading=false;
+    print("Add group member response : "+response.response["errorMessage"]);
+    if(response.status==200){
       create_Group=true;
-
       if(isFrom==true){
         getGroupMember(groupId!);
       }else{
-        await getAllGroup(userId, context);
-        showLoader(context);
+        await getGroupListByUserId();
+
         goToNextPage(context);
       }
 
@@ -405,19 +405,15 @@ class GroupProvider extends  BaseProvider{
 
   }
 
-  getAllGroup(int? userId,context)async{
+ /* getAllGroup(int? userId,context)async{
     print('the id is +${userId}');
     groupListByUserId.clear();
-    isLoading=true;
-    //showLoader(context);
     ApiHelper apiHelper=ApiHelper();
     var response=await apiHelper.apiGet(ApiConstant.GET_GROUP_LIST(userId));
     GroupListResponse groupListModel=GroupListResponse.fromJson(response.response);
     groupListByUserId.addAll(groupListModel.content!);
-    isLoading=false;
-    //showLoader(context);
     notifyListeners();
-  }
+  }*/
 
   getGroupMember(int groupId)async{
     listAddedMember.clear();
