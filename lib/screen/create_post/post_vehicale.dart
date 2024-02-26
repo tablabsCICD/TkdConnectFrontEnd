@@ -181,6 +181,23 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 ),
                 hideMyIden(context),
                 SizedBox(
+                  height: 12.h,
+                ),
+                labelText(S().groupType),
+                SizedBox(
+                  height: 4.h,
+                ),
+                DropDown(
+                  onClick: () async {
+                    await provider.getGroupListByUserId();
+                    ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                    int a = await itemBottomSheet.showIteam(
+                        context,provider.groupListName, "Select Group");
+                    provider.selecteGroup(a);
+                  },
+                  hint: provider.selectedGroup,
+                ),
+                SizedBox(
                   height: 30.h,
                 ),
                 provider.images.length>0? BaseWidget().carouseImageDelete(provider.images,(item){

@@ -10,6 +10,7 @@ import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/screen/group/select_user_for_group_screen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/rating_dailog.dart';
 
@@ -111,6 +112,18 @@ class Utils {
         builder: (BuildContext context) {
           return FractionallySizedBox(
               heightFactor: 0.58, child: RatingDialog(load));
+        });
+
+  }
+
+  callCreateGroup(context, int userId){
+
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.58, child: SelectUserForGroupScreen(userId));
         });
 
   }

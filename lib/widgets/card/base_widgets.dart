@@ -1815,6 +1815,27 @@ class BaseWidget {
                     fit: BoxFit.contain, image: NetworkImage(src))));
   }
 
+  getGroupImage(String src, {double? height, double? width}) {
+    return src == "string"
+        ? Container(
+        width: height == null ? 35 : height,
+        height: width == null ? 35 : width,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[100],
+         ),
+      child:Icon(Icons.group_outlined,color: Colors.grey,)
+    )
+        : Container(
+        width: height == null ? 35 : height,
+        height: width == null ? 35 : width,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[100],
+            image: new DecorationImage(
+                fit: BoxFit.contain, image: NetworkImage(src))));
+  }
+
   getImageclip(String src, {double? height, double? width}) {
     return src == ""
         ? Container(

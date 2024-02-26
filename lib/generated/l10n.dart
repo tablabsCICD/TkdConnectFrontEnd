@@ -960,6 +960,27 @@ class S {
     );
   }
 
+  /// `Next`
+  String get next {
+    return Intl.message(
+      'Next',
+      name: 'next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create`
+  String get create {
+    return Intl.message(
+      'Create',
+      name: 'create',
+      desc: '',
+      args: [],
+    );
+  }
+
+
   /// `Login issue`
   String get loginIssue {
     return Intl.message(
@@ -1395,6 +1416,16 @@ class S {
     return Intl.message(
       'Cargo Type',
       name: 'cargoType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Type`
+  String get groupType {
+    return Intl.message(
+      'Select Group',
+      name: 'groupType',
       desc: '',
       args: [],
     );

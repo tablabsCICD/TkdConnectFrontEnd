@@ -30,39 +30,102 @@ class GroupScreen extends StatefulWidget {
 }
 
 class _GroupScreenState extends State<GroupScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GroupProvider(widget.userId),
+      create: (BuildContext context) => GroupProvider(),
       builder: (context, child) => _buildPage(context),
     );
   }
 
   _buildPage(BuildContext context) {
-    return Scaffold(
-      body: Consumer<GroupProvider>(
-  builder: (context, provider, child) {
-  return Container(
-        color: ThemeColor.baground,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            top_bar(context),
-            serachBar(),
-            tabBar(),
-            allUserTag(),
-            provider.groupListByUserId.length==0 && provider.isLoadDone?Center(child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(S().noRecordFound),
-            )):SizedBox(),
-            allUserData()
+    return Consumer<GroupProvider>(
+        builder: (context, provider, child) {
+          return Scaffold(
+            body: Container(
+              color: ThemeColor.baground,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  top_bar(context),
+                  serachBar(),
+                  // tabBar(),
+                  //allUserTag(),
+                  provider.groupListByUserId.length == 0 && provider.isLoadDone
+                      ? Center(child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(S().noRecordFound),
+                  ))
+                      : SizedBox(),
+                  allUserData()
 
-          ],
-        ),
-      );
-  },
-),
+                ],
+              ),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation
+                .centerFloat,
+            floatingActionButton: InkWell(
+              onTap: () async {
+               // Utils().callCreateGroup(context,widget.userId);
+                Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: widget.userId);
+              },
+              child: Container(
+                width: 155.w,
+                height: 38.h,
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: ThemeColor.theme_blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.r)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Create Group',
+                      style: TextStyle(
+                        color: ThemeColor.progress_color,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts
+                            .poppins()
+                            .fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 2.w,
+                    ),
+                    Container(
+                      width: 16.w,
+                      height: 16.w,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 16.w,
+                            height: 16.w,
+                            child: Stack(children: [
+                              SvgPicture.asset(
+                                Images.add, height: 16.h, width: 16.w,)
+
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
     );
   }
 
@@ -72,10 +135,11 @@ class _GroupScreenState extends State<GroupScreen> {
         return Container(
           child: Expanded(
             child: ListView.builder(
+              shrinkWrap: true,
                 controller: provider.scrollControllerVertical,
                 itemCount: provider.groupListByUserId.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return groupItem(provider.groupListByUserId[index]);
+                  return groupItem(provider.groupListByUserId[index],provider,index);
                 }),
           ),
         );
@@ -244,7 +308,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                 child: TextField(
                                   controller: provider.searchController,
                                   onChanged: (value) {
-                                   // provider.searchUser(value);
+                                    provider.groupSearch(value);
                                   },
                                   decoration: InputDecoration(
                                       hintText: "Search groups ",
@@ -463,107 +527,124 @@ class _GroupScreenState extends State<GroupScreen> {
     );
   }
 
-  groupItem(GroupData groupData) {
-    return Container(
-      width: 375.w,
-      height: 67.h,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          left: BorderSide(color: Color(0x192C363F)),
-          top: BorderSide(color: Color(0x192C363F)),
-          right: BorderSide(color: Color(0x192C363F)),
-          bottom: BorderSide(width: 1, color: Color(0x192C363F)),
+  groupItem(GroupData groupData, GroupProvider provider, int index) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(groupData.date!);
+    // Format DateTime as string
+    String formattedDate = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    print(formattedDate);
+
+    return InkWell(
+      onTap: () async {
+        provider.seletedGroupObject(groupData);
+        await provider.getGroupMember(groupData.id!);
+        Navigator.pushNamed(context, AppRoutes.group_info,arguments: provider);
+      },
+      child: Container(
+        width: 375.w,
+        height: 67.h,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            left: BorderSide(color: Color(0x192C363F)),
+            top: BorderSide(color: Color(0x192C363F)),
+            right: BorderSide(color: Color(0x192C363F)),
+            bottom: BorderSide(width: 1, color: Color(0x192C363F)),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BaseWidget().getImage(groupData.imageUrl!,
-                          height: 32.h, width: 32.w),
-                      SizedBox(
-                        width: 14.5.w,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                groupData.groupName!,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
-                                  fontWeight: FontWeight.w600,
-                                  height: 0,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BaseWidget().getGroupImage(groupData.imageUrl!,
+                            height: 32.h, width: 32.w),
+                        SizedBox(
+                          width: 14.5.w,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  groupData.groupName!,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12.sp,
+                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontWeight: FontWeight.w600,
+                                    height: 0,
+
+                                  ),
 
                                 ),
+                                SizedBox(width: 4.w,),
+                               // Visibility(visible: groupData.isPaid !=0?true:false,child: SvgPicture.asset(Images.verified,height: 12.h,width: 12.w,))
 
-                              ),
-                              SizedBox(width: 4.w,),
-                             // Visibility(visible: groupData.isPaid !=0?true:false,child: SvgPicture.asset(Images.verified,height: 12.h,width: 12.w,))
-
-                            ],
-                          ),
-                          Container(
-                            child: Text(
-                              groupData.date!.toString(),
-                              style: TextStyle(
-                                color: Color(0x99001E49),
-                                fontSize: 10.sp,
-                                fontFamily: GoogleFonts.poppins().fontFamily,
-                                fontWeight: FontWeight.w400,
+                              ],
+                            ),
+                            Container(
+                              child: Text(
+                                formattedDate,
+                                style: TextStyle(
+                                  color: Color(0x99001E49),
+                                  fontSize: 10.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                    onTap: () {
+            Container(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 24.w,
+                    height: 24.h,
+                    child: Stack(children: [
+                      InkWell(onTap: () async {
+                        provider.seletedGroupObject(groupData);
+                        await provider.getGroupMember(groupData.id!);
+                        Navigator.pushNamed(context, AppRoutes.group_info,arguments: provider);
+                      }, child: Icon(Icons.info_outline))
 
-                      Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: groupData);
-
-                    },
-                    child: SvgPicture.asset(Images.profilepicture)),
-                SizedBox(width: 12.w),
-                InkWell(
-                    onTap: () {
-                    //  Utils().callFunction("${groupData.mobileNumber}");
-                    },
-                    child: SvgPicture.asset(Images.call)),
-              ],
+                    ]),
+                  ),
+                  SizedBox(width: 12.w),
+                  InkWell(
+                      onTap: () {
+                        provider.deleteGroup(groupData.id!, index);
+                      },
+                      child: SvgPicture.asset(Images.delete)),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -31,7 +31,7 @@ class ItemBottomSheet{
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Textview(
-                        title: 'Select Type',
+                        title: title,
                         TextStyle(
                           color: Colors.black,
                           fontSize: 20.sp,

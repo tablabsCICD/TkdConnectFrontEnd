@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
 import 'package:tkd_connect/screen/buy_sell/create_buy_sell.dart';
 import 'package:tkd_connect/screen/general_post/general_post_list.dart';
 import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
+import 'package:tkd_connect/screen/group/create_group_screen.dart';
+import 'package:tkd_connect/screen/group/group_detail_screen.dart';
+import 'package:tkd_connect/screen/group/select_user_for_group_screen.dart';
 import 'package:tkd_connect/screen/group/group_screen.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_one.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_three.dart';
@@ -83,12 +87,15 @@ class RouteGenerator {
 
       case AppRoutes.registration_plan_details:
         return buildRoute(SelectPlanScreen(), settings: settings);
+
       case AppRoutes.create_post:
        // return buildRoute(CreatePostBase(), settings: settings);
           return _createRoute(CreatePostBase());
+
       case AppRoutes.viewprofiledirectory:
         TransportSearchData data = settings.arguments as TransportSearchData;
         return buildRoute(ViewProfileDirectory(data: data), settings: settings);
+
       case AppRoutes.editprofile:
         return buildRoute(EditProfileBaseScreen(), settings: settings);
 
@@ -121,7 +128,20 @@ class RouteGenerator {
             ),
             settings: settings);
        // return buildRoute(GeneralPostScreen(), settings: settings);
-      case AppRoutes.mypost:
+
+      case AppRoutes.select_group_member:
+        int userId = settings.arguments as int;
+        return _createRoute(SelectUserForGroupScreen(userId));
+
+      case AppRoutes.create_group:
+        GroupProvider provider = settings.arguments as GroupProvider ;
+        return _createRoute(CreateGroupScreen(provider));
+
+      case AppRoutes.group_info:
+        GroupProvider provider = settings.arguments as GroupProvider ;
+        return _createRoute(GroupInfo(provider));
+
+     case AppRoutes.mypost:
         return buildRoute(MyPostBase(), settings: settings);
 
       case AppRoutes.buysell:

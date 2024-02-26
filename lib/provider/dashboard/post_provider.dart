@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
+import 'package:tkd_connect/model/response/group_member_list.dart';
+import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -21,6 +23,7 @@ class PostLoadProvider extends BaseProvider {
   String selectedRequriment="Select One";
   String selectedCargo="Select One";
   String selectedPayment="Select One";
+  String selectedGroup="Select Group";
   String sourceCity="Select One";
   String destinationCity="Select One";
 
@@ -50,6 +53,44 @@ class PostLoadProvider extends BaseProvider {
     print('the images is ${images.length}');
     notifyListeners();
   }
+
+  List<GroupData> groupListByUserId = [];
+  List<String> groupListName = [];
+  List<GroupMember>listAddedMember=[];
+  List<int> addedMemberIdList = [];
+
+  getGroupListByUserId() async {
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    String myUrl = ApiConstant.GET_GROUP_LIST(user.content!.first.id);
+    print("Get Group List By User Id : $myUrl");
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
+    print(apiResponse.response);
+    if(apiResponse.status==200){
+      GroupListResponse groupListResponse=GroupListResponse.fromJson(apiResponse.response);
+      groupListByUserId.clear();
+      groupListName.clear();
+      groupListByUserId.addAll(groupListResponse.content as Iterable<GroupData>);
+      groupListByUserId.forEach((element) {groupListName.add(element.groupName!); });
+
+    }
+    notifyListeners();
+  }
+
+  getGroupMember(int groupId)async{
+    listAddedMember.clear();
+    addedMemberIdList.clear();
+    ApiHelper apiHelper=ApiHelper();
+    String myUrl = ApiConstant.GROUP_MEMBER_LIST+groupId!.toString();
+    print(myUrl);
+    var response=await apiHelper.apiWithoutDecodeGet(myUrl);
+    print(response.response);
+    GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
+    listAddedMember.addAll(groupListModel.content!);
+    listAddedMember.forEach((element) { addedMemberIdList.add(element.id!);});
+    print(addedMemberIdList.length);
+    notifyListeners();
+  }
+
   createPost(BuildContext context)async{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
@@ -77,7 +118,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.tableName="Full Load";
     postLoad.topicName= "Full Load Truck";
     postLoad.image=images;
-    postLoad.listOfUserIds=[];
+    postLoad.listOfUserIds=addedMemberIdList;
 
     postLoad.id=0;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
@@ -117,6 +158,8 @@ class PostLoadProvider extends BaseProvider {
     postLoad.tableName="Full Load";
     postLoad.topicName= "Full Load Truck";
     postLoad.image=images;
+    postLoad.listOfUserIds=addedMemberIdList;
+
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){
         ToastMessage.show(context, "Post submitted successfully!");
@@ -167,6 +210,14 @@ class PostLoadProvider extends BaseProvider {
     notifyListeners();
 
   }
+
+  selecteGroup(int index) async {
+    print(groupListByUserId[index].groupName!);
+    selectedGroup=groupListByUserId[index].groupName!;
+    await getGroupMember(groupListByUserId[index].id!);
+   // enble();
+  }
+
   selectedSourceCity(String city){
     sourceCity=city;
     enble();

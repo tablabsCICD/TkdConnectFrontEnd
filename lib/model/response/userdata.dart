@@ -73,14 +73,14 @@ class UserData {
   String? companyLogo;
   String? aadharCard;
   String? otp;
-  dynamic? ratings;
+  double? ratings;
   int? numberOfTimesRating;
   String? password;
   String? deviceId;
   String? profilePicture;
   String? os;
   String? loggedUserName;
- // String? loggedTime;
+  int? loggedTime;
   int? transporterOrAgent;
   int? preferredRouresEntered;
   int? isPaid;
@@ -90,11 +90,12 @@ class UserData {
   String? alternativeNumber;
   int? companyId;
   int? isUserVerifiedByCompany;
-  String? aadharCardForVerification;
+  bool? isSelected;
+  bool? addedIngroup;
   String? panCardForVerification;
 
   UserData(
-      {this.id,
+      {this.addedIngroup,this.isSelected,this.id,
         this.userName,
         this.firstName,
         this.lastName,
@@ -119,7 +120,7 @@ class UserData {
         this.profilePicture,
         this.os,
         this.loggedUserName,
-      //  this.loggedTime,
+        this.loggedTime,
         this.transporterOrAgent,
         this.preferredRouresEntered,
         this.isPaid,
@@ -128,48 +129,46 @@ class UserData {
         this.website,
         this.alternativeNumber,
         this.companyId,
-        this.isUserVerifiedByCompany,
-        this.aadharCardForVerification,
-        this.panCardForVerification});
+        this.isUserVerifiedByCompany});
 
   UserData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userName = json['userName'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    emailId = json['emailId'];
-    mobileNumber = json['mobileNumber'];
-    companyName = json['companyName'];
-    companyAddress = json['companyAddress'];
-    city = json['city'];
-    state = json['state'];
-    country = json['country'];
-    landlineNumber = json['landlineNumber'];
-    mainBranch = json['mainBranch'];
-    idOfMainBranch = json['idOfMainBranch'];
-    verified = json['verified'];
-    companyLogo = json['companyLogo'];
-    aadharCard = json['aadharCard'];
-    otp = json['otp'];
-    ratings = json['ratings'];
-    numberOfTimesRating = json['numberOfTimesRating'];
-    password = json['password'];
-    deviceId = json['deviceId'];
-    profilePicture = json['profilePicture'];
-    os = json['os'];
-    loggedUserName = json['loggedUserName'];
-    //loggedTime = json['loggedTime'];
-    transporterOrAgent = json['transporterOrAgent'];
-    preferredRouresEntered = json['preferredRouresEntered'];
-    isPaid = json['isPaid'];
-    paidStartDate = json['paidStartDate'];
-    validTill = json['validTill'];
-    website = json['website'];
-    alternativeNumber = json['alternativeNumber'];
-    companyId = json['companyId'];
-    isUserVerifiedByCompany = json['isUserVerifiedByCompany'];
-    aadharCardForVerification = json['aadharCardForVerification'];
-    panCardForVerification = json['panCardForVerification'];
+    id = json['id']?? 0;
+    userName = json['userName']?? '';
+    firstName = json['firstName']?? '';
+    lastName = json['lastName']?? '';
+    emailId = json['emailId']?? '';
+    mobileNumber = json['mobileNumber']?? 0;
+    companyName = json['companyName']?? '';
+    companyAddress = json['companyAddress']?? '';
+    city = json['city']?? '';
+    state = json['state']?? '';
+    country = json['country']?? '';
+    landlineNumber = json['landlineNumber']?? 0;
+    mainBranch = json['mainBranch']?? 0;
+    idOfMainBranch = json['idOfMainBranch']?? 0;
+    verified = json['verified']?? 0;
+    companyLogo = json['companyLogo']?? '';
+    aadharCard = json['aadharCard']?? '';
+    otp = json['otp']?? '';
+    ratings = json['ratings']?? 0.0;
+    numberOfTimesRating = json['numberOfTimesRating']?? 0;
+    password = json['password']?? '';
+    deviceId = json['deviceId']?? '';
+    profilePicture = json['profilePicture']?? '';
+    os = json['os']?? '';
+    loggedUserName = json['loggedUserName']?? '';
+    loggedTime = json['loggedTime']?? 0;
+    transporterOrAgent = json['transporterOrAgent']?? 0;
+    preferredRouresEntered = json['preferredRouresEntered']?? 0;
+    isPaid = json['isPaid']?? 0;
+    paidStartDate = json['paidStartDate']?? '';
+    validTill = json['validTill']?? '';
+    website = json['website']?? '';
+    alternativeNumber = json['alternativeNumber']?? '';
+    companyId = json['companyId']?? 0;
+    isUserVerifiedByCompany = json['isUserVerifiedByCompany']?? 0;
+    isSelected=false;
+    addedIngroup=false;
   }
 
   Map<String, dynamic> toJson() {
@@ -199,7 +198,7 @@ class UserData {
     data['profilePicture'] = this.profilePicture;
     data['os'] = this.os;
     data['loggedUserName'] = this.loggedUserName;
-  //  data['loggedTime'] = this.loggedTime;
+    data['loggedTime'] = this.loggedTime;
     data['transporterOrAgent'] = this.transporterOrAgent;
     data['preferredRouresEntered'] = this.preferredRouresEntered;
     data['isPaid'] = this.isPaid;
@@ -209,8 +208,6 @@ class UserData {
     data['alternativeNumber'] = this.alternativeNumber;
     data['companyId'] = this.companyId;
     data['isUserVerifiedByCompany'] = this.isUserVerifiedByCompany;
-    data['aadharCardForVerification'] = this.aadharCardForVerification;
-    data['panCardForVerification'] = this.panCardForVerification;
     return data;
   }
 }

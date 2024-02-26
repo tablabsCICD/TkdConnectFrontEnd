@@ -1,3 +1,5 @@
+import 'package:tkd_connect/model/response/userdata.dart';
+
 class ApiConstant {
 
 
@@ -15,21 +17,24 @@ class ApiConstant {
   static String CHAT_USER_LIST(id) => BASE_URL + "chatBackup/userId?userId=$id";
   static String CHAT_USER_LIST_COMPANY(name) => BASE_URL + "companyRegistration/ByName8?firstName=$name";
 
+   static String IMG_UPLOAD = BASE_URL +"uploadImages";
   static String POST_CHAT = BASE_URL + "chatBackup";
 
   static String DIRECTORYFILTER = BASE_URL + "directory?";
 
   static String CREATE_GROUP = BASE_URL + "groups";
   static String UPDATE_GROUP = BASE_URL + "groups";
-  static String DELETE_GROUP(id) => BASE_URL + "groups?id=$id";
+  static String DELETE_GROUP= BASE_URL + "groups?id=";
 
   static String GET_GROUP_LIST(userId) => BASE_URL + "groups/byUser/$userId";
 
   static String ADD_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
-  static String REMOVE_GROUP_MEMBER (memberId) => BASE_URL + "groupMembers?id=$memberId";
+  static String REMOVE_GROUP_MEMBER = BASE_URL + "groupMembers?id=";
   static String EDIT_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
+   static String GROUP_MEMBER_LIST=BASE_URL+'groupMembers/byGroupId/';
 
-  // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
+
+   // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String OTP_VERIFICATION(mobile,otp) => BASE_URL + "VerifyOtp?mobileNumber=$mobile&otp=$otp";
 
   //static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
