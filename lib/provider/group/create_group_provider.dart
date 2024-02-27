@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
@@ -14,11 +15,15 @@ import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
+import 'package:tkd_connect/utils/toast.dart';
 
 class CreateGroupProvider extends BaseProvider{
-  CreateGroupProvider(super.appState);
 
-  bool isLoadDone=false;
+  CreateGroupProvider(this.isEdit) : super('Ideal'){
+    getAllUserList(isEdit);
+  }
+
+  bool isEdit;
   bool buttonEnable = false;
 
   List<GroupMember> groupMemberList = [];
@@ -38,11 +43,13 @@ class CreateGroupProvider extends BaseProvider{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     selectedUsers=[];
     notifyListeners();
+    EasyLoading.show(status: "Loading");
     if(allUserList.length==0){
       String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=1000';
       print(myUrl);
       var responseBody=await ApiHelper().apiWithoutDilogDecodeGet(myUrl);
       print(responseBody.response);
+      EasyLoading.dismiss();
       var type = User.fromJson(responseBody.response);
       allUserList.addAll(type.content!);
     }
@@ -109,18 +116,18 @@ class CreateGroupProvider extends BaseProvider{
     print(apiResponse.response);
     if(apiResponse.status==200){
       GroupCreateModel model=GroupCreateModel.fromJson(apiResponse.response);
-      callGroupMember(model.id,userId,context,false);
+      callGroupMember(model.id,userId,context,false,selectedUsers);
     }else{
       notifyListeners();
     }
   }
 
-  callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom) async{
+  callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom,List<UserData> memberList) async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     List<GroupMember>selectedUserId=[];
-    for(int i=0;i<selectedUsers.length;i++){
-      String? dpName= selectedUsers[i].firstName!+" "+selectedUsers[i].lastName!;
-      selectedUserId.add(GroupMember(displayName:dpName,userId: selectedUsers[i].id));
+    for(int i=0;i<memberList.length;i++){
+      String? dpName= memberList[i].firstName!+" "+memberList[i].lastName!;
+      selectedUserId.add(GroupMember(displayName:dpName,userId: memberList[i].id));
     }
     ApiHelper apiHelper=ApiHelper();
     Map<String,dynamic>parameter={
@@ -129,18 +136,22 @@ class CreateGroupProvider extends BaseProvider{
       'date':date,
       'listOfUsers':selectedUserId,
     };
-    print("Create Group Url : ${ApiConstant.ADD_GROUP_MEMBER}");
+    print("Add member Url : ${ApiConstant.ADD_GROUP_MEMBER}");
     var response=await apiHelper.postParameter(ApiConstant.ADD_GROUP_MEMBER,parameter);
     print("Add group member response : "+response.response["errorMessage"]);
     if(response.status==200){
       create_Group=true;
       if(isFrom==true){
         getGroupMember(groupId!);
+        ToastMessage.show(context, "group edited successfully");
+
       }else{
-        goToNextPage(context);
+        ToastMessage.show(context, "group created successfully");
       }
+      goToNextPage(context);
+
     }else{
-      notifyListeners();
+      ToastMessage.show(context, "Please try again");
     }
   }
 
@@ -154,6 +165,13 @@ class CreateGroupProvider extends BaseProvider{
 
   uploadProfileImage(BuildContext context)async{
     changeImageUrl =await postImage(context);
+    notifyListeners();
+  }
+
+  Future<void> setData() async {
+    currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
+    groupNameController.text = currentGroup!.groupName!;
+    changeImageUrl = currentGroup!.imageUrl!;
     notifyListeners();
   }
 
@@ -268,15 +286,21 @@ class CreateGroupProvider extends BaseProvider{
     notifyListeners();
   }
 
-  callUpdateGroupApi(int? userId,int? groupId,String groupName,List<GroupMember> memberList,BuildContext context)async{
+  seletedGroupObject(GroupData groupData){
+    currentGroup=groupData;
+    LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
+  }
+
+  callUpdateGroupApi(int? userId,String groupName,List<UserData> memberList,BuildContext context)async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
+    currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
     Map<String,dynamic>data={
       'createByUserId':userId,
       'groupName':groupName,
       'isPrivate':0,
-      'imageUrl':imageUrl,
+      'imageUrl':changeImageUrl,
       'date':date,
-      'id': groupId
+      'id': currentGroup!.id!
     };
     String myUrl = ApiConstant.UPDATE_GROUP;
     print("update Group Url : $myUrl");
@@ -284,7 +308,7 @@ class CreateGroupProvider extends BaseProvider{
     print(apiResponse.response);
     if(apiResponse.status==200){
       GroupCreateModel model=GroupCreateModel.fromJson(apiResponse.response);
-      callGroupMember(model.id,userId,context,false);
+      callGroupMember(model.id,userId,context,true,memberList);
     }else{
       notifyListeners();
     }

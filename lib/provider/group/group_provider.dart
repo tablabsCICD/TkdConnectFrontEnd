@@ -20,14 +20,18 @@ import '../../model/api_response.dart';
 import '../../network/api_helper.dart';
 
 class GroupProvider extends  BaseProvider{
-
-  GroupProvider(this.isEdit) : super('Ideal'){
+  int groupId;
+  GroupProvider(this.groupId) : super('Ideal'){
     getGroupListByUserId();
-    getAllUserList(isEdit);
-  }
+    if(groupId!=0){
+      getGroupMember(groupId);
+    }
+    }
+
 
   int selectedPage=0;
-  bool isEdit;
+
+  GroupData? currentGroup;
   List<GroupData> groupListByUserId = [];
   List<GroupData> tempGroupListByUserId = [];
   List<GroupMember> groupMemberList = [];
@@ -38,11 +42,13 @@ class GroupProvider extends  BaseProvider{
   TextEditingController groupNameController=TextEditingController();
 
   getGroupListByUserId() async {
+    EasyLoading.show(status: "Loading");
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     String myUrl = ApiConstant.GET_GROUP_LIST(user.content!.first.id);
     print("Get Group List By User Id : $myUrl");
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
     print(apiResponse.response);
+    EasyLoading.dismiss();
     if(apiResponse.status==200){
       GroupListResponse groupListResponse=GroupListResponse.fromJson(apiResponse.response);
       groupListByUserId.clear();
@@ -51,53 +57,6 @@ class GroupProvider extends  BaseProvider{
     }
     notifyListeners();
   }
-
-  createGroup(BuildContext context,String groupName,String img,bool isPrivate) async {
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    Map<String,dynamic> data = {
-      "createByUserId": user.content!.first.id,
-      "date": "",
-      "groupName": groupName,
-      "imageUrl": img,
-      "isPrivate": isPrivate
-    };
-    String myUrl = ApiConstant.CREATE_GROUP;
-    print("Create Group Url : $myUrl");
-    ApiResponse apiResponse=await ApiHelper().postParameter(myUrl, data);
-    if(apiResponse.status==200){
-      ToastMessage.show(context, "Post saved successfully");
-      notifyListeners();
-      Navigator.pop(context,1);
-    } else{
-      ToastMessage.show(context, "Please Tye again");
-    }
-  }
-
-
-  updateGroup(BuildContext context,String groupName,String img,bool isPrivate,int groupId) async {
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    Map<String,dynamic> data = {
-      "createByUserId": user.content!.first.id,
-      "date": "",
-      "id": groupId,
-      "groupName": groupName,
-      "imageUrl": img,
-      "isPrivate": isPrivate
-    };
-    String myUrl = ApiConstant.CREATE_GROUP;
-    print("Update Group Url : $myUrl");
-    ApiResponse apiResponse=await ApiHelper().postParameter(myUrl, data);
-    if(apiResponse.status==200){
-      ToastMessage.show(context, "Post saved successfully");
-      notifyListeners();
-      Navigator.pop(context,1);
-    } else{
-      ToastMessage.show(context, "Please Tye again");
-    }
-  }
-
-
-
 
   pagenationVerical(){
     scrollControllerVertical.addListener(() {
@@ -121,364 +80,14 @@ class GroupProvider extends  BaseProvider{
     notifyListeners();
   }
 
-  getBySearchData() async {
-    if(searchController.text.length>2){
-      String myUrl = ApiConstant.DIRECTORY(searchController.text);
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
-      if(apiResponse.status==200){
-        GroupListResponse groupListResponse=GroupListResponse.fromJson(apiResponse.response);
-        groupListByUserId.clear();
-        groupListByUserId.addAll(groupListResponse.content as Iterable<GroupData>);
-      }
-    }else{
-      groupListByUserId.clear();
-      groupListByUserId.addAll(tempGroupListByUserId);
-    }
-    notifyListeners();
-  }
-
-  callSetState(){
-    notifyListeners();
-  }
-
-  bool isLoading=false;
-  bool isFirstLoading=false;
-  List<UserData> allUserList = [];
-  List<UserData>filterByName=[];
-  List<UserData>selectedUsers=[];
-  List<GroupMember>listAddedMember=[];
-  bool create_Group=false;
-  String imageUrl='https://cdn.pixabay.com/photo/2016/03/23/22/26/user-1275780_1280.png';
- // List<GroupData?>listGroup=[];
-  String changeImageUrl='';
-
-  getAllUserList(bool isFromEdit) async {
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    selectedUsers=[];
-    isLoading = true;
-    notifyListeners();
-    if(allUserList.length==0){
-      String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=1000';
-      print(myUrl);
-      var responseBody=await ApiHelper().apiWithoutDilogDecodeGet(myUrl);
-      print(responseBody.response);
-      isFirstLoading= false;
-      var type = User.fromJson(responseBody.response);
-      allUserList.addAll(type.content!);
-    }
-    isLoading = false;
-    //filterByName.addAll(allUserList);
-    if(isFromEdit==true){
-      currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
-      getGroupMember(currentGroup!.id!);
-     // listAddedMember = await LocalSharePreferences.localSharePreferences.getGroupMemberList();
-      print(listAddedMember.length);
-      for(int i=0;i<allUserList.length;i++){
-        allUserList[i].addedIngroup=false;
-        for(int j=0;j<listAddedMember.length;j++){
-          if(allUserList[i].id==listAddedMember[j].userId){
-            allUserList[i].addedIngroup=true;
-            selectedUsers.add(allUserList[i]);
-          }
-        }
-        if(allUserList[i].id != user.content!.first.id){
-          filterByName.add(allUserList[i]);
-        }
-      }
-    }else{
-      for(int i=0;i<allUserList.length;i++){
-        allUserList[i].isSelected=false;
-        if(allUserList[i].id != user.content!.first.id){
-
-          filterByName.add(allUserList[i]);
-        }
-      }
-    }
-
-    notifyListeners();
-  }
-
-  GroupData? currentGroup;
-  seletedGroupObject(GroupData groupData){
-    currentGroup=groupData;
-    LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
-  }
-
-  uploadProfileImage(BuildContext context)async{
-    changeImageUrl =await postImage(context);
-    notifyListeners();
-  }
-
-  filterUser(String name) async {
-    if(name.length > 2) {
-      filterByName.clear();
-      /* for(int i=0;i<allUserList.length;i++){
-        if(allUserList[i].firstName!.toLowerCase().contains(name.toLowerCase())==true||allUserList[i].lastName!.toLowerCase().contains(name.toLowerCase())==true){
-          filterByName.add(allUserList[i]);
-        }
-      }*/
-      String myUrl = ApiConstant.CHAT_USER_LIST_COMPANY(name);
-      print(myUrl);
-      ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
-      print(apiResponse.response);
-      if (apiResponse.status == 200) {
-        SearchDataList searchDataList = SearchDataList.fromJson(
-            jsonDecode(apiResponse.response));
-        for(int i=0;i<searchDataList.data!.length;i++){
-         SearchData element = searchDataList.data![i];
-         UserData userData = UserData(id: element.id,
-             addedIngroup: false,
-             alternativeNumber: element.alternativeNumber,
-             aadharCard: element.aadharCard,
-             companyName: element.companyName,
-             country: element.country,
-             companyLogo: element.companyLogo,
-           companyAddress: element.companyAddress,
-             companyId: element.companyId,
-             city: element.city,
-             deviceId: element.deviceId,
-             emailId: element.emailId,
-             firstName: element.firstName,
-             isUserVerifiedByCompany: element.isUserVerifiedByCompany,
-             isPaid: element.isPaid,
-             idOfMainBranch: element.idOfMainBranch,
-             isSelected: false,
-             loggedUserName: element.loggedUserName,
-             loggedTime: element.loggedTime,
-             lastName: element.lastName,
-             landlineNumber: element.landlineNumber,
-             mobileNumber: element.mobileNumber,
-             numberOfTimesRating: element.numberOfTimesRating,
-             mainBranch: element.mainBranch,
-             otp: element.otp,
-             os: element.os,
-             profilePicture: element.profilePicture,
-             preferredRouresEntered: element.preferredRouresEntered,
-             password: element.password,
-             paidStartDate: element.paidStartDate,
-             ratings: element.ratings,
-             state: element.state,
-             transporterOrAgent: element.transporterOrAgent,
-             userName: element.userName,
-             verified: element.verified,
-             validTill: element.validTill,
-             website: element.website
-         );
-         filterByName.add(userData);
-        }
-
-      /*  searchDataList.data!.forEach((element) {
-          UserData userData = UserData(id: element.id,
-              addedIngroup: false,
-              alternativeNumber: element.alternativeNumber,
-              aadharCard: element.aadharCard,
-              companyName: element.companyName,
-              country: element.country,
-              companyLogo: element.companyLogo,
-              companyAddress: element.companyAddress,
-              companyId: element.companyId,
-              city: element.city,
-              deviceId: element.deviceId,
-              emailId: element.emailId,
-              firstName: element.firstName,
-              isUserVerifiedByCompany: element.isUserVerifiedByCompany,
-              isPaid: element.isPaid,
-              idOfMainBranch: element.idOfMainBranch,
-              isSelected: false,
-              loggedUserName: element.loggedUserName,
-              loggedTime: element.loggedTime,
-              lastName: element.lastName,
-              landlineNumber: element.landlineNumber,
-              mobileNumber: element.mobileNumber,
-              numberOfTimesRating: element.numberOfTimesRating,
-              mainBranch: element.mainBranch,
-              otp: element.otp,
-              os: element.os,
-              profilePicture: element.profilePicture,
-              preferredRouresEntered: element.preferredRouresEntered,
-              password: element.password,
-              paidStartDate: element.paidStartDate,
-              ratings: element.ratings,
-              state: element.state,
-              transporterOrAgent: element.transporterOrAgent,
-              userName: element.userName,
-              verified: element.verified,
-              validTill: element.validTill,
-              website: element.website
-          );
-          filterByName.add(userData);
-        });*/
-      } else {
-        filterByName.addAll(allUserList);
-      }
-    }
-    notifyListeners();
-  }
-
-  selectedUser(bool? value,UserData userObj){
-    userObj.isSelected=value;
-    if(value==true){
-      selectedUsers.add(userObj);
-    }else{
-      selectedUsers.remove(userObj);
-    }
-    notifyListeners();
-  }
-
-  callCreateGroupApi(int? userId,String groupName,BuildContext context)async{
-    isLoading=true;
-    showLoader(context);
-    String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
-
-    Map<String,dynamic>data={
-      'createByUserId':userId,
-      'groupName':groupName,
-      'isPrivate':0,
-      'imageUrl':imageUrl,
-      'date':date
-
-    };
-    String myUrl = ApiConstant.CREATE_GROUP;
-    print("Create Group Url : $myUrl");
-    ApiResponse apiResponse=await ApiHelper().postParameter(myUrl, data);
-    print(apiResponse.response);
-    if(apiResponse.status==200){
-      GroupCreateModel model=GroupCreateModel.fromJson(apiResponse.response);
-     callGroupMember(model.id,userId,context,false);
-    }else{
-      isLoading=false;
-      showLoader(context);
-      notifyListeners();
-    }
-  }
-
-  callUpdateGroupApi(int? userId,int? groupId,String groupName,List<GroupMember> memberList,BuildContext context)async{
-    isLoading=true;
-    showLoader(context);
-    String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
-
-    Map<String,dynamic>data={
-      'createByUserId':userId,
-      'groupName':groupName,
-      'isPrivate':0,
-      'imageUrl':imageUrl,
-      'date':date,
-      'id': groupId
-    };
-    String myUrl = ApiConstant.UPDATE_GROUP;
-    print("update Group Url : $myUrl");
-    ApiResponse apiResponse=await ApiHelper().apiPut(myUrl, data);
-    print(apiResponse.response);
-    if(apiResponse.status==200){
-      GroupCreateModel model=GroupCreateModel.fromJson(apiResponse.response);
-      callGroupMember(model.id,userId,context,false);
-    }else{
-      isLoading=false;
-      showLoader(context);
-      notifyListeners();
-    }
-  }
-
-  callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom) async{
-    String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
-    List<GroupMember>selectedUserId=[];
-    for(int i=0;i<selectedUsers.length;i++){
-      String? dpName= selectedUsers[i].firstName!+" "+selectedUsers[i].lastName!;
-      selectedUserId.add(GroupMember(displayName:dpName,userId: selectedUsers[i].id));
-    }
-    ApiHelper apiHelper=ApiHelper();
-    Map<String,dynamic>parameter={
-      'addedByUserId':userId,
-      'groupId':groupId,
-      'date':date,
-      'listOfUsers':selectedUserId,
-
-    };
-    print("Create Group Url : ${ApiConstant.ADD_GROUP_MEMBER}");
-    var response=await apiHelper.postParameter(ApiConstant.ADD_GROUP_MEMBER,parameter);
-    print("Add group member response : "+response.response["errorMessage"]);
-    if(response.status==200){
-      create_Group=true;
-      if(isFrom==true){
-        getGroupMember(groupId!);
-      }else{
-        await getGroupListByUserId();
-        notifyListeners();
-        goToNextPage(context);
-      }
-
-      //notifyListeners();
-    }else{
-      isLoading=false;
-      showLoader(context);
-      notifyListeners();
-
-    }
-
-  }
-
-
-  showLoader(context){
-    if(isLoading){
-      //Loader().showLoaderDialog(context);
-      EasyLoading.show(status: "Loading");
-    }else{
-      //Loader().dismissLoader(context);
-      EasyLoading.dismiss();
-    }
-  }
-
-  goToNextPage(BuildContext context){
-    int count = 0;
-    Navigator.popUntil(context, (route) {
-      return count++ == 2;
-    });
-  notifyListeners();
-  }
-
- /* getAllGroup(int? userId,context)async{
-    print('the id is +${userId}');
-    groupListByUserId.clear();
-    ApiHelper apiHelper=ApiHelper();
-    var response=await apiHelper.apiGet(ApiConstant.GET_GROUP_LIST(userId));
-    GroupListResponse groupListModel=GroupListResponse.fromJson(response.response);
-    groupListByUserId.addAll(groupListModel.content!);
-    notifyListeners();
-  }*/
-
-  getGroupMember(int groupId)async{
-    listAddedMember.clear();
-    isLoading=true;
-    //showLoader(context);
-    ApiHelper apiHelper=ApiHelper();
-    var response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId!.toString());
-    GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
-    LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
-    listAddedMember.addAll(groupListModel.content!);
-    for(int i=0;i<allUserList.length;i++){
-      allUserList[i].addedIngroup=false;
-      allUserList[i].isSelected= false;
-      for(int j=0;j<listAddedMember.length;j++){
-        if(allUserList[i].id==listAddedMember[j].userId){
-          allUserList[i].addedIngroup=true;
-          allUserList[i].isSelected = true;
-          selectedUsers.add(allUserList[i]);
-        }
-      }
-    }
-    isLoading=false;
-    notifyListeners();
-  }
-
   removeMemberFromGroup(int memberId,int index)async{
     ApiHelper apiHelper=ApiHelper();
     var res=await http.delete(Uri.parse("${ApiConstant.REMOVE_GROUP_MEMBER}"+"${memberId.toString()}"));
     if(res.statusCode==200){
-      listAddedMember.removeAt(index);
+      memberList.removeAt(index);
       notifyListeners();
     }
   }
-
 
   deleteGroup(int groupId,int index)async{
     ApiHelper apiHelper=ApiHelper();
@@ -492,8 +101,16 @@ class GroupProvider extends  BaseProvider{
     }
   }
 
-
-
-
-
+  List<GroupMember> memberList = [];
+  getGroupMember(int groupId)async{
+    memberList.clear();
+    ApiHelper apiHelper=ApiHelper();
+    EasyLoading.show(status: "Loading");
+    var response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId!.toString());
+    GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
+    LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
+    memberList.addAll(groupListModel.content!);
+    EasyLoading.dismiss();
+    notifyListeners();
+  }
 }

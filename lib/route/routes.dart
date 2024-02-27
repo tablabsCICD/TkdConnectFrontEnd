@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tkd_connect/model/response/group_member_list.dart';
+import 'package:tkd_connect/model/response/group_response.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
 import 'package:tkd_connect/screen/buy_sell/create_buy_sell.dart';
@@ -135,16 +138,16 @@ class RouteGenerator {
         return _createRoute(SelectUserForGroupScreen(isEdit));
 
       case AppRoutes.create_group:
-        GroupProvider provider = settings.arguments as GroupProvider ;
-        return _createRoute(CreateGroupScreen(provider));
+        List<UserData> list = settings.arguments as List<UserData> ;
+        return _createRoute(CreateGroupScreen(list));
 
       case AppRoutes.edit_group:
-        GroupProvider provider = settings.arguments as GroupProvider ;
-        return _createRoute(EditGroupScreen(provider));
+        List<UserData> list = settings.arguments as List<UserData> ;
+        return _createRoute(EditGroupScreen(list));
 
       case AppRoutes.group_info:
-        GroupProvider provider = settings.arguments as GroupProvider ;
-        return _createRoute(GroupInfo(provider));
+        GroupData groupData = settings.arguments as GroupData ;
+        return _createRoute(GroupInfo(groupData));
 
      case AppRoutes.mypost:
         return buildRoute(MyPostBase(), settings: settings);

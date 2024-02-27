@@ -8,10 +8,12 @@ import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
+import 'package:tkd_connect/provider/group/create_group_provider.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/widgets/button.dart';
+import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 class SelectUserForGroupScreen extends StatefulWidget {
   bool isEdit;
@@ -37,66 +39,64 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GroupProvider(widget.isEdit),
+      create: (BuildContext context) => CreateGroupProvider(widget.isEdit),
       builder: (context, child) => _buildPage(context),
     );
   }
 
   _buildPage(BuildContext context) {
-    return Scaffold(
-      body: Consumer<GroupProvider>(builder: (context, model, child) {
-      // getUserList(model);
-        return model.isLoading == true
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  top_bar(context),
-                  serachBar(),
-                  Visibility(
-                    visible: model.selectedUsers.length == 0 ? false : true,
-                    child: Container(
-                      color: Colors.black12,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              child: selectedUsers(),
-                              height: 90,
+    return SafeArea(
+      child: Scaffold(
+        body: Consumer<CreateGroupProvider>(builder: (context, model, child) {
+        // getUserList(model);
+          return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    BaseWidget().appBar(context, "Users"),
+                    serachBar(),
+                    Visibility(
+                      visible: model.selectedUsers.length == 0 ? false : true,
+                      child: Container(
+                        color: Colors.black12,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                child: selectedUsers(),
+                                height: 90,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  listViewUser(),
-                ],
-              );
-      }),
-      bottomNavigationBar: Consumer<GroupProvider>(
-        builder: (context, provider, child) => Padding(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-          child: Button(
-              width: 327.w,
-              height: 49.h,
-              title: S().next,
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 14.sp,
-                fontFamily: AppConstant.FONTFAMILY,
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-              onClick: () {
-                widget.isEdit?Navigator.pushNamed(context, AppRoutes.edit_group,
-                    arguments: provider):Navigator.pushNamed(context, AppRoutes.create_group,
-                    arguments: provider);
-              },
-              isEnbale: provider.selectedUsers.length == 0 ? false : true),
+                    listViewUser(),
+                  ],
+                );
+        }),
+        bottomNavigationBar: Consumer<CreateGroupProvider>(
+          builder: (context, provider, child) => Padding(
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+            child: Button(
+                width: 327.w,
+                height: 49.h,
+                title: S().next,
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.sp,
+                  fontFamily: AppConstant.FONTFAMILY,
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),
+                onClick: () {
+                  widget.isEdit?Navigator.pushNamed(context, AppRoutes.edit_group,
+                      arguments: provider.selectedUsers):Navigator.pushNamed(context, AppRoutes.create_group,
+                      arguments: provider.selectedUsers);
+                },
+                isEnbale: provider.selectedUsers.length == 0 ? false : true),
+          ),
         ),
       ),
     );
@@ -121,98 +121,94 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   serachBar() {
-    return Consumer<GroupProvider>(
+    return Consumer<CreateGroupProvider>(
       builder: (context, provider, child) {
-        return Transform.translate(
-          // e.g: vertical negative margin
-          offset: const Offset(00, -25),
-          child: Container(
-            // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
-            margin: EdgeInsets.only(right: 20.w, left: 20.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 52.h,
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 0.50, color: Color(0x332C363F)),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+        return Container(
+          // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
+          margin: EdgeInsets.all(20.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 52.h,
+                padding: const EdgeInsets.symmetric(horizontal: 0),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24.w,
-                              height: 24.h,
-                              margin: EdgeInsets.only(left: 10.w),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 24.w,
-                                    height: 24.h,
-                                    child: Stack(children: [
-                                      SvgPicture.asset(Images.search_normal)
-                                    ]),
-                                  ),
-                                ],
-                              ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24.w,
+                            height: 24.h,
+                            margin: EdgeInsets.only(left: 10.w),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24.w,
+                                  height: 24.h,
+                                  child: Stack(children: [
+                                    SvgPicture.asset(Images.search_normal)
+                                  ]),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              child: SizedBox(
-                                child: TextField(
-                                  controller: provider.searchController,
-                                  onChanged: (value) {
-                                    provider.filterUser(
-                                        provider.searchController.text);
-                                  },
-                                  decoration: InputDecoration(
-                                      hintText: "Search users ",
-                                      border: InputBorder.none,
-                                      hintStyle: TextStyle(
-                                        color: Color(0x662C363F),
-                                        fontSize: 14.sp,
-                                        fontFamily:
-                                            GoogleFonts.poppins().fontFamily,
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.sp,
-                                    fontFamily:
-                                        GoogleFonts.poppins().fontFamily,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: SizedBox(
+                              child: TextField(
+                                controller: provider.searchController,
+                                onChanged: (value) {
+                                  provider.filterUser(
+                                      provider.searchController.text);
+                                },
+                                decoration: InputDecoration(
+                                    hintText: "Search users ",
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                      color: Color(0x662C363F),
+                                      fontSize: 14.sp,
+                                      fontFamily:
+                                          GoogleFonts.poppins().fontFamily,
+                                      fontWeight: FontWeight.w400,
+                                    )),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontFamily:
+                                      GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -220,7 +216,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   listViewUser() {
-    return Consumer<GroupProvider>(
+    return Consumer<CreateGroupProvider>(
       builder: (context, model, child) => Expanded(
         child: ListView.builder(
             shrinkWrap: true,
@@ -232,7 +228,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  groupTile(int index, GroupProvider model) {
+  groupTile(int index, CreateGroupProvider model) {
     String displayName = model.filterByName[index].firstName! +
         " " +
         model.filterByName[index].lastName!;
@@ -301,7 +297,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   selectedUsers() {
-    return Consumer<GroupProvider>(
+    return Consumer<CreateGroupProvider>(
       builder: (context, model, child) => ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -338,11 +334,13 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  callEditCheckBox(index, GroupProvider model) {
+  callEditCheckBox(index, CreateGroupProvider model) {
     return Visibility(
       visible: model.filterByName[index].addedIngroup == true ? true : true,
       child: Checkbox(
           value: model.filterByName[index].isSelected,
+          activeColor: Color(0xFFC3262C),
+          checkColor: Colors.white,
           onChanged: (value) {
             model.selectedUser(value, model.filterByName[index]);
 
@@ -361,9 +359,11 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  callCreateCheckBox(int index, GroupProvider model) {
+  callCreateCheckBox(int index, CreateGroupProvider model) {
     return Checkbox(
         value: model.filterByName[index].isSelected,
+        activeColor: Color(0xFFC3262C),
+        checkColor: Colors.white,
         onChanged: (value) {
           model.selectedUser(value, model.filterByName[index]);
 
@@ -382,7 +382,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
         });
   }
 
-  void getUserList(GroupProvider model) async{
+  void getUserList(CreateGroupProvider model) async{
     await model.getAllUserList(widget.isEdit);
   }
 }

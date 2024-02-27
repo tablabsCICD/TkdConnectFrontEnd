@@ -20,17 +20,14 @@ import 'package:tkd_connect/widgets/card/base_widgets.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 
 class GroupInfo extends StatefulWidget {
-  GroupProvider provider;
-  GroupInfo(this.provider);
+  GroupData groupData;
+  GroupInfo(this.groupData);
 
   @override
   _GroupInfoState createState() => _GroupInfoState();
 }
 
 class _GroupInfoState extends State<GroupInfo> {
-  bool isEdit=false;
-  ScrollController horizantalControllet=ScrollController();
-  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -43,37 +40,39 @@ class _GroupInfoState extends State<GroupInfo> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) =>
-          GroupProvider(false),
+          GroupProvider(widget.groupData.id!),
       builder: (context, child) => _buildPage(context),
     ); }
 
   _buildPage(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeColor.baground,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BaseWidget().appBar(context, "Group Details"),
-            SizedBox(height: 10,),
-            groupName(),
-            SizedBox(height: 30,),
-            particepent(),
-            SizedBox(height: 20,),
-            Padding(padding: EdgeInsets.only(left: 10,right: 10),child: selectedUserList(widget.provider),),
-          ],
-        ),
-      
-      
-      ),
+      child:  Scaffold(
+            backgroundColor: ThemeColor.baground,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BaseWidget().appBar(context, "Group Details"),
+                SizedBox(height: 10,),
+                groupName(),
+                SizedBox(height: 30,),
+                particepent(),
+                SizedBox(height: 20,),
+                Padding(padding: EdgeInsets.only(left: 10, right: 10),
+                  child: selectedUserList(),),
+              ],
+            ),
+
+
+          )
+
     );
 
   }
 
   bool buttonEnable = false;
   groupName() {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(widget.provider.currentGroup!.date!);
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(widget.groupData.date!);
     String formattedDate = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +89,8 @@ class _GroupInfoState extends State<GroupInfo> {
                   setState(() {
                   });*/
                 },
-                child: SizedBox(width: 50, height: 50, child:  Image.network(widget.provider.currentGroup!.imageUrl!)),
+                child: BaseWidget().getImageclip(widget.groupData.imageUrl!,
+                    height: 40.h, width: 40.w),
               ),
             ),
           ),
@@ -102,7 +102,7 @@ class _GroupInfoState extends State<GroupInfo> {
             Row(
               children: [
                 Text(
-                  widget.provider.currentGroup!.groupName!,
+                  widget.groupData.groupName!,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.sp,
@@ -139,7 +139,7 @@ class _GroupInfoState extends State<GroupInfo> {
     return Container(
       height: 40,
       color: Colors.black12,
-      child: Center(child: Text("PARTICIPANTS: ${widget.provider.listAddedMember.length}",style: TextStyle(fontSize: 14.sp,
+      child: Center(child: Text("Members in group",style: TextStyle(fontSize: 14.sp,
         fontFamily: AppConstant.FONTFAMILY,
         fontWeight: FontWeight.w600,))),
     );
@@ -147,51 +147,93 @@ class _GroupInfoState extends State<GroupInfo> {
 
 
 
-  selectedUserList(GroupProvider provider){
-    return ListView.builder(
-      // controller: _scrollController,
-        shrinkWrap: true,
-        itemCount: provider.listAddedMember.length,
-        itemBuilder: (context, index) {
-          return InkWell(onTap: () {}, child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.account_circle,
-                          size: 30.0,
+  selectedUserList(){
+    return Consumer<GroupProvider>(
+        builder: (context, provider, child) {
+      return Expanded(
+        child: ListView.builder(
+          // controller: _scrollController,
+            shrinkWrap: true,
+            itemCount: provider.memberList.length,
+            itemBuilder: (context, index) {
+              return InkWell(onTap: () {}, child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.account_circle,
+                              size: 30.0,
+                            ),
+                            SizedBox(width: 10,),
+                            Text(
+                                provider.memberList[index].displayName!,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontFamily: AppConstant.FONTFAMILY,
+                                  fontWeight: FontWeight.w600,
+                                ))
+                          ],
                         ),
-                        SizedBox(width: 10,),
-                        Text(
-                            provider.listAddedMember[index].displayName!,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: AppConstant.FONTFAMILY,
-                              fontWeight: FontWeight.w600,
-                            ))
+                        InkWell(
+                          onTap: (){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Remove Member From Group',style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.sp,
+                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontWeight: FontWeight.w600,
+                                  ),),
+                                  content: Text('Are you sure you want to remove member from group?',style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12.sp,
+                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontWeight: FontWeight.w400,
+                                  ),),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(); // Close the dialog
+                                      },
+                                      child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                                        fontFamily: GoogleFonts.poppins().fontFamily,
+                                        fontWeight: FontWeight.w600,),),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        provider.removeMemberFromGroup(provider.memberList[index].id!, index);
+                                        Navigator.of(context).pop(); // Close the dialog
+                                      },
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(color: Colors.red, fontSize: 12.sp,
+                                          fontFamily: GoogleFonts.poppins().fontFamily,
+                                          fontWeight: FontWeight.w600,),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: SvgPicture.asset(Images.delete)
+                        )
                       ],
                     ),
-                    InkWell(
-                      onTap: (){
-                        provider.removeMemberFromGroup(provider.listAddedMember[index].id!, index);
-                       /* setState(() {
-
-                        });*/
-                      },
-                      child: SvgPicture.asset(Images.delete)
-                    )
-                  ],
-                ),
-              ),
-              Divider()
-            ],
-          ));
-        });
+                  ),
+                  Divider()
+                ],
+              ));
+            }),
+      );
+    });
   }
 
 

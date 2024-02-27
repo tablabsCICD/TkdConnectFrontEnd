@@ -38,7 +38,7 @@ class _GroupScreenState extends State<GroupScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GroupProvider(false),
+      create: (BuildContext context) => GroupProvider(0),
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -46,84 +46,87 @@ class _GroupScreenState extends State<GroupScreen> {
   _buildPage(BuildContext context) {
     return Consumer<GroupProvider>(
         builder: (context, provider, child) {
-          return Scaffold(
-            body: Container(
-              color: ThemeColor.baground,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  top_bar(context),
-                  serachBar(),
-                  // tabBar(),
-                  //allUserTag(),
-                  provider.groupListByUserId.length == 0 && provider.isLoadDone
-                      ? Center(child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(S().noRecordFound),
-                  ))
-                      : SizedBox(),
-                  allUserData()
-
-                ],
-              ),
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation
-                .centerFloat,
-            floatingActionButton: InkWell(
-              onTap: () async {
-               // Utils().callCreateGroup(context,widget.userId);
-                Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
-              },
-              child: Container(
-                width: 155.w,
-                height: 38.h,
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-                decoration: ShapeDecoration(
-                  color: ThemeColor.theme_blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          return SafeArea(
+            child: Scaffold(
+              body: Container(
+                color: ThemeColor.baground,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Create Group',
-                      style: TextStyle(
-                        color: ThemeColor.progress_color,
-                        fontSize: 12.sp,
-                        fontFamily: GoogleFonts
-                            .poppins()
-                            .fontFamily,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    BaseWidget().appBar(context, "Groups"),
+                    serachBar(),
+                   /* SizedBox(
+                      height: 12.h,
                     ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Container(
-                      width: 16.w,
-                      height: 16.w,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 16.w,
-                            height: 16.w,
-                            child: Stack(children: [
-                              SvgPicture.asset(
-                                Images.add, height: 16.h, width: 16.w,)
+                    alGroupTag(),*/
+                    provider.groupListByUserId.length == 0 && provider.isLoadDone
+                        ? Center(child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(S().noRecordFound),
+                    ))
+                        : SizedBox(),
+                    allGroupData()
 
-                            ]),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
+                ),
+              ),
+              floatingActionButtonLocation: FloatingActionButtonLocation
+                  .centerFloat,
+              floatingActionButton: InkWell(
+                onTap: () async {
+                  Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
+                },
+                child: Container(
+                  width: 155.w,
+                  height: 38.h,
+                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                  decoration: ShapeDecoration(
+                    color: ThemeColor.theme_blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Create Group',
+                        style: TextStyle(
+                          color: ThemeColor.progress_color,
+                          fontSize: 12.sp,
+                          fontFamily: GoogleFonts
+                              .poppins()
+                              .fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Container(
+                        width: 16.w,
+                        height: 16.w,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 16.w,
+                              height: 16.w,
+                              child: Stack(children: [
+                                SvgPicture.asset(
+                                  Images.add, height: 16.h, width: 16.w,)
+
+                              ]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -132,7 +135,7 @@ class _GroupScreenState extends State<GroupScreen> {
     );
   }
 
-  allUserData() {
+  allGroupData() {
     return Consumer<GroupProvider>(
       builder: (context, provider, child) {
         return Expanded(
@@ -148,371 +151,101 @@ class _GroupScreenState extends State<GroupScreen> {
     );
   }
 
-  tabBar() {
-    return Container(
-      width: 335.w,
-      height: 32.h,
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Color(0x332C363F),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: Color(0x332C363F)),
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: ShapeDecoration(
-                color: Color(0x19001E49),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Color(0x332C363F)),
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'All messages',
-                    style: TextStyle(
-                      color: Color(0xCC001E49),
-                      fontSize: 12,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          // Expanded(
-          //   child: Container(
-          //     height: double.infinity,
-          //     padding: const EdgeInsets.symmetric(horizontal: 12),
-          //     decoration: ShapeDecoration(
-          //       color: Colors.white,
-          //       shape: RoundedRectangleBorder(
-          //         side: BorderSide(color: Color(0x332C363F)),
-          //       ),
-          //     ),
-          //     child: Column(
-          //       mainAxisSize: MainAxisSize.min,
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       crossAxisAlignment: CrossAxisAlignment.center,
-          //       children: [
-          //         Text(
-          //           'Favourites',
-          //           style: TextStyle(
-          //             color: Color(0xCC001E49),
-          //             fontSize: 12,
-          //             fontFamily: 'Poppins',
-          //             fontWeight: FontWeight.w400,
-          //             height: 0,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
-    );
-  }
-
-  top_bar(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 87.h,
-      //padding: const EdgeInsets.only(bottom: 16),
-      decoration: ShapeDecoration(
-        color: Color(0xFFC3262C),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(16),
-            bottomRight: Radius.circular(16),
-          ),
-        ),
-      ),
-      child: SizedBox(),
-    );
-  }
-
-  serachBar() {
+   serachBar() {
     return Consumer<GroupProvider>(
       builder: (context, provider, child) {
-        return Transform.translate(
-          // e.g: vertical negative margin
-          offset: const Offset(00,-25),
-          child: Container(
-            // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
-            margin: EdgeInsets.only(right: 20.w, left: 20.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 52.h,
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 0.50, color: Color(0x332C363F)),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+        return Container(
+          // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
+          margin: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 52.h,
+                padding: const EdgeInsets.symmetric(horizontal: 0),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24.w,
-                              height: 24.h,
-                              margin: EdgeInsets.only(left: 10.w),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 24.w,
-                                    height: 24.h,
-                                    child: Stack(children: [
-                                      SvgPicture.asset(Images.search_normal)
-                                    ]),
-                                  ),
-                                ],
-                              ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24.w,
+                            height: 24.h,
+                            margin: EdgeInsets.only(left: 10.w),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24.w,
+                                  height: 24.h,
+                                  child: Stack(children: [
+                                    SvgPicture.asset(Images.search_normal)
+                                  ]),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              child: SizedBox(
-                                child: TextField(
-                                  controller: provider.searchController,
-                                  onChanged: (value) {
-                                    provider.groupSearch(value);
-                                  },
-                                  decoration: InputDecoration(
-                                      hintText: "Search groups ",
-                                      border: InputBorder.none,
-                                      hintStyle: TextStyle(
-                                        color: Color(0x662C363F),
-                                        fontSize: 14.sp,
-                                        fontFamily:
-                                        GoogleFonts.poppins().fontFamily,
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14.sp,
-                                    fontFamily: GoogleFonts.poppins().fontFamily,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: SizedBox(
+                              child: TextField(
+                                controller: provider.searchController,
+                                onChanged: (value) {
+                                  provider.groupSearch(value);
+                                },
+                                decoration: InputDecoration(
+                                    hintText: "Search groups ",
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                      color: Color(0x662C363F),
+                                      fontSize: 14.sp,
+                                      fontFamily:
+                                      GoogleFonts.poppins().fontFamily,
+                                      fontWeight: FontWeight.w400,
+                                    )),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
 
-              ],
-            ),
+            ],
           ),
         );
       },
     );
   }
 
-  tagVerifiedUser() {
-    return Container(
-      margin: EdgeInsets.only(right: 20.w, left: 20.w),
-      child: Row(
-        children: [
-          Textview(
-            title: S().verifiedUsers,
-            TextStyle(
-              color: Colors.black,
-              fontSize: 12,
-              fontFamily: GoogleFonts.poppins().fontFamily,
-              fontWeight: FontWeight.w600,
-              height: 0,
-            ),
-          ),
-          SizedBox(
-            width: 4.w,
-          ),
-          SvgPicture.asset(Images.verified)
-        ],
-      ),
-    );
-  }
-
-
-  cityTag(String tag) {
-    return Container(
-      height: 26.w,
-      transform: Matrix4.translationValues(0.0, -20.0.h, 00),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: ShapeDecoration(
-        color: Color(0xFFF4F6F6),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            tag,
-            textAlign: TextAlign.right,
-            style: TextStyle(
-              color: Color(0xCC001E49),
-              fontSize: 12.sp,
-              fontFamily: AppConstant.FONTFAMILY,
-              fontWeight: FontWeight.w400,
-              height: 0,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  itemVerified(TransportSearchData data) {
-    return Container(
-      width: 335.w,
-     // height: 130.h,
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
-      padding: EdgeInsets.all(12.r),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        shadows: [
-          BoxShadow(
-            color: Color(0x114A5568),
-            blurRadius: 8.r,
-            offset: Offset(0, 3),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              width: 38.w,
-              height: 38.h,
-              child: InkWell(
-                onTap: (){
-                  Utils().callFunction(data.mobileNumber.toString());
-                },
-                child: SvgPicture.asset(
-                  Images.call,
-                  height: 38.h,
-                  width: 38.w,
-                ),
-              ),
-            ),
-          ),
-          Container(
-              transform: Matrix4.translationValues(0.0, -25.0.h, 00),
-              child: BaseWidget().profileDirectory(data.profilePicture!, data.firstName!+" "+data.lastName!, data.companyName!,verify: data.isPaid!)),
-
-
-          //cityTag("Tag"),
-          cityChip(data),
-          buttonViewProfile(data),
-
-        ],
-      ),
-    );
-  }
-
-  cityChip(TransportSearchData data){
-    List<Widget>list=[];
-    int length=data.listOfPreferredRoutes.length;
-    if(length >2){
-      length=2;
-    }
-    for(int i=0;i<length;i++){
-      list.add(cityTag(data.listOfPreferredRoutes[i].routeSource!));
-      list.add(cityTag(data.listOfPreferredRoutes[i].routeDestination!));
-    }
-
-    return Wrap(
-      spacing: 6.0,
-      runSpacing: 6.0,
-      children: list,
-    );
-  }
-
-  buttonViewProfile(TransportSearchData data) {
-    return InkWell(
-      onTap: () {
-       Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: data);
-      },
-      child: Container(
-        width: 291.w,
-        height: 38.h,
-        transform: Matrix4.translationValues(0.0, -10.0.h, 00),
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1, color: Color(0x33001E49)),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              S().viewProfile,
-              style: TextStyle(
-                color: Color(0xFF001E49),
-                fontSize: 12,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  allUserTag() {
+   alGroupTag() {
     return Container(
       margin: EdgeInsets.only(left: 20.w,top: 0.h),
       child: Text(
@@ -536,10 +269,8 @@ class _GroupScreenState extends State<GroupScreen> {
 
     return InkWell(
       onTap: () async {
-        provider.seletedGroupObject(groupData);
-        await provider.getGroupMember(groupData.id!);
-
-        Navigator.pushNamed(context, AppRoutes.group_info,arguments: provider);
+        provider.currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
+        Navigator.pushNamed(context, AppRoutes.group_info,arguments: groupData);
       },
       child: Container(
         width: 375.w,
@@ -631,14 +362,54 @@ class _GroupScreenState extends State<GroupScreen> {
                       InkWell(onTap: () async {
                         LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
                         Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: true);
-                      }, child: SvgPicture.asset(Images.edit))
+                      }, child: SvgPicture.asset(Images.edit,height: 20,width: 20,))
 
                     ]),
                   ),
                   SizedBox(width: 12.w),
                   InkWell(
                       onTap: () {
-                        provider.deleteGroup(groupData.id!, index);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Delete Group',style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w600,
+                              ),),
+                              content: Text('Are you sure you want to delete this group?',style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                  },
+                                  child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontWeight: FontWeight.w600,),),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    provider.deleteGroup(groupData.id!, index);
+                                    Navigator.of(context).pop(); // Close the dialog
+                                  },
+                                  child: Text(
+                                    'Delete',
+                                    style: TextStyle(color: Colors.red, fontSize: 12.sp,
+                                      fontFamily: GoogleFonts.poppins().fontFamily,
+                                      fontWeight: FontWeight.w600,),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: SvgPicture.asset(Images.delete)),
                 ],

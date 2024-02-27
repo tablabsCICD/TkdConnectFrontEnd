@@ -632,7 +632,8 @@ class AllCards {
           BaseWidget().headingWithDescription("Job Title", getDateObject(load.postingTime), "-",load.topicName!,'',true),
           SizedBox(height: 8.w),
           BaseWidget().heading("Job Description", '', load.content!),
-          load.userId==userId ?BaseWidget().deleteButton((val) {
+          jobApply(load,context),
+         /* load.userId==userId ?BaseWidget().deleteButton((val) {
             if(val==10){
 
             }else{
@@ -641,10 +642,67 @@ class AllCards {
 
           }) :BaseWidget().applyButton((val) {
             Utils().openMenu(val, load, context);
-          })
+          })*/
         ],
       ),
     );
   }
 
+
+  Widget jobApply(TruckLoad load, BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: (){
+              Utils().callFunction(load.mobileNumber.toString());
+            },
+            child: Container(
+              height: 38.h,
+              //width: 203.w,//for save job
+              width: 240.w,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Call now',
+                    style: TextStyle(
+                      color: Color(0xFF001E49),
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //  SizedBox(width: 12.w),
+          // SvgPicture.asset(Images.savejob),
+          SizedBox(width: 12.w),
+          InkWell(
+              onTap: (){
+                String Message="I am writing to express my strong interest in the our department"+" From TKD Connect Application";
+                Utils().openwhatsapp(context, load.mobileNumber!, Message);
+              },
+              child: SvgPicture.asset(Images.message_job)),
+        ],
+      ),
+    );
+  }
 }

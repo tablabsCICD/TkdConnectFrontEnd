@@ -7,123 +7,114 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
-import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
+import 'package:tkd_connect/provider/group/create_group_provider.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/button.dart';
+import 'package:tkd_connect/widgets/card/base_widgets.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 
+import '../../model/response/group_member_list.dart';
+
 class EditGroupScreen extends StatefulWidget {
-  GroupProvider provider;
-  EditGroupScreen(this.provider);
+  List<UserData> memberList;
+  EditGroupScreen(this.memberList);
 
   @override
   _EditGroupScreenState createState() => _EditGroupScreenState();
 }
 
 class _EditGroupScreenState extends State<EditGroupScreen> {
+  bool isEdit=false;
   TextEditingController _controller = TextEditingController();
   ScrollController horizantalControllet=ScrollController();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //setData();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-    return /*ChangeNotifierProvider(
+    return ChangeNotifierProvider(
       create: (BuildContext context) =>
-          GroupProvider(widget.userId),
+          CreateGroupProvider(true),
       builder: (context, child) => _buildPage(context),
-    );*/_buildPage(context);
+    );
   }
-  GroupData? groupData;
-  _buildPage(BuildContext context) async {
-setData();
+
+  _buildPage(BuildContext context) {
     return Scaffold(
       // appBar: AppBarCommon(context, title: "Create Group").appBar(),
-      body: Column(
+      body:  Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 50,),
-          groupName(widget.provider),
+          groupName(),
           SizedBox(height: 30,),
-          particepent(widget.provider),
+          particepent(),
           SizedBox(height: 20,),
-          Padding(padding: EdgeInsets.only(left: 10,right: 10),child: selectUserList(widget.provider),),
+          Padding(padding: EdgeInsets.only(left: 10,right: 10),child: selectUserList(),),
         ],
       ),
 
-      bottomNavigationBar: Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
-        child: Button(width: 327.w, height: 49.h, title: "Update", textStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 14.sp,
-          fontFamily: AppConstant.FONTFAMILY,
-          fontWeight: FontWeight.w600,
-          height: 0,
-        ), onClick: () async {
-          User user=await LocalSharePreferences().getLoginData();
-          await widget.provider.callCreateGroupApi(user.content!.first.id,widget.provider.groupNameController.text,context);
-          //  Navigator.pushReplacementNamed(context, AppRoutes.group);
-        },isEnbale: false),),
+
+      bottomNavigationBar: Consumer<CreateGroupProvider>(
+        builder: (context, provider, child) => Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
+          child: Button(width: 327.w, height: 49.h, title: "Update", textStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 14.sp,
+            fontFamily: AppConstant.FONTFAMILY,
+            fontWeight: FontWeight.w600,
+            height: 0,
+          ), onClick: () async {
+            User user=await LocalSharePreferences().getLoginData();
+            await provider.callUpdateGroupApi(user.content!.first.id,provider.groupNameController.text,widget.memberList,context);
+          },isEnbale: true),),
+      ),
     );
 
   }
 
   bool buttonEnable = false;
-  String img='';
-  groupName(GroupProvider provider) {
-    String img=provider.imageUrl.replaceAll('"', '');
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: ClipOval(
-            child: Material(
-              color: Colors.grey, // Button color
-              child: InkWell(
-                splashColor: Colors.grey, // Splash color
-                onTap: () async{
-                  await provider.uploadProfileImage(context);
-                  setState(() {
-                  });
-                },
-                child: SizedBox(width: 50, height: 50, child:  Image.network(provider.changeImageUrl==''?img:provider.changeImageUrl)),
+  groupName() {
+    return Consumer<CreateGroupProvider>(
+        builder: (context, provider, child) {
+          String img=provider.imageUrl.replaceAll('"', '');
+          provider.setData();
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.grey, // Button color
+                    child: InkWell(
+                      splashColor: Colors.grey, // Splash color
+                      onTap: () async{
+                        await provider.uploadProfileImage(context);
+                      },
+                      child: BaseWidget().getImageclip(provider.changeImageUrl==''?img:provider.changeImageUrl,
+                          height: 40.h, width: 40.w),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-        Container(height: 50,width: 250,
-            child: EditText(controller: _controller, hint: "Enter Group Name", keybordType: TextInputType.text,
-              onChange: (val){
-                if(val==0) {
-                  buttonEnable = false;
-                }else{
-                  buttonEnable = true;
-                }
-                setState(() {
-                });
-              },
-              width: 250,height: 50,))
-      ],
+              Container(height: 50,width: 250,
+                  child: EditText(controller: provider.groupNameController, hint: "Enter Group Name", keybordType: TextInputType.text,
+
+                    width: 250,height: 50,))
+            ],
+          );}
     );
   }
 
-  particepent(GroupProvider provider) {
+  particepent() {
     return Container(
       height: 40,
       color: Colors.black12,
-      child: Center(child: Text("PARTICIPANTS: ${provider.selectedUsers.length} OF 1000",style: TextStyle(fontSize: 14.sp,
+      child: Center(child: Text("PARTICIPANTS: ${widget.memberList.length} OF 1000",style: TextStyle(fontSize: 14.sp,
         fontFamily: AppConstant.FONTFAMILY,
         fontWeight: FontWeight.w600,))),
     );
@@ -131,11 +122,11 @@ setData();
 
 
 
-  selectUserList(GroupProvider provider){
+  selectUserList(){
     return ListView.builder(
       // controller: _scrollController,
         shrinkWrap: true,
-        itemCount: provider.selectedUsers.length,
+        itemCount: widget.memberList.length,
         itemBuilder: (context, index) {
           return InkWell(onTap: () {}, child: Column(
             children: [
@@ -143,13 +134,13 @@ setData();
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: <Widget>[
-                    provider.selectedUsers[index].profilePicture!.allMatches("null")==0 ? Image.network(provider.selectedUsers[index].profilePicture!,height: 64,width: 64,) : Icon(
+                    widget.memberList[index].profilePicture!.allMatches("null")==0 ? Image.network(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
                       Icons.account_circle,
                       size: 30.0,
                     ),
                     SizedBox(width: 10,),
                     Text(
-                        provider.selectedUsers[index].firstName!+" "+provider.selectedUsers[index].lastName!,
+                        widget.memberList[index].firstName!+" "+widget.memberList[index].lastName!,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontFamily: AppConstant.FONTFAMILY,
@@ -162,12 +153,6 @@ setData();
             ],
           ));
         });
-  }
-
-  Future<void> setData() async {
-    groupData = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
-    _controller.text = widget.provider.currentGroup!.groupName!;
-    img = groupData!.imageUrl!;
   }
 
 }
