@@ -158,19 +158,33 @@ class _GroupInfoState extends State<GroupInfo> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.account_circle,
-                      size: 30.0,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.account_circle,
+                          size: 30.0,
+                        ),
+                        SizedBox(width: 10,),
+                        Text(
+                            provider.listAddedMember[index].displayName!,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w600,
+                            ))
+                      ],
                     ),
-                    SizedBox(width: 10,),
-                    Text(
-                        provider.listAddedMember[index].displayName!,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: AppConstant.FONTFAMILY,
-                          fontWeight: FontWeight.w600,
-                        ))
+                    InkWell(
+                      onTap: (){
+                        provider.removeMemberFromGroup(provider.listAddedMember[index].id!, index);
+                       /* setState(() {
+
+                        });*/
+                      },
+                      child: SvgPicture.asset(Images.delete)
+                    )
                   ],
                 ),
               ),
@@ -180,12 +194,5 @@ class _GroupInfoState extends State<GroupInfo> {
         });
   }
 
-  /*String img='';
-  String date = '';
-  void setData() {
-    _controller.text = widget.groupData.groupName!;
-    img = widget.groupData.imageUrl!;
-    date = widget.groupData.date!.toString();
-  }*/
 
 }

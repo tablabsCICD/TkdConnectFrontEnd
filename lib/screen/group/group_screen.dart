@@ -629,6 +629,7 @@ class _GroupScreenState extends State<GroupScreen> {
                     height: 24.h,
                     child: Stack(children: [
                       InkWell(onTap: () async {
+                        LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
                         Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: true);
                       }, child: SvgPicture.asset(Images.edit))
 

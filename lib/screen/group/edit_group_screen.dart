@@ -7,6 +7,7 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
@@ -16,16 +17,15 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 
-class CreateGroupScreen extends StatefulWidget {
+class EditGroupScreen extends StatefulWidget {
   GroupProvider provider;
-  CreateGroupScreen(this.provider);
+  EditGroupScreen(this.provider);
 
   @override
-  _CreateGroupScreenState createState() => _CreateGroupScreenState();
+  _EditGroupScreenState createState() => _EditGroupScreenState();
 }
 
-class _CreateGroupScreenState extends State<CreateGroupScreen> {
-  bool isEdit=false;
+class _EditGroupScreenState extends State<EditGroupScreen> {
   TextEditingController _controller = TextEditingController();
   ScrollController horizantalControllet=ScrollController();
 
@@ -33,6 +33,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //setData();
   }
 
 
@@ -44,40 +45,42 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       builder: (context, child) => _buildPage(context),
     );*/_buildPage(context);
   }
-
-  _buildPage(BuildContext context) {
+  GroupData? groupData;
+  _buildPage(BuildContext context) async {
+setData();
     return Scaffold(
-          // appBar: AppBarCommon(context, title: "Create Group").appBar(),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 50,),
-              groupName(widget.provider),
-              SizedBox(height: 30,),
-              particepent(widget.provider),
-              SizedBox(height: 20,),
-              Padding(padding: EdgeInsets.only(left: 10,right: 10),child: selectUserList(widget.provider),),
-            ],
-          ),
+      // appBar: AppBarCommon(context, title: "Create Group").appBar(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 50,),
+          groupName(widget.provider),
+          SizedBox(height: 30,),
+          particepent(widget.provider),
+          SizedBox(height: 20,),
+          Padding(padding: EdgeInsets.only(left: 10,right: 10),child: selectUserList(widget.provider),),
+        ],
+      ),
 
-          bottomNavigationBar: Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
-            child: Button(width: 327.w, height: 49.h, title: S().create, textStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 14.sp,
-            fontFamily: AppConstant.FONTFAMILY,
-            fontWeight: FontWeight.w600,
-            height: 0,
-          ), onClick: () async {
-              User user=await LocalSharePreferences().getLoginData();
-              await widget.provider.callCreateGroupApi(user.content!.first.id,widget.provider.groupNameController.text,context);
-            //  Navigator.pushReplacementNamed(context, AppRoutes.group);
-          },isEnbale: buttonEnable),),
-        );
+      bottomNavigationBar: Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
+        child: Button(width: 327.w, height: 49.h, title: "Update", textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 14.sp,
+          fontFamily: AppConstant.FONTFAMILY,
+          fontWeight: FontWeight.w600,
+          height: 0,
+        ), onClick: () async {
+          User user=await LocalSharePreferences().getLoginData();
+          await widget.provider.callCreateGroupApi(user.content!.first.id,widget.provider.groupNameController.text,context);
+          //  Navigator.pushReplacementNamed(context, AppRoutes.group);
+        },isEnbale: false),),
+    );
 
   }
 
   bool buttonEnable = false;
+  String img='';
   groupName(GroupProvider provider) {
     String img=provider.imageUrl.replaceAll('"', '');
     return Row(
@@ -91,9 +94,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               child: InkWell(
                 splashColor: Colors.grey, // Splash color
                 onTap: () async{
-                 await provider.uploadProfileImage(context);
-                 setState(() {
-                 });
+                  await provider.uploadProfileImage(context);
+                  setState(() {
+                  });
                 },
                 child: SizedBox(width: 50, height: 50, child:  Image.network(provider.changeImageUrl==''?img:provider.changeImageUrl)),
               ),
@@ -101,17 +104,17 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           ),
         ),
         Container(height: 50,width: 250,
-            child: EditText(controller: provider.groupNameController, hint: "Enter Group Name", keybordType: TextInputType.text,
-          onChange: (val){
-              if(val==0) {
-                buttonEnable = false;
-              }else{
-                buttonEnable = true;
-              }
-              setState(() {
-              });
-          },
-          width: 250,height: 50,))
+            child: EditText(controller: _controller, hint: "Enter Group Name", keybordType: TextInputType.text,
+              onChange: (val){
+                if(val==0) {
+                  buttonEnable = false;
+                }else{
+                  buttonEnable = true;
+                }
+                setState(() {
+                });
+              },
+              width: 250,height: 50,))
       ],
     );
   }
@@ -146,12 +149,12 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     ),
                     SizedBox(width: 10,),
                     Text(
-                      provider.selectedUsers[index].firstName!+" "+provider.selectedUsers[index].lastName!,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: AppConstant.FONTFAMILY,
-                        fontWeight: FontWeight.w600,
-                      ))
+                        provider.selectedUsers[index].firstName!+" "+provider.selectedUsers[index].lastName!,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontFamily: AppConstant.FONTFAMILY,
+                          fontWeight: FontWeight.w600,
+                        ))
                   ],
                 ),
               ),
@@ -159,6 +162,12 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             ],
           ));
         });
+  }
+
+  Future<void> setData() async {
+    groupData = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
+    _controller.text = widget.provider.currentGroup!.groupName!;
+    img = groupData!.imageUrl!;
   }
 
 }

@@ -25,6 +25,7 @@ class GroupProvider extends  BaseProvider{
     getGroupListByUserId();
     getAllUserList(isEdit);
   }
+
   int selectedPage=0;
   bool isEdit;
   List<GroupData> groupListByUserId = [];
@@ -153,7 +154,6 @@ class GroupProvider extends  BaseProvider{
 
   getAllUserList(bool isFromEdit) async {
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-
     selectedUsers=[];
     isLoading = true;
     notifyListeners();
@@ -169,18 +169,21 @@ class GroupProvider extends  BaseProvider{
     isLoading = false;
     //filterByName.addAll(allUserList);
     if(isFromEdit==true){
+      currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
+      getGroupMember(currentGroup!.id!);
+     // listAddedMember = await LocalSharePreferences.localSharePreferences.getGroupMemberList();
+      print(listAddedMember.length);
       for(int i=0;i<allUserList.length;i++){
         allUserList[i].addedIngroup=false;
         for(int j=0;j<listAddedMember.length;j++){
           if(allUserList[i].id==listAddedMember[j].userId){
             allUserList[i].addedIngroup=true;
+            selectedUsers.add(allUserList[i]);
           }
         }
-
         if(allUserList[i].id != user.content!.first.id){
           filterByName.add(allUserList[i]);
         }
-
       }
     }else{
       for(int i=0;i<allUserList.length;i++){
@@ -209,7 +212,6 @@ class GroupProvider extends  BaseProvider{
   filterUser(String name) async {
     if(name.length > 2) {
       filterByName.clear();
-      notifyListeners();
       /* for(int i=0;i<allUserList.length;i++){
         if(allUserList[i].firstName!.toLowerCase().contains(name.toLowerCase())==true||allUserList[i].lastName!.toLowerCase().contains(name.toLowerCase())==true){
           filterByName.add(allUserList[i]);
@@ -222,8 +224,7 @@ class GroupProvider extends  BaseProvider{
       if (apiResponse.status == 200) {
         SearchDataList searchDataList = SearchDataList.fromJson(
             jsonDecode(apiResponse.response));
-
-        for(int i=0;i<searchDataList.data!.length-1;i++){
+        for(int i=0;i<searchDataList.data!.length;i++){
          SearchData element = searchDataList.data![i];
          UserData userData = UserData(id: element.id,
              addedIngroup: false,
@@ -232,7 +233,7 @@ class GroupProvider extends  BaseProvider{
              companyName: element.companyName,
              country: element.country,
              companyLogo: element.companyLogo,
-             companyAddress: element.companyAddress,
+           companyAddress: element.companyAddress,
              companyId: element.companyId,
              city: element.city,
              deviceId: element.deviceId,
@@ -316,7 +317,6 @@ class GroupProvider extends  BaseProvider{
 
   selectedUser(bool? value,UserData userObj){
     userObj.isSelected=value;
-
     if(value==true){
       selectedUsers.add(userObj);
     }else{
@@ -352,7 +352,34 @@ class GroupProvider extends  BaseProvider{
     }
   }
 
-  void callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom) async{
+  callUpdateGroupApi(int? userId,int? groupId,String groupName,List<GroupMember> memberList,BuildContext context)async{
+    isLoading=true;
+    showLoader(context);
+    String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
+
+    Map<String,dynamic>data={
+      'createByUserId':userId,
+      'groupName':groupName,
+      'isPrivate':0,
+      'imageUrl':imageUrl,
+      'date':date,
+      'id': groupId
+    };
+    String myUrl = ApiConstant.UPDATE_GROUP;
+    print("update Group Url : $myUrl");
+    ApiResponse apiResponse=await ApiHelper().apiPut(myUrl, data);
+    print(apiResponse.response);
+    if(apiResponse.status==200){
+      GroupCreateModel model=GroupCreateModel.fromJson(apiResponse.response);
+      callGroupMember(model.id,userId,context,false);
+    }else{
+      isLoading=false;
+      showLoader(context);
+      notifyListeners();
+    }
+  }
+
+  callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom) async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     List<GroupMember>selectedUserId=[];
     for(int i=0;i<selectedUsers.length;i++){
@@ -400,13 +427,13 @@ class GroupProvider extends  BaseProvider{
       EasyLoading.dismiss();
     }
   }
+
   goToNextPage(BuildContext context){
     int count = 0;
     Navigator.popUntil(context, (route) {
       return count++ == 2;
     });
-
-
+  notifyListeners();
   }
 
  /* getAllGroup(int? userId,context)async{
@@ -428,13 +455,19 @@ class GroupProvider extends  BaseProvider{
     GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
     LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
     listAddedMember.addAll(groupListModel.content!);
-    allUserList.forEach((element) {
-
-    });
+    for(int i=0;i<allUserList.length;i++){
+      allUserList[i].addedIngroup=false;
+      allUserList[i].isSelected= false;
+      for(int j=0;j<listAddedMember.length;j++){
+        if(allUserList[i].id==listAddedMember[j].userId){
+          allUserList[i].addedIngroup=true;
+          allUserList[i].isSelected = true;
+          selectedUsers.add(allUserList[i]);
+        }
+      }
+    }
     isLoading=false;
-    //showLoader(context);
     notifyListeners();
-
   }
 
   removeMemberFromGroup(int memberId,int index)async{

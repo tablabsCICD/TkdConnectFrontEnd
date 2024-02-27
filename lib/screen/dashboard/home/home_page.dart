@@ -124,7 +124,8 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
     }
     else if(truckLoad.type=="Buy/Sell"){
       return AllCards().cardSellBuyPost(index, context, provider.truckLoadTypeList[index]);
-    }else if(truckLoad.type=="Jobs"){
+    }
+    else if(truckLoad.type=="Jobs"){
       return AllCards().cardJobPost(index, context, provider.truckLoadTypeList[index]);
     }
     else if(truckLoad.type=="General Post"){

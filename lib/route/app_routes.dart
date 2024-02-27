@@ -16,6 +16,7 @@ class AppRoutes {
 
   static const create_post = '/createpost';
   static const create_group = '/creategroup';
+  static const edit_group = '/editgroup';
   static const select_group_member = '/selectgroupmember';
   static const group_info = '/groupinfo';
 

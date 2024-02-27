@@ -92,7 +92,8 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                 height: 0,
               ),
               onClick: () {
-                Navigator.pushNamed(context, AppRoutes.create_group,
+                widget.isEdit?Navigator.pushNamed(context, AppRoutes.edit_group,
+                    arguments: provider):Navigator.pushNamed(context, AppRoutes.create_group,
                     arguments: provider);
               },
               isEnbale: provider.selectedUsers.length == 0 ? false : true),
@@ -245,7 +246,10 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: <Widget>[
+              children: <Widget>[model.filterByName[index].profilePicture==null?Icon(
+                Icons.account_circle,
+                size: 30.0,
+              ):
                 model.filterByName[index].profilePicture!.allMatches("null") ==
                         0
                     ? Image.network(
@@ -336,13 +340,12 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
 
   callEditCheckBox(index, GroupProvider model) {
     return Visibility(
-      visible: model.filterByName[index].addedIngroup == true ? false : true,
+      visible: model.filterByName[index].addedIngroup == true ? true : true,
       child: Checkbox(
           value: model.filterByName[index].isSelected,
           onChanged: (value) {
             model.selectedUser(value, model.filterByName[index]);
 
-            //horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
             if (value == true) {
               horizantalControllet.animateTo(
                   horizantalControllet.position.maxScrollExtent + 200,
