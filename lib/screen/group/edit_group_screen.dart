@@ -123,36 +123,38 @@ class _EditGroupScreenState extends State<EditGroupScreen> {
 
 
   selectUserList(){
-    return ListView.builder(
-      // controller: _scrollController,
-        shrinkWrap: true,
-        itemCount: widget.memberList.length,
-        itemBuilder: (context, index) {
-          return InkWell(onTap: () {}, child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: <Widget>[
-                    widget.memberList[index].profilePicture!.allMatches("null")==0 ? Image.network(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
-                      Icons.account_circle,
-                      size: 30.0,
-                    ),
-                    SizedBox(width: 10,),
-                    Text(
-                        widget.memberList[index].firstName!+" "+widget.memberList[index].lastName!,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: AppConstant.FONTFAMILY,
-                          fontWeight: FontWeight.w600,
-                        ))
-                  ],
+    return Expanded(
+      child: ListView.builder(
+        // controller: _scrollController,
+          shrinkWrap: true,
+          itemCount: widget.memberList.length,
+          itemBuilder: (context, index) {
+            return InkWell(onTap: () {}, child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      widget.memberList[index].profilePicture!.allMatches("null")==0 ? Image.network(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
+                        Icons.account_circle,
+                        size: 30.0,
+                      ),
+                      SizedBox(width: 10,),
+                      Text(
+                          widget.memberList[index].firstName!+" "+widget.memberList[index].lastName!,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: AppConstant.FONTFAMILY,
+                            fontWeight: FontWeight.w600,
+                          ))
+                    ],
+                  ),
                 ),
-              ),
-              Divider()
-            ],
-          ));
-        });
+                Divider()
+              ],
+            ));
+          }),
+    );
   }
 
 }

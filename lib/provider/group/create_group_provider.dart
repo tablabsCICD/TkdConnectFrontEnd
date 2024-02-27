@@ -101,7 +101,7 @@ class CreateGroupProvider extends BaseProvider{
     notifyListeners();
   }
 
-  createGroupApi(int? userId,String groupName,BuildContext context)async{
+  createGroupApi(int? userId,String groupName,List<UserData> memberList,BuildContext context)async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     Map<String,dynamic>data={
       'createByUserId':userId,
