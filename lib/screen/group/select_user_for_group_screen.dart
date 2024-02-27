@@ -14,74 +14,90 @@ import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/widgets/button.dart';
 
 class SelectUserForGroupScreen extends StatefulWidget {
-  int userId;
-  SelectUserForGroupScreen(this.userId);
+  bool isEdit;
+
+  SelectUserForGroupScreen(this.isEdit);
 
   @override
-  _SelectUserForGroupScreenState createState() => _SelectUserForGroupScreenState();
+  _SelectUserForGroupScreenState createState() =>
+      _SelectUserForGroupScreenState();
 }
 
 class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
-  bool isEdit=false;
   TextEditingController _controller = TextEditingController();
-  ScrollController horizantalControllet=ScrollController();
+  ScrollController horizantalControllet = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
 
+  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) =>
-          GroupProvider(),
+      create: (BuildContext context) => GroupProvider(widget.isEdit),
       builder: (context, child) => _buildPage(context),
     );
   }
 
   _buildPage(BuildContext context) {
     return Scaffold(
-      body: Consumer<GroupProvider>( builder: (context, model, child) =>
-      model.isLoading==true?Center(child: CircularProgressIndicator(),):
-      Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          top_bar(context),
-          serachBar(),
-          Visibility(visible: model.selectedUsers.length==0?false:true,child: Container(
-            color:  Colors.black12,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(child: selectedUsers(),height: 90,),
-                ),
-              ],
-            ),
-          ),),
-          listViewUser(),
-        ],
-      ),
-
-      ),
+      body: Consumer<GroupProvider>(builder: (context, model, child) {
+      // getUserList(model);
+        return model.isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  top_bar(context),
+                  serachBar(),
+                  Visibility(
+                    visible: model.selectedUsers.length == 0 ? false : true,
+                    child: Container(
+                      color: Colors.black12,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              child: selectedUsers(),
+                              height: 90,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  listViewUser(),
+                ],
+              );
+      }),
       bottomNavigationBar: Consumer<GroupProvider>(
-        builder: (context, provider, child)=> Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
-          child: Button(width: 327.w, height: 49.h, title: S().next, textStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 14.sp,
-          fontFamily: AppConstant.FONTFAMILY,
-          fontWeight: FontWeight.w600,
-          height: 0,
-        ), onClick: (){
-        Navigator.pushNamed(context, AppRoutes.create_group,arguments: provider);
-
-        },isEnbale: provider.selectedUsers.length==0?false:true),),
+        builder: (context, provider, child) => Padding(
+          padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+          child: Button(
+              width: 327.w,
+              height: 49.h,
+              title: S().next,
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 14.sp,
+                fontFamily: AppConstant.FONTFAMILY,
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+              onClick: () {
+                Navigator.pushNamed(context, AppRoutes.create_group,
+                    arguments: provider);
+              },
+              isEnbale: provider.selectedUsers.length == 0 ? false : true),
+        ),
       ),
-
     );
   }
 
@@ -108,7 +124,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
       builder: (context, provider, child) {
         return Transform.translate(
           // e.g: vertical negative margin
-          offset: const Offset(00,-25),
+          offset: const Offset(00, -25),
           child: Container(
             // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
             margin: EdgeInsets.only(right: 20.w, left: 20.w),
@@ -165,22 +181,24 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                                 child: TextField(
                                   controller: provider.searchController,
                                   onChanged: (value) {
-                                     provider.filterUser(provider.searchController.text);
+                                    provider.filterUser(
+                                        provider.searchController.text);
                                   },
                                   decoration: InputDecoration(
-                                      hintText: "Search groups ",
+                                      hintText: "Search users ",
                                       border: InputBorder.none,
                                       hintStyle: TextStyle(
                                         color: Color(0x662C363F),
                                         fontSize: 14.sp,
                                         fontFamily:
-                                        GoogleFonts.poppins().fontFamily,
+                                            GoogleFonts.poppins().fontFamily,
                                         fontWeight: FontWeight.w400,
                                       )),
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 14.sp,
-                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -192,7 +210,6 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
@@ -201,36 +218,45 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  listViewUser(){
-    return Consumer<GroupProvider>( builder: (context, model, child)=> Expanded(
+  listViewUser() {
+    return Consumer<GroupProvider>(
+      builder: (context, model, child) => Expanded(
         child: ListView.builder(
             shrinkWrap: true,
             itemCount: model.filterByName.length,
             itemBuilder: (context, index) {
-              return InkWell(onTap: () {}, child: groupTile(index,model));
+              return InkWell(onTap: () {}, child: groupTile(index, model));
             }),
       ),
     );
   }
 
   groupTile(int index, GroupProvider model) {
-    String displayName=model.filterByName[index].firstName!+" "+model.filterByName[index].lastName!;
-    if(displayName.length >18){
-      displayName=displayName.substring(0,18);
-      displayName=displayName+"...";
+    String displayName = model.filterByName[index].firstName! +
+        " " +
+        model.filterByName[index].lastName!;
+    if (displayName.length > 18) {
+      displayName = displayName.substring(0, 18);
+      displayName = displayName + "...";
     }
     return Container(
-
       child: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: <Widget>[
-                model.filterByName[index].profilePicture!.allMatches("null")==0 ? Image.network(model.filterByName[index].profilePicture!,height: 64,width: 64,) : Icon(
-                  Icons.account_circle,
-                  size: 30.0,
-                ),
+                model.filterByName[index].profilePicture!.allMatches("null") ==
+                        0
+                    ? Image.network(
+                        model.filterByName[index].profilePicture!,
+                        height: 64,
+                        width: 64,
+                      )
+                    : Icon(
+                        Icons.account_circle,
+                        size: 30.0,
+                      ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -246,15 +272,17 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                                 color: Color(0xCC001E49),
                                 fontSize: 16.sp,
                                 fontFamily: AppConstant.FONTFAMILY,
-                                fontWeight: FontWeight.w400,),
+                                fontWeight: FontWeight.w400,
+                              ),
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                               maxLines: 2,
                             ),
-                            isEdit?callEditCheckBox(index,model):callCreateCheckBox(index,model),
+                            widget.isEdit
+                                ? callEditCheckBox(index, model)
+                                : callCreateCheckBox(index, model),
                           ],
                         ),
-
                       ],
                     ),
                   ),
@@ -268,9 +296,9 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-
-  selectedUsers(){
-    return Consumer<GroupProvider>( builder: (context, model, child)=> ListView.builder(
+  selectedUsers() {
+    return Consumer<GroupProvider>(
+      builder: (context, model, child) => ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         controller: horizantalControllet,
@@ -279,12 +307,17 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           height: 70,
           width: 100,
           child: Column(
-
             children: <Widget>[
-              model.selectedUsers[index].profilePicture!.allMatches("null")==0 ? Image.network(model.selectedUsers[index].profilePicture!,height: 64,width: 64,) : Icon(
-                Icons.account_circle,
-                size: 64.0,
-              ),
+              model.selectedUsers[index].profilePicture!.allMatches("null") == 0
+                  ? Image.network(
+                      model.selectedUsers[index].profilePicture!,
+                      height: 64,
+                      width: 64,
+                    )
+                  : Icon(
+                      Icons.account_circle,
+                      size: 64.0,
+                    ),
               Text(
                 model.selectedUsers[index].firstName!,
                 style: TextStyle(
@@ -293,8 +326,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                   fontFamily: AppConstant.FONTFAMILY,
                   fontWeight: FontWeight.w400,
                 ),
-                )
-
+              )
             ],
           ),
         ),
@@ -304,42 +336,50 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
 
   callEditCheckBox(index, GroupProvider model) {
     return Visibility(
-      visible: model.filterByName[index].addedIngroup==true?false:true,
-      child: Checkbox(value:  model.filterByName[index].isSelected, onChanged: (value){
+      visible: model.filterByName[index].addedIngroup == true ? false : true,
+      child: Checkbox(
+          value: model.filterByName[index].isSelected,
+          onChanged: (value) {
+            model.selectedUser(value, model.filterByName[index]);
 
-        model.selectedUser(value, model.filterByName[index]);
-
-        //horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
-        if(value==true){
-          horizantalControllet.animateTo(horizantalControllet.position.maxScrollExtent+200,
-              duration:Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
-        }else{
-          horizantalControllet.animateTo(horizantalControllet.position.maxScrollExtent,
-              duration:Duration(milliseconds: 400), curve: Curves.slowMiddle);
-        }
-
-
-
-      }),
+            //horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
+            if (value == true) {
+              horizantalControllet.animateTo(
+                  horizantalControllet.position.maxScrollExtent + 200,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.fastOutSlowIn);
+            } else {
+              horizantalControllet.animateTo(
+                  horizantalControllet.position.maxScrollExtent,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.slowMiddle);
+            }
+          }),
     );
   }
 
   callCreateCheckBox(int index, GroupProvider model) {
-    return Checkbox(value:  model.filterByName[index].isSelected, onChanged: (value){
+    return Checkbox(
+        value: model.filterByName[index].isSelected,
+        onChanged: (value) {
+          model.selectedUser(value, model.filterByName[index]);
 
-      model.selectedUser(value, model.filterByName[index]);
+          //horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
+          if (value == true) {
+            horizantalControllet.animateTo(
+                horizantalControllet.position.maxScrollExtent + 200,
+                duration: Duration(milliseconds: 400),
+                curve: Curves.fastOutSlowIn);
+          } else {
+            horizantalControllet.animateTo(
+                horizantalControllet.position.maxScrollExtent,
+                duration: Duration(milliseconds: 400),
+                curve: Curves.slowMiddle);
+          }
+        });
+  }
 
-      //horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
-      if(value==true){
-        horizantalControllet.animateTo(horizantalControllet.position.maxScrollExtent+200,
-            duration:Duration(milliseconds: 400), curve: Curves.fastOutSlowIn);
-      }else{
-        horizantalControllet.animateTo(horizantalControllet.position.maxScrollExtent,
-            duration:Duration(milliseconds: 400), curve: Curves.slowMiddle);
-      }
-
-
-
-    });
+  void getUserList(GroupProvider model) async{
+    await model.getAllUserList(widget.isEdit);
   }
 }

@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
+import 'package:tkd_connect/model/response/group_member_list.dart';
+import 'package:tkd_connect/model/response/group_response.dart';
 
 import '../model/response/userdata.dart';
 class LocalSharePreferences{
@@ -41,6 +43,19 @@ class LocalSharePreferences{
    String data  = await getString(AppConstant.LOGIN_KEY);
    User datas=User.fromJson(jsonDecode(data));
    return datas;
+  }
+
+  Future<GroupData> getCurrentGroupData() async{
+    String data  = await getString(AppConstant.CURRENT_GROUP);
+    GroupData groupData=GroupData.fromJson(jsonDecode(data));
+    return groupData;
+  }
+
+  Future<List<GroupMember>> getGroupMemberList() async{
+    String data  = await getString(AppConstant.GROUP_MEMBER);
+    GroupMemberListResponse groupMemberListResponse=GroupMemberListResponse.fromJson(jsonDecode(data));
+    List<GroupMember> groupMemberList = groupMemberListResponse.content!;
+    return groupMemberList;
   }
 
   Future<bool> logOut()async{

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
+import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/request/create_group.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
@@ -19,12 +20,13 @@ import '../../model/api_response.dart';
 import '../../network/api_helper.dart';
 
 class GroupProvider extends  BaseProvider{
-  GroupProvider() : super('Ideal'){
+
+  GroupProvider(this.isEdit) : super('Ideal'){
     getGroupListByUserId();
-    getAllUserList(false);
+    getAllUserList(isEdit);
   }
   int selectedPage=0;
-
+  bool isEdit;
   List<GroupData> groupListByUserId = [];
   List<GroupData> tempGroupListByUserId = [];
   List<GroupMember> groupMemberList = [];
@@ -156,7 +158,7 @@ class GroupProvider extends  BaseProvider{
     isLoading = true;
     notifyListeners();
     if(allUserList.length==0){
-      String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=6000';
+      String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=1000';
       print(myUrl);
       var responseBody=await ApiHelper().apiWithoutDilogDecodeGet(myUrl);
       print(responseBody.response);
@@ -196,6 +198,7 @@ class GroupProvider extends  BaseProvider{
   GroupData? currentGroup;
   seletedGroupObject(GroupData groupData){
     currentGroup=groupData;
+    LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
   }
 
   uploadProfileImage(BuildContext context)async{
@@ -262,6 +265,7 @@ class GroupProvider extends  BaseProvider{
          );
          filterByName.add(userData);
         }
+
       /*  searchDataList.data!.forEach((element) {
           UserData userData = UserData(id: element.id,
               addedIngroup: false,
@@ -372,7 +376,7 @@ class GroupProvider extends  BaseProvider{
         getGroupMember(groupId!);
       }else{
         await getGroupListByUserId();
-
+        notifyListeners();
         goToNextPage(context);
       }
 
@@ -422,8 +426,11 @@ class GroupProvider extends  BaseProvider{
     ApiHelper apiHelper=ApiHelper();
     var response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId!.toString());
     GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
-
+    LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
     listAddedMember.addAll(groupListModel.content!);
+    allUserList.forEach((element) {
+
+    });
     isLoading=false;
     //showLoader(context);
     notifyListeners();

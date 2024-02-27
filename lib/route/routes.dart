@@ -130,8 +130,8 @@ class RouteGenerator {
        // return buildRoute(GeneralPostScreen(), settings: settings);
 
       case AppRoutes.select_group_member:
-        int userId = settings.arguments as int;
-        return _createRoute(SelectUserForGroupScreen(userId));
+        bool isEdit = settings.arguments as bool;
+        return _createRoute(SelectUserForGroupScreen(isEdit));
 
       case AppRoutes.create_group:
         GroupProvider provider = settings.arguments as GroupProvider ;

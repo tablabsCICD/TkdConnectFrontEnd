@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +11,7 @@ import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
 import '../../constant/images.dart';
@@ -35,7 +38,7 @@ class _GroupScreenState extends State<GroupScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GroupProvider(),
+      create: (BuildContext context) => GroupProvider(false),
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -70,7 +73,7 @@ class _GroupScreenState extends State<GroupScreen> {
             floatingActionButton: InkWell(
               onTap: () async {
                // Utils().callCreateGroup(context,widget.userId);
-                Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: widget.userId);
+                Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
               },
               child: Container(
                 width: 155.w,
@@ -132,16 +135,14 @@ class _GroupScreenState extends State<GroupScreen> {
   allUserData() {
     return Consumer<GroupProvider>(
       builder: (context, provider, child) {
-        return Container(
-          child: Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-                controller: provider.scrollControllerVertical,
-                itemCount: provider.groupListByUserId.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return groupItem(provider.groupListByUserId[index],provider,index);
-                }),
-          ),
+        return Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+              controller: provider.scrollControllerVertical,
+              itemCount: provider.groupListByUserId.length,
+              itemBuilder: (BuildContext context, int index) {
+                return groupItem(provider.groupListByUserId[index],provider,index);
+              }),
         );
       },
     );
@@ -537,6 +538,7 @@ class _GroupScreenState extends State<GroupScreen> {
       onTap: () async {
         provider.seletedGroupObject(groupData);
         await provider.getGroupMember(groupData.id!);
+
         Navigator.pushNamed(context, AppRoutes.group_info,arguments: provider);
       },
       child: Container(
@@ -627,10 +629,8 @@ class _GroupScreenState extends State<GroupScreen> {
                     height: 24.h,
                     child: Stack(children: [
                       InkWell(onTap: () async {
-                        provider.seletedGroupObject(groupData);
-                        await provider.getGroupMember(groupData.id!);
-                        Navigator.pushNamed(context, AppRoutes.group_info,arguments: provider);
-                      }, child: Icon(Icons.info_outline))
+                        Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: true);
+                      }, child: SvgPicture.asset(Images.edit))
 
                     ]),
                   ),

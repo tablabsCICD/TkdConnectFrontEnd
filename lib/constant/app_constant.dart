@@ -7,6 +7,8 @@ class AppConstant{
   static final String APP_VERSION = "3.0.4"; // 50
 
   static final String LOGIN_KEY="login";
+  static final String CURRENT_GROUP="group";
+  static final String GROUP_MEMBER="member";
 
   static final String LOGIN_BOOl="loginbool";
 

@@ -576,6 +576,136 @@ class BaseWidget {
     );
   }
 
+  Widget headingWithDescription(String title, String date, String field1,String field2,String field3,bool isJobPost) {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(4),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          date,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0x99001E49),
+                            fontSize: 12.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              isJobPost?"Experience : ":"Mfg Year : ",
+                              style: TextStyle(
+                                color: Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              field1,
+                              style: TextStyle(
+                                color: Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                        isJobPost?"Role : ":"Model : ",
+                              style: TextStyle(
+                                color: Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              field2,
+                              style: TextStyle(
+                                color: Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        isJobPost?SizedBox.shrink():Row(
+                          children: [
+                            Text(
+                              "Price : ",
+                              style: TextStyle(
+                                color: Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              field3,
+                              style: TextStyle(
+                                color: Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget headingWithoutDate(String title, String subTitle) {
     return Container(
       width: double.infinity,
@@ -672,6 +802,107 @@ class BaseWidget {
                     ),
                   ),
                   SvgPicture.asset(Images.bid)
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(onTap: () {}, child: popUpmenu(onMenuTap))
+        ],
+      ),
+    );
+  }
+
+  Widget applyButton(Function(int) onMenuTap) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () {
+              onMenuTap(0);
+            },
+            child: Container(
+              height: 38.h,
+              width: 253.w,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    S().applyNow,
+                    style: TextStyle(
+                      color: Color(0xFF001E49),
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SvgPicture.asset(Images.arrow_right)
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(onTap: () {}, child: popUpmenu(onMenuTap))
+        ],
+      ),
+    );
+  }
+
+  Widget getInTouchButton(Function(int) onMenuTap) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () {
+              onMenuTap(2);
+            },
+            child: Container(
+              height: 38.h,
+              width: 253.w,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    S().getInTouch,
+                    style: TextStyle(
+                      color: Color(0xFF001E49),
+                      fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(width: 5,),
+                  Icon(Icons.call,size:15)
                 ],
               ),
             ),

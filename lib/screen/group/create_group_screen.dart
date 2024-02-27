@@ -72,7 +72,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           ), onClick: () async {
               User user=await LocalSharePreferences().getLoginData();
               await widget.provider.callCreateGroupApi(user.content!.first.id,widget.provider.groupNameController.text,context);
-              Navigator.pushReplacementNamed(context, AppRoutes.group);
+            //  Navigator.pushReplacementNamed(context, AppRoutes.group);
           },isEnbale: buttonEnable),),
         );
 

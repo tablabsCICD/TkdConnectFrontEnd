@@ -1291,6 +1291,26 @@ class S {
     );
   }
 
+  /// `Apply now`
+  String get applyNow {
+    return Intl.message(
+      'Apply now',
+      name: 'applyNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get In Touch`
+  String get getInTouch {
+    return Intl.message(
+      'Get In Touch',
+      name: 'getInTouch',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Chat`
   String get chat {
     return Intl.message(

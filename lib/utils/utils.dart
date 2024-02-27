@@ -123,7 +123,7 @@ class Utils {
         context: context,
         builder: (BuildContext context) {
           return FractionallySizedBox(
-              heightFactor: 0.58, child: SelectUserForGroupScreen(userId));
+              heightFactor: 0.58, child: SelectUserForGroupScreen(false));
         });
 
   }

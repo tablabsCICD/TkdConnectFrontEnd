@@ -120,7 +120,12 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
       }
 
     }else if(truckLoad.type=="Advertisement"){
-      return AllCards().cardAdd(index, context, provider.truckLoadTypeList[index]);
+      return AllCards().cardAdv(index, context, provider.truckLoadTypeList[index]);
+    }
+    else if(truckLoad.type=="Buy/Sell"){
+      return AllCards().cardSellBuyPost(index, context, provider.truckLoadTypeList[index]);
+    }else if(truckLoad.type=="Jobs"){
+      return AllCards().cardJobPost(index, context, provider.truckLoadTypeList[index]);
     }
     else if(truckLoad.type=="General Post"){
       return AllCards().generalPost(truckLoad,context);
@@ -717,6 +722,50 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                   children: [
                     Text(
                       'General Post ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.drooDwonheading = 'Sell Buy Post ';
+                  provider.falseAllFilter();
+                  provider.buy_sell = true;
+                  provider.notifyListeners();
+                  provider.applyDropDwonFilter(context);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Sell Buy Post ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.drooDwonheading = 'Jobs ';
+                  provider.falseAllFilter();
+                  provider.jobs = true;
+                  provider.notifyListeners();
+                  provider.applyDropDwonFilter(context);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Jobs ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
