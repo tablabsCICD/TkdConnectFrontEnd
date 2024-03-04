@@ -42,7 +42,6 @@ class HomeScreenProvider extends BaseProvider{
     callDashboradApi(context,selectedPage);
     pagenation(context);
     //callToken();
-
   }
 
   onCliclFilter(BuildContext context){
