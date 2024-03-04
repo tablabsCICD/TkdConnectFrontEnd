@@ -75,7 +75,10 @@ class _GroupScreenState extends State<GroupScreen> {
                   .centerFloat,
               floatingActionButton: InkWell(
                 onTap: () async {
-                  Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
+                  var result = await Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
+                  if(result==1){
+                    provider.callSetState();
+                  }
                 },
                 child: Container(
                   width: 155.w,
@@ -302,7 +305,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BaseWidget().getGroupImage(groupData.imageUrl!,
+                        BaseWidget().getImageclip(groupData.imageUrl!,
                             height: 32.h, width: 32.w),
                         SizedBox(
                           width: 14.5.w,
@@ -361,7 +364,10 @@ class _GroupScreenState extends State<GroupScreen> {
                     child: Stack(children: [
                       InkWell(onTap: () async {
                         LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
-                        Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: true);
+                        var result = await Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: true);
+                        if(result==1){
+                          provider.callSetState();
+                        }
                       }, child: SvgPicture.asset(Images.edit,height: 20,width: 20,))
 
                     ]),

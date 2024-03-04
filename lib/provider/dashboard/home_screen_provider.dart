@@ -161,7 +161,7 @@ class HomeScreenProvider extends BaseProvider{
     callDashboradApi(context,0);
   }
   falseAllFilter(){
-    fla = false;pla = false;flr = false;plr = false;gp=false;
+    fla = false;pla = false;flr = false;plr = false;gp=false;jobs=false;buy_sell=false;
   }
 
   selectCityFilter(BuildContext context)async{

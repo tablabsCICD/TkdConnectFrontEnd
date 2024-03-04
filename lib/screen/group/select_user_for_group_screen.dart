@@ -11,6 +11,7 @@ import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/create_group_provider.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
@@ -47,6 +48,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   _buildPage(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: ThemeColor.baground,
         body: Consumer<CreateGroupProvider>(builder: (context, model, child) {
         // getUserList(model);
           return Column(
@@ -90,10 +92,20 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                   fontWeight: FontWeight.w600,
                   height: 0,
                 ),
-                onClick: () {
-                  widget.isEdit?Navigator.pushNamed(context, AppRoutes.edit_group,
-                      arguments: provider.selectedUsers):Navigator.pushNamed(context, AppRoutes.create_group,
-                      arguments: provider.selectedUsers);
+                onClick: () async {
+                  if(widget.isEdit){
+                   var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
+                        arguments: provider.selectedUsers);
+                   if(result==1){
+                     Navigator.pop(context,1);
+                   }
+                  }else{
+                    var result = await Navigator.pushNamed(context, AppRoutes.create_group,
+                        arguments: provider.selectedUsers);
+                    if(result==1){
+                      Navigator.pop(context,1);
+                    }
+                  }
                 },
                 isEnbale: provider.selectedUsers.length == 0 ? false : true),
           ),
@@ -237,60 +249,65 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
       displayName = displayName + "...";
     }
     return Container(
-      child: Column(
+      width: 375.w,
+      height: 90.h,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          left: BorderSide(color: Color(0x192C363F)),
+          top: BorderSide(color: Color(0x192C363F)),
+          right: BorderSide(color: Color(0x192C363F)),
+          bottom: BorderSide(width: 1, color: Color(0x192C363F)),
+        ),
+      ),
+      child: Row(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[model.filterByName[index].profilePicture==null?Icon(
-                Icons.account_circle,
-                size: 30.0,
-              ):
-                model.filterByName[index].profilePicture!.allMatches("null") ==
-                        0
-                    ? Image.network(
-                        model.filterByName[index].profilePicture!,
-                        height: 64,
-                        width: 64,
-                      )
-                    : Icon(
-                        Icons.account_circle,
-                        size: 30.0,
-                      ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              displayName,
-                              style: TextStyle(
-                                color: Color(0xCC001E49),
-                                fontSize: 16.sp,
-                                fontFamily: AppConstant.FONTFAMILY,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              maxLines: 2,
-                            ),
-                            widget.isEdit
-                                ? callEditCheckBox(index, model)
-                                : callCreateCheckBox(index, model),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+          model.filterByName[index].profilePicture==null?Icon(
+          Icons.account_circle,
+          size: 30.0,
+        ):
+          model.filterByName[index].profilePicture!.allMatches("null") ==
+                  0
+              ? BaseWidget().getImageclip(
+                  model.filterByName[index].profilePicture!,
+                  height: 64,
+                  width: 64,
                 )
-              ],
+              : Icon(
+                  Icons.account_circle,
+                  size: 30.0,
+                ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        displayName,
+                        style: TextStyle(
+                          color: Color(0xCC001E49),
+                          fontSize: 16.sp,
+                          fontFamily: AppConstant.FONTFAMILY,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                        maxLines: 2,
+                      ),
+                      widget.isEdit
+                          ? callEditCheckBox(index, model)
+                          : callCreateCheckBox(index, model),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          Divider(),
+          )
         ],
       ),
     );
@@ -308,8 +325,12 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           width: 100,
           child: Column(
             children: <Widget>[
+              model.selectedUsers[index].profilePicture==null?Icon(
+                Icons.account_circle,
+                size: 64.0,
+              ):
               model.selectedUsers[index].profilePicture!.allMatches("null") == 0
-                  ? Image.network(
+                  ? BaseWidget().getImageclip(
                       model.selectedUsers[index].profilePicture!,
                       height: 64,
                       width: 64,

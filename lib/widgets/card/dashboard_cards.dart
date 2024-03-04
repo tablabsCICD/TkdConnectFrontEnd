@@ -494,8 +494,10 @@ class AllCards {
           imageLoad(load),
           InkWell(
             onTap: ()async{
+              print("Website::"+load.website.toString());
               final url = Uri.parse(
-                'http://${load.website}',
+               // 'http://${load.website}',
+                '${load.website}'
               );
              await  launchUrl(url);
             },

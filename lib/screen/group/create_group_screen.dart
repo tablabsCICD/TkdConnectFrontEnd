@@ -54,7 +54,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 SizedBox(height: 30,),
                 particepent(),
                 SizedBox(height: 20,),
-                Padding(padding: EdgeInsets.only(left: 10,right: 10),child: selectUserList(),),
+                selectUserList()
               ],
             ),
 
@@ -143,7 +143,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
-                      widget.memberList[index].profilePicture!.allMatches("null")==0 ? Image.network(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
+                      widget.memberList[index].profilePicture==null?Icon(
+                        Icons.account_circle,
+                        size: 30.0,
+                      ):
+                      widget.memberList[index].profilePicture!.allMatches("null")==0 ? BaseWidget().getImageclip(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
                         Icons.account_circle,
                         size: 30.0,
                       ),

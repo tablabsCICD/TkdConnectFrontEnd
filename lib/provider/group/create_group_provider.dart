@@ -116,7 +116,7 @@ class CreateGroupProvider extends BaseProvider{
     print(apiResponse.response);
     if(apiResponse.status==200){
       GroupCreateModel model=GroupCreateModel.fromJson(apiResponse.response);
-      callGroupMember(model.id,userId,context,false,selectedUsers);
+      callGroupMember(model.id,userId,context,false,memberList);
     }else{
       notifyListeners();
     }
@@ -136,13 +136,14 @@ class CreateGroupProvider extends BaseProvider{
       'date':date,
       'listOfUsers':selectedUserId,
     };
+    print("Add member request : ${parameter}");
     print("Add member Url : ${ApiConstant.ADD_GROUP_MEMBER}");
     var response=await apiHelper.postParameter(ApiConstant.ADD_GROUP_MEMBER,parameter);
     print("Add group member response : "+response.response["errorMessage"]);
     if(response.status==200){
       create_Group=true;
       if(isFrom==true){
-        getGroupMember(groupId!);
+       // getGroupMember(groupId!);
         ToastMessage.show(context, "group edited successfully");
 
       }else{
@@ -157,10 +158,10 @@ class CreateGroupProvider extends BaseProvider{
 
   goToNextPage(BuildContext context){
     int count = 0;
-    Navigator.popUntil(context, (route) {
+   /* Navigator.popUntil(context, (route) {
       return count++ == 2;
-    });
-    notifyListeners();
+    });*/
+    Navigator.pop(context,1);
   }
 
   uploadProfileImage(BuildContext context)async{

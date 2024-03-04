@@ -41,6 +41,11 @@ class GroupProvider extends  BaseProvider{
   TextEditingController searchController=TextEditingController();
   TextEditingController groupNameController=TextEditingController();
 
+  callSetState()async{
+    await getGroupListByUserId();
+    notifyListeners();
+  }
+
   getGroupListByUserId() async {
     EasyLoading.show(status: "Loading");
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();

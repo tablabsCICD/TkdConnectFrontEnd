@@ -46,6 +46,7 @@ class EditText extends StatelessWidget {
                   child: TextField(
                     controller: controller,
                     onChanged: (value){
+                      onChange==null?null:
                       onChange!(value);
 
                     },

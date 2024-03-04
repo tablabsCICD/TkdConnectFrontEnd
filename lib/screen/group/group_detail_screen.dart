@@ -58,7 +58,9 @@ class _GroupInfoState extends State<GroupInfo> {
                 SizedBox(height: 30,),
                 particepent(),
                 SizedBox(height: 20,),
-                Padding(padding: EdgeInsets.only(left: 10, right: 10),
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.only(left: 10, right: 10),
                   child: selectedUserList(),),
               ],
             ),
@@ -151,87 +153,90 @@ class _GroupInfoState extends State<GroupInfo> {
     return Consumer<GroupProvider>(
         builder: (context, provider, child) {
       return Expanded(
-        child: ListView.builder(
-          // controller: _scrollController,
-            shrinkWrap: true,
-            itemCount: provider.memberList.length,
-            itemBuilder: (context, index) {
-              return InkWell(onTap: () {}, child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.account_circle,
-                              size: 30.0,
-                            ),
-                            SizedBox(width: 10,),
-                            Text(
-                                provider.memberList[index].displayName!,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w600,
-                                ))
-                          ],
-                        ),
-                        InkWell(
-                          onTap: (){
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Remove Member From Group',style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.sp,
-                                    fontFamily: GoogleFonts.poppins().fontFamily,
+        child: Container(
+         // color: Colors.white,
+          child: ListView.builder(
+            // controller: _scrollController,
+              shrinkWrap: true,
+              itemCount: provider.memberList.length,
+              itemBuilder: (context, index) {
+                return InkWell(onTap: () {}, child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.account_circle,
+                                size: 30.0,
+                              ),
+                              SizedBox(width: 10,),
+                              Text(
+                                  provider.memberList[index].displayName!,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: AppConstant.FONTFAMILY,
                                     fontWeight: FontWeight.w600,
-                                  ),),
-                                  content: Text('Are you sure you want to remove member from group?',style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12.sp,
-                                    fontFamily: GoogleFonts.poppins().fontFamily,
-                                    fontWeight: FontWeight.w400,
-                                  ),),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop(); // Close the dialog
-                                      },
-                                      child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
-                                        fontFamily: GoogleFonts.poppins().fontFamily,
-                                        fontWeight: FontWeight.w600,),),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        provider.removeMemberFromGroup(provider.memberList[index].id!, index);
-                                        Navigator.of(context).pop(); // Close the dialog
-                                      },
-                                      child: Text(
-                                        'Delete',
-                                        style: TextStyle(color: Colors.red, fontSize: 12.sp,
+                                  ))
+                            ],
+                          ),
+                          InkWell(
+                            onTap: (){
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Remove Member From Group',style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                      fontFamily: GoogleFonts.poppins().fontFamily,
+                                      fontWeight: FontWeight.w600,
+                                    ),),
+                                    content: Text('Are you sure you want to remove member from group?',style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12.sp,
+                                      fontFamily: GoogleFonts.poppins().fontFamily,
+                                      fontWeight: FontWeight.w400,
+                                    ),),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
                                           fontFamily: GoogleFonts.poppins().fontFamily,
-                                          fontWeight: FontWeight.w600,),
+                                          fontWeight: FontWeight.w600,),),
                                       ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: SvgPicture.asset(Images.delete)
-                        )
-                      ],
+                                      TextButton(
+                                        onPressed: () {
+                                          provider.removeMemberFromGroup(provider.memberList[index].id!, index);
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Text(
+                                          'Delete',
+                                          style: TextStyle(color: Colors.red, fontSize: 12.sp,
+                                            fontFamily: GoogleFonts.poppins().fontFamily,
+                                            fontWeight: FontWeight.w600,),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: SvgPicture.asset(Images.delete)
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Divider()
-                ],
-              ));
-            }),
+                    Divider()
+                  ],
+                ));
+              }),
+        ),
       );
     });
   }
