@@ -138,7 +138,6 @@ class Utils {
   }
 
   openMenu(int a,TruckLoad load,BuildContext context)async{
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     if(a==0){
       showModalBottomSheet<void>(
           isScrollControlled: true,
@@ -173,6 +172,7 @@ class Utils {
 
         case 5:
           //Re-Post
+
           return;
 
         case 6:
