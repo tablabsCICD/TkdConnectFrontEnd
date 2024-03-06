@@ -147,13 +147,12 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.topicName= "Full Load Truck";
     postLoad.image=images;
     postLoad.listOfUserIds=addedMemberIdList;
-
     postLoad.id=truckLoad.id;
-    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"UpdatePost", postLoad.toJson());
-    print('the resopnse is ${json.encode(postLoad.toJson())}');
-    print('the resopnse is ${response.status}');
+    ApiResponse response=await ApiHelper().apiPut(ApiConstant.BASE_URL+"UpdatePost", postLoad.toJson());
+    print('the request is ${json.encode(postLoad.toJson())}');
+    print('the resopnse is ${response.response}');
     if(response.status==200){
-      ToastMessage.show(context, "Post submitted successfully!");
+      ToastMessage.show(context, "Post edited successfully!");
       Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
@@ -189,9 +188,9 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.image=images;
     postLoad.listOfUserIds=addedMemberIdList;
 
-    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"UpdatePost", postLoad.toJson());
+    ApiResponse response=await ApiHelper().apiPut(ApiConstant.BASE_URL+"UpdatePost", postLoad.toJson());
     if(response.status==200){
-      ToastMessage.show(context, "Post submitted successfully!");
+      ToastMessage.show(context, "Post edited successfully!");
       Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
