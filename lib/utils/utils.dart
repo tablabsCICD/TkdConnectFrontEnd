@@ -10,6 +10,7 @@ import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/group/select_user_for_group_screen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/rating_dailog.dart';
@@ -137,6 +138,7 @@ class Utils {
   }
 
   openMenu(int a,TruckLoad load,BuildContext context)async{
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     if(a==0){
       showModalBottomSheet<void>(
           isScrollControlled: true,
@@ -167,10 +169,18 @@ class Utils {
         case 4:
           User user=await LocalSharePreferences().getLoginData();
           Utils().callRatingAndReview(context,load);
-          return;  
+          return;
+
+        case 5:
+          //Re-Post
+          return;
+
+        case 6:
+          //Edit Post
+          Navigator.pushNamed(context, AppRoutes.editpost,arguments: load);
+          return;
       }
     }
-
   }
 
   getSelectedPackageImage(int val){

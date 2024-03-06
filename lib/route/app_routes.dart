@@ -30,6 +30,7 @@ class AppRoutes {
   static const job = '/job';
   static const group = '/group';
   static const mypost = '/mypost';
+  static const editpost = '/editpost';
   static const buysell = '/buysell';
   static const createjob = '/createjob';
   static const createbuysell="/createbuysell";

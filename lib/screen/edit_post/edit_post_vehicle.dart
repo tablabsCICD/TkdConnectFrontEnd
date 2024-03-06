@@ -1,39 +1,44 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/provider/dashboard/edit_post_provider.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
-import '../../provider/dashboard/post_provider.dart';
+import '../../utils/colors.dart';
 import '../../widgets/bottomsheet.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/drop_down.dart';
 import '../../widgets/editText.dart';
 import '../my_route/select_one_city.dart';
 
-class PostLoadScreen extends StatefulWidget {
+class EditPostVehicleScreen extends StatefulWidget {
+  TruckLoad truckLoad;
+  EditPostVehicleScreen(this.truckLoad);
+
   @override
   State<StatefulWidget> createState() {
-    return _PostLoadScreen();
+    return _EditPostVehicleScreen();
   }
 }
 
-class _PostLoadScreen extends State<PostLoadScreen> {
+class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => PostLoadProvider(),
+      create: (BuildContext context) => EditPostLoadProvider(widget.truckLoad),
       builder: (context, child) => _buildPage(context),
     );
   }
 
   _buildPage(BuildContext context) {
-    return Consumer<PostLoadProvider>(
+    return Consumer<EditPostLoadProvider>(
       builder: (context, provider, child) {
         return Container(
           child: Expanded(
@@ -43,20 +48,19 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                   height: 20.h,
                 ),
                 // SvgPicture.asset(
-                //   Images.load_post,
+                //   Images.vehicle_load,
                 //   height: 133.h,
                 //   width: 200.w,
                 // ),
-                labelText(S().loads),
+                labelText(S().vehicle+" "+S().loads),
                 SizedBox(
                   height: 4.h,
                 ),
                 DropDown(
                   onClick: () async {
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                    int a = await itemBottomSheet.showIteam(context, provider.reqirement, "Select Load Type");
-
-                    provider.selectedRequrimentType(a);
+                    int a = await itemBottomSheet.showIteam(context, provider.reqirementVehicale, "Select Load Type");
+                    provider.selectedRequrimentVehicaleType(a);
                   },
                   hint: provider.selectedRequriment,
                 ),
@@ -123,7 +127,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editViewError("eg.100 Tons",provider.vehicleSizeController,provider,provider.vehicaleSize),
+                editViewError("eg.100",provider.vehicleSizeController,provider,provider.vehicaleSize),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -223,18 +227,17 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-
-
                 SizedBox(
                   height: 30.h,
                 ),
-               Padding(
+                Padding(
                   padding:  EdgeInsets.only(bottom: 20.h),
                   child: Button(width: MediaQuery.of(context).size.width, height: 49.h, title: S().postLoad, textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
+
                   ), onClick: (){
                     showDialog(
                       context: context,
@@ -263,7 +266,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                provider.checkValidation(context);
+                                provider.checkVehicaleValidation(context);
                               },
                               child: Text(
                                 'Yes',
@@ -276,9 +279,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                         );
                       },
                     );
-                   // provider.createPost(context);
-                   // provider.checkValidation(context);
-
+                    // provider.checkVehicaleValidation(context);
                   },isEnbale: true,),
                 )
               ],
@@ -310,21 +311,20 @@ class _PostLoadScreen extends State<PostLoadScreen> {
     );
   }
 
-  editView(String hint,TextEditingController controller,PostLoadProvider provider,bool redOnly) {
+  editView(String hint,TextEditingController controller,EditPostLoadProvider provider,bool redOnly) {
     return EditText(
-      readOnly: redOnly,
       width: 335.w,
       height: 52.h,
       hint: hint,
       controller: controller,
       onChange: (val){
-          provider.enble();
+        provider.enble();
       },
     );
   }
 
 
-  editViewError(String hint,TextEditingController controller,PostLoadProvider provider,bool valid) {
+  editViewError(String hint,TextEditingController controller,EditPostLoadProvider provider,bool valid) {
     return EditTextError(
       validate: valid,
       width: 335.w,
@@ -337,104 +337,105 @@ class _PostLoadScreen extends State<PostLoadScreen> {
     );
   }
 
+
   dnd(context){
-    return Consumer<PostLoadProvider>(
-  builder: (context, provider, child) {
-  return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 52.h,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-      decoration: ShapeDecoration(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1, color: Color(0x332C363F)),
-        borderRadius: BorderRadius.circular(8),
-      ),
-    ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(
-              height: 33.h,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Do Not Disturb",
+    return Consumer<EditPostLoadProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 52.h,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  height: 33.h,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Do Not Disturb",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontFamily: AppConstant.FONTFAMILY,
+                                        fontWeight: FontWeight.w600,
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  '',
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12.sp,
-                                    fontFamily: AppConstant.FONTFAMILY,
-                                    fontWeight: FontWeight.w600,
+                                    color: Color(0x99001E49),
+                                    fontSize: 10,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
                                     height: 0,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              '',
-                              style: TextStyle(
-                                color: Color(0x99001E49),
-                                fontSize: 10,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(width: 129),
+              Container(
+                width: 100.w,
+                height: 40.sp,
+                child:Switch.adaptive(
+                  // This bool value toggles the switch.
+                  value: provider.dnd,
+                  splashRadius: 10,
+                  activeColor: ThemeColor.theme_blue,
+                  onChanged: (bool value) {
+                    provider.dndChange(value);
+                  },
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 129),
-          Container(
-            width: 100.w,
-            height: 40.sp,
-            child:Switch.adaptive(
-              // This bool value toggles the switch.
-              value: provider.dnd,
-              splashRadius: 10,
-              activeColor: ThemeColor.theme_blue,
-              onChanged: (bool value) {
-               provider.dndChange(value);
-              },
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
-  },
-);
   }
 
   hideMyIden(context){
-    return Consumer<PostLoadProvider>(
+    return Consumer<EditPostLoadProvider>(
       builder: (context, provider, child) {
         return Container(
           width: MediaQuery.of(context).size.width,
@@ -528,4 +529,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
       },
     );
   }
+
+
 }

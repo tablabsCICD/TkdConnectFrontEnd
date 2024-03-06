@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/provider/dashboard/genral_post_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
@@ -13,16 +14,16 @@ import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/editText.dart';
 
-
-class PostGenralScreen extends StatefulWidget{
-
+class EditPostSponseredScreen extends StatefulWidget{
+  TruckLoad truckLoad;
+  EditPostSponseredScreen(this.truckLoad);
   @override
   State<StatefulWidget> createState() {
-    return _PostGenralScreen();
+    return _EditPostSponseredScreen();
   }
 
 }
-class _PostGenralScreen extends State<PostGenralScreen>{
+class _EditPostSponseredScreen extends State<EditPostSponseredScreen>{
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -41,11 +42,11 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                 SizedBox(
                   height: 20.h,
                 ),
-                // SvgPicture.asset(
-                //   Images.general_post,
-                //   height: 133.h,
-                //   width: 200.w,
-                // ),
+                SvgPicture.asset(
+                  Images.load_post,
+                  height: 133.h,
+                  width: 200.w,
+                ),
 
                 labelText(S().title),
                 SizedBox(
@@ -96,7 +97,7 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('General Post',style: TextStyle(
+                          title: Text('Post Load',style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
@@ -119,7 +120,7 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                             ),
                             TextButton(
                               onPressed: () {
-                                provider.createPost(context);
+                                provider.createSponsedPost(context);
                               },
                               child: Text(
                                 'Yes',
@@ -132,7 +133,8 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                         );
                       },
                     );
-                   // provider.createPost(context);
+                    // provider.createSponsedPost(context);
+
                   },isEnbale: provider.enbleButton,),
                 )
               ],

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/dashboard/genral_post_provider.dart';
+import 'package:tkd_connect/utils/colors.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -89,7 +90,47 @@ class _PostSponseredScreen extends State<PostSponseredScreen>{
                     fontWeight: FontWeight.w600,
 
                   ), onClick: (){
-                    provider.createSponsedPost(context);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Post Load',style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,
+                          ),),
+                          content: Text('Are you sure you want to post this requirement?',style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w400,
+                          ),),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Text('No',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w600,),),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                provider.createSponsedPost(context);
+                              },
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(color: Colors.green, fontSize: 12.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w600,),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                   // provider.createSponsedPost(context);
 
                   },isEnbale: provider.enbleButton,),
                 )

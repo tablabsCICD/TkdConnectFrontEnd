@@ -757,7 +757,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Jobs';
+                  provider.drooDwonheading = 'Jobs ';
                   provider.falseAllFilter();
                   provider.jobs = true;
                   provider.notifyListeners();
@@ -766,7 +766,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Jobs',
+                      'Jobs ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

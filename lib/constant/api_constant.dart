@@ -3,13 +3,15 @@ import 'package:tkd_connect/model/response/userdata.dart';
 class ApiConstant {
 
 
-   //static final String BASE_URL="http://ec2-13-201-5-172.ap-south-1.compute.amazonaws.com:8080/tkd3/api/";
-  static final String BASE_URL="http://tkd-elb-747986853.ap-south-1.elb.amazonaws.com:8080/tkd2/api/";//Live Url
+  static final String BASE_URL="http://ec2-13-201-5-172.ap-south-1.compute.amazonaws.com:8080/tkd3/api/";
+ // static final String BASE_URL="http://tkd-elb-747986853.ap-south-1.elb.amazonaws.com:8080/tkd2/api/";//Live Url
 
   //static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080/tkdConnect1/api/";
 
   // static String FULL_LOAD_ALL_CARD=BASE_URL + "allcards/fullLoad3";
   static String FULL_LOAD_ALL_CARD=BASE_URL + "dashboard/homepage/posts";
+  static String FULL_LOAD_BY_ID=BASE_URL+'fullTruckLoad/';
+
   static String SEND_OTP(mobile) => BASE_URL + "sendOtp?mobileNos=$mobile";
   static String USER_FIND_BY_MOBILE(mobile) => BASE_URL + "DeleteUser/getByMobileNumber?mobileNumber=$mobile";
   static String DIRECTORY(search) => BASE_URL + "directory?search=$search";

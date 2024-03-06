@@ -8,6 +8,7 @@ import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
 import 'package:tkd_connect/screen/buy_sell/create_buy_sell.dart';
+import 'package:tkd_connect/screen/edit_post/edit_post_base_screen.dart';
 import 'package:tkd_connect/screen/general_post/general_post_list.dart';
 import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
 import 'package:tkd_connect/screen/group/create_group_screen.dart';
@@ -149,7 +150,11 @@ class RouteGenerator {
         GroupData groupData = settings.arguments as GroupData ;
         return _createRoute(GroupInfo(groupData));
 
-     case AppRoutes.mypost:
+      case AppRoutes.editpost:
+        TruckLoad truckLoad = settings.arguments as TruckLoad ;
+        return _createRoute(EditPostBase(truckLoad));
+
+      case AppRoutes.mypost:
         return buildRoute(MyPostBase(), settings: settings);
 
       case AppRoutes.buysell:

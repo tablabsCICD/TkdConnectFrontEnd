@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/request/bid_place.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/network/api_helper.dart';
+import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/button.dart';
@@ -125,7 +127,47 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
         height: 0,
       ), onClick: (){
 
-        callApi(controller.text.toString());
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Quote',style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,
+              ),),
+              content: Text('Are you sure you want to quote this post?',style: TextStyle(
+                color: Colors.black,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w400,
+              ),),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('No',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,),),
+                ),
+                TextButton(
+                  onPressed: () {
+                    callApi(controller.text.toString());
+                  },
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.green, fontSize: 12.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      //  callApi(controller.text.toString());
 
       },isEnbale: buttonEnable,),),
     );

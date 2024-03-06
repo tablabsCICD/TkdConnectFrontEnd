@@ -10,9 +10,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/request/comment_screen.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/utils.dart';
 
 import '../../constant/images.dart';
@@ -918,7 +920,8 @@ class BaseWidget {
     );
   }
 
-  Widget deleteButton(Function(int) onMenuTap) {
+  Widget deleteButton(Function(int) onMenuTap,bool isOwnPost) {
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(right: 8.w),
@@ -962,7 +965,7 @@ class BaseWidget {
             ),
           ),
           SizedBox(width: 8.w),
-          InkWell(onTap: () {}, child: popUpmenu(onMenuTap))
+          InkWell(onTap: () {}, child: isOwnPost?popUpmenuForOwnPost(onMenuTap):popUpmenu(onMenuTap))
         ],
       ),
     );
@@ -1444,6 +1447,184 @@ class BaseWidget {
     );
   }
 
+  popUpmenuForOwnPost(Function(int) onMenuTap) {
+    return PopupMenuButton(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Center(child: SvgPicture.asset(Images.post_menu)),
+      onSelected: (dynamic val) {
+        onMenuTap(val);
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          onTap: () {
+            onMenuTap(1);
+          },
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                Images.message,
+                color: Colors.black,
+                width: 20.w,
+                height: 20.h,
+              ),
+              SizedBox(
+                width: 12.w,
+              ),
+              Text(
+                S().chat,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              SizedBox(
+                width: 13.w,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(2);
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  Images.call_white,
+                  color: Colors.black,
+                  width: 20.w,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().call,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(3);
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  Images.share_white,
+                  color: Colors.black,
+                  width: 20.w,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().share,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(4);
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star_border,
+                  color: Colors.black,
+                  size: 20.w,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().rating,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(5);
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star_border,
+                  color: Colors.black,
+                  size: 20.w,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().re_post,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(6);
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.edit_outlined,
+                  color: Colors.black,
+                  size: 20.w,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().edit,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+      ],
+    );
+  }
+
   popUpmenu(Function(int) onMenuTap) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
@@ -1566,6 +1747,7 @@ class BaseWidget {
                 )
               ],
             )),
+
       ],
     );
   }

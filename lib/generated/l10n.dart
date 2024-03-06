@@ -490,6 +490,17 @@ class S {
     );
   }
 
+  /// `Edit a post`
+  String get editPost {
+    return Intl.message(
+      'Edit post',
+      name: 'editPost',
+      desc: '',
+      args: [],
+    );
+  }
+
+
   /// `Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly.`
   String get introOneDescription {
     return Intl.message(
@@ -675,6 +686,27 @@ class S {
     return Intl.message(
       'Rating And Review',
       name: 'rating',
+      desc: '',
+      args: [],
+    );
+  }
+
+
+  /// `Rating and Review`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rating and Review`
+  String get re_post {
+    return Intl.message(
+      'Re-Post',
+      name: 're_post',
       desc: '',
       args: [],
     );

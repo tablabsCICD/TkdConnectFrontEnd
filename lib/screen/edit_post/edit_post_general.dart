@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/provider/dashboard/genral_post_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
@@ -14,15 +15,18 @@ import '../../widgets/card/base_widgets.dart';
 import '../../widgets/editText.dart';
 
 
-class PostGenralScreen extends StatefulWidget{
+class EditPostGenralScreen extends StatefulWidget{
+
+  TruckLoad truckLoad;
+  EditPostGenralScreen(this.truckLoad);
 
   @override
   State<StatefulWidget> createState() {
-    return _PostGenralScreen();
+    return _EditPostGenralScreen();
   }
 
 }
-class _PostGenralScreen extends State<PostGenralScreen>{
+class _EditPostGenralScreen extends State<EditPostGenralScreen>{
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -132,7 +136,7 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                         );
                       },
                     );
-                   // provider.createPost(context);
+                    // provider.createPost(context);
                   },isEnbale: provider.enbleButton,),
                 )
               ],

@@ -83,7 +83,7 @@ class AllCards {
              Utils().openMenu(val, load, context);
            }
 
-         }) :BaseWidget().bidButton((val) {
+         },true) :BaseWidget().bidButton((val) {
             Utils().openMenu(val, load, context);
           })
         ],
@@ -148,12 +148,13 @@ class AllCards {
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
               verify: load.isPaid!,transporterOrAgent: load.transporterOrAgent!),
           BaseWidget().routes(load.source!, load.destination!),
+
           SizedBox(
             height: 12.h,
           ),
+
           imageLoad(load),
           BaseWidget().heading(load.topicName!, getDateObject(load.postingTime), load.content!),
-
 
           load.userId==userId ?BaseWidget().deleteButton((val) {
             if(val==10){
@@ -164,10 +165,8 @@ class AllCards {
               }else{
                 Utils().openMenu(val, load, context);
               }
-
             }
-
-          }) :BaseWidget().bidButton((val) {
+          },true) :BaseWidget().bidButton((val) {
             if(load.dnd==1){
               ToastMessage.show(context, "This is DND Post");
             }else{
@@ -264,7 +263,7 @@ class AllCards {
               //Utils().openMenu(val, load, context);
             }
 
-          }) :BaseWidget().bidButton((val) {
+          },true) :BaseWidget().bidButton((val) {
            // Utils().openMenu(val, load, context);
             ToastMessage.show(context, "This is Private Post");
           })
@@ -570,8 +569,7 @@ class AllCards {
             }else{
               Utils().openMenu(val, load, context);
             }
-
-          }) :BaseWidget().getInTouchButton((val) {
+          },false) :BaseWidget().getInTouchButton((val) {
             Utils().openMenu(val, load, context);
           })
         ],
