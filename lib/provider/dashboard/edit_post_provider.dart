@@ -160,7 +160,7 @@ class EditPostLoadProvider extends BaseProvider {
     }
   }
 
-  createVehiclePost(BuildContext context)async{
+  editVehiclePost(BuildContext context)async{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
     postLoad.contactNumber= user.content!.first.mobileNumber! ;
@@ -168,7 +168,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.dnd =dnd?1:0;
     postLoad.emailId=user.content!.first.emailId!;
     postLoad.fullLoadChoice="I Want Vehicle";
-
+    postLoad.id=truckLoad.id;
     postLoad.instructions= specialInstructionController.text;
     postLoad.loadWeight= loadWeightController.text;
     postLoad.loggedUserName= user.content!.first.userName;
@@ -189,7 +189,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.image=images;
     postLoad.listOfUserIds=addedMemberIdList;
 
-    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
+    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"UpdatePost", postLoad.toJson());
     if(response.status==200){
       ToastMessage.show(context, "Post submitted successfully!");
       Navigator.pop(context,1);
@@ -326,7 +326,7 @@ class EditPostLoadProvider extends BaseProvider {
           }else{
 
             if(loadWieght && vehicaleSize){
-              createVehiclePost(context);
+              editVehiclePost(context);
             }else{
               ToastMessage.show(context, "Please fill the all information");
             }

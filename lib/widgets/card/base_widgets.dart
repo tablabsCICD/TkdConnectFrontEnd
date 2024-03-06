@@ -1576,7 +1576,7 @@ class BaseWidget {
             child: Row(
               children: [
                 Icon(
-                  Icons.star_border,
+                  Icons.post_add,
                   color: Colors.black,
                   size: 20.w,
                 ),
