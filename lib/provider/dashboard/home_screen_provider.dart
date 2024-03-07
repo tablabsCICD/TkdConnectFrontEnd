@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
+import 'package:tkd_connect/model/request/post_load.dart';
 import 'package:tkd_connect/model/response/comment_response.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:http/http.dart' as http;
@@ -246,6 +247,54 @@ class HomeScreenProvider extends BaseProvider{
   }
 
 
+  reSendPost(BuildContext context,TruckLoad load){
+    createPost(context,load);
+
+  }
+
+
+
+  createPost(BuildContext context,TruckLoad load)async{
+
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    PostLoad postLoad=PostLoad();
+    postLoad.contactNumber= user.content!.first!.mobileNumber! ;
+    postLoad.destination=load.destination;
+    postLoad.dnd =load.dnd;
+    postLoad.emailId=user.content!.first!.emailId!;
+    postLoad.fullLoadChoice= load.mainTag =="Full load required"?"I Have Vehicle":"I Want Vehicle";
+
+    postLoad.instructions= load.content;
+    postLoad.loadWeight= load.loadWeight.toString();
+    postLoad.loggedUserName= user.content!.first!.userName;
+    postLoad.mainTag= load.mainTag;
+    postLoad.os= 'App';
+    postLoad.otherDetails= load.content;
+    postLoad.source=load.source;
+    postLoad.partLoad=  load.partLoadOrNot;
+    postLoad.privatePost= load.privatePost;
+    postLoad.rating= 5;
+    postLoad.type= load.type;
+    postLoad.typeOfCargo=load.typeOfCargo;
+    postLoad.typeOfPayment=load.typeOfPayment;
+    postLoad.vehicleSize= load.vehicleSize;
+    postLoad.tableName=load.tableName;
+    postLoad.topicName= load.tableName;
+    postLoad.image= [];
+    postLoad.partLoad=load.partLoadOrNot!;
+    postLoad.listOfUserIds=[];
+
+    postLoad.id=0;
+    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
+    print('the request is ${json.encode(postLoad.toJson())}');
+    print('the resopnse is ${response.response}');
+    if(response.status==200){
+      ToastMessage.show(context, "Re-post submitted successfully!");
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
 
 
 }

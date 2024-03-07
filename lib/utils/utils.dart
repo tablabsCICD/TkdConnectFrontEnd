@@ -6,10 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:provider/provider.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
+import 'package:tkd_connect/provider/my_post/my_post_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/group/select_user_for_group_screen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -172,7 +175,8 @@ class Utils {
 
         case 5:
           //Re-Post
-
+          final myData = Provider.of<HomeScreenProvider>(context);
+          myData.reSendPost(context, load);
           return;
 
         case 6:

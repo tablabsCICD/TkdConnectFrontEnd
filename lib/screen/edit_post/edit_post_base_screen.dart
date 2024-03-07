@@ -48,11 +48,11 @@ class _EditPostBase extends State<EditPostBase>{
   }
 
   setData(){
-    if(widget.truckLoad.partLoadOrNot==0){
+    if(widget.truckLoad.fullLoadChoice=="I Have Vehicle"){
       isLoad=true;
       isVehicle=false;
     }
-    else if(widget.truckLoad.partLoadOrNot==1){
+    else if(widget.truckLoad.fullLoadChoice=="I Want Vehicle"){
       isVehicle=true;
       isLoad=false;
     }else{

@@ -126,8 +126,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.destination= destinationCity;
     postLoad.dnd =dnd?1:0;
     postLoad.emailId=user.content!.first!.emailId!;
-    postLoad.fullLoadChoice="I Have Vehicle";
-
+    postLoad.fullLoadChoice=truckLoad.fullLoadChoice;
     postLoad.instructions= specialInstructionController.text;
     postLoad.loadWeight= loadWeightController.text;
     postLoad.loggedUserName= user.content!.first!.userName;
