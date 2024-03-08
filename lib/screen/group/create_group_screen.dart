@@ -44,19 +44,22 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
   _buildPage(BuildContext context) {
     return Scaffold(
-          // appBar: AppBarCommon(context, title: "Create Group").appBar(),
-          body:  Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 50,),
-                groupName(),
-                SizedBox(height: 30,),
-                particepent(),
-                SizedBox(height: 20,),
-                selectUserList()
-              ],
-            ),
+           //appBar:  BaseWidget().appBar(context, "Users"),
+          body:  SafeArea(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BaseWidget().appBar(context, "Create Group"),
+                  SizedBox(height: 50,),
+                  groupName(),
+                  SizedBox(height: 30,),
+                  particepent(),
+                  SizedBox(height: 20,),
+                  selectUserList()
+                ],
+              ),
+          ),
 
 
           bottomNavigationBar: Consumer<CreateGroupProvider>(
@@ -143,15 +146,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
-                      widget.memberList[index].profilePicture==null?Icon(
-                        Icons.account_circle,
-                        size: 30.0,
-                      ):
-                      widget.memberList[index].profilePicture!.allMatches("null")==0 ? BaseWidget().getImageclip(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
-                        Icons.account_circle,
-                        size: 30.0,
-                      ),
-                      SizedBox(width: 10,),
+                      BaseWidget().getImageclip( widget.memberList[index].profilePicture!,height: 34.h,width: 34.w),
+                      SizedBox(width: 10.w,),
                       Text(
                           widget.memberList[index].firstName!+" "+widget.memberList[index].lastName!,
                         style: TextStyle(

@@ -178,8 +178,8 @@ class TruckLoad {
     isVerifiedByCompany = json['isVerifiedByCompany']?? '';
     typeOfPayment = json['typeOfPayment']?? '';
     fullLoadChoice = json['fullLoadChoice']?? '';
-    loadWeight = json['loadWeight']?? '';
-    typeOfCargo = json['typeOfCargo']?? '';
+    loadWeight = json['vehicleWeight']?? '';
+    typeOfCargo = json['cargoType']?? '';
     otherDetails = json['otherDetails']?? '';
     likes=json['likes']??'';
     comment=json['comment']??'';;

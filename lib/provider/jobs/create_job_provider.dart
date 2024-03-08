@@ -83,7 +83,7 @@ class CreateJobProvider extends BaseProvider{
       "mainTag": "Job Seeker",
       "message": descriptionController.text,
       "os": "App",
-      "postingTime": '',//DateTime.now(),// DateFormat("dd/MM/yyyy hh:mm").format(DateTime.now()), // +" "+DateTime.now().hour.toString() +":" +DateTime.now().minute.toString() ,
+      "postingTime": '' ,
       "loggedUserName": user.content!.first.userName,
       "privatePost": 0,
       "removedDate": '' ,
@@ -93,7 +93,6 @@ class CreateJobProvider extends BaseProvider{
       "type": "Job Seeker",
       "userId":user.content!.first.id
     };
-    print('the respo ${json.encode(data)}');
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.POST_JOB, data);
     if(apiResponse.status==200){
       ToastMessage.show(context, "Post job successfull");
@@ -111,15 +110,5 @@ class CreateJobProvider extends BaseProvider{
     salController.text=salary[a];
     notifyListeners();
   }
-
-
-
-
-
-
-
-
-
-
 
 }

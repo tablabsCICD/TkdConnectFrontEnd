@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
@@ -11,7 +12,11 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
 import '../../model/request/post_load.dart';
+import '../../model/response/search_data.dart';
 import '../../model/response/userdata.dart';
+import '../../model/response/verified_user.dart';
+import '../../screen/create_post/select_userlist_for_post.dart';
+import '../../widgets/bottomsheet.dart';
 
 class PostLoadProvider extends BaseProvider {
   List<String>reqirement=["Full Load","Part Load"];
@@ -37,6 +42,9 @@ class PostLoadProvider extends BaseProvider {
   bool loadWieght=true;
   bool dnd=false;
   bool hideMyID=false;
+
+  String selectOption="Select Option";
+
   PostLoadProvider() : super('Ideal'){
 
     initData();
@@ -56,6 +64,7 @@ class PostLoadProvider extends BaseProvider {
 
   List<GroupData> groupListByUserId = [];
   List<String> groupListName = [];
+  List<String> listOptionShow= ["All User","Select Group","Verified user"];
   List<GroupMember>listAddedMember=[];
   List<int> addedMemberIdList = [];
 
@@ -83,7 +92,7 @@ class PostLoadProvider extends BaseProvider {
     String myUrl = ApiConstant.GROUP_MEMBER_LIST+groupId!.toString();
     print(myUrl);
     var response=await apiHelper.apiWithoutDecodeGet(myUrl);
-    print(response.response);
+
     GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
     listAddedMember.addAll(groupListModel.content!);
     listAddedMember.forEach((element) { addedMemberIdList.add(element.id!);});
@@ -126,6 +135,7 @@ class PostLoadProvider extends BaseProvider {
     print('the resopnse is ${response.status}');
     if(response.status==200){
       ToastMessage.show(context, "Post submitted successfully!");
+      Navigator.pop(context);
       Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
@@ -163,6 +173,7 @@ class PostLoadProvider extends BaseProvider {
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){
         ToastMessage.show(context, "Post submitted successfully!");
+        Navigator.pop(context);
       Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
@@ -212,11 +223,66 @@ class PostLoadProvider extends BaseProvider {
   }
 
   selecteGroup(int index) async {
-    print(groupListByUserId[index].groupName!);
+    addedMemberIdList.clear();
     selectedGroup=groupListByUserId[index].groupName!;
     await getGroupMember(groupListByUserId[index].id!);
-   // enble();
+
   }
+
+  selecteOptiontoShow(int index,BuildContext context) async {
+
+    notifyListeners();
+    switch (index){
+
+      case 0:
+        addedMemberIdList.clear();
+        selectOption=listOptionShow[index];
+        return;
+      case 1:
+
+            if(groupListName.isEmpty) {
+              await getGroupListByUserId();
+            }
+            ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+            int a = await itemBottomSheet.showIteamHieght(
+                context,groupListName, "Select Group");
+             selecteGroup(a);
+            selectOption=listOptionShow[index];
+             notifyListeners();
+        return;
+
+      case 2:
+
+        if(sourceCity=="Select One"){
+          ToastMessage.show(context, "Please select the source city ");
+        }else{
+
+          List<UserVerifiedData> verfiedUserList=await Navigator.push(context, MaterialPageRoute(builder: (_)=>SelectUserForPostScreen(false,sourceCity)));
+          if(verfiedUserList !=null){
+            addedMemberIdList.clear();
+            for(int i=0;  i<verfiedUserList.length; i++){
+
+              addedMemberIdList.add(verfiedUserList[i].id!);
+
+            }
+            selectOption=listOptionShow[index];
+          }
+
+
+        }
+
+
+        return;
+
+    }
+
+
+
+  }
+
+
+
+
 
   selectedSourceCity(String city){
     sourceCity=city;

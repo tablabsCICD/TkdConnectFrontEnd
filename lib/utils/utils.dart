@@ -140,7 +140,7 @@ class Utils {
     await launch('$link');
   }
 
-  openMenu(int a,TruckLoad load,BuildContext context)async{
+  openMenu(int a,TruckLoad load,BuildContext context,{HomeScreenProvider? providerHome})async{
     if(a==0){
       showModalBottomSheet<void>(
           isScrollControlled: true,
@@ -175,12 +175,13 @@ class Utils {
 
         case 5:
           //Re-Post
-          final myData = Provider.of<HomeScreenProvider>(context);
-          myData.reSendPost(context, load);
+
+          providerHome!.reSendPost(context, load);
           return;
 
         case 6:
           //Edit Post
+          print('the edit post');
           Navigator.pushNamed(context, AppRoutes.editpost,arguments: load);
           return;
       }

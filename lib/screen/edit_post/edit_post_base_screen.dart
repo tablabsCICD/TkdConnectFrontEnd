@@ -89,28 +89,8 @@ class _EditPostBase extends State<EditPostBase>{
                 tabs(),
                 Visibility(visible: isLoad,child: EditPostLoadScreen(widget.truckLoad)),
                 Visibility(visible: isVehicle,child: EditPostVehicleScreen(widget.truckLoad)) ,
-              //  Visibility(visible: isGeneral,child: EditPostGenralScreen(widget.truckLoad)),
                 Visibility(visible: isSponsered,child: EditPostSponseredScreen(widget.truckLoad))
 
-                // Expanded(
-                //   child: PageView(
-                //     /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-                //     /// Use [Axis.vertical] to scroll vertically.
-                //     physics: NeverScrollableScrollPhysics(),
-                //     controller: controller,
-                //     onPageChanged: (page){
-                //      // onPageChanges(page);
-                //       controller.jumpToPage(page);
-                //     },
-                //     children: <Widget>[
-                //       PostLoadScreen(),
-                //       PostVehicleScreen(),
-                //       PostGenralScreen(),
-                //       PostSponseredScreen()
-                //
-                //     ],
-                //   ),
-                // ),
 
               ],
             ),

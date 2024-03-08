@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
         return AllCards().cardLoadPrivateHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
 
       }else{
-        return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
+        return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this,provider);
 
       }
 

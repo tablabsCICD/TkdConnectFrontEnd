@@ -19,6 +19,7 @@ import 'package:tkd_connect/widgets/editText.dart';
 
 import '../../../constant/images.dart';
 import '../../../generated/l10n.dart';
+import '../../../model/response/bid_state_response.dart';
 import '../../../model/response/userdata.dart';
 import '../../../widgets/textview.dart';
 class PlaceBidScreen extends StatefulWidget{
@@ -36,6 +37,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
   TextEditingController controller=TextEditingController();
   bool buttonEnable=false;
+  String bidState="";
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +111,23 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                 }else{
                   buttonEnable=true;
                 }
+
                 callSetState();
+                callApiBidState();
 
               },)),
-              SizedBox(height: 8,)
+              SizedBox(height: 8,),
+              Text(
+                bidState,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.sp,
+                  fontFamily: AppConstant.FONTFAMILY,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+
+              ),
 
             ],
           ),
@@ -154,7 +169,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    callApi(controller.text.toString());
+                   callYes();
                   },
                   child: Text(
                     'Yes',
@@ -201,6 +216,43 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
     setState(() {
 
     });
+  }
+  
+  callApiBidState()async{
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_STATE(widget.truckLoad.id,controller.text.toString()));
+    if(apiResponse.status==200){
+      BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
+      if(bidStateObj.data=="0"){
+
+      }else{
+        bidState="Your Bid Range is in ${bidStateObj.data} position";
+      }
+     setState(() {
+      });
+    }else{
+    }
+    
+  }
+
+  void callYes() {
+    Navigator.pop(context);
+    callApi(controller.text.toString());
+
+  }
+
+  callAvrageBid() async{
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_STATE(widget.truckLoad.id,controller.text.toString()));
+    if(apiResponse.status==200){
+      BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
+      if(bidStateObj.data=="0"){
+
+      }else{
+       // bidState="Your Bid Range is in ${bidStateObj.data} position";
+      }
+      setState(() {
+      });
+    }else{
+    }
   }
   
   

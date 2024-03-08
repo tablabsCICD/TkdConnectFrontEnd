@@ -38,7 +38,7 @@ class _GroupScreenState extends State<GroupScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GroupProvider(0),
+      create: (BuildContext context) => GroupProvider(0,context),
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -56,10 +56,6 @@ class _GroupScreenState extends State<GroupScreen> {
                   children: [
                     BaseWidget().appBar(context, "Groups"),
                     serachBar(),
-                   /* SizedBox(
-                      height: 12.h,
-                    ),
-                    alGroupTag(),*/
                     provider.groupListByUserId.length == 0 && provider.isLoadDone
                         ? Center(child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -277,7 +273,7 @@ class _GroupScreenState extends State<GroupScreen> {
       },
       child: Container(
         width: 375.w,
-        height: 67.h,
+
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: BoxDecoration(
           color: Colors.white,

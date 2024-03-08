@@ -6,27 +6,26 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
-import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/create_group_provider.dart';
-import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
-class SelectUserForGroupScreen extends StatefulWidget {
-  bool isEdit;
+import '../../provider/dashboard/verfied_user_list_provoder.dart';
 
-  SelectUserForGroupScreen(this.isEdit);
+class SelectUserForPostScreen extends StatefulWidget {
+  bool isEdit;
+  String source;
+
+  SelectUserForPostScreen(this.isEdit,this.source);
 
   @override
-  _SelectUserForGroupScreenState createState() =>
-      _SelectUserForGroupScreenState();
+  _SelectUserForPostScreen createState() =>
+      _SelectUserForPostScreen();
 }
 
-class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
+class _SelectUserForPostScreen extends State<SelectUserForPostScreen> {
   TextEditingController _controller = TextEditingController();
   ScrollController horizantalControllet = ScrollController();
 
@@ -40,7 +39,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => CreateGroupProvider(widget.isEdit),
+      create: (BuildContext context) => VerifiedUserProvider(widget.isEdit,widget.source),
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -49,36 +48,36 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeColor.baground,
-        body: Consumer<CreateGroupProvider>(builder: (context, model, child) {
-        // getUserList(model);
+        body: Consumer<VerifiedUserProvider>(builder: (context, model, child) {
+          // getUserList(model);
           return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    BaseWidget().appBar(context, "Users"),
-                    serachBar(),
-                    Visibility(
-                      visible: model.selectedUsers.length == 0 ? false : true,
-                      child: Container(
-                        color: Colors.black12,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                child: selectedUsers(),
-                                height: 60.h,
-                              ),
-                            ),
-                          ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              BaseWidget().appBar(context, "Users"),
+              serachBar(),
+              Visibility(
+                visible: model.selectedUsers.length == 0 ? false : true,
+                child: Container(
+                  color: Colors.black12,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          child: selectedUsers(),
+                          height: 60.h,
                         ),
                       ),
-                    ),
-                    listViewUser(),
-                  ],
-                );
+                    ],
+                  ),
+                ),
+              ),
+              listViewUser(),
+            ],
+          );
         }),
-        bottomNavigationBar: Consumer<CreateGroupProvider>(
+        bottomNavigationBar: Consumer<VerifiedUserProvider>(
           builder: (context, provider, child) => Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Button(
@@ -94,17 +93,19 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                 ),
                 onClick: () async {
                   if(widget.isEdit){
-                   var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
-                        arguments: provider.selectedUsers);
-                   if(result==1){
-                     Navigator.pop(context,1);
-                   }
-                  }else{
-                    var result = await Navigator.pushNamed(context, AppRoutes.create_group,
+                    var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
                         arguments: provider.selectedUsers);
                     if(result==1){
                       Navigator.pop(context,1);
                     }
+                  }else{
+                    // var result = await Navigator.pushNamed(context, AppRoutes.create_group,
+                    //     arguments: provider.selectedUsers);
+                    // if(result==1){
+                    //   Navigator.pop(context,1);
+                    // }
+
+                    Navigator.pop(context,provider.selectedUsers);
                   }
                 },
                 isEnbale: provider.selectedUsers.length == 0 ? false : true),
@@ -133,7 +134,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   serachBar() {
-    return Consumer<CreateGroupProvider>(
+    return Consumer<VerifiedUserProvider>(
       builder: (context, provider, child) {
         return Container(
           // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
@@ -201,14 +202,14 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                                       color: Color(0x662C363F),
                                       fontSize: 14.sp,
                                       fontFamily:
-                                          GoogleFonts.poppins().fontFamily,
+                                      GoogleFonts.poppins().fontFamily,
                                       fontWeight: FontWeight.w400,
                                     )),
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.sp,
                                   fontFamily:
-                                      GoogleFonts.poppins().fontFamily,
+                                  GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -228,7 +229,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   listViewUser() {
-    return Consumer<CreateGroupProvider>(
+    return Consumer<VerifiedUserProvider>(
       builder: (context, model, child) => Expanded(
         child: ListView.builder(
             shrinkWrap: true,
@@ -240,7 +241,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  groupTile(int index, CreateGroupProvider model) {
+  groupTile(int index, VerifiedUserProvider model) {
     String displayName = model.filterByName[index].firstName! +
         " " +
         model.filterByName[index].lastName!;
@@ -309,7 +310,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   selectedUsers() {
-    return Consumer<CreateGroupProvider>(
+    return Consumer<VerifiedUserProvider>(
       builder: (context, model, child) => ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -347,15 +348,15 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  callEditCheckBox(index, CreateGroupProvider model) {
+  callEditCheckBox(index, VerifiedUserProvider model) {
     return Visibility(
-      visible: model.filterByName[index].addedIngroup == true ? true : true,
+      visible: model.filterByName[index].isAdded == true ? true : true,
       child: Checkbox(
           value: model.filterByName[index].isSelected,
           activeColor: Color(0xFFC3262C),
           checkColor: Colors.white,
           onChanged: (value) {
-            model.selectedUser(value, model.filterByName[index]);
+           // model.selectedUser(value, model.filterByName[index]);
 
             if (value == true) {
               horizantalControllet.animateTo(
@@ -372,7 +373,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  callCreateCheckBox(int index, CreateGroupProvider model) {
+  callCreateCheckBox(int index, VerifiedUserProvider model) {
     return Checkbox(
         value: model.filterByName[index].isSelected,
         activeColor: Color(0xFFC3262C),
@@ -380,7 +381,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
         onChanged: (value) {
           model.selectedUser(value, model.filterByName[index]);
 
-          //horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
+          horizantalControllet.jumpTo(horizantalControllet.position.maxScrollExtent+200);
           if (value == true) {
             horizantalControllet.animateTo(
                 horizantalControllet.position.maxScrollExtent + 200,
@@ -395,7 +396,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
         });
   }
 
-  void getUserList(CreateGroupProvider model) async{
-    await model.getAllUserList(widget.isEdit);
-  }
+  // void getUserList(VerifiedUserProvider model) async{
+  //   await model.getAllUserList(widget.isEdit);
+  // }
 }

@@ -429,16 +429,6 @@ backgroundColor: Colors.white,
                   style: TextStyle(color: Colors.black,fontFamily: AppConstant.FONTFAMILY,fontSize: 12.sp,fontWeight: FontWeight.w600,),
                 ),
                 SizedBox(height: 1,),
-                Text(
-                  'Shreeji Translogistics Limited',
-                  style: TextStyle(
-                    color: Color(0x99001E49),
-                    fontSize: 10.sp,
-                    fontFamily: AppConstant.FONTFAMILY,
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                )
               ],
             )
           ],

@@ -136,10 +136,8 @@ class CreateGroupProvider extends BaseProvider{
       'date':date,
       'listOfUsers':selectedUserId,
     };
-    print("Add member request : ${parameter}");
-    print("Add member Url : ${ApiConstant.ADD_GROUP_MEMBER}");
+
     var response=await apiHelper.postParameter(ApiConstant.ADD_GROUP_MEMBER,parameter);
-    print("Add group member response : "+response.response["errorMessage"]);
     if(response.status==200){
       create_Group=true;
       if(isFrom==true){
@@ -228,48 +226,6 @@ class CreateGroupProvider extends BaseProvider{
           );
           filterByName.add(userData);
         }
-
-        /*  searchDataList.data!.forEach((element) {
-          UserData userData = UserData(id: element.id,
-              addedIngroup: false,
-              alternativeNumber: element.alternativeNumber,
-              aadharCard: element.aadharCard,
-              companyName: element.companyName,
-              country: element.country,
-              companyLogo: element.companyLogo,
-              companyAddress: element.companyAddress,
-              companyId: element.companyId,
-              city: element.city,
-              deviceId: element.deviceId,
-              emailId: element.emailId,
-              firstName: element.firstName,
-              isUserVerifiedByCompany: element.isUserVerifiedByCompany,
-              isPaid: element.isPaid,
-              idOfMainBranch: element.idOfMainBranch,
-              isSelected: false,
-              loggedUserName: element.loggedUserName,
-              loggedTime: element.loggedTime,
-              lastName: element.lastName,
-              landlineNumber: element.landlineNumber,
-              mobileNumber: element.mobileNumber,
-              numberOfTimesRating: element.numberOfTimesRating,
-              mainBranch: element.mainBranch,
-              otp: element.otp,
-              os: element.os,
-              profilePicture: element.profilePicture,
-              preferredRouresEntered: element.preferredRouresEntered,
-              password: element.password,
-              paidStartDate: element.paidStartDate,
-              ratings: element.ratings,
-              state: element.state,
-              transporterOrAgent: element.transporterOrAgent,
-              userName: element.userName,
-              verified: element.verified,
-              validTill: element.validTill,
-              website: element.website
-          );
-          filterByName.add(userData);
-        });*/
       } else {
         filterByName.addAll(allUserList);
       }

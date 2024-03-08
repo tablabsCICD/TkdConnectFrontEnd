@@ -96,7 +96,7 @@ class HomeScreenProvider extends BaseProvider{
       var type = TruckLoadType.fromJson(response);
       totalPages = type.totalPages;
       truckLoadTypeList.addAll(type.content);
-      //print('the size is ${truckLoadTypeList.length}');
+      print('the new json is ${url}');
       EasyLoading.dismiss();
       notifyListeners();
     }
@@ -275,6 +275,7 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.privatePost= load.privatePost;
     postLoad.rating= 5;
     postLoad.type= load.type;
+    print('the cargo type is ${load.typeOfCargo} ${load.loadWeight}');
     postLoad.typeOfCargo=load.typeOfCargo;
     postLoad.typeOfPayment=load.typeOfPayment;
     postLoad.vehicleSize= load.vehicleSize;
@@ -283,14 +284,12 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.image= [];
     postLoad.partLoad=load.partLoadOrNot!;
     postLoad.listOfUserIds=[];
-
-    postLoad.id=0;
+ postLoad.id=0;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
-    print('the request is ${json.encode(postLoad.toJson())}');
-    print('the resopnse is ${response.response}');
     if(response.status==200){
       ToastMessage.show(context, "Re-post submitted successfully!");
-      Navigator.pop(context,1);
+      callDashboradApi(context,0);
+
     }else{
       ToastMessage.show(context, "Please try again");
     }

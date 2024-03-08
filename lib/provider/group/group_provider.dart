@@ -21,10 +21,11 @@ import '../../network/api_helper.dart';
 
 class GroupProvider extends  BaseProvider{
   int groupId;
-  GroupProvider(this.groupId) : super('Ideal'){
+  BuildContext context;
+  GroupProvider(this.groupId,this.context) : super('Ideal'){
     getGroupListByUserId();
     if(groupId!=0){
-      getGroupMember(groupId);
+      getGroupMember(context,groupId);
     }
     }
 
@@ -59,7 +60,9 @@ class GroupProvider extends  BaseProvider{
       groupListByUserId.clear();
       groupListByUserId.addAll(groupListResponse.content as Iterable<GroupData>);
       tempGroupListByUserId.addAll(groupListResponse.content as Iterable<GroupData>);
+
     }
+    isLoadDone=true;
     notifyListeners();
   }
 
@@ -107,14 +110,19 @@ class GroupProvider extends  BaseProvider{
   }
 
   List<GroupMember> memberList = [];
-  getGroupMember(int groupId)async{
+  getGroupMember(BuildContext context,int groupId)async{
     memberList.clear();
     ApiHelper apiHelper=ApiHelper();
     EasyLoading.show(status: "Loading");
-    var response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId!.toString());
-    GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
-    LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
-    memberList.addAll(groupListModel.content!);
+    ApiResponse response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId!.toString());
+    if(response.status==200){
+      GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
+      LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
+      memberList.addAll(groupListModel.content!);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+
     EasyLoading.dismiss();
     notifyListeners();
   }

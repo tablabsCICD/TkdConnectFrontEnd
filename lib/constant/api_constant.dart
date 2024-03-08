@@ -29,6 +29,7 @@ class ApiConstant {
   static String DELETE_GROUP= BASE_URL + "groups?id=";
 
   static String GET_GROUP_LIST(userId) => BASE_URL + "groups/byUser/$userId";
+ static String GET_USER_SOURCE_LIST(cityName) => BASE_URL + "UserBySource?source=$cityName";
 
   static String ADD_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
   static String REMOVE_GROUP_MEMBER = BASE_URL + "groupMembers?id=";
@@ -65,6 +66,7 @@ class ApiConstant {
   static String POST_BUY_SELL = BASE_URL + "buySell";
   static String UPDATE_DEVICE_ID = BASE_URL + 'updateDeviceId';
   static String UPDATE_YOUR_PLAN(id,planId) =>BASE_URL+"updateValidTill?id=$id&plan=$planId";
+  static String GET_BID_STATE (id,amount)=>BASE_URL+"GetPositionByAmountAndPostId?postId=$id&amount=$amount";
 
 
 }

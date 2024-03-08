@@ -40,7 +40,7 @@ class _GroupInfoState extends State<GroupInfo> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) =>
-          GroupProvider(widget.groupData.id!),
+          GroupProvider(widget.groupData.id!,context),
       builder: (context, child) => _buildPage(context),
     ); }
 

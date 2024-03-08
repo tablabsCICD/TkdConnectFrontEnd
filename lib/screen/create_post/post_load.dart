@@ -183,20 +183,32 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 12.h,
                 ),
-                labelText(S().groupType),
+                labelText("Show Post to"),
                 SizedBox(
                   height: 4.h,
                 ),
+                // DropDown(
+                //   onClick: () async {
+                //     await provider.getGroupListByUserId();
+                //     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                //     int a = await itemBottomSheet.showIteam(
+                //         context,provider.groupListName, "Select Group");
+                //     provider.selecteGroup(a);
+                //   },
+                //   hint: provider.selectedGroup,
+                // ),
+
                 DropDown(
                   onClick: () async {
-                    await provider.getGroupListByUserId();
+
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                    int a = await itemBottomSheet.showIteam(
-                        context,provider.groupListName, "Select Group");
-                    provider.selecteGroup(a);
+                    int index = await itemBottomSheet.showIteam(
+                        context,provider.listOptionShow, provider.selectOption);
+                    provider.selecteOptiontoShow(index,context);
                   },
                   hint: provider.selectedGroup,
                 ),
+
                 SizedBox(
                   height: 30.h,
                 ),
@@ -257,7 +269,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                               onPressed: () {
                                 Navigator.of(context).pop(); // Close the dialog
                               },
-                              child: Text('No',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                              child: Text(S().no,style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w600,),),
                             ),
@@ -266,7 +278,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                                 provider.checkValidation(context);
                               },
                               child: Text(
-                                'Yes',
+                                S().yes,
                                 style: TextStyle(color: Colors.green, fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w600,),

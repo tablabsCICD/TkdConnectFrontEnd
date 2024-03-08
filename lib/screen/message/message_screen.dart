@@ -39,14 +39,27 @@ class _MessageScreenState extends State<MessageScreen> {
           children: [
             top_bar(context),
             serachBar(),
-
             tabBar(),
-            // SizedBox(
-            //   height: 16.h,
-            // ),
-            //itemMessage(),
+
+            Consumer<MessageProvider>(
+              builder: (context, provider, child) {
+                return Visibility(
+                    visible:provider.userChat.length == 0, child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 200.h,),
+                    Center(child: Text("Please search the user and start the connection"),),
+
+                  ],
+                ));
+              },
+            ),
 
             userChat(),
+
+
+
             Consumer<MessageProvider>(
               builder: (context, provider, child) {
                 return Visibility(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tkd_connect/screen/edit_post/edit_post_base_screen.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,6 +11,7 @@ import 'package:intl/intl.dart';
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
 import '../../provider/dashboard/delete_interface.dart';
+import '../../route/app_routes.dart';
 import '../../utils/utils.dart';
 import 'base_widgets.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -95,7 +97,7 @@ class AllCards {
 
 
 
-  cardLoadHome(int index, BuildContext context, TruckLoad load,int userId,DeletePostInf postDelete) {
+  cardLoadHome(int index, BuildContext context, TruckLoad load,int userId,DeletePostInf postDelete,HomeScreenProvider provider) {
     return Container(
       width: 335.w,
       // height: 255.h,
@@ -163,14 +165,22 @@ class AllCards {
               if(load.dnd==1){
                 ToastMessage.show(context, "This is DND Post");
               }else{
-                Utils().openMenu(val, load, context);
+
+                if(val==6){
+                 // Navigator.pushNamed(context, AppRoutes.editpost,arguments: load);
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(load)));
+
+                }else{
+                  Utils().openMenu(val, load, context,providerHome: provider);
+                }
+
               }
             }
           },true) :BaseWidget().bidButton((val) {
             if(load.dnd==1){
               ToastMessage.show(context, "This is DND Post");
             }else{
-              Utils().openMenu(val, load, context);
+              Utils().openMenu(val, load, context,providerHome: provider);
             }
           })
         ],
@@ -626,9 +636,9 @@ class AllCards {
             ),
           ),
           SizedBox(height: 8.w),
-          BaseWidget().profile(
+          BaseWidget().profileWithUser(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
-              verify: load.isPaid!),
+              verify: load.isPaid!,transporterOrAgent: load.transporterOrAgent!),
           BaseWidget().headingWithDescription("Job Title", getDateObject(load.postingTime), "-",load.topicName!,'',true),
           SizedBox(height: 8.w),
           BaseWidget().heading("Job Description", '', load.content!),
