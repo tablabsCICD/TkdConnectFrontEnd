@@ -93,11 +93,12 @@ class _SelectUserForPostScreen extends State<SelectUserForPostScreen> {
                 ),
                 onClick: () async {
                   if(widget.isEdit){
-                    var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
+                   /* var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
                         arguments: provider.selectedUsers);
                     if(result==1){
-                      Navigator.pop(context,1);
-                    }
+                      Navigator.pop(context,1);*/
+                   Navigator.pop(context,[]);
+
                   }else{
                     // var result = await Navigator.pushNamed(context, AppRoutes.create_group,
                     //     arguments: provider.selectedUsers);
@@ -230,7 +231,7 @@ class _SelectUserForPostScreen extends State<SelectUserForPostScreen> {
 
   listViewUser() {
     return Consumer<VerifiedUserProvider>(
-      builder: (context, model, child) => Expanded(
+      builder: (context, model, child) => model.filterByName.isEmpty?Expanded(child: Text("No user found for this source list")): Expanded(
         child: ListView.builder(
             shrinkWrap: true,
             itemCount: model.filterByName.length,

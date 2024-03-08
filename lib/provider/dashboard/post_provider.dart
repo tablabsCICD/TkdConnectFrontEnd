@@ -141,6 +141,7 @@ class PostLoadProvider extends BaseProvider {
       ToastMessage.show(context, "Please try again");
     }
   }
+
   createVehiclePost(BuildContext context)async{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
@@ -179,6 +180,7 @@ class PostLoadProvider extends BaseProvider {
       ToastMessage.show(context, "Please try again");
     }
   }
+
   enble(){
     if(vehicleSizeController.text.isNotEmpty && loadWeightController.text.isNotEmpty && emailIdController.text.isNotEmpty && mobileNumberController.text.isNotEmpty
     && specialInstructionController.text.isNotEmpty && checkdropDown(selectedCargo)&& checkdropDown(selectedRequriment) && checkdropDown(selectedPayment)
@@ -258,12 +260,10 @@ class PostLoadProvider extends BaseProvider {
         }else{
 
           List<UserVerifiedData> verfiedUserList=await Navigator.push(context, MaterialPageRoute(builder: (_)=>SelectUserForPostScreen(false,sourceCity)));
-          if(verfiedUserList !=null){
+          if(verfiedUserList.isNotEmpty){
             addedMemberIdList.clear();
             for(int i=0;  i<verfiedUserList.length; i++){
-
               addedMemberIdList.add(verfiedUserList[i].id!);
-
             }
             selectOption=listOptionShow[index];
           }
@@ -279,10 +279,6 @@ class PostLoadProvider extends BaseProvider {
 
 
   }
-
-
-
-
 
   selectedSourceCity(String city){
     sourceCity=city;

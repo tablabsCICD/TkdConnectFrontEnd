@@ -191,7 +191,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                DropDown(
+              /*  DropDown(
                   onClick: () async {
                     await provider.getGroupListByUserId();
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
@@ -200,7 +200,17 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                     provider.selecteGroup(a);
                   },
                   hint: provider.selectedGroup,
+                ),*/
+                DropDown(
+                  onClick: () async {
+                    ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                    int index = await itemBottomSheet.showIteam(
+                        context,provider.listOptionShow, provider.selectOption);
+                    provider.selecteOptiontoShow(index,context);
+                  },
+                  hint: provider.selectedGroup,
                 ),
+
                 SizedBox(
                   height: 30.h,
                 ),

@@ -33,15 +33,11 @@ class VerifiedUserProvider extends BaseProvider {
   getListOfVefiyUser() async {
     String myUrl = ApiConstant.GET_USER_SOURCE_LIST(sourceCity);
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
-    print('the call is ');
     if(apiResponse.status==200){
       VerifiedUser verifiedUser =VerifiedUser.fromJson(jsonDecode(apiResponse.response));
       allUserList.addAll(verifiedUser.data!);
       filterByName.addAll(allUserList);
-
-
-
- }
+   }
     notifyListeners();
   }
 

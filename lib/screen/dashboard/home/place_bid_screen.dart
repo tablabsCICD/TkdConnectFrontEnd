@@ -38,6 +38,14 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
   TextEditingController controller=TextEditingController();
   bool buttonEnable=false;
   String bidState="";
+  String avgBid="";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    callAvrageBid();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +93,18 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0x99001E49),
+                  fontSize: 14.sp,
+                  fontFamily: AppConstant.FONTFAMILY,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              SizedBox(height: 10.h,),
+              avgBid==0?SizedBox.shrink():Text(
+                "Average Bid is "+avgBid,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
                   fontSize: 14.sp,
                   fontFamily: AppConstant.FONTFAMILY,
                   fontWeight: FontWeight.w400,
@@ -241,13 +261,13 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
   }
 
   callAvrageBid() async{
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_STATE(widget.truckLoad.id,controller.text.toString()));
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.AVG_BID(widget.truckLoad.id));
     if(apiResponse.status==200){
       BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
       if(bidStateObj.data=="0"){
-
+        avgBid = "0";
       }else{
-       // bidState="Your Bid Range is in ${bidStateObj.data} position";
+        avgBid = bidStateObj.data.toString();
       }
       setState(() {
       });

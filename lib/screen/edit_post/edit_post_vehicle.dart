@@ -193,14 +193,14 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                 ),
                 DropDown(
                   onClick: () async {
-                    await provider.getGroupListByUserId();
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                    int a = await itemBottomSheet.showIteam(
-                        context,provider.groupListName, "Select Group");
-                    provider.selecteGroup(a);
+                    int index = await itemBottomSheet.showIteam(
+                        context,provider.listOptionShow, provider.selectOption);
+                    provider.selecteOptiontoShow(index,context);
                   },
                   hint: provider.selectedGroup,
                 ),
+
                 SizedBox(
                   height: 30.h,
                 ),

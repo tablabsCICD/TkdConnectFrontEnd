@@ -126,6 +126,7 @@ class ApiHelper{
 
   Future<ApiResponse>  apiPut(String URL,Map<String,dynamic>data) async{
     var body = json.encode(data);
+    print(body);
     var request = await dio.put(URL,data: body);
     ApiResponse apiResponseHelper = returnResponse(request);
     return apiResponseHelper;

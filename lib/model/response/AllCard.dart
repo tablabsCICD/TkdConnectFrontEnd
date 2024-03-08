@@ -224,8 +224,8 @@ class TruckLoad {
     _data['isVerifiedByCompany'] = isVerifiedByCompany;
     _data['typeOfPayment'] = typeOfPayment;
     _data['fullLoadChoice'] = fullLoadChoice;
-    _data['loadWeight'] = loadWeight;
-    _data['typeOfCargo'] = typeOfCargo;
+    _data['vehicleWeight'] = loadWeight;
+    _data['cargoType'] = typeOfCargo;
     _data['otherDetails'] = otherDetails;
     _data['likes'] = likes;
     _data['comment'] = comment;

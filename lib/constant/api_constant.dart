@@ -42,6 +42,7 @@ class ApiConstant {
 
   //static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
   static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUserWithFilter?userName=$userName&privatePost=0&page=$page";
+  static String AVG_BID(bidId) => BASE_URL + "GetAvgOfBid?id=${bidId}";
 
   static String GET_ALL_CITY(page)=>BASE_URL+"get/cities/db/page/search?page=$page";
   static String GET_ALL_CITY_SERACH(city)=>BASE_URL+"get/cities/db/page/search?city=$city";
