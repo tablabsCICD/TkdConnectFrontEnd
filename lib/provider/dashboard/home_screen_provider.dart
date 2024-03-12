@@ -94,6 +94,7 @@ class HomeScreenProvider extends BaseProvider{
     if(req.statusCode == 200) {
       response = json.decode(req.body);
       var type = TruckLoadType.fromJson(response);
+
       totalPages = type.totalPages;
       truckLoadTypeList.addAll(type.content);
       print('the new json is ${url}');
@@ -101,6 +102,11 @@ class HomeScreenProvider extends BaseProvider{
       notifyListeners();
     }
 
+  }
+
+  getUserListFromString(String userList){
+    List<String> addedUserListInPost = userList.split(',').map((e) => e.trim()).toList();
+    print(addedUserListInPost);
   }
 
   likeIncreamentApi(int postId, BuildContext context)async{
@@ -248,13 +254,16 @@ class HomeScreenProvider extends BaseProvider{
 
 
   reSendPost(BuildContext context,TruckLoad load){
-    createPost(context,load);
+    List<String> userList = load.userList!.split(',').map((e) => e.trim()).toList();
+    List<int> userIdList=[];
+    userList.forEach((element) {userIdList.add(int.parse(element)); });
+    createPost(context,load,userIdList);
 
   }
 
 
 
-  createPost(BuildContext context,TruckLoad load)async{
+  createPost(BuildContext context,TruckLoad load, List<int> userIdList)async{
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
@@ -283,7 +292,8 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.topicName= load.tableName;
     postLoad.image= [];
     postLoad.partLoad=load.partLoadOrNot!;
-    postLoad.listOfUserIds=[];
+    postLoad.listOfUserIds=userIdList;
+    postLoad.userList = '';
  postLoad.id=0;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){

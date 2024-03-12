@@ -122,6 +122,32 @@ class EditPostLoadProvider extends BaseProvider {
     notifyListeners();
   }
 
+  List<String> addedUserListIdInPost=[];
+  List<UserData> addedUsers = [];
+  getUserListFromString(String userList){
+    addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
+    print(addedUserListIdInPost);
+    addedUserListIdInPost.forEach((element) async {
+      UserData userData = await getUserById(int.parse(element));
+      addedUsers.add(userData);
+    });
+  }
+
+  getUserById(int userId) async {
+    ApiHelper apiHelper = ApiHelper();
+    String myUrl = ApiConstant.FULL_LOAD_BY_ID + userId.toString();
+    print(myUrl);
+    ApiResponse response = await apiHelper.apiWithoutDecodeGet(myUrl);
+    print(response.response);
+    if(response.status==200){
+      var result = User.fromJson(response.response);
+      UserData userData = result.content!.first;
+      return userData;
+    }else{
+      return null;
+    }
+  }
+
   getTruckLoadById(int id) async {
     ApiHelper apiHelper = ApiHelper();
     String myUrl = ApiConstant.FULL_LOAD_BY_ID + id.toString();

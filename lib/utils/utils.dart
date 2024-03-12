@@ -92,6 +92,20 @@ class Utils {
     }
   }
 
+  callPrivacyAndPolicy(BuildContext context) async {
+    final String packageName = 'com.pdk.tkd';
+    final String appId = 'your_app_id';
+    final String url = Platform.isAndroid
+        ? 'https://play.google.com/store/apps/details?id=$packageName'
+        : 'https://apps.apple.com/app/your_app_name/id$appId';
+
+    if (await canLaunch(url)) {
+    await launch(url);
+    } else {
+    throw 'Could not launch $url';
+    }
+  }
+
   callFunction(String mobile)async{
 
     final call = Uri.parse('tel:+91$mobile');

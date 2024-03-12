@@ -167,7 +167,8 @@ class AllCards {
               }else{
 
                 if(val==6){
-                 // Navigator.pushNamed(context, AppRoutes.editpost,arguments: load);
+
+
                   Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(load)));
 
                 }else{

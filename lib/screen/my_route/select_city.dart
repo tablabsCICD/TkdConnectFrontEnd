@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:provider/provider.dart';
+import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/provider/my_route_provider/select_city_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
@@ -255,8 +256,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                       Expanded(
                         child: GooglePlaceAutoCompleteTextField(
                           textEditingController: cityController,
-                          googleAPIKey:
-                              "AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30",
+                          googleAPIKey:AppConstant.GOOGLE_KEY,
                           boxDecoration: BoxDecoration(
                             border: Border.all(color: Colors.transparent),
                           ),
@@ -390,6 +390,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                                 controller: provider.searchController,
                                 onChanged: (value) {
                                   provider.searchCity(value);
+
                                 },
                                 onSubmitted: (val) async {
                                   provider.searchCity(val);

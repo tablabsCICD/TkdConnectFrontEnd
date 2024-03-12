@@ -1401,6 +1401,33 @@ class BaseWidget {
                 )
               ],
             )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(6);
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  Images.edit,
+                  color: Colors.black,
+                  width: 20.w,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().edit,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
       ],
     );
   }

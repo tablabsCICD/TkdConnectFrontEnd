@@ -59,7 +59,7 @@ dependencies:
   firebase_core:
   flutter_local_notifications: ^9.3.2
   notification_permissions: ^0.6.1
-
+ # flutter_google_places: ^0.3.0
   firebase_auth: ^4.15.3
   cloud_firestore: ^4.13.6
   firebase_storage: ^11.5.6

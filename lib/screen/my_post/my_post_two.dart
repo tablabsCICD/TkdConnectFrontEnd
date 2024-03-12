@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/provider/my_post/my_post_provider.dart';
+import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
@@ -143,6 +144,10 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                 }
                 if(val==4){
                  provider.reSendPost(context,postBidData);
+                }
+                if(val==6){
+                  print('the edit post');
+                  Navigator.pushNamed(context, AppRoutes.editpost,arguments: postBidData);
                 }
 
               },false)

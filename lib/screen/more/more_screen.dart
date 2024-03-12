@@ -111,6 +111,16 @@ class _MoreScreen extends State<MoreScreen> {
 
               },FontWeight.w400),
 
+              item(S().terms_condition,() async {
+                Utils().callPrivacyAndPolicy(context);
+
+              },FontWeight.w400),
+
+              item(S().privacyAndPolicy,() async {
+                Utils().callPrivacyAndPolicy(context);
+
+              },FontWeight.w400),
+
               itemLogout(S().logout,(){
 
                 _showMyDialog();

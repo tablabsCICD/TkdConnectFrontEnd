@@ -1713,6 +1713,25 @@ class S {
     );
   }
 
+  /// `Rate and Review`
+  String get terms_condition {
+    return Intl.message(
+      'Terms and Condition',
+      name: 'terms_condition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate and Review`
+  String get privacyAndPolicy {
+    return Intl.message(
+      'Privacy and Policy',
+      name: 'privacyAndPolicy',
+      desc: '',
+      args: [],
+    );
+  }
   /// `Rate This App.`
   String get rate_this_app {
     return Intl.message(

@@ -28,6 +28,7 @@ class EditPostLoadScreen extends StatefulWidget {
 }
 
 class _EditPostLoadScreen extends State<EditPostLoadScreen> {
+  ScrollController horizantalControllet = ScrollController();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -39,6 +40,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
   _buildPage(BuildContext context) {
     return Consumer<EditPostLoadProvider>(
       builder: (context, provider, child) {
+       getAddedUserList(provider);
         return Container(
           child: Expanded(
             child: ListView(
@@ -191,17 +193,24 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-              /*  DropDown(
-                  onClick: () async {
-                    await provider.getGroupListByUserId();
-                    ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                    int a = await itemBottomSheet.showIteam(
-                        context,provider.groupListName, "Select Group");
-                    provider.selecteGroup(a);
-                  },
-                  hint: provider.selectedGroup,
-                ),*/
-                DropDown(
+                Visibility(
+                  visible: provider.addedUserListIdInPost.length == 0 ? false : true,
+                  child: Container(
+                    color: Colors.black12,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            child: selectedUsers(),
+                            height: 60.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+               /* DropDown(
                   onClick: () async {
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                     int index = await itemBottomSheet.showIteam(
@@ -210,7 +219,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                   },
                   hint: provider.selectedGroup,
                 ),
-
+*/
                 SizedBox(
                   height: 30.h,
                 ),
@@ -300,6 +309,45 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
           ),
         );
       },
+    );
+  }
+
+  selectedUsers() {
+    return Consumer<EditPostLoadProvider>(
+      builder: (context, model, child) => ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        controller: horizantalControllet,
+        itemCount: model.addedUsers.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+          height: 50.h,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Column(
+
+              children: <Widget>[
+
+
+                BaseWidget().getImageclip(
+                  model.addedUsers[index].profilePicture.toString(),
+                  height: 34,
+                  width: 34,
+                ),
+                Text(
+                  model.addedUsers[index].firstName!,
+                  style: TextStyle(
+                    color: Color(0xCC001E49),
+                    fontSize: 14.sp,
+                    fontFamily: AppConstant.FONTFAMILY,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ],
+            ),
+          ),
+        );}
+      ),
     );
   }
 
@@ -541,5 +589,9 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
         );
       },
     );
+  }
+
+  Future<void> getAddedUserList(EditPostLoadProvider provider) async {
+    await provider.getUserListFromString(widget.truckLoad.userList!);
   }
 }

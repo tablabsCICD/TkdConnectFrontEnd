@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
+import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/toast.dart';
-
+import 'package:http/http.dart' as http;
 import '../../model/request/route_request.dart';
 import '../../model/response/city_selection.dart';
 
@@ -185,20 +189,49 @@ class SelectCityProvider extends BaseProvider {
       var request=await ApiHelper().apiGet(ApiConstant.GET_ALL_CITY_SERACH(name));
       if(request.status==200){
         cityList=request.response;
-
         listCity.clear();
         for(int i=0;i<cityList.length;i++){
           CitySelection citySelection=CitySelection(cityList[i], false,i);
-
           listCity.add(citySelection);
+        }
+        if(listCity.isEmpty){
+          fetchCities(name);
+         /* Prediction prediction = await PlacesAutocomplete.show(
+            context: context,
+            apiKey: AppConstant.GOOGLE_KEY,
+            mode: Mode.overlay,
+            language: 'en',
+            components: [Component(Component.country, "us")], // You can change the country code as needed
+          );
+          if (prediction != null) {
+            listCity.add(CitySelection(prediction.description.toString(), true, 0));
+          }*/
         }
         notifyListeners();
       }
     }else{
       listCity.clear();
+
       listCity.addAll(temListCity);
     }
     notifyListeners();
+  }
+
+  Future<void> fetchCities(String name) async {
+    final apiKey = AppConstant.GOOGLE_KEY;
+    final url =//'https://maps.googleapis.com/maps/api/place/nearbysearch/json?${name}';
+       'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&types=city&key=$apiKey';
+    print(url);
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final predictions = jsonResponse['predictions'];
+       var listResponse = predictions.map<dynamic>((json) => json['description']).toList();
+
+    } else {
+      throw Exception('Failed to load cities');
+    }
   }
 
   addCity(String state,String city)async{
@@ -212,6 +245,4 @@ class SelectCityProvider extends BaseProvider {
     }
     return request.response;
   }
-
-
 }

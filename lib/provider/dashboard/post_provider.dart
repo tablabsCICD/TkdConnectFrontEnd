@@ -128,6 +128,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.topicName= "Full Load Truck";
     postLoad.image=images;
     postLoad.listOfUserIds=addedMemberIdList;
+    postLoad.userList='';
 
     postLoad.id=0;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
@@ -170,6 +171,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.topicName= "Full Load Truck";
     postLoad.image=images;
     postLoad.listOfUserIds=addedMemberIdList;
+    postLoad.userList='';
 
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){

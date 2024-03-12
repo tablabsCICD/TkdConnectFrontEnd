@@ -27,6 +27,7 @@ class PostLoad {
   String? typeOfCargo;
   String? typeOfPayment;
   String? vehicleSize;
+  String? userList;
 
   PostLoad(
       {this.contactNumber,
@@ -56,6 +57,7 @@ class PostLoad {
         this.type,
         this.typeOfCargo,
         this.typeOfPayment,
+        this.userList,
         this.vehicleSize});
 
   PostLoad.fromJson(Map<String, dynamic> json) {
@@ -87,6 +89,7 @@ class PostLoad {
     typeOfCargo = json['typeOfCargo'];
     typeOfPayment = json['typeOfPayment'];
     vehicleSize = json['vehicleSize'];
+    userList = json['userList'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +122,7 @@ class PostLoad {
     data['typeOfCargo'] = this.typeOfCargo;
     data['typeOfPayment'] = this.typeOfPayment;
     data['vehicleSize'] = this.vehicleSize;
+    data['userList'] = this.userList;
     return data;
   }
 }

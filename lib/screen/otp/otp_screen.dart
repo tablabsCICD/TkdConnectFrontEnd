@@ -353,8 +353,4 @@ class _OTPScreen extends State<OTPScreen> {
   },
 );
   }
-
-
-
-
 }
