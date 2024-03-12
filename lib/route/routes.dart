@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
@@ -151,8 +152,8 @@ class RouteGenerator {
         return _createRoute(GroupInfo(groupData));
 
       case AppRoutes.editpost:
-        TruckLoad truckLoad = settings.arguments as TruckLoad ;
-        return _createRoute(EditPostBase(truckLoad));
+        PostBidData postBidData = settings.arguments as PostBidData ;
+        return _createRoute(EditPostBase(postBidData));
 
       case AppRoutes.mypost:
         return buildRoute(MyPostBase(), settings: settings);

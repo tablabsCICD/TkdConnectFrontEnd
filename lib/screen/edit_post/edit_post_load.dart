@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/request/route_request.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/provider/dashboard/edit_post_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/button.dart';
@@ -18,8 +19,8 @@ import '../../widgets/editText.dart';
 import '../my_route/select_one_city.dart';
 
 class EditPostLoadScreen extends StatefulWidget {
-  TruckLoad truckLoad;
-  EditPostLoadScreen(this.truckLoad);
+  PostBidData postBidData;
+  EditPostLoadScreen(this.postBidData);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,7 +33,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => EditPostLoadProvider(widget.truckLoad),
+      create: (BuildContext context) => EditPostLoadProvider(widget.postBidData),
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -325,10 +326,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Column(
-
               children: <Widget>[
-
-
                 BaseWidget().getImageclip(
                   model.addedUsers[index].profilePicture.toString(),
                   height: 34,
@@ -592,6 +590,6 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
   }
 
   Future<void> getAddedUserList(EditPostLoadProvider provider) async {
-    await provider.getUserListFromString(widget.truckLoad.userList!);
+    await provider.getUserListFromString(widget.postBidData.genericCardsDto!.userList!);
   }
 }

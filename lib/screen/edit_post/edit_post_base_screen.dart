@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/screen/create_post/post_genral.dart';
 import 'package:tkd_connect/screen/create_post/post_load.dart';
 import 'package:tkd_connect/screen/create_post/post_sponsered.dart';
@@ -22,8 +23,8 @@ import '../../utils/colors.dart';
 import '../../widgets/app_bar.dart';
 
 class EditPostBase extends StatefulWidget {
-  TruckLoad truckLoad;
-  EditPostBase(this.truckLoad);
+  PostBidData postBidData;
+  EditPostBase(this.postBidData);
 
   @override
   State<StatefulWidget> createState() {
@@ -48,11 +49,11 @@ class _EditPostBase extends State<EditPostBase>{
   }
 
   setData(){
-    if(widget.truckLoad.fullLoadChoice=="I Have Vehicle"){
+    if(widget.postBidData.genericCardsDto!.tableName=="FullTruckLoad"){
       isLoad=true;
       isVehicle=false;
     }
-    else if(widget.truckLoad.fullLoadChoice=="I Want Vehicle"){
+    else if(widget.postBidData.genericCardsDto!.tableName=="FullTruckVehicle"){
       isVehicle=true;
       isLoad=false;
     }else{
@@ -87,9 +88,9 @@ class _EditPostBase extends State<EditPostBase>{
                 ),
                 SizedBox(height: 10.h,),
                 tabs(),
-                Visibility(visible: isLoad,child: EditPostLoadScreen(widget.truckLoad)),
-                Visibility(visible: isVehicle,child: EditPostVehicleScreen(widget.truckLoad)) ,
-                Visibility(visible: isSponsered,child: EditPostSponseredScreen(widget.truckLoad))
+                Visibility(visible: isLoad,child: EditPostLoadScreen(widget.postBidData)),
+                Visibility(visible: isVehicle,child: EditPostVehicleScreen(widget.postBidData)) ,
+             //   Visibility(visible: isSponsered,child: EditPostSponseredScreen(widget.postBidData))
 
 
               ],

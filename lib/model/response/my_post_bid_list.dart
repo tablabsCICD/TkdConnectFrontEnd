@@ -128,6 +128,7 @@ class GenericCardsDto {
   String? likes;
   String? comment;
   String? cargoType;
+  String? userList;
   var vehicleWeight;
 
   GenericCardsDto(
@@ -171,6 +172,7 @@ class GenericCardsDto {
         this.title,
         this.likes,
         this.cargoType,
+        this.userList,
         this.comment});
 
   GenericCardsDto.fromJson(Map<String, dynamic> json) {
@@ -215,7 +217,7 @@ class GenericCardsDto {
     likes = json['likes'];
     comment = json['comment'];
     vehicleWeight = json['vehicleWeight'];
-
+    userList = json['userList'];
   }
 
   Map<String, dynamic> toJson() {
@@ -262,7 +264,7 @@ class GenericCardsDto {
     data['comment'] = this.comment;
     data['cargoType'] = this.cargoType;
     data['vehicleWeight'] = this.vehicleWeight;
-
+    data['userList'] = this.userList;
     return data;
   }
 }

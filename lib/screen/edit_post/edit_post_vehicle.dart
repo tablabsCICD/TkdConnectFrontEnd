@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/provider/dashboard/edit_post_provider.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import '../../constant/app_constant.dart';
@@ -19,8 +20,8 @@ import '../../widgets/editText.dart';
 import '../my_route/select_one_city.dart';
 
 class EditPostVehicleScreen extends StatefulWidget {
-  TruckLoad truckLoad;
-  EditPostVehicleScreen(this.truckLoad);
+  PostBidData postBidData;
+  EditPostVehicleScreen(this.postBidData);
 
   @override
   State<StatefulWidget> createState() {
@@ -29,10 +30,11 @@ class EditPostVehicleScreen extends StatefulWidget {
 }
 
 class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
+  ScrollController horizantalControllet = ScrollController();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => EditPostLoadProvider(widget.truckLoad),
+      create: (BuildContext context) => EditPostLoadProvider(widget.postBidData),
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -40,6 +42,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
   _buildPage(BuildContext context) {
     return Consumer<EditPostLoadProvider>(
       builder: (context, provider, child) {
+        getAddedUserList(provider);
         return Container(
           child: Expanded(
             child: ListView(
@@ -191,7 +194,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                DropDown(
+               /* DropDown(
                   onClick: () async {
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                     int index = await itemBottomSheet.showIteam(
@@ -199,8 +202,24 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                     provider.selecteOptiontoShow(index,context);
                   },
                   hint: provider.selectedGroup,
+                ),*/
+                Visibility(
+                  visible: provider.addedUserListIdInPost.length == 0 ? false : true,
+                  child: Container(
+                    color: Colors.black12,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            child: selectedUsers(),
+                            height: 60.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-
                 SizedBox(
                   height: 30.h,
                 ),
@@ -287,6 +306,41 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
           ),
         );
       },
+    );
+  }
+  selectedUsers() {
+    return Consumer<EditPostLoadProvider>(
+      builder: (context, model, child) => ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          controller: horizantalControllet,
+          itemCount: model.addedUsers.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              height: 50.h,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Column(
+                  children: <Widget>[
+                    BaseWidget().getImageclip(
+                      model.addedUsers[index].profilePicture.toString(),
+                      height: 34,
+                      width: 34,
+                    ),
+                    Text(
+                      model.addedUsers[index].firstName!,
+                      style: TextStyle(
+                        color: Color(0xCC001E49),
+                        fontSize: 14.sp,
+                        fontFamily: AppConstant.FONTFAMILY,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );}
+      ),
     );
   }
 
@@ -530,5 +584,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
     );
   }
 
-
+  Future<void> getAddedUserList(EditPostLoadProvider provider) async {
+    await provider.getUserListFromString(widget.postBidData.genericCardsDto!.userList!);
+  }
 }

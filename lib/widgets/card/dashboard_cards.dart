@@ -169,7 +169,7 @@ class AllCards {
                 if(val==6){
 
 
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(load)));
+                 // Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(load)));
 
                 }else{
                   Utils().openMenu(val, load, context,providerHome: provider);

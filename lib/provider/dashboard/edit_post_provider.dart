@@ -7,6 +7,7 @@ import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/model/response/verified_user.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
@@ -54,9 +55,9 @@ class EditPostLoadProvider extends BaseProvider {
   bool loadWieght = true;
   bool dnd = false;
   bool hideMyID = false;
-  TruckLoad truckLoad;
+  PostBidData postBidData;
 
-  EditPostLoadProvider(this.truckLoad) : super('Ideal') {
+  EditPostLoadProvider(this.postBidData) : super('Ideal') {
     initData();
   }
 
@@ -65,9 +66,9 @@ class EditPostLoadProvider extends BaseProvider {
         await LocalSharePreferences.localSharePreferences.getLoginData();
     emailIdController.text = user.content!.first!.emailId!;
     mobileNumberController.text = user.content!.first!.mobileNumber!.toString();
-    selectedCargo = truckLoad.typeOfCargo!;
-    loadWeightController.text = truckLoad.loadWeight!;
-    await getTruckLoadById(truckLoad.id!);
+    selectedCargo = postBidData.genericCardsDto!.cargoType!;
+    loadWeightController.text = postBidData.genericCardsDto!.vehicleWeight!;
+    await getTruckLoadById(postBidData.genericCardsDto!.id!);
     notifyListeners();
   }
 
@@ -123,19 +124,24 @@ class EditPostLoadProvider extends BaseProvider {
   }
 
   List<String> addedUserListIdInPost=[];
+  List<int> addedUserListInPost=[];
   List<UserData> addedUsers = [];
   getUserListFromString(String userList){
     addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
     print(addedUserListIdInPost);
     addedUserListIdInPost.forEach((element) async {
       UserData userData = await getUserById(int.parse(element));
+      addedUserListInPost.add(int.parse(element));
+      print(userData.id);
+      print(userData.firstName);
       addedUsers.add(userData);
     });
+    return addedUserListIdInPost;
   }
 
   getUserById(int userId) async {
     ApiHelper apiHelper = ApiHelper();
-    String myUrl = ApiConstant.FULL_LOAD_BY_ID + userId.toString();
+    String myUrl = ApiConstant.BASE_URL +"/companyRegistration/"+ userId.toString();
     print(myUrl);
     ApiResponse response = await apiHelper.apiWithoutDecodeGet(myUrl);
     print(response.response);
@@ -167,6 +173,8 @@ class EditPostLoadProvider extends BaseProvider {
     destinationCity = truckLoad.destination!;
     dnd = truckLoad.dnd == 0 ? false : true;
     hideMyID = truckLoad.privatePost == 0 ? false : true;
+    var userList = getUserListFromString(truckLoad.userList!);
+    addedMemberIdList = addedUserListInPost;
     notifyListeners();
   }
 
@@ -198,7 +206,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.topicName = "Full Load Truck";
     postLoad.image = images;
     postLoad.listOfUserIds = addedMemberIdList;
-    postLoad.id = truckLoad.id;
+    postLoad.id = postBidData.genericCardsDto!.id;
     ApiResponse response = await ApiHelper()
         .apiPut(ApiConstant.BASE_URL + "UpdatePost", postLoad.toJson());
     print('the request is ${json.encode(postLoad.toJson())}');
@@ -221,7 +229,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.dnd = dnd ? 1 : 0;
     postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Want Vehicle";
-    postLoad.id = truckLoad.id;
+    postLoad.id = postBidData.genericCardsDto!.id;
     postLoad.instructions = specialInstructionController.text;
     postLoad.loadWeight = loadWeightController.text;
     postLoad.loggedUserName = user.content!.first.userName;
