@@ -348,7 +348,7 @@ class AllCards {
             alignment: Alignment.topRight,
             child: InkWell(
               onTap: (){
-                String des="Title: "+truckLoad.topicName!+"\n "+"Description: "+truckLoad.content!;
+                String des="Type: General Post"+"\n "+"Title: "+truckLoad.topicName!+"\n "+"Description: "+truckLoad.content!+"\n "+"Link: "+truckLoad.sharableLink!;
                 Utils().callShareFunction(des);
               },
               child: Container(
