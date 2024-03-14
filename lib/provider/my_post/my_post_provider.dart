@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 
 import '../../constant/api_constant.dart';
@@ -62,11 +63,35 @@ class MyPostProvider extends BaseProvider{
   }
 
 
-  reSendPost(BuildContext context,PostBidData postBidData){
+  reSendPost(BuildContext context,PostBidData postBidData) async {
+    addedMemberIdList = await getTruckLoadById(postBidData.genericCardsDto!.id!);
     createPost(context,postBidData);
 
   }
 
+  List<int> addedMemberIdList = [];
+  getTruckLoadById(int id) async {
+    ApiHelper apiHelper = ApiHelper();
+    String myUrl = ApiConstant.FULL_LOAD_BY_ID + id.toString();
+    print(myUrl);
+    var response = await apiHelper.apiWithoutDecodeGet(myUrl);
+    print(response.response);
+    var result = TruckLoadType.fromJson(response.response);
+    TruckLoad truckLoad = result.content.first;
+    addedMemberIdList = await getUserListFromString(truckLoad.userList!);
+    return addedMemberIdList;
+  }
+
+  List<String> addedUserListIdInPost=[];
+  getUserListFromString(String userList){
+    addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
+    print(addedUserListIdInPost);
+    addedUserListIdInPost.forEach((element) async {
+      addedMemberIdList.add(int.parse(element));
+      print(element);
+    });
+    return addedMemberIdList;
+  }
 
 
   createPost(BuildContext context,PostBidData postBidData)async{
@@ -97,7 +122,7 @@ class MyPostProvider extends BaseProvider{
     postLoad.topicName= "Full Load Truck";
     postLoad.image= [];
     postLoad.partLoad=postBidData.genericCardsDto!.partLoadOrNot!;
-    postLoad.listOfUserIds=[];
+    postLoad.listOfUserIds=addedMemberIdList;
 
     postLoad.id=0;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());

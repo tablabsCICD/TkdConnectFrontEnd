@@ -9,6 +9,7 @@ class ListExpProvider extends BaseProvider{
 
   ListExpProvider(super.appState);
   String nameFrom="no";
+  int selectedFromIndex =0,selectedToIndex=0;
   String nameTo="no";
   bool onFrom=true;
   bool isEnable=false;
@@ -26,8 +27,10 @@ class ListExpProvider extends BaseProvider{
   void selectTab(int index) {
     if(onFrom){
       nameFrom=listExp[index];
+      selectedFromIndex = index;
     }else{
       nameTo=listExp[index];
+      selectedToIndex = index;
     }
     checkButton();
     notifyListeners();

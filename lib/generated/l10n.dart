@@ -1476,7 +1476,7 @@ class S {
   /// `Group Type`
   String get groupType {
     return Intl.message(
-      'Select Group',
+      'Show Post to',
       name: 'groupType',
       desc: '',
       args: [],

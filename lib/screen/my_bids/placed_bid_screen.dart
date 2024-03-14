@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/bid_placed.dart';
+import 'package:tkd_connect/utils/colors.dart';
 
 import '../../generated/l10n.dart';
 import '../../provider/mybids/my_bids_provider.dart';
@@ -45,14 +46,14 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                 ) {
               return Container(
                 // transform: Matrix4.translationValues(0.0, -45.0.h, 0.0),
-                  child: Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 20.h),child: cardLoad(index, context, provider.listBids[index]),));
+                  child: Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 20.h),child: cardLoad(index, context, provider.listBids[index],provider)));
             });
 
       },
     );
   }
 
-  cardLoad(int index, BuildContext context, Bids bids) {
+  cardLoad(int index, BuildContext context, Bids bids,MyBidsProvider provider) {
     return Container(
       width: 335.w,
       padding: EdgeInsets.all(12.r),
@@ -132,7 +133,47 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
           ),
           BaseWidget().heading(bids.topicName!, bids.postingTime!.split(" ").first, bids.content!),
           BaseWidget().onlyBidButton((){
-             //provider.deleteBid(index, bids, context);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Withdraw quote',style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),),
+                  content: Text('Are you sure you want to withdraw this quote?',style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                  ),),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,),),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        provider.deleteBid(index, bids, context);
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: Text(
+                        'Withdraw',
+                        style: TextStyle(color: Colors.red, fontSize: 12.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
 
           })
         ],

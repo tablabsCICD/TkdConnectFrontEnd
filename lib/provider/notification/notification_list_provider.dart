@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -22,14 +24,14 @@ class NotificationListProvider extends BaseProvider{
 
     User user=await LocalSharePreferences().getLoginData();
 
-    String myUrl = ApiConstant.BASE_URL +'Notifications/forSpecificUser/${user.content!.first.id}?page=${page}';
+  //  String myUrl = ApiConstant.BASE_URL +'Notifications/forSpecificUser/${user.content!.first.id}';
+    String myUrl = ApiConstant.BASE_URL +'getNotification/${user.content!.first.id}';
     print(myUrl);
     ApiResponse req = await ApiHelper().apiWithoutDecodeGet(myUrl);
-
+    print(req.response);
     if(req.status == 200) {
-
-      NotificationListModel notificationListModel=NotificationListModel.fromJson(req.response);
-      notificationList.addAll(notificationListModel.content!);
+      NotificationListModel notificationListModel=NotificationListModel.fromJson(jsonDecode(req.response));
+      notificationList.addAll(notificationListModel.data!);
       print('the status code is ${notificationList.length}');
       page=page+1;
       notifyListeners();

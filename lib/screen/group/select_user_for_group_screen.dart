@@ -276,9 +276,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                     children: <Widget>[
-
                       Padding(
                         padding:  EdgeInsets.only(top: 3.h),
                         child: Text(
@@ -321,10 +319,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Column(
-
               children: <Widget>[
-
-
                 BaseWidget().getImageclip(
                   model.selectedUsers[index].profilePicture.toString(),
                   height: 34,

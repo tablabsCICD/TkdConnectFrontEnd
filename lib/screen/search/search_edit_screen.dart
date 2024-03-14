@@ -70,7 +70,7 @@ class _SearchEditState extends State<SearchEditScreen> {
                 ),
               ),
 
-          Expanded(
+              listSuggestes.isEmpty?Expanded(child: Center(child: Text("No Data found"),),):Expanded(
             child: ListView.builder(
 
                 itemCount: listSuggestes.length,

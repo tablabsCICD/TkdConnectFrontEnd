@@ -10,6 +10,7 @@ import 'package:tkd_connect/provider/dashboard/delete_interface.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 import '../../../generated/l10n.dart';
 import '../../../model/response/AllCard.dart';
@@ -553,7 +554,9 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
       builder: (context, provider, child) {
         return InkWell(
           onTap: () {
-            provider.onCliclFilter(context);
+            provider.drooDwonheading=="General Post " || provider.drooDwonheading=="Sell Buy Post" || provider.drooDwonheading=="Jobs"
+                ?ToastMessage.show(context,"City filter is for load post only")
+                :provider.onCliclFilter(context);
           },
           child: Container(
               width: 52.w,

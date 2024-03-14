@@ -7,6 +7,7 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/search_data.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/create_group_provider.dart';
@@ -21,7 +22,7 @@ import 'package:tkd_connect/widgets/editText.dart';
 import '../../model/response/group_member_list.dart';
 
 class CreateGroupScreen extends StatefulWidget {
-  List<UserData> memberList;
+  List<SearchData> memberList;
   CreateGroupScreen(this.memberList);
 
   @override

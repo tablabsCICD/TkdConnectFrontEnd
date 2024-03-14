@@ -27,9 +27,9 @@ class CreateGroupProvider extends BaseProvider{
   bool buttonEnable = false;
 
   List<GroupMember> groupMemberList = [];
-  List<UserData> allUserList = [];
-  List<UserData>filterByName=[];
-  List<UserData>selectedUsers=[];
+  List<SearchData> allUserList = [];
+  List<SearchData>filterByName=[];
+  List<SearchData>selectedUsers=[];
   List<GroupMember>listAddedMember=[];
   GroupData? currentGroup;
   bool create_Group=false;
@@ -45,13 +45,13 @@ class CreateGroupProvider extends BaseProvider{
     notifyListeners();
     EasyLoading.show(status: "Loading");
     if(allUserList.length==0){
-      String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=1000';
+     // String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=1000';
+      String myUrl = ApiConstant.CHAT_USER_LIST_COMPANY(' ');
       print(myUrl);
       var responseBody=await ApiHelper().apiWithoutDilogDecodeGet(myUrl);
-      print(responseBody.response);
       EasyLoading.dismiss();
-      var type = User.fromJson(responseBody.response);
-      allUserList.addAll(type.content!);
+      var type = SearchDataList.fromJson(json.decode(responseBody.response));
+      allUserList.addAll(type.data!);
     }
     if(isFromEdit==true){
       currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
@@ -101,7 +101,7 @@ class CreateGroupProvider extends BaseProvider{
     notifyListeners();
   }
 
-  createGroupApi(int? userId,String groupName,List<UserData> memberList,BuildContext context)async{
+  createGroupApi(int? userId,String groupName,List<SearchData> memberList,BuildContext context)async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     Map<String,dynamic>data={
       'createByUserId':userId,
@@ -122,7 +122,7 @@ class CreateGroupProvider extends BaseProvider{
     }
   }
 
-  callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom,List<UserData> memberList) async{
+  callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom,List<SearchData> memberList) async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     List<GroupMember>selectedUserId=[];
     for(int i=0;i<memberList.length;i++){
@@ -186,45 +186,7 @@ class CreateGroupProvider extends BaseProvider{
             jsonDecode(apiResponse.response));
         for(int i=0;i<searchDataList.data!.length;i++){
           SearchData element = searchDataList.data![i];
-          UserData userData = UserData(id: element.id,
-              addedIngroup: false,
-              alternativeNumber: element.alternativeNumber,
-              aadharCard: element.aadharCard,
-              companyName: element.companyName,
-              country: element.country,
-              companyLogo: element.companyLogo,
-              companyAddress: element.companyAddress,
-              companyId: element.companyId,
-              city: element.city,
-              deviceId: element.deviceId,
-              emailId: element.emailId,
-              firstName: element.firstName,
-              isUserVerifiedByCompany: element.isUserVerifiedByCompany,
-              isPaid: element.isPaid,
-              idOfMainBranch: element.idOfMainBranch,
-              isSelected: false,
-              loggedUserName: element.loggedUserName,
-              loggedTime: element.loggedTime,
-              lastName: element.lastName,
-              landlineNumber: element.landlineNumber,
-              mobileNumber: element.mobileNumber,
-              numberOfTimesRating: element.numberOfTimesRating,
-              mainBranch: element.mainBranch,
-              otp: element.otp,
-              os: element.os,
-              profilePicture: element.profilePicture,
-              preferredRouresEntered: element.preferredRouresEntered,
-              password: element.password,
-              paidStartDate: element.paidStartDate,
-              ratings: element.ratings,
-              state: element.state,
-              transporterOrAgent: element.transporterOrAgent,
-              userName: element.userName,
-              verified: element.verified,
-              validTill: element.validTill,
-              website: element.website
-          );
-          filterByName.add(userData);
+          filterByName.add(element);
         }
       } else {
         filterByName.addAll(allUserList);
@@ -233,7 +195,7 @@ class CreateGroupProvider extends BaseProvider{
     notifyListeners();
   }
 
-  selectedUser(bool? value,UserData userObj){
+  selectedUser(bool? value,SearchData userObj){
     userObj.isSelected=value;
     if(value==true){
       selectedUsers.add(userObj);
@@ -248,7 +210,7 @@ class CreateGroupProvider extends BaseProvider{
     LocalSharePreferences().setString(AppConstant.CURRENT_GROUP, jsonEncode(groupData));
   }
 
-  callUpdateGroupApi(int? userId,String groupName,List<UserData> memberList,BuildContext context)async{
+  callUpdateGroupApi(int? userId,String groupName,List<SearchData> memberList,BuildContext context)async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
     Map<String,dynamic>data={

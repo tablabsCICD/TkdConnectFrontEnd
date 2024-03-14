@@ -86,7 +86,7 @@ class HomeScreenProvider extends BaseProvider{
 
    //   url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
     }
-   // print('the url $url');
+    print('the url $url');
 
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;

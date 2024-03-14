@@ -68,7 +68,13 @@ class _RatingDialogState extends State<RatingDialog> {
               SizedBox(height: 20),
               StarRating(
                   rating: provider.rating,
-                  onRatingChanged: (rating) => provider.changeRating(rating)
+                  onRatingChanged: (rating) {
+                    if(rating==0){
+                      provider.buttonEnable=false;
+                    }else{
+                      provider.buttonEnable=true;
+                    }
+                    provider.changeRating(rating);}
               ),
               SizedBox(height: 20),
               TextField(

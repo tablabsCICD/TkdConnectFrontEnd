@@ -38,7 +38,7 @@ class MyJobPost extends State<MyJobPostScreen> {
 
   ScrollController scrollController =ScrollController();
   List<MyJobData> listOwnPost=[];
-  bool isLoad=false;
+  bool isLoad=true;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +47,10 @@ class MyJobPost extends State<MyJobPostScreen> {
 
 
   _buildPage(BuildContext context) {
-    return
-
-      !isLoad || listOwnPost.length==0?Center(
-        child: Text("No Any Post"),
-      ):
-      Column(
+    return !isLoad || listOwnPost.length==0?Center(
+      child: Text("No Post Found"),
+    ) :Column(
       children: [
-
 
         Expanded(
           child: ListView.builder(
@@ -69,7 +65,6 @@ class MyJobPost extends State<MyJobPostScreen> {
       ],
     );
   }
-
 
   iteamMyPost(MyJobData ownData, int index) {
     return Container(
@@ -160,13 +155,18 @@ class MyJobPost extends State<MyJobPostScreen> {
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.BASE_URL}getPostJobsByUserId/${user.content!.first.id}");
     print('the status code is ${apiResponse.status}');
     if(apiResponse.status==200){
-      MyJobList ownGenralPostList=MyJobList.fromJson(jsonDecode(apiResponse.response));
-      listOwnPost.addAll(ownGenralPostList.data!);
+      MyJobList myJobList=MyJobList.fromJson(jsonDecode(apiResponse.response));
+      listOwnPost.addAll(myJobList.data!);
+      print('the lenghth is ${listOwnPost.length}');
       setState(() {
       });
     }else{
-      print('the error');
+      isLoad=false;
+      setState(() {
+      });
+
     }
+
   }
 
   Future<void> _showMyDialog(int index) async {

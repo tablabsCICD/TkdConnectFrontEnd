@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/model/response/my_post_bid_list.dart';
+import 'package:tkd_connect/model/response/search_data.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
@@ -140,11 +141,11 @@ class RouteGenerator {
         return _createRoute(SelectUserForGroupScreen(isEdit));
 
       case AppRoutes.create_group:
-        List<UserData> list = settings.arguments as List<UserData> ;
+        List<SearchData> list = settings.arguments as List<SearchData> ;
         return _createRoute(CreateGroupScreen(list));
 
       case AppRoutes.edit_group:
-        List<UserData> list = settings.arguments as List<UserData> ;
+        List<SearchData> list = settings.arguments as List<SearchData> ;
         return _createRoute(EditGroupScreen(list));
 
       case AppRoutes.group_info:

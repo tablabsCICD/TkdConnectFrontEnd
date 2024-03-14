@@ -7,6 +7,7 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/search_data.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/create_group_provider.dart';
@@ -21,7 +22,7 @@ import 'package:tkd_connect/widgets/editText.dart';
 import '../../model/response/group_member_list.dart';
 
 class EditGroupScreen extends StatefulWidget {
-  List<UserData> memberList;
+  List<SearchData> memberList;
   EditGroupScreen(this.memberList);
 
   @override
@@ -143,9 +144,10 @@ class _EditGroupScreenState extends State<EditGroupScreen> {
                       widget.memberList[index].profilePicture==null?Icon(
                         Icons.account_circle,
                         size: 30.0,
-                      ):widget.memberList[index].profilePicture!.allMatches("null")==0 ? Image.network(widget.memberList[index].profilePicture!,height: 64,width: 64,) : Icon(
-                        Icons.account_circle,
-                        size: 30.0,
+                      ):BaseWidget().getImageclip(
+                        widget.memberList[index].profilePicture.toString(),
+                        height: 34,
+                        width: 34,
                       ),
                       SizedBox(width: 10,),
                       Text(

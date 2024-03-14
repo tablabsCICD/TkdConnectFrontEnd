@@ -66,6 +66,8 @@ class SearchData {
   String? aadharCardForVerification;
   String? panCardForVerification;
   String? branchName;
+  bool? isSelected;
+  bool? addedIngroup;
 
   SearchData(
       {this.id,
@@ -105,6 +107,8 @@ class SearchData {
         this.isUserVerifiedByCompany,
         this.aadharCardForVerification,
         this.panCardForVerification,
+        this.isSelected,
+        this.addedIngroup,
         this.branchName});
 
   SearchData.fromJson(Map<String, dynamic> json) {
@@ -146,6 +150,8 @@ class SearchData {
     aadharCardForVerification = json['aadharCardForVerification'];
     panCardForVerification = json['panCardForVerification'];
     branchName = json['branchName'];
+    isSelected = false;
+    addedIngroup = false;
   }
 
   Map<String, dynamic> toJson() {
@@ -188,6 +194,8 @@ class SearchData {
     data['aadharCardForVerification'] = this.aadharCardForVerification;
     data['panCardForVerification'] = this.panCardForVerification;
     data['branchName'] = this.branchName;
+    isSelected = false;
+    addedIngroup = false;
     return data;
   }
 }

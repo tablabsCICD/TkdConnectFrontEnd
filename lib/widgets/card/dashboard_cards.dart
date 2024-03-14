@@ -348,7 +348,7 @@ class AllCards {
             alignment: Alignment.topRight,
             child: InkWell(
               onTap: (){
-                String des=truckLoad.topicName!+"\n "+truckLoad.content!;
+                String des="Title: "+truckLoad.topicName!+"\n "+"Description: "+truckLoad.content!;
                 Utils().callShareFunction(des);
               },
               child: Container(
@@ -643,17 +643,13 @@ class AllCards {
           BaseWidget().headingWithDescription("Job Title", getDateObject(load.postingTime), "-",load.topicName!,'',true),
           SizedBox(height: 8.w),
           BaseWidget().heading("Job Description", '', load.content!),
-          jobApply(load,context),
-         /* load.userId==userId ?BaseWidget().deleteButton((val) {
+          load.userId==userId ?BaseWidget().deleteButton((val) {
             if(val==10){
 
             }else{
               Utils().openMenu(val, load, context);
             }
-
-          }) :BaseWidget().applyButton((val) {
-            Utils().openMenu(val, load, context);
-          })*/
+          },false) :jobApply(load,context)
         ],
       ),
     );
@@ -672,6 +668,8 @@ class AllCards {
           InkWell(
             onTap: (){
               Utils().callFunction(load.mobileNumber.toString());
+              /*String Message="I am writing to express my strong interest in the our department"+" From TKD Connect Application";
+                Utils().openwhatsapp(context, load.mobileNumber!, Message);*/
             },
             child: Container(
               height: 38.h,

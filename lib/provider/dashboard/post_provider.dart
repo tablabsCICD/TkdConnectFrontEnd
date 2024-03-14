@@ -95,7 +95,7 @@ class PostLoadProvider extends BaseProvider {
 
     GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
     listAddedMember.addAll(groupListModel.content!);
-    listAddedMember.forEach((element) { addedMemberIdList.add(element.id!);});
+    listAddedMember.forEach((element) { addedMemberIdList.add(element.userId!);});
     print(addedMemberIdList.length);
     notifyListeners();
   }
@@ -172,7 +172,6 @@ class PostLoadProvider extends BaseProvider {
     postLoad.image=images;
     postLoad.listOfUserIds=addedMemberIdList;
     postLoad.userList='';
-
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){
         ToastMessage.show(context, "Post submitted successfully!");

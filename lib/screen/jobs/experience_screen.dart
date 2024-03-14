@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tkd_connect/utils/toast.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -84,9 +85,11 @@ class ExperienceScreen extends StatelessWidget{
       fontFamily: GoogleFonts.poppins().fontFamily,
       fontWeight: FontWeight.w600,
     ), onClick: (){
-
-        provider.onclick(context);
-
+        if(provider.selectedFromIndex>provider.selectedToIndex){
+          ToastMessage.show(context, "Please select proper experience");
+        }else {
+          provider.onclick(context);
+        }
     },);
   },
 );

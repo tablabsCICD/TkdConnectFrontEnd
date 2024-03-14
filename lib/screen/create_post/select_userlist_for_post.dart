@@ -54,7 +54,7 @@ class _SelectUserForPostScreen extends State<SelectUserForPostScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              BaseWidget().appBar(context, "Users"),
+              BaseWidget().appBar(context, "Verified Users"),
               serachBar(),
               Visibility(
                 visible: model.selectedUsers.length == 0 ? false : true,

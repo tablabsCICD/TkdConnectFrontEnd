@@ -100,7 +100,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                 ),
               ),
               SizedBox(height: 10.h,),
-              avgBid==0?SizedBox.shrink():Text(
+              avgBid=="0"?SizedBox.shrink():Text(
                 "Average Bid is "+avgBid,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -130,10 +130,11 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                   buttonEnable=false;
                 }else{
                   buttonEnable=true;
+                  callApiBidState();
                 }
 
                 callSetState();
-                callApiBidState();
+
 
               },)),
               SizedBox(height: 8,),

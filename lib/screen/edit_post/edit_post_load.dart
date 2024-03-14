@@ -194,10 +194,10 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                Visibility(
-                  visible: provider.addedUserListIdInPost.length == 0 ? false : true,
+                provider.addedUserListIdInPost.length == 0 ? Text("All Users"): Visibility(
+                  visible: true,
                   child: Container(
-                    color: Colors.black12,
+                    color: Colors.grey.shade50,
                     child: Column(
                       children: [
                         Padding(

@@ -44,7 +44,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
             SizedBox(height: 20.h,),
             Consumer<NotificationListProvider>(
               builder: (context, provider, child) {
-                return listView();
+                return  provider.notificationList.isNotEmpty?  listView() : Expanded(child: Center(child: Text("Notification not found"),));
               },
             )
           ],

@@ -1,52 +1,28 @@
 class NotificationListModel {
-  List<NotificationModel>? content;
-  bool? last;
-  int? totalPages;
-  int? totalElements;
-  int? size;
-  int? number;
-  String? sort;
-  int? numberOfElements;
-  bool? first;
+  List<NotificationModel>? data;
+  String? message;
+  bool? success;
 
-  NotificationListModel(
-      {this.content,
-        this.last,
-        this.totalPages,
-        this.totalElements,
-        this.size,
-        this.number,
-        this.sort,
-        this.numberOfElements,
-        this.first});
+  NotificationListModel({this.message, this.data, this.success});
 
   NotificationListModel.fromJson(Map<String, dynamic> json) {
-    if (json['content'] != null) {
-      content = List.from(json['content']).map((e)=>NotificationModel.fromJson(e)).toList();
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <NotificationModel>[];
+      json['data'].forEach((v) {
+        data!.add(new NotificationModel.fromJson(v));
+      });
     }
-    last = json['last'];
-    totalPages = json['totalPages']??0;
-    totalElements = json['totalElements']??0;
-    size = json['size']??0;
-    number = json['number']??0;
-    sort = json['sort']??'';
-    numberOfElements = json['numberOfElements']??0;
-    first = json['first'];
+    success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
-    data['sort'] = this.sort;
-    data['numberOfElements'] = this.numberOfElements;
-    data['first'] = this.first;
+    data['success'] = this.success;
     return data;
   }
 }
