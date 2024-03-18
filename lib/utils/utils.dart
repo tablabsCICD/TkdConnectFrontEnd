@@ -83,10 +83,8 @@ class Utils {
             ? 'https://play.google.com/store/apps/details?id=$packageName'
             : 'https://apps.apple.com/app/your_app_name/id$appId';
 
-        if (await canLaunch(url)) {
-          await launch(url);
-        } else {
-          throw 'Could not launch $url';
+        if (!await launchUrl(Uri.parse(url))) {
+          throw Exception('Could not launch $url');
         }
 
     }
@@ -99,20 +97,23 @@ class Utils {
         ? 'https://play.google.com/store/apps/details?id=$packageName'
         : 'https://apps.apple.com/app/your_app_name/id$appId';
 
-    if (await canLaunch(url)) {
-    await launch(url);
-    } else {
-    throw 'Could not launch $url';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  callTermsAndCondition(BuildContext context) async {
+    
+    const url = 'https://www.tkdconnect.in/term-and-condition';
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
     }
   }
 
   callFunction(String mobile)async{
-
     final call = Uri.parse('tel:+91$mobile');
-    if (await canLaunchUrl(call)) {
-    launchUrl(call);
-    } else {
-    throw 'Could not launch $call';
+    if (!await launchUrl(call)) {
+      throw Exception('Could not launch $call');
     }
   }
 
@@ -123,7 +124,6 @@ class Utils {
 
 
   callRatingAndReview(context,TruckLoad load){
-
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,

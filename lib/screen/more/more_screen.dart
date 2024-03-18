@@ -112,7 +112,7 @@ class _MoreScreen extends State<MoreScreen> {
               },FontWeight.w400),
 
               item(S().terms_condition,() async {
-                Utils().callPrivacyAndPolicy(context);
+                Utils().callTermsAndCondition(context);
 
               },FontWeight.w400),
 
