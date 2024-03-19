@@ -32,8 +32,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   void initState() {
     // TODO: implement initState
    // startTimer();
-    //versionControllApi();
-    callNextScreen();
+    versionControllApi();
+    //callNextScreen();
     super.initState();
   }
   @override
@@ -85,7 +85,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   versionControllApi() async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
     Version version=Version.fromJson(apiResponse.response);
-    print('the version is ${version.version}');
+   // print('the version is ${version.version}');
     if(version.version == AppConstant.APP_VERSION){
       callNextScreen();
     }else{

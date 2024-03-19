@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "appCrash": MessageLookupByLibrary.simpleMessage("App crash"),
         "appSetting": MessageLookupByLibrary.simpleMessage("App setting"),
+        "applyNow": MessageLookupByLibrary.simpleMessage("Apply now"),
         "businessDetails":
             MessageLookupByLibrary.simpleMessage("Business details"),
         "businessInfo": MessageLookupByLibrary.simpleMessage("Business info"),
@@ -79,11 +80,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "createPost": MessageLookupByLibrary.simpleMessage("Create a post"),
         "createPostLoadIssue":
             MessageLookupByLibrary.simpleMessage("Load Post Issue"),
+        "creategroup": MessageLookupByLibrary.simpleMessage("Create Group"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "Do you want to delete this post."),
         "directory": MessageLookupByLibrary.simpleMessage("Directory"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "editPost": MessageLookupByLibrary.simpleMessage("Edit Post"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
         "editYourProfile":
             MessageLookupByLibrary.simpleMessage("Edit your profile"),
@@ -111,7 +115,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "fromCity": MessageLookupByLibrary.simpleMessage("From City"),
         "general": MessageLookupByLibrary.simpleMessage("General"),
+        "getInTouch": MessageLookupByLibrary.simpleMessage("Get in tounch"),
         "getVerified": MessageLookupByLibrary.simpleMessage("Get verified"),
+        "group": MessageLookupByLibrary.simpleMessage("Group"),
+        "groupType": MessageLookupByLibrary.simpleMessage("Show post to"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("Help & support"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "how_do_you_rate_app":
@@ -169,6 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "postJob": MessageLookupByLibrary.simpleMessage("Post Job"),
         "postLoad": MessageLookupByLibrary.simpleMessage("Post Load"),
         "posts": MessageLookupByLibrary.simpleMessage("Posts"),
+        "privacyAndPolicy":
+            MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("Quote price"),
         "quotesYouPlaced":
@@ -180,6 +189,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateAndReviewApp":
             MessageLookupByLibrary.simpleMessage("Rate and Review"),
         "rate_this_app": MessageLookupByLibrary.simpleMessage("Rate This App."),
+        "rating": MessageLookupByLibrary.simpleMessage("Rating"),
+        "re_post": MessageLookupByLibrary.simpleMessage("Repost"),
         "recent_search":
             MessageLookupByLibrary.simpleMessage("Recent searches"),
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),
@@ -206,6 +217,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sponsered": MessageLookupByLibrary.simpleMessage("Sponsered"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "subtitle": MessageLookupByLibrary.simpleMessage("Subtitle"),
+        "terms_condition":
+            MessageLookupByLibrary.simpleMessage("Terms & Condition"),
         "textlogin": MessageLookupByLibrary.simpleMessage("Log in"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),

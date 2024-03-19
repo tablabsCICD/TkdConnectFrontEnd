@@ -65,7 +65,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
           bottomNavigationBar: Consumer<CreateGroupProvider>(
             builder: (context, provider, child) => Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
-              child: Button(width: 327.w, height: 49.h, title: S().create, textStyle: TextStyle(
+              child: Button(width: 327.w, height: 49.h, title: S().creategroup, textStyle: TextStyle(
               color: Colors.white,
               fontSize: 14.sp,
               fontFamily: AppConstant.FONTFAMILY,

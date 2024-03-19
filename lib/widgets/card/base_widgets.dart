@@ -582,6 +582,85 @@ class BaseWidget {
     );
   }
 
+
+
+  Widget headingMobile(String title, String date, String subTitle) {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(4),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            // overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        InkWell(
+                          onTap: (){
+                            Utils().callFunction(date);
+                          },
+                          child: Text(
+                            date,
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: ThemeColor.theme_blue,
+                              fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      subTitle,
+                      style: TextStyle(
+                        color: Color(0x99001E49),
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
   Widget headingWithDescription(String title, String date, String field1,String field2,String field3,bool isJobPost) {
     return Container(
       width: double.infinity,
@@ -1816,20 +1895,7 @@ class BaseWidget {
   }
 
   Widget image({String image = ""}) {
-    // return Container(
-    //   width: 311.w,
-    //   height: 200.h,
-    //   decoration: ShapeDecoration(
-    //     image: DecorationImage(
-    //       image: NetworkImage(
-    //         image,
-    //       ),fit: BoxFit.fill,
-    //     ),
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(12),
-    //     ),
-    //   ),
-    // );
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       child: CachedNetworkImage(
@@ -1850,21 +1916,29 @@ class BaseWidget {
     );
   }
 
+  Widget imageAdd({String image = ""}) {
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: CachedNetworkImage(
+        imageUrl: image,
+        placeholder: (context, url) => SvgPicture.asset(Images.logo),
+        errorWidget: (context, url, error) => ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image.network(
+              "https://igps.net/wp-content/uploads/2018/08/shutterstock_711168088.jpg",
+              fit: BoxFit.fill,
+              width: 311.w,
+              height: 200.h,
+            )),
+        fit: BoxFit.fitHeight,
+        width: 311.w,
+        height: 200.h,
+      ),
+    );
+  }
+
   Widget imageLink(String link) {
-    // return Container(
-    //   width: 311.w,
-    //   height: 200.h,
-    //   decoration: ShapeDecoration(
-    //     image: DecorationImage(
-    //       image: NetworkImage(
-    //           link),
-    //       fit: BoxFit.fill,
-    //     ),
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(12),
-    //     ),
-    //   ),
-    // );
 
     return image(image: link);
   }

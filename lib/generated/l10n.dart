@@ -490,17 +490,6 @@ class S {
     );
   }
 
-  /// `Edit a post`
-  String get editPost {
-    return Intl.message(
-      'Edit post',
-      name: 'editPost',
-      desc: '',
-      args: [],
-    );
-  }
-
-
   /// `Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly.`
   String get introOneDescription {
     return Intl.message(
@@ -556,16 +545,6 @@ class S {
     return Intl.message(
       'Vehicle sell/buy',
       name: 'buySell',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `group`
-  String get group {
-    return Intl.message(
-      'Group',
-      name: 'group',
       desc: '',
       args: [],
     );
@@ -676,37 +655,6 @@ class S {
     return Intl.message(
       'Share',
       name: 'share',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Rating and Review`
-  String get rating {
-    return Intl.message(
-      'Rating And Review',
-      name: 'rating',
-      desc: '',
-      args: [],
-    );
-  }
-
-
-  /// `Rating and Review`
-  String get edit {
-    return Intl.message(
-      'Edit',
-      name: 'edit',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Rating and Review`
-  String get re_post {
-    return Intl.message(
-      'Re-Post',
-      name: 're_post',
       desc: '',
       args: [],
     );
@@ -991,27 +939,6 @@ class S {
       args: [],
     );
   }
-
-  /// `Next`
-  String get next {
-    return Intl.message(
-      'Next',
-      name: 'next',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Create`
-  String get create {
-    return Intl.message(
-      'Create',
-      name: 'create',
-      desc: '',
-      args: [],
-    );
-  }
-
 
   /// `Login issue`
   String get loginIssue {
@@ -1323,26 +1250,6 @@ class S {
     );
   }
 
-  /// `Apply now`
-  String get applyNow {
-    return Intl.message(
-      'Apply now',
-      name: 'applyNow',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Get In Touch`
-  String get getInTouch {
-    return Intl.message(
-      'Get In Touch',
-      name: 'getInTouch',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Chat`
   String get chat {
     return Intl.message(
@@ -1468,16 +1375,6 @@ class S {
     return Intl.message(
       'Cargo Type',
       name: 'cargoType',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Group Type`
-  String get groupType {
-    return Intl.message(
-      'Show Post to',
-      name: 'groupType',
       desc: '',
       args: [],
     );
@@ -1713,25 +1610,6 @@ class S {
     );
   }
 
-  /// `Rate and Review`
-  String get terms_condition {
-    return Intl.message(
-      'Terms and Condition',
-      name: 'terms_condition',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Rate and Review`
-  String get privacyAndPolicy {
-    return Intl.message(
-      'Privacy and Policy',
-      name: 'privacyAndPolicy',
-      desc: '',
-      args: [],
-    );
-  }
   /// `Rate This App.`
   String get rate_this_app {
     return Intl.message(
@@ -1767,6 +1645,116 @@ class S {
     return Intl.message(
       'MAYBE LATER',
       name: 'may_be_letter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get in tounch`
+  String get getInTouch {
+    return Intl.message(
+      'Get in tounch',
+      name: 'getInTouch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rating`
+  String get rating {
+    return Intl.message(
+      'Rating',
+      name: 'rating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Repost`
+  String get re_post {
+    return Intl.message(
+      'Repost',
+      name: 're_post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply now`
+  String get applyNow {
+    return Intl.message(
+      'Apply now',
+      name: 'applyNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show post to`
+  String get groupType {
+    return Intl.message(
+      'Show post to',
+      name: 'groupType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group`
+  String get group {
+    return Intl.message(
+      'Group',
+      name: 'group',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms & Condition`
+  String get terms_condition {
+    return Intl.message(
+      'Terms & Condition',
+      name: 'terms_condition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyAndPolicy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyAndPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Group`
+  String get creategroup {
+    return Intl.message(
+      'Create Group',
+      name: 'creategroup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Post`
+  String get editPost {
+    return Intl.message(
+      'Edit Post',
+      name: 'editPost',
       desc: '',
       args: [],
     );

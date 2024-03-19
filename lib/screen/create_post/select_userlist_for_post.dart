@@ -83,7 +83,7 @@ class _SelectUserForPostScreen extends State<SelectUserForPostScreen> {
             child: Button(
                 width: 327.w,
                 height: 49.h,
-                title: S().next,
+                title: S().Next,
                 textStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 14.sp,
