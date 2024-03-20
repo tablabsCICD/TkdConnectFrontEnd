@@ -832,4 +832,10 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
     );
   }
 
+  @override
+  void refreshHomeScreen() {
+
+   refreshHome();
+  }
+
 }

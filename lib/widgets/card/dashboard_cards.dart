@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/screen/edit_post/edit_post_base_screen.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
@@ -81,7 +82,11 @@ class AllCards {
           load.userId == userId
               ? BaseWidget().deleteButton((val) {
                   if (val == 10) {
-                  } else {
+                  }else if(val==6){
+
+                    Navigator.pushNamed(context, AppRoutes.editpost,arguments: load);
+                  }
+                  else {
                     Utils().openMenu(val, load, context);
                   }
                 }, true)
@@ -163,7 +168,30 @@ class AllCards {
                       ToastMessage.show(context, "This is DND Post");
                     } else {
                       if (val == 6) {
-                        // Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(load)));
+                        //Navigator.pop(context);
+
+                        Future.delayed(Duration(seconds: 1), () async {
+
+                          PostBidData postBidData=PostBidData();
+                          postBidData.genericCardsDto=GenericCardsDto();
+                          postBidData.genericCardsDto!.id=load.id;
+                          postBidData.genericCardsDto!.mobileNumber=load.mobileNumber;
+                          postBidData.genericCardsDto!.companyName=load.companyName;
+                          postBidData.genericCardsDto!.cargoType=load.typeOfCargo;
+                          postBidData.genericCardsDto!.vehicleWeight=load.loadWeight;
+                          postBidData.genericCardsDto!.vehicleSize=load.vehicleSize;
+                          postBidData.genericCardsDto!.typeOfPayment=load.typeOfPayment;
+                          postBidData.genericCardsDto!.source=load.source;
+                          postBidData.genericCardsDto!.destination=load.destination;
+                          postBidData.genericCardsDto!.dnd=load.dnd;
+                          postBidData.genericCardsDto!.privatePost=load.privatePost;
+                          int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
+
+                          postDelete.refreshHomeScreen();
+
+
+                        });
+
                       } else {
                         Utils().openMenu(val, load, context,
                             providerHome: provider);
@@ -175,6 +203,8 @@ class AllCards {
                   if (load.dnd == 1) {
                     ToastMessage.show(context, "This is DND Post");
                   } else {
+
+
                     Utils()
                         .openMenu(val, load, context, providerHome: provider);
                   }

@@ -70,7 +70,7 @@ class _MoreScreen extends State<MoreScreen> {
                 Navigator.pushNamed(context, AppRoutes.job);
 
               },FontWeight.w600),
-              AppConstant.USERTYPE==AppConstant.TRANSPOTER ?
+              AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.USERTYPE==AppConstant.AGENT?
               item(S().buySell,(){
                 Navigator.pushNamed(context, AppRoutes.buysell);
 

@@ -127,15 +127,17 @@ class EditPostLoadProvider extends BaseProvider {
   List<int> addedUserListInPost=[];
   List<UserData> addedUsers = [];
   getUserListFromString(String userList){
-    addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
-    print(addedUserListIdInPost);
-    addedUserListIdInPost.forEach((element) async {
-      UserData userData = await getUserById(int.parse(element));
-      addedUserListInPost.add(int.parse(element));
-      print(userData.id);
-      print(userData.firstName);
-      addedUsers.add(userData);
-    });
+    if(userList.isNotEmpty){
+      addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
+      print(addedUserListIdInPost);
+      addedUserListIdInPost.forEach((element) async {
+        UserData userData = await getUserById(int.parse(element));
+        addedUserListInPost.add(int.parse(element));
+        print(userData.id);
+        print(userData.firstName);
+        addedUsers.add(userData);
+      });
+    }
     return addedUserListIdInPost;
   }
 

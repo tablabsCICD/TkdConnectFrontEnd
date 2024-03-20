@@ -86,7 +86,7 @@ class HomeScreenProvider extends BaseProvider{
 
    //   url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
     }
-    print('the url $url');
+   // print('the url $url');
 
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
@@ -97,7 +97,7 @@ class HomeScreenProvider extends BaseProvider{
 
       totalPages = type.totalPages;
       truckLoadTypeList.addAll(type.content);
-      print('the new json is ${url}');
+
       EasyLoading.dismiss();
       notifyListeners();
     }
@@ -106,7 +106,7 @@ class HomeScreenProvider extends BaseProvider{
 
   getUserListFromString(String userList){
     List<String> addedUserListInPost = userList.split(',').map((e) => e.trim()).toList();
-    print(addedUserListInPost);
+
   }
 
   likeIncreamentApi(int postId, BuildContext context)async{
@@ -284,7 +284,7 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.privatePost= load.privatePost;
     postLoad.rating= 5;
     postLoad.type= load.type;
-    print('the cargo type is ${load.typeOfCargo} ${load.loadWeight}');
+   // print('the cargo type is ${load.typeOfCargo} ${load.loadWeight}');
     postLoad.typeOfCargo=load.typeOfCargo;
     postLoad.typeOfPayment=load.typeOfPayment;
     postLoad.vehicleSize= load.vehicleSize;

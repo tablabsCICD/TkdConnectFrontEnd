@@ -1701,7 +1701,7 @@ class BaseWidget {
                 )
               ],
             )),
-        /*PopupMenuItem(
+        PopupMenuItem(
             onTap: () {
               onMenuTap(6);
             },
@@ -1726,7 +1726,7 @@ class BaseWidget {
                   ),
                 )
               ],
-            )),*/
+            )),
       ],
     );
   }
