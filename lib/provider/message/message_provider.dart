@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:tkd_connect/utils/toast.dart';
 
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
+import '../../model/response/ChatList.dart';
 import '../../model/response/chat_list.dart';
 import '../../model/response/search_data.dart';
 import '../../model/response/transport_directory_search.dart';
@@ -21,6 +23,7 @@ class MessageProvider extends BaseProvider{
 
   MessageProvider():super(""){
     getChatList();
+    setUpTimedFetch();
   }
   List<SearchData> userSearch=[];
   List<userAdded> userChat=[];
@@ -45,51 +48,122 @@ class MessageProvider extends BaseProvider{
       isUserVisbile=true;
     }
 
-    //   String myUrl = ApiConstant.DIRECTORY(search);
-    // ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
-    //   userSearch.clear();
-    // if(apiResponse.status==200){
-    //   TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
-    //   userSearch.addAll(transportSearchData.content);
-    // }
+
     notifyListeners();
 
   }
 
   getChatList()async{
+    userChat.clear();
     Map<String,userAdded> map={};
     User user=await LocalSharePreferences().getLoginData();
-    String myUrl = ApiConstant.CHAT_USER_LIST(user.content!.first.id);
+    String myUrl = ApiConstant.CHAT_USER_LIST_DATE_SORT(user.content!.first.id);
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
+
     if(apiResponse.status==200){
-      List<dynamic> list = List.from(apiResponse.response);
-      if(list.length>0){
-        for(int i=0;i<list.length;i++){
-          //userChat.add(userAdded(list[i]["name2"], list[i]["loggedUserName2"], "https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1702020994041-5dbfe0b8-3474-4351-b00a-813d8bb4a92e2170825283657788568.jpg"));
-
-           if(list[i]["mobileNumber1"]==user.content!.first.mobileNumber){
-             String profile="";
-             if(list[i]["userProfile2"]==null){
-               profile="";
-             }else{
-               profile=list[i]["userProfile2"];
-             }
-             map[list[i]["connectionKey"]]=userAdded(list[i]["name2"], list[i]["mobileNumber2"].toString(),  profile);
-
-           }else{
-             String profile="";
-             if(list[i]["userProfile1"]==null){
-               profile="";
-             }else{
-               profile=list[i]["userProfile1"];
-             }
-             map[list[i]["connectionKey"]]=userAdded(list[i]["name1"], list[i]["mobileNumber1"].toString(),profile );
-
-           }
+     // print('the ${apiResponse.response}');
+      ChatListDate chatList=ChatListDate.fromJson(jsonDecode(apiResponse.response));
+      if(chatList.data!.length!=0){
+        for(int i=0;i<chatList.data!.length;i++){
+          if(chatList.data![i].mobileNumber1 ==user.content!.first.mobileNumber){
+            userAdded userChatAdded=userAdded(chatList.data![i].name2!,chatList.data![i].mobileNumber2!.toString(),chatList.data![i].userProfile2==null?"":chatList.data![i].userProfile2!,chatList.data![i].id!,chatList.data![i].userId2!);
+            userChat.add(userChatAdded);
+          }else{
+            userAdded userChatAdded=userAdded(chatList.data![i].name1!,chatList.data![i].mobileNumber1!.toString(),chatList.data![i].userProfile1==null?"":chatList.data![i].userProfile1!,chatList.data![i].id!,chatList.data![i].userId!);
+            userChat.add(userChatAdded);
+          }
         }
       }
-     userChat= map.entries.map((entry) => entry.value).cast<userAdded>().toList();
+    notifyListeners();
+
+    }else{
+
     }
+    // if(apiResponse.status==200){
+    //   List<dynamic> list = List.from(apiResponse.response);
+    //   if(list.length>0){
+    //     for(int i=0;i<list.length;i++){
+    //        if(list[i]["mobileNumber1"]==user.content!.first.mobileNumber){
+    //          String profile="";
+    //          if(list[i]["userProfile2"]==null){
+    //            profile="";
+    //          }else{
+    //            profile=list[i]["userProfile2"];
+    //          }
+    //          map[list[i]["connectionKey"]]=userAdded(list[i]["name2"], list[i]["mobileNumber2"].toString(),  profile);
+    //
+    //        }else{
+    //          String profile="";
+    //          if(list[i]["userProfile1"]==null){
+    //            profile="";
+    //          }else{
+    //            profile=list[i]["userProfile1"];
+    //          }
+    //
+    //          map[list[i]["connectionKey"]]=userAdded(list[i]["name1"], list[i]["mobileNumber1"].toString(),profile );
+    //
+    //        }
+    //     }
+    //   }
+    //  userChat= map.entries.map((entry) => entry.value).cast<userAdded>().toList();
+    // }
+    notifyListeners();
+  }
+
+  getChatListWithoutDialog()async{
+    userChat.clear();
+    Map<String,userAdded> map={};
+    User user=await LocalSharePreferences().getLoginData();
+    String myUrl = ApiConstant.CHAT_USER_LIST_DATE_SORT(user.content!.first.id);
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(myUrl);
+
+    if(apiResponse.status==200){
+     // print('the ${apiResponse.response}');
+      ChatListDate chatList=ChatListDate.fromJson(jsonDecode(apiResponse.response));
+      if(chatList.data!.length!=0){
+        for(int i=0;i<chatList.data!.length;i++){
+          if(chatList.data![i].mobileNumber1 ==user.content!.first.mobileNumber){
+            userAdded userChatAdded=userAdded(chatList.data![i].name2!,chatList.data![i].mobileNumber2!.toString(),chatList.data![i].userProfile2==null?"":chatList.data![i].userProfile2!,chatList.data![i].id!,chatList.data![i].userId2!);
+            userChat.add(userChatAdded);
+          }else{
+            userAdded userChatAdded=userAdded(chatList.data![i].name1!,chatList.data![i].mobileNumber1!.toString(),chatList.data![i].userProfile1==null?"":chatList.data![i].userProfile1!,chatList.data![i].id!,chatList.data![i].userId!);
+            userChat.add(userChatAdded);
+          }
+        }
+      }
+      notifyListeners();
+
+    }else{
+
+    }
+    // if(apiResponse.status==200){
+    //   List<dynamic> list = List.from(apiResponse.response);
+    //   if(list.length>0){
+    //     for(int i=0;i<list.length;i++){
+    //        if(list[i]["mobileNumber1"]==user.content!.first.mobileNumber){
+    //          String profile="";
+    //          if(list[i]["userProfile2"]==null){
+    //            profile="";
+    //          }else{
+    //            profile=list[i]["userProfile2"];
+    //          }
+    //          map[list[i]["connectionKey"]]=userAdded(list[i]["name2"], list[i]["mobileNumber2"].toString(),  profile);
+    //
+    //        }else{
+    //          String profile="";
+    //          if(list[i]["userProfile1"]==null){
+    //            profile="";
+    //          }else{
+    //            profile=list[i]["userProfile1"];
+    //          }
+    //
+    //          map[list[i]["connectionKey"]]=userAdded(list[i]["name1"], list[i]["mobileNumber1"].toString(),profile );
+    //
+    //        }
+    //     }
+    //   }
+    //  userChat= map.entries.map((entry) => entry.value).cast<userAdded>().toList();
+    // }
     notifyListeners();
   }
 
@@ -107,7 +181,6 @@ class MessageProvider extends BaseProvider{
     } else {
       groupChatId = '$peerId-$currentUserId';
     }
-    print('the groupId is ${groupChatId}');
     Map<String ,dynamic>parameter={
       "chat": "string",
       "connectionKey": groupChatId,
@@ -134,9 +207,11 @@ class MessageProvider extends BaseProvider{
         MaterialPageRoute(
           builder: (context) => ChatPage(
             arguments: ChatPageArguments(
+              id: data.id!,
               peerId: data.mobileNumber!.toString(),
-              peerAvatar: "",
+              peerAvatar: data.profilePicture.toString(),
               peerNickname: data.firstName!+" "+data.lastName!,
+              notificationId: data.id!
             ),
           ),
         ),
@@ -150,23 +225,44 @@ class MessageProvider extends BaseProvider{
   
 
   getNewaddedList()async{
+    userChat.clear();
     Map<String,userAdded> map={};
     User user=await LocalSharePreferences().getLoginData();
-    String myUrl = ApiConstant.CHAT_USER_LIST(user.content!.first.id);
+    String myUrl = ApiConstant.CHAT_USER_LIST_DATE_SORT(user.content!.first.id);
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
-    if(apiResponse.status==200){
-      List<dynamic> list = List.from(apiResponse.response);
-      if(list.length>0){
-        for(int i=0;i<list.length;i++){
-          //userChat.add(userAdded(list[i]["name2"], list[i]["loggedUserName2"], "https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1702020994041-5dbfe0b8-3474-4351-b00a-813d8bb4a92e2170825283657788568.jpg"));
 
-          map[list[i]["connectionKey"]]=userAdded(list[i]["name2"], list[i]["loggedUserName2"], "https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1702020994041-5dbfe0b8-3474-4351-b00a-813d8bb4a92e2170825283657788568.jpg");
+    if(apiResponse.status==200){
+      print('the ${apiResponse.response}');
+      ChatListDate chatList=ChatListDate.fromJson(jsonDecode(apiResponse.response));
+      if(chatList.data!.length!=0){
+        for(int i=0;i<chatList.data!.length;i++){
+          if(chatList.data![i].mobileNumber1 ==user.content!.first.mobileNumber){
+            userAdded userChatAdded=userAdded(chatList.data![i].name2!,chatList.data![i].mobileNumber2!.toString(),chatList.data![i].userProfile2==null?"":chatList.data![i].userProfile2!,chatList.data![i].id!,chatList.data![i].userId2!);
+            userChat.add(userChatAdded);
+          }else{
+            userAdded userChatAdded=userAdded(chatList.data![i].name1!,chatList.data![i].mobileNumber1!.toString(),chatList.data![i].userProfile1==null?"":chatList.data![i].userProfile1!,chatList.data![i].id!,chatList.data![i].userId!);
+            userChat.add(userChatAdded);
+          }
         }
       }
-      userChat.clear();
-      userChat= map.entries.map((entry) => entry.value).cast<userAdded>().toList();
+      notifyListeners();
+
+    }else{
+
     }
     notifyListeners();
+  }
+
+  late Timer time;
+  setUpTimedFetch() {
+   time= Timer.periodic(Duration(milliseconds: 5000), (timer) {
+      getChatListWithoutDialog();
+
+    });
+  }
+
+  stopTimer(){
+    time.cancel();
   }
 
 }
@@ -174,6 +270,8 @@ class userAdded{
   final String name;
   final String userId;
   final String profile;
+  final int id;
+  final int notificationUserId;
 
-  userAdded(this.name, this.userId, this.profile);
+  userAdded(this.name, this.userId, this.profile, this.id,this.notificationUserId);
 }

@@ -91,12 +91,7 @@ class Utils {
   }
 
   callPrivacyAndPolicy(BuildContext context) async {
-    final String packageName = 'com.pdk.tkd';
-    final String appId = 'your_app_id';
-    final String url = Platform.isAndroid
-        ? 'https://play.google.com/store/apps/details?id=$packageName'
-        : 'https://apps.apple.com/app/your_app_name/id$appId';
-
+    const url = 'https://www.tkdconnect.in/term-and-condition';
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
@@ -195,8 +190,14 @@ class Utils {
 
         case 6:
           //Edit Post
-          print('the edit post');
+
           Navigator.pushNamed(context, AppRoutes.editpost,arguments: load);
+          return;
+
+
+        case 7:
+          print('the click is ');
+          providerHome!.interChnageSendPost(context, load);
           return;
       }
     }
@@ -237,10 +238,12 @@ class Utils {
  String getTranport(int val){
     switch(val){
       case 0:
-        return "Transporters";
+     //   return "Transporters";
+        return "Agents/Brokers";
 
       case 1:
-        return "Agents/Brokers";
+       // return "Agents/Brokers";
+        return "Transporters";
 
       case 2:
         return "PACKERS AND MOVERS";
@@ -261,15 +264,13 @@ class Utils {
   String mainTag(String tag){
     switch(tag){
       case 'Full load available':
-        return 'Full load available';
-      case 'Part load available':
-        return 'Part load available';
-      case 'Full load required':
         return 'Full vehicle required';
-      case 'Part load required':
+      case 'Part load available':
         return 'Part vehicle required';
-
-
+      case 'Full load required':
+        return 'Full load required';
+      case 'Part load required':
+        return 'Part load required';
       case '':
 
     }
@@ -277,7 +278,4 @@ class Utils {
 
     return "";
   }
-
-
-
 }

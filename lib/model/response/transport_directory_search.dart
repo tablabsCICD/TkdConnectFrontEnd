@@ -75,6 +75,10 @@ class TransportSearchData {
   String? paidStartDate;
   String? validTill;
   String? website;
+  String? type;
+  String? mainTag;
+  String? title;
+  List<String>? images;
   late final List<ListOfPreferredRoutes> listOfPreferredRoutes;
 
   TransportSearchData(
@@ -102,6 +106,10 @@ class TransportSearchData {
         this.paidStartDate,
         this.validTill,
         this.website,
+        this.type,
+        this.mainTag,
+        this.title,
+        this.images,
         required this.listOfPreferredRoutes});
 
   TransportSearchData.fromJson(Map<String, dynamic> json) {
@@ -129,6 +137,12 @@ class TransportSearchData {
     paidStartDate = json['paidStartDate']?? '';
     validTill = json['validTill']?? '';
     website = json['website']?? '';
+    type = json['type']?? '';
+    mainTag = json['mainTag']?? '';
+    title = json['title']?? '';
+
+    images = json['images'].cast<String>();
+
     listOfPreferredRoutes = List.from(json['listOfPreferredRoutes']).map((e)=>ListOfPreferredRoutes.fromJson(e)).toList();
   }
 
@@ -158,6 +172,11 @@ class TransportSearchData {
     data['paidStartDate'] = this.paidStartDate;
     data['validTill'] = this.validTill;
     data['website'] = this.website;
+    data['type'] = this.type;
+    data['mainTag'] = this.mainTag;
+    data['title'] = this.title;
+    data['images'] = this.images;
+
     if (this.listOfPreferredRoutes != null) {
       data['listOfPreferredRoutes'] =
           this.listOfPreferredRoutes.map((e)=>e.toJson()).toList();

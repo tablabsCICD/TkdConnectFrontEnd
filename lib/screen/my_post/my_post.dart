@@ -100,7 +100,7 @@ class _MyPostState extends State<MyPostScreen> {
               ),
               child: Center(
                 child: Text(
-                  postBidData.genericCardsDto!.mainTag!,
+                  Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 9.sp,

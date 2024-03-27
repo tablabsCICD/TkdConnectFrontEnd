@@ -245,7 +245,14 @@ class _SearchEditState extends State<SearchEditScreen> {
     String lastSearch=await LocalSharePreferences().getString(AppConstant.RESENT_SEARCH);
 
     if(lastSearch!=null){
-      listSuggestes=lastSearch.split(",");
+      List<String>listDemo=lastSearch.split(",");
+      for(int i=0;i<listDemo.length;i++){
+        if(listDemo[i]==""){
+        }else{
+          listSuggestes.add(listDemo[i]);
+        }
+      }
+
       setState(() {
 
       });

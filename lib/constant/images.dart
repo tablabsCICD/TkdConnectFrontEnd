@@ -68,6 +68,9 @@ static String vehicle_load = "assets/images/vehicle_load.svg";
 
 static String general_post = "assets/images/general_post.svg";
 
+static String swap = "assets/images/swap.svg";
+
+
 
 
 

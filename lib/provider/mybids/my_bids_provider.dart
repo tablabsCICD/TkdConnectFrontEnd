@@ -31,7 +31,6 @@ class MyBidsProvider extends BaseProvider{
     if(isLoad && tabChang){
     }else{
       User user=await LocalSharePreferences().getLoginData();
-      //print('the link is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}"}');
 
       ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}");
      // print('the response is ${apiResponse.response}');
@@ -119,24 +118,26 @@ class MyBidsProvider extends BaseProvider{
 
   changeDropDown(String tab,BuildContext context){
     selectedString=tab;
+    print('the selcted tab $selectedString');
     if(tab.contains("All bids")){
       fla = false;pla = false;flr = false;plr = false;
     }
 
-    if(tab.contains("Full load available")){
-      fla = true;pla = false;flr = false;plr = false;
-    }
-
-    if(tab.contains("Part load available")){
-      fla = false;pla = true;flr = false;plr = false;
-    }
-    if(tab.contains("Full load Required")){
+    if(tab.contains("Full load required")){
       fla = false;pla = false;flr = true;plr = false;
     }
 
-    if(tab.contains("Part load Required")){
+    if(tab.contains("Part load required")){
       fla = false;pla = false;flr = false;plr = true;
     }
+    if(tab.contains("Full vehicle required")){
+      fla = true;pla = false;flr = false;plr = false;
+    }
+
+    if(tab.contains("Part vehicle required")){
+      fla = false;pla = true;flr = false;plr = false;
+    }
+   // print('the fa $fla $pla $flr $plr');
     if(isLoadMyPlacedBid){
 
         selectedPage=0;

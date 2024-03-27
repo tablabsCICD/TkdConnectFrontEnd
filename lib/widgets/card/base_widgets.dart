@@ -7,15 +7,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:tkd_connect/model/request/comment_screen.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
-import 'package:tkd_connect/model/response/userdata.dart';
-import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
-import 'package:tkd_connect/screen/general_post/post_comment_list.dart';
 import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/utils/sharepreferences.dart';
+
 import 'package:tkd_connect/utils/utils.dart';
+import 'package:tkd_connect/widgets/verified_tag.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -24,7 +20,7 @@ import '../textview.dart';
 
 class BaseWidget {
   Widget profile(String profileLink, String name, String companyName,
-      {int verify = 0}) {
+      {int verify = 0,double ratings= 4.5}) {
     return Container(
       width: double.infinity,
       child: Row(
@@ -126,7 +122,7 @@ class BaseWidget {
                                         ),
                                         RatingBar.builder(
                                           itemSize: 10,
-                                          initialRating: 3,
+                                          initialRating: ratings,
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -164,7 +160,7 @@ class BaseWidget {
   }
 
   Widget profileWithUser(String profileLink, String name, String companyName,
-      {int verify = 0, int transporterOrAgent = 0}) {
+      {int verify = 0, int transporterOrAgent = 0,double ratings= 4.5}) {
     return Container(
       width: double.infinity,
       child: Row(
@@ -244,11 +240,13 @@ class BaseWidget {
                                             Visibility(
                                                 visible:
                                                     verify != 0 ? true : false,
-                                                child: SvgPicture.asset(
-                                                  Images.verified,
-                                                  height: 12.h,
-                                                  width: 12.w,
-                                                ))
+                                                // child: SvgPicture.asset(
+                                                //   Images.verified,
+                                                //   height: 12.h,
+                                                //   width: 12.w,
+                                                // ))
+                                            child: VerifiedTag().onVeriedTag(),
+                                            )
                                           ],
                                         ),
                                         SizedBox(
@@ -280,7 +278,7 @@ class BaseWidget {
                                         ),
                                         RatingBar.builder(
                                           itemSize: 10,
-                                          initialRating: 3,
+                                          initialRating: ratings,
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -293,7 +291,7 @@ class BaseWidget {
                                             size: 5,
                                           ),
                                           onRatingUpdate: (rating) {
-                                            print(rating);
+                                            //print(rating);
                                           },
                                         )
                                       ],
@@ -1482,6 +1480,33 @@ class BaseWidget {
             )),
         PopupMenuItem(
             onTap: () {
+              onMenuTap(7);
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  Images.swap,
+                  color: Colors.black,
+                  width: 20.w,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().cityInterchange,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
               onMenuTap(6);
             },
             child: Row(
@@ -1564,64 +1589,64 @@ class BaseWidget {
         onMenuTap(val);
       },
       itemBuilder: (context) => [
-        PopupMenuItem(
-          onTap: () {
-            onMenuTap(1);
-          },
-          child: Row(
-            children: [
-              SvgPicture.asset(
-                Images.message,
-                color: Colors.black,
-                width: 20.w,
-                height: 20.h,
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              Text(
-                S().chat,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-              SizedBox(
-                width: 13.w,
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-            onTap: () {
-              onMenuTap(2);
-            },
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  Images.call_white,
-                  color: Colors.black,
-                  width: 20.w,
-                  height: 20.h,
-                ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                Text(
-                  S().call,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                )
-              ],
-            )),
+        // PopupMenuItem(
+        //   onTap: () {
+        //     onMenuTap(1);
+        //   },
+        //   child: Row(
+        //     children: [
+        //       SvgPicture.asset(
+        //         Images.message,
+        //         color: Colors.black,
+        //         width: 20.w,
+        //         height: 20.h,
+        //       ),
+        //       SizedBox(
+        //         width: 12.w,
+        //       ),
+        //       Text(
+        //         S().chat,
+        //         style: TextStyle(
+        //           color: Colors.black,
+        //           fontSize: 14.sp,
+        //           fontFamily: GoogleFonts.poppins().fontFamily,
+        //           fontWeight: FontWeight.w400,
+        //           height: 0,
+        //         ),
+        //       ),
+        //       SizedBox(
+        //         width: 13.w,
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // PopupMenuItem(
+        //     onTap: () {
+        //       onMenuTap(2);
+        //     },
+        //     child: Row(
+        //       children: [
+        //         SvgPicture.asset(
+        //           Images.call_white,
+        //           color: Colors.black,
+        //           width: 20.w,
+        //           height: 20.h,
+        //         ),
+        //         SizedBox(
+        //           width: 12.w,
+        //         ),
+        //         Text(
+        //           S().call,
+        //           style: TextStyle(
+        //             color: Colors.black,
+        //             fontSize: 14.sp,
+        //             fontFamily: GoogleFonts.poppins().fontFamily,
+        //             fontWeight: FontWeight.w400,
+        //             height: 0,
+        //           ),
+        //         )
+        //       ],
+        //     )),
         PopupMenuItem(
             onTap: () {
               onMenuTap(3);
@@ -1649,32 +1674,32 @@ class BaseWidget {
                 )
               ],
             )),
-        PopupMenuItem(
-            onTap: () {
-              onMenuTap(4);
-            },
-            child: Row(
-              children: [
-                Icon(
-                  Icons.star_border,
-                  color: Colors.black,
-                  size: 20.w,
-                ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                Text(
-                  S().rating,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                )
-              ],
-            )),
+        // PopupMenuItem(
+        //     onTap: () {
+        //       onMenuTap(4);
+        //     },
+        //     child: Row(
+        //       children: [
+        //         Icon(
+        //           Icons.star_border,
+        //           color: Colors.black,
+        //           size: 20.w,
+        //         ),
+        //         SizedBox(
+        //           width: 12.w,
+        //         ),
+        //         Text(
+        //           S().rating,
+        //           style: TextStyle(
+        //             color: Colors.black,
+        //             fontSize: 14.sp,
+        //             fontFamily: GoogleFonts.poppins().fontFamily,
+        //             fontWeight: FontWeight.w400,
+        //             height: 0,
+        //           ),
+        //         )
+        //       ],
+        //     )),
         PopupMenuItem(
             onTap: () {
               onMenuTap(5);
@@ -1691,6 +1716,32 @@ class BaseWidget {
                 ),
                 Text(
                   S().re_post,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(7);
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  Images.swap,
+                  width: 20.w,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().cityInterchange,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.sp,
@@ -2381,6 +2432,36 @@ class BaseWidget {
               ),
             ),
           );
+  }
+
+
+  getImageclipGroup(String src, {double? height, double? width}) {
+    return src.isEmpty
+        ? Container(
+        width: height == null ? 35 : height,
+        height: width == null ? 35 : width,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[100],
+            image: new DecorationImage(
+                fit: BoxFit.contain,
+                image: AssetImage('assets/images/my_profile.png'))))
+        : CircleAvatar(
+      radius: width == null ? 35 : width / 2,
+      backgroundColor: Colors.white,
+      // borderRadius: BorderRadius.circular(width==null?35:width),
+
+      child: ClipOval(
+        child: CachedNetworkImage(
+          imageUrl: src,
+          placeholder: (context, url) =>
+              Image.asset("assets/images/my_profile.png"),
+          fit: BoxFit.cover,
+          width: height == null ? 35 : height,
+          height: width == null ? 35 : width,
+        ),
+      ),
+    );
   }
 
   appBar(BuildContext context, String title) {

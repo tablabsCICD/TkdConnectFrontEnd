@@ -263,8 +263,9 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
       ),
       child: Row(
         children: <Widget>[
-          BaseWidget().getImageclip(
-            model.filterByName[index].profilePicture.toString(),
+          BaseWidget().getImageclipGroup(
+          model.filterByName[index].companyLogo ==null ?"":
+            model.filterByName[index].companyLogo.toString(),
             height: 34,
             width: 34,
           ),

@@ -1759,6 +1759,16 @@ class S {
       args: [],
     );
   }
+
+  /// `City Interchange`
+  String get cityInterchange {
+    return Intl.message(
+      'City Interchange',
+      name: 'cityInterchange',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

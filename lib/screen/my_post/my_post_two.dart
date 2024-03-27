@@ -10,6 +10,7 @@ import 'package:tkd_connect/provider/my_post/my_post_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
+import 'package:tkd_connect/widgets/verified_tag.dart';
 
 import '../../generated/l10n.dart';
 import '../../model/response/my_post_bid_list.dart';
@@ -99,7 +100,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   ),
                   child: Center(
                     child: Text(
-                      postBidData.genericCardsDto!.mainTag!,
+                      Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 9.sp,
@@ -146,8 +147,10 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                  provider.reSendPost(context,postBidData);
                 }
                 if(val==6){
-                  print('the edit post');
                   Navigator.pushNamed(context, AppRoutes.editpost,arguments: postBidData);
+                }
+                if(val==7){
+                  provider.interChnageSendPost(context, postBidData);
                 }
 
               },false)
@@ -283,18 +286,8 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                                 ),
                                 SizedBox(width: 4.w),
                                 Visibility(
-                                  visible: bidings.isPaid!=0?true:false,
-                                  child: Container(
-                                    width: 12.w,
-                                    height: 12.h,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(),
-                                    child: Stack(
-                                      children: [
-                                        SvgPicture.asset(Images.verified)
-                                      ],
-                                    ),
-                                  ),
+                                  visible: bidings.isVerified!=0?true:false,
+                                  child: VerifiedTag().onVeriedTag(),
                                 ),
                               ],
                             ),

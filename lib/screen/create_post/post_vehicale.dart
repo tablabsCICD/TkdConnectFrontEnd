@@ -246,46 +246,11 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                     fontWeight: FontWeight.w600,
 
                   ), onClick: (){
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Post Load',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w600,
-                          ),),
-                          content: Text('Are you sure you want to post this requirement?',style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w400,
-                          ),),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(); // Close the dialog
-                              },
-                              child: Text('No',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
-                                fontFamily: GoogleFonts.poppins().fontFamily,
-                                fontWeight: FontWeight.w600,),),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                provider.checkVehicaleValidation(context);
-                              },
-                              child: Text(
-                                'Yes',
-                                style: TextStyle(color: Colors.green, fontSize: 12.sp,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
-                                  fontWeight: FontWeight.w600,),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+
+                    provider.checkVehicaleValidation(context);
+
+
+
                    // provider.checkVehicaleValidation(context);
                   },isEnbale: true,),
                 )

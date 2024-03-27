@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("characters remaining"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "chooseATopic": MessageLookupByLibrary.simpleMessage("Choose a topic"),
+        "cityInterchange":
+            MessageLookupByLibrary.simpleMessage("City Interchange"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "Click the below button to add routes"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),

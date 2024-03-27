@@ -39,7 +39,7 @@ class AppSettingScreen extends StatelessWidget {
   changeLanguage(BuildContext context){
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 64.h,
+      //height: 64.h,
       padding:  EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -61,7 +61,7 @@ class AppSettingScreen extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                height: 35.h,
+                //height: 35.h,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,

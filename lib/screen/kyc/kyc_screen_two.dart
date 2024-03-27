@@ -55,7 +55,9 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SvgPicture.asset(Images.close_circle)
+                      InkWell(onTap: (){
+                        Navigator.pop(context);
+                      },child: SvgPicture.asset(Images.close_circle))
                     ],
                   ),
                 ),

@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
     if(truckLoad.type=="Full Load" || truckLoad.type=="Part Load"){
 
       if(truckLoad.privatePost ==1){
-        return AllCards().cardLoadPrivateHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this);
+        return AllCards().cardLoadPrivateHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this,provider);
 
       }else{
         return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this,provider);
@@ -226,7 +226,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                                   width: 8.w,
                                 ),
                                 SizedBox(
-                                  width: 2.w,
+                                  width: 1.w,
                                 ),
                                 Text(
                                   Utils().getSelectedPackageName(provider.ispaid),
@@ -628,16 +628,16 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             ),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Full load available';
+                  provider.drooDwonheading = 'Full load Required ';
                   provider.falseAllFilter();
-                  provider.fla = true;
+                  provider.flr = true;
                   provider.notifyListeners();
                   provider.applyDropDwonFilter(context);
                 },
                 child: Row(
                   children: [
                     Text(
-                      'Full load available',
+                      'Full load Required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -650,16 +650,16 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Part load available ';
+                  provider.drooDwonheading = 'Part load required ';
                   provider.falseAllFilter();
-                  provider.pla = true;
+                  provider.plr = true;
                   provider.notifyListeners();
                   provider.applyDropDwonFilter(context);
                 },
                 child: Row(
                   children: [
                     Text(
-                      'Part load available ',
+                      'Part load required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -674,7 +674,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 onTap: () {
                   provider.drooDwonheading = 'Full vehicle  required ';
                   provider.falseAllFilter();
-                  provider.flr = true;
+                  provider.fla = true;
                   provider.notifyListeners();
                   provider.applyDropDwonFilter(context);
                 },
@@ -696,7 +696,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 onTap: () {
                   provider.drooDwonheading = 'Part vehicle Required ';
                   provider.falseAllFilter();
-                  provider.plr = true;
+                  provider.pla = true;
                   provider.notifyListeners();
                   provider.applyDropDwonFilter(context);
                 },
@@ -837,5 +837,8 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
 
    refreshHome();
   }
+
+
+
 
 }

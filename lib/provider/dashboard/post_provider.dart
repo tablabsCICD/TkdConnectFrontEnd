@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
@@ -16,6 +18,7 @@ import '../../model/response/search_data.dart';
 import '../../model/response/userdata.dart';
 import '../../model/response/verified_user.dart';
 import '../../screen/create_post/select_userlist_for_post.dart';
+import '../../utils/colors.dart';
 import '../../widgets/bottomsheet.dart';
 
 class PostLoadProvider extends BaseProvider {
@@ -128,7 +131,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.destination = destinationCity;
     postLoad.dnd = dnd ? 1 : 0;
     postLoad.emailId = user.content!.first!.emailId!;
-    postLoad.fullLoadChoice = "I Have Vehicle";
+    postLoad.fullLoadChoice = "I Have Vehicle"; //I Have Vehicle (Vheicle Load Pahejay) (Vehicle Load ahe vehicle )
 
     postLoad.instructions = specialInstructionController.text;
     postLoad.loadWeight = loadWeightController.text;
@@ -149,7 +152,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.topicName = "Full Load Truck";
     postLoad.image = images;
     postLoad.listOfUserIds = addedMemberIdList;
-    postLoad.userList = '';
+    //postLoad.userList = null;
 
     postLoad.id = 0;
     ApiResponse response = await ApiHelper().postParameter(
@@ -194,7 +197,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.topicName = "Full Load Truck";
     postLoad.image = images;
     postLoad.listOfUserIds = addedMemberIdList;
-    postLoad.userList = '';
+    //postLoad.userList = null;
     ApiResponse response = await ApiHelper().postParameter(
         ApiConstant.BASE_URL + "fullTruckLoad", postLoad.toJson());
     if (response.status == 200) {
@@ -277,7 +280,9 @@ class PostLoadProvider extends BaseProvider {
         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
         int a = await itemBottomSheet.showIteamHieght(
             context, groupListName, "Select Group");
+
         selecteGroup(a);
+
         selectOption = listOptionShow[index];
         selectedGroup = listOptionShow[index];
         notifyListeners();
@@ -345,10 +350,58 @@ class PostLoadProvider extends BaseProvider {
             ToastMessage.show(context, "Please Select Cargo Type");
           } else {
             if (selectedGroup == "Select One") {
-              ToastMessage.show(context, "Please Select User List");
+              ToastMessage.show(context, "Please Select Show Post To");
             } else {
               if (loadWieght && vehicaleSize) {
-                createPost(context);
+                //createPost(context);
+
+
+                if(selectedGroup == "Select One"){
+
+                }else{
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Post Load',style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),),
+                        content: Text('Are you sure you want to post this requirement?',style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w400,
+                        ),),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('No',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,),),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              createPost(context);
+
+                            },
+                            child: Text(
+                              'Yes',
+                              style: TextStyle(color: Colors.green, fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w600,),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+
               } else {
                 ToastMessage.show(context, "Please fill the all information");
               }
@@ -383,11 +436,63 @@ class PostLoadProvider extends BaseProvider {
           if (selectedCargo == "Select One") {
             ToastMessage.show(context, "Please Select Cargo Type");
           } else {
-            if (loadWieght && vehicaleSize) {
-              createVehiclePost(context);
-            } else {
-              ToastMessage.show(context, "Please fill the all information");
+
+            if(selectedGroup == "Select One"){
+              ToastMessage.show(context, "Please Select Show Post To");
+            }else {
+              if (loadWieght && vehicaleSize) {
+                // createVehiclePost(context);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Post Load',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),),
+                      content: Text('Are you sure you want to post this requirement?',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                      ),),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: Text('No',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,),),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            createVehiclePost(context);
+
+                          },
+                          child: Text(
+                            'Yes',
+                            style: TextStyle(color: Colors.green, fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+
+
+              } else {
+                ToastMessage.show(context, "Please fill the all information");
+              }
             }
+
+
+
           }
         }
       }

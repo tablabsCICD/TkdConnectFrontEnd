@@ -169,7 +169,9 @@ class _BuySellScreen extends State<BuySellScreen>{
             ),
           ),
           SizedBox(width: 8.w),
-          BaseWidget().profile("", truckLoad.nameOfPerson!, truckLoad.companyName!),
+          BaseWidget().profileWithUser("", truckLoad.nameOfPerson!, truckLoad.companyName!,
+              verify: truckLoad.isverified!,
+              transporterOrAgent: truckLoad.transporterOrAgent!),
           SizedBox(
             height: 12.h,
           ),

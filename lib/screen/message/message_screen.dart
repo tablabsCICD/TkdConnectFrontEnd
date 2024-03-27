@@ -21,10 +21,28 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _myProvider.stopTimer();
+    super.dispose();
+
+  }
+ late MessageProvider _myProvider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _myProvider=MessageProvider();
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => MessageProvider(),
+      create: (BuildContext context) => _myProvider,
       builder: (context, child) => _buildPage(context),
     );
   }
@@ -39,7 +57,7 @@ class _MessageScreenState extends State<MessageScreen> {
           children: [
             top_bar(context),
             serachBar(),
-            tabBar(),
+            toptabBar(),
 
             Consumer<MessageProvider>(
               builder: (context, provider, child) {
@@ -226,85 +244,66 @@ class _MessageScreenState extends State<MessageScreen> {
     );
   }
 
-  tabBar() {
-    return Container(
-      width: 335.w,
-      height: 32.h,
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Color(0x332C363F),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: Color(0x332C363F)),
-          borderRadius: BorderRadius.circular(8),
+  toptabBar() {
+    return Consumer<MessageProvider>(
+  builder: (context, provider, child) {
+  return InkWell(
+      onTap: (){
+          provider.getChatList();
+      },
+      child: Container(
+        width: 335.w,
+        height: 32.h,
+        margin: EdgeInsets.symmetric(horizontal: 20.w),
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: Color(0x332C363F),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1, color: Color(0x332C363F)),
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: ShapeDecoration(
-                color: Color(0x19001E49),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Color(0x332C363F)),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                height: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: ShapeDecoration(
+                  color: Color(0x19001E49),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Color(0x332C363F)),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'All messages',
+                      style: TextStyle(
+                        color: Color(0xCC001E49),
+                        fontSize: 12,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'All messages',
-                    style: TextStyle(
-                      color: Color(0xCC001E49),
-                      fontSize: 12,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-          // Expanded(
-          //   child: Container(
-          //     height: double.infinity,
-          //     padding: const EdgeInsets.symmetric(horizontal: 12),
-          //     decoration: ShapeDecoration(
-          //       color: Colors.white,
-          //       shape: RoundedRectangleBorder(
-          //         side: BorderSide(color: Color(0x332C363F)),
-          //       ),
-          //     ),
-          //     child: Column(
-          //       mainAxisSize: MainAxisSize.min,
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       crossAxisAlignment: CrossAxisAlignment.center,
-          //       children: [
-          //         Text(
-          //           'Favourites',
-          //           style: TextStyle(
-          //             color: Color(0xCC001E49),
-          //             fontSize: 12,
-          //             fontFamily: 'Poppins',
-          //             fontWeight: FontWeight.w400,
-          //             height: 0,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-        ],
+
+          ],
+        ),
       ),
     );
+  },
+);
   }
 
   itemMessage() {
@@ -530,18 +529,7 @@ class _MessageScreenState extends State<MessageScreen> {
         return InkWell(
           onTap: () {
             provider.postChatAdded(data, context);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => ChatPage(
-            //       arguments: ChatPageArguments(
-            //         peerId: data.userName!,
-            //         peerAvatar: data.companyLogo!,
-            //         peerNickname: data.firstName!+" "+data.lastName!,
-            //       ),
-            //     ),
-            //   ),
-            // );
+
           },
           child: Container(
             width: 375.w,
@@ -631,16 +619,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                     ],
                                   ),
                                 ),
-                                // Text(
-                                //   'Lorem ipsum dolor sit amet',
-                                //   style: TextStyle(
-                                //     color: Color(0x99001E49),
-                                //     fontSize: 10,
-                                //     fontFamily: 'Poppins',
-                                //     fontWeight: FontWeight.w400,
-                                //     height: 0,
-                                //   ),
-                                // ),
+
                               ],
                             ),
                           ),
@@ -650,71 +629,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   ),
                 ),
                 const SizedBox(width: 129),
-                // Container(
-                //   child: Column(
-                //     mainAxisSize: MainAxisSize.min,
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     children: [
-                //       Text(
-                //         '15:21',
-                //         style: TextStyle(
-                //           color: Color(0xFFC3262C),
-                //           fontSize: 10,
-                //           fontFamily: 'Poppins',
-                //           fontWeight: FontWeight.w600,
-                //           height: 0,
-                //         ),
-                //       ),
-                //       Container(
-                //         child: Row(
-                //           mainAxisSize: MainAxisSize.min,
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             Container(
-                //               decoration: ShapeDecoration(
-                //                 color: Color(0xFFC3262C),
-                //                 shape: RoundedRectangleBorder(
-                //                   borderRadius: BorderRadius.circular(40),
-                //                 ),
-                //               ),
-                //               child: Row(
-                //                 mainAxisSize: MainAxisSize.min,
-                //                 mainAxisAlignment: MainAxisAlignment.start,
-                //                 crossAxisAlignment: CrossAxisAlignment.center,
-                //                 children: [
-                //                   Container(
-                //                     width: 20,
-                //                     height: 20,
-                //                     child: Column(
-                //                       mainAxisSize: MainAxisSize.min,
-                //                       mainAxisAlignment: MainAxisAlignment.center,
-                //                       crossAxisAlignment: CrossAxisAlignment.center,
-                //                       children: [
-                //                         Text(
-                //                           '15',
-                //                           textAlign: TextAlign.right,
-                //                           style: TextStyle(
-                //                             color: Colors.white,
-                //                             fontSize: 10,
-                //                             fontFamily: 'Poppins',
-                //                             fontWeight: FontWeight.w600,
-                //                             height: 0,
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                 ],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+
               ],
             ),
           ),
@@ -728,14 +643,17 @@ class _MessageScreenState extends State<MessageScreen> {
       builder: (context, provider, child) {
         return InkWell(
           onTap: () {
+
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ChatPage(
                   arguments: ChatPageArguments(
+                    id: data.id!,
                     peerId: data.userId!,
                     peerAvatar: data.profile!,
                     peerNickname: data.name!,
+                    notificationId: data.notificationUserId
                   ),
                 ),
               ),
@@ -829,16 +747,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                     ],
                                   ),
                                 ),
-                                // Text(
-                                //   'Lorem ipsum dolor sit amet',
-                                //   style: TextStyle(
-                                //     color: Color(0x99001E49),
-                                //     fontSize: 10,
-                                //     fontFamily: 'Poppins',
-                                //     fontWeight: FontWeight.w400,
-                                //     height: 0,
-                                //   ),
-                                // ),
+
                               ],
                             ),
                           ),
@@ -848,71 +757,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   ),
                 ),
                 const SizedBox(width: 129),
-                // Container(
-                //   child: Column(
-                //     mainAxisSize: MainAxisSize.min,
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     children: [
-                //       Text(
-                //         '15:21',
-                //         style: TextStyle(
-                //           color: Color(0xFFC3262C),
-                //           fontSize: 10,
-                //           fontFamily: 'Poppins',
-                //           fontWeight: FontWeight.w600,
-                //           height: 0,
-                //         ),
-                //       ),
-                //       Container(
-                //         child: Row(
-                //           mainAxisSize: MainAxisSize.min,
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             Container(
-                //               decoration: ShapeDecoration(
-                //                 color: Color(0xFFC3262C),
-                //                 shape: RoundedRectangleBorder(
-                //                   borderRadius: BorderRadius.circular(40),
-                //                 ),
-                //               ),
-                //               child: Row(
-                //                 mainAxisSize: MainAxisSize.min,
-                //                 mainAxisAlignment: MainAxisAlignment.start,
-                //                 crossAxisAlignment: CrossAxisAlignment.center,
-                //                 children: [
-                //                   Container(
-                //                     width: 20,
-                //                     height: 20,
-                //                     child: Column(
-                //                       mainAxisSize: MainAxisSize.min,
-                //                       mainAxisAlignment: MainAxisAlignment.center,
-                //                       crossAxisAlignment: CrossAxisAlignment.center,
-                //                       children: [
-                //                         Text(
-                //                           '15',
-                //                           textAlign: TextAlign.right,
-                //                           style: TextStyle(
-                //                             color: Colors.white,
-                //                             fontSize: 10,
-                //                             fontFamily: 'Poppins',
-                //                             fontWeight: FontWeight.w600,
-                //                             height: 0,
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                 ],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+
               ],
             ),
           ),
@@ -920,4 +765,6 @@ class _MessageScreenState extends State<MessageScreen> {
       },
     );
   }
+
+
 }

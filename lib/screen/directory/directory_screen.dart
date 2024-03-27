@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/widgets/card/dashboard_cards.dart';
 import 'package:tkd_connect/widgets/textview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -71,7 +75,9 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                 controller: provider.scrollControllerVertical,
                 itemCount: provider.user.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return userItem(provider.user[index]);
+                  return
+                    provider.user[index].type=="Directory"?
+                    userItem(provider.user[index]):cardAdv(index,context,provider.user[index]);
                 }),
           ),
         );
@@ -79,6 +85,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
     );
   }
 
+  //not in use now
   verifyUserData() {
     return Consumer<DirectoryProvider>(
       builder: (context, provider, child) {
@@ -594,9 +601,11 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
   }
 
   userItem(TransportSearchData user) {
-    return Container(
+    return Consumer<DirectoryProvider>(
+  builder: (context, provider, child) {
+  return Container(
       width: 375.w,
-      height: 67.h,
+      //height: 67.h,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -679,8 +688,9 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               children: [
                 InkWell(
                     onTap: () {
-
-                      Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: user);
+                      
+                      provider.getDetailsOfUserDirectory(user!.id!,context);
+                      //Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: user);
 
                     },
                     child: SvgPicture.asset(Images.profilepicture)),
@@ -696,6 +706,8 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         ],
       ),
     );
+  },
+);
   }
 
 
@@ -849,6 +861,217 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         );
       },
     );
+  }
+
+
+  cardAdv(int index, BuildContext context, TransportSearchData load, {int userId = 0}) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (_) => imageDialogAdd(
+                load.companyName, load.images!.first, context, load),
+          );
+        },
+        child: Container(
+          width: 335.w,
+          // height: 255.h,
+          padding: EdgeInsets.all(12.r),
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0x114A5568),
+                blurRadius: 8.r,
+                offset: Offset(0, 3),
+                spreadRadius: 0,
+              )
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 100.w,
+                  height: 18.h,
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                  decoration: ShapeDecoration(
+                    color: Color(0xFFD9462A),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.r)),
+                  ),
+                  child: Center(
+                    child: Text(
+                      load.type!,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.w),
+              imageLoad(load),
+
+              InkWell(
+                onTap: () async {
+                  final url = Uri.parse(
+                    // 'http://${load.website}',
+                      '${load.website}');
+                  await launchUrl(url);
+                },
+                child: BaseWidget().headingMobile(load.companyName!, load.mobileNumber.toString(), load.website!),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  imageLoad(TransportSearchData load) {
+    if (load.images!.length == 0) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 0.h,
+          ),
+        ],
+      );
+    } else if (load.images!.length == 1) {
+      return Column(
+        children: [
+          BaseWidget().image(image: load.images!.first),
+          SizedBox(
+            height: 9.h,
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Container(
+              transform: Matrix4.translationValues(0.0, -25.0.h, 00),
+              child: BaseWidget()
+                  .carouseImage(new List<String>.from(load.images!))),
+          SizedBox(
+            height: 9.h,
+          ),
+        ],
+      );
+    }
+  }
+
+
+  Widget imageDialogAdd(text, path, context, load) {
+    return Dialog(
+      // backgroundColor: Colors.transparent,
+      // elevation: 0,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '$text',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.close_rounded),
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+          imageLoadAddA(load, context),
+        ],
+      ),
+    );
+  }
+
+  imageLoadAddA(TransportSearchData load, BuildContext context) {
+    if (load.images!.length == 0) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 0,
+          ),
+        ],
+      );
+    } else if (load.images!.length == 1) {
+      return Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: CachedNetworkImage(
+              imageUrl: load.images!.first,
+              placeholder: (context, url) =>
+                  SvgPicture.asset("assets/svg/logo.svg"),
+              errorWidget: (context, url, error) => ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    "https://igps.net/wp-content/uploads/2018/08/shutterstock_711168088.jpg",
+                    fit: BoxFit.fill,
+                    width: MediaQuery.of(context).size.width - 100,
+                    height: MediaQuery.of(context).size.height - 100,
+                  )),
+              fit: BoxFit.fill,
+              width: 500.w,
+              height: 500.h,
+            ),
+          ),
+          SizedBox(
+            height: 9,
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Container(
+              transform: Matrix4.translationValues(0.0, -25.0, 00),
+              child: Container(
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      padEnds: false,
+                      pageSnapping: false,
+                      enableInfiniteScroll: false,
+                    ),
+                    items: load.images!
+                        .map((item) => Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(child: AllCards().imageLink(item!)),
+                      ),
+                    ))
+                        .toList(),
+                  ))),
+          SizedBox(
+            height: 9,
+          ),
+        ],
+      );
+    }
   }
 
 

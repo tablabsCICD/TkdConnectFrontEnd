@@ -61,6 +61,8 @@ class JobData {
   String? name;
   int? isVerified;
   int? isPaid;
+  int? transporterOrAgent;
+
 
   JobData(
       {this.postJob,
@@ -68,7 +70,9 @@ class JobData {
         this.postingDate,
         this.name,
         this.isVerified,
-        this.isPaid});
+        this.isPaid,
+        this.transporterOrAgent
+      });
 
   JobData.fromJson(Map<String, dynamic> json) {
     postJob =
@@ -78,6 +82,8 @@ class JobData {
     name = json['name'];
     isVerified = json['isVerified'];
     isPaid = json['isPaid'];
+    transporterOrAgent = json['transporterOrAgent'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -90,6 +96,8 @@ class JobData {
     data['name'] = this.name;
     data['isVerified'] = this.isVerified;
     data['isPaid'] = this.isPaid;
+    data['transporterOrAgent'] = this.transporterOrAgent;
+
     return data;
   }
 }

@@ -66,12 +66,10 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
     String val=await localSharePreferences.getLangCode();
     if(isLogin){
-     // S.load(Locale("hi"));
-      callToken();
+      await callToken();
       S.load(Locale(val));
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     }else{
-
       if(val=="no"){
         Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
       }else{
@@ -271,13 +269,30 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
 
   callToken()async {
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    String? token=await FirebaseMessaging.instance.getToken();
-    ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
-    if(result.status==200){
-      return "Success";
-    }
-    return "Fail";
+   try{
+
+
+
+
+
+     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+
+     String? token=await FirebaseMessaging.instance.getToken();
+     ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
+     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}");
+      if(apiResponse.status==200){
+       User user=User.fromJson(apiResponse.response);
+       if(user.content!.length>0){
+         LocalSharePreferences localSharePreferences=LocalSharePreferences();
+         localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
+         localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));
+
+     }
+   }
+   }
+   catch (e){
+
+   }
 
   }
 

@@ -32,8 +32,8 @@ class OtpProvider extends BaseProvider{
     startTimer();
   }
   late Timer _timer;
-  int start = 150;
-  String timeRemaning="02:30";
+  int start = 60;
+  String timeRemaning="01:00";
 
   void startTimer() {
 
@@ -95,9 +95,7 @@ class OtpProvider extends BaseProvider{
     String otp=textControllerOne.text+textControllerTwo.text+textControllerThree.text+textControllerFour.text+textControllerFive.text+textControllerSix.text;
 
     String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp);
-
     var req = await ApiHelper().apiPost(myUrl);
-    print('the response is ${req.response}');
     if(req.status== 200){
      // try{
         User user=User.fromJson(req.response);
@@ -125,7 +123,7 @@ class OtpProvider extends BaseProvider{
   resendOtp(BuildContext context,String mobileNumber) async{
     var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(mobileNumber));
     if(req.status==200){
-      start=150;
+      start=60;
       startTimer();
       ToastMessage.show(context, "OTP resend Successfully");
     }

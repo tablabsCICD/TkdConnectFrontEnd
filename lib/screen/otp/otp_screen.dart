@@ -117,7 +117,7 @@ class _OTPScreen extends State<OTPScreen> {
       size: 40.sp,
       backStrokeWidth: 2,
       maxValue: 150,
-      animationDuration: 150,
+      animationDuration: 60,
       progressColors: [ThemeColor.progress_color],
       backColor: ThemeColor.border_grey,
       mergeMode: true,

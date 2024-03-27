@@ -12,6 +12,7 @@ import 'package:tkd_connect/widgets/sign_in_widget.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 import '../../utils/colors.dart';
+import '../../utils/utils.dart';
 
 
 class PersonalDetailsScreen extends StatefulWidget {
@@ -33,7 +34,9 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
 
   _buildPage(BuildContext context) {
     return Scaffold(
+      backgroundColor:ThemeColor.baground,
       body: SafeArea(
+
         child: Consumer<UserDetailsProvider>(
           builder: (context, provider, child) {
             return ListView(
@@ -117,9 +120,13 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                         },
                       ),
                       SizedBox(
-                        height: 60.h,
+                        height: 40.h,
                       ),
-                      AlredayAccountWidget()
+                      AlredayAccountWidget(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      supportNumber()
                     ],
                   ),
                 ),
@@ -202,6 +209,65 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+
+  supportNumber() {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Textview(
+                TextStyle(
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontSize: 12.sp,
+                    color: Colors.black),
+                title: S().helpSupport),
+            InkWell(
+              onTap: (){
+
+              },
+              child:
+
+              Row(
+                children: [
+                  InkWell(
+
+                    onTap: (){
+                      Utils().callFunction("8123006888");
+                    },child: subTitle('(+91)  8123006888 '),
+                  ),
+                  Text(" / "),
+                  InkWell(
+
+                    onTap: (){
+                      Utils().callFunction("8123004666");
+                    },child:   subTitle('(+91)  8123004666 '),
+                  ),
+                ],
+              )
+              ,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  subTitle(String subtitle) {
+    return Text(
+      subtitle,
+      style: TextStyle(
+        color: Color(0xFFC3262C),
+        fontSize: 10.sp,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontWeight: FontWeight.w600,
+        height: 0,
       ),
     );
   }

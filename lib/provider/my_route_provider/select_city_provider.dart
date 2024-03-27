@@ -16,6 +16,7 @@ class SelectCityProvider extends BaseProvider {
   final bool isEdit;
   final String dest;
   final String sorce;
+  bool isLoad= true;
   SelectCityProvider(super.appState, this.isEdit, this.dest, this.sorce){
       getCallCity();
       pagenation();
@@ -49,6 +50,7 @@ class SelectCityProvider extends BaseProvider {
      if(isEdit){
        onEditCity(sorce, dest);
      }
+    isLoad=false;
      notifyListeners();
 
   }

@@ -71,28 +71,49 @@ class HomeScreenProvider extends BaseProvider{
       notifyListeners();
     }
     if(fromCity=="All" && toCity=="All"){
-      url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
 
-    }else{
+      // bool  bool fla = false,pla = false,flr = false,plr = false,gp=false,buy_sell=false,jobs=false; = false,pla = false,flr = false,plr = false,gp=false,buy_sell=false,jobs=false;
+      if(!fla && !pla && !flr & !plr &!gp & ! buy_sell  &!jobs){
+      //  url = ApiConstant.ALL_CARD +'?page=${currentPage}&size=10';//&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+        url = ApiConstant.ALL_CARD(user.content!.first!.id,currentPage);//&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
 
-      if(fromCity != "All" && toCity!="All"){
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
-      }else if(fromCity != "All" && toCity=="All"){
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
-           }else{
-        url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+      }else{
+        if(fla){
+          url=ApiConstant.FULL_LOAD_AVILABLE(user.content!.first!.id,currentPage);
+        }else if(pla){
+          url=ApiConstant.PART_LOAD_AVILABLE(user.content!.first!.id,currentPage);
+        }else if(flr){
+          url=ApiConstant.FULL_LOAD_REQUIRED(user.content!.first!.id,currentPage);
+        }else if(plr){
+          url=ApiConstant.PART_LOAD_REQUIRED(user.content!.first!.id,currentPage);
+        }else if(gp){
+          url=ApiConstant.General_POST_HOMEPAGE(user.content!.first!.id,currentPage);
+        }else if(buy_sell){
+          url=ApiConstant.BUYSELL_HOMEPAGE(user.content!.first!.id,currentPage);
+        }else if(jobs){
+          url=ApiConstant.JOBS_HOMEPAGE(user.content!.first!.id,currentPage);
+        }else{
+          url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=50&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+        }
       }
 
+    }else{
+   if(fromCity != "All" && toCity!="All"){
+        url = ApiConstant.HOMEPAGE_FILTER +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+      }else if(fromCity != "All" && toCity=="All"){
+        url = ApiConstant.HOMEPAGE_FILTER +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+           }else{
+        url = ApiConstant.HOMEPAGE_FILTER +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+      }
 
-   //   url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity';
     }
    // print('the url $url');
-
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
     isLoading = false;
     if(req.statusCode == 200) {
       response = json.decode(req.body);
+      //print('the response is ${response}');
       var type = TruckLoadType.fromJson(response);
 
       totalPages = type.totalPages;
@@ -253,22 +274,33 @@ class HomeScreenProvider extends BaseProvider{
   }
 
 
-  reSendPost(BuildContext context,TruckLoad load){
-    List<String> userList = load.userList!.split(',').map((e) => e.trim()).toList();
-    List<int> userIdList=[];
-    userList.forEach((element) {userIdList.add(int.parse(element)); });
-    createPost(context,load,userIdList);
+  reSendPost(BuildContext context,TruckLoad load)async {
+    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${load.id}&interchange=${false}");
+    if(apiResponse.status==200){
+      callDashboradApi(context,0);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
 
+  }
+
+  interChnageSendPost(BuildContext context,TruckLoad load) async{
+    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${load.id}&interchange=${true}");
+    if(apiResponse.status==200){
+      callDashboradApi(context,0);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
   }
 
 
 
-  createPost(BuildContext context,TruckLoad load, List<int> userIdList)async{
+  createPost(BuildContext context,TruckLoad load, List<int> userIdList,bool isInterchange)async{
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
     postLoad.contactNumber= user.content!.first!.mobileNumber! ;
-    postLoad.destination=load.destination;
+
     postLoad.dnd =load.dnd;
     postLoad.emailId=user.content!.first!.emailId!;
     postLoad.fullLoadChoice= load.mainTag =="Full load required"?"I Have Vehicle":"I Want Vehicle";
@@ -278,8 +310,16 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.loggedUserName= user.content!.first!.userName;
     postLoad.mainTag= load.mainTag;
     postLoad.os= 'App';
+    if(isInterchange){
+      postLoad.source=load.destination;
+      postLoad.destination=load.source;
+    }else{
+      postLoad.source=load.source;
+      postLoad.destination=load.destination;
+    }
     postLoad.otherDetails= load.content;
-    postLoad.source=load.source;
+
+
     postLoad.partLoad=  load.partLoadOrNot;
     postLoad.privatePost= load.privatePost;
     postLoad.rating= 5;
@@ -293,7 +333,7 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.image= [];
     postLoad.partLoad=load.partLoadOrNot!;
     postLoad.listOfUserIds=userIdList;
-    postLoad.userList = '';
+
  postLoad.id=0;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
     if(response.status==200){

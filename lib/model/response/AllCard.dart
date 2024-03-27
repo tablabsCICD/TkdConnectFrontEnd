@@ -6,7 +6,7 @@ class TruckLoadType {
     required this.last,
     required this.size,
     required this.number,
-    this.sort,
+  //  this.sort,
     required this.first,
     required this.numberOfElements,
   });
@@ -16,7 +16,7 @@ class TruckLoadType {
   late final bool last;
   late final int size;
   late final int number;
-  late final String? sort;
+ // late final String? sort;
   late final bool first;
   late final int numberOfElements;
 
@@ -27,7 +27,7 @@ class TruckLoadType {
     last = json['last'];
     size = json['size'];
     number = json['number'];
-    sort = json['sort']?? '';
+    //sort = json['sort']?? '';
     first = json['first'];
     numberOfElements = json['numberOfElements'];
   }
@@ -40,7 +40,7 @@ class TruckLoadType {
     _data['last'] = last;
     _data['size'] = size;
     _data['number'] = number;
-    _data['sort'] = sort;
+   // _data['sort'] = sort;
     _data['first'] = first;
     _data['numberOfElements'] = numberOfElements;
     return _data;
@@ -136,6 +136,8 @@ class TruckLoad {
   late final List<dynamic>?postImages;
   late final int?transporterOrAgent;
   late final String? userList;
+  late final int? isverified;
+
 
 
 
@@ -172,6 +174,8 @@ class TruckLoad {
     vehicleSize = json['vehicleSize']?? '';
     association = json['association']?? '';
     isPaid = json['isPaid']?? 0;
+    isverified = json['isverified']?? 0;
+
     website = json['website']?? '';
 
     alterativeNumber = json['alterativeNumber']?? '';
@@ -233,6 +237,8 @@ class TruckLoad {
     _data['images'] = postImages;
     _data['transporterOrAgent'] = transporterOrAgent;
     _data['userList'] = userList;
+    _data['isverified'] = isverified;
+
 
     return _data;
   }

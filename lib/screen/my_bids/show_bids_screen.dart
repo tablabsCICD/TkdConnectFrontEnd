@@ -12,6 +12,7 @@ import '../../generated/l10n.dart';
 import '../../model/response/my_post_bid_list.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/textview.dart';
+import '../../widgets/verified_tag.dart';
 
 class ShowBidsScreen extends StatelessWidget{
   final List<Bidings>? listBidings;
@@ -124,18 +125,8 @@ class ShowBidsScreen extends StatelessWidget{
                                 ),
                                 SizedBox(width: 4.w),
                                 Visibility(
-                                  visible: bidings.isPaid!=0?true:false,
-                                  child: Container(
-                                    width: 12.w,
-                                    height: 12.h,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(),
-                                    child: Stack(
-                                      children: [
-                                        SvgPicture.asset(Images.verified)
-                                      ],
-                                    ),
-                                  ),
+                                  visible: bidings.isVerified!=0?true:false,
+                                  child: VerifiedTag().onVeriedTag(),
                                 ),
                               ],
                             ),

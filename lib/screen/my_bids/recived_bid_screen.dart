@@ -7,6 +7,7 @@ import 'package:tkd_connect/model/response/bid_placed.dart';
 import 'package:tkd_connect/screen/my_bids/show_bids_screen.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
+import 'package:tkd_connect/widgets/verified_tag.dart';
 
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
@@ -98,7 +99,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
               ),
               child: Center(
                 child: Text(
-                  postBidData.genericCardsDto!.mainTag!,
+                  Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 9.sp,
@@ -227,18 +228,8 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                                 ),
                                 SizedBox(width: 4.w),
                                 Visibility(
-                                  visible: bidings.isPaid!=0?true:false,
-                                  child: Container(
-                                    width: 12.w,
-                                    height: 12.h,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(),
-                                    child: Stack(
-                                      children: [
-                                        SvgPicture.asset(Images.verified)
-                                      ],
-                                    ),
-                                  ),
+                                  visible: bidings.isVerified!=0?true:false,
+                                  child:   VerifiedTag().onVeriedTag(),
                                 ),
                               ],
                             ),

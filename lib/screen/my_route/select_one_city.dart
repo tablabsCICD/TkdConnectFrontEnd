@@ -39,6 +39,7 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
 
   _buildPage(context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         color: Colors.white,
         child: Container(
@@ -76,11 +77,12 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
               ),
               searchBox(),
               // placesAutoCompleteTextField(),
+              addRoute(context),
               listLang(),
               SizedBox(
                 height: 16.h,
               ),
-              addRoute(context)
+
             ],
           ),
         ),
@@ -95,13 +97,22 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
   addRoute(BuildContext context) {
     return Consumer<SelectCityProvider>(
       builder: (context, provider, child) {
-        return provider.listCity.isEmpty
-            ? InkWell(
-                onTap: () {
-                  _showCityDialog(context,provider);
-                },
-                child: SvgPicture.asset(Images.additional_label),
-              )
+        return provider.listCity.isEmpty && ! provider.isLoad
+            ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height /3,
+                  child: InkWell(
+                        onTap: () {
+                          _showCityDialog(context,provider);
+                        },
+                        child: SvgPicture.asset(Images.additional_label),
+                  ),
+                ),
+              ],
+            )
             : SizedBox.shrink();
       },
     );

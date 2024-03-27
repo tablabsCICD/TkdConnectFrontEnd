@@ -16,6 +16,7 @@ import '../../model/request/route_request.dart';
 import '../../provider/registration_provider/company_details_provider.dart';
 import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
+import '../../utils/utils.dart';
 import '../../widgets/sign_in_widget.dart';
 
 class CompanyDetailsScreen extends StatefulWidget {
@@ -162,9 +163,12 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                           });
                     },
                   ),
-                  SizedBox(height: 60.h,),
+                  SizedBox(height: 40.h,),
                   AlredayAccountWidget(),
-
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  supportNumber()
 
                 ],
 
@@ -594,6 +598,66 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
           ),
         );
       },
+    );
+  }
+
+
+
+  supportNumber() {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Textview(
+                TextStyle(
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontSize: 12.sp,
+                    color: Colors.black),
+                title: S().helpSupport),
+            InkWell(
+              onTap: (){
+
+              },
+              child:
+
+              Row(
+                children: [
+                  InkWell(
+
+                    onTap: (){
+                      Utils().callFunction("8123006888");
+                    },child: subTitle('(+91)  8123006888 '),
+                  ),
+                  Text(" / "),
+                  InkWell(
+
+                    onTap: (){
+                      Utils().callFunction("8123004666");
+                    },child:   subTitle('(+91)  8123004666 '),
+                  ),
+                ],
+              )
+              ,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  subTitle(String subtitle) {
+    return Text(
+      subtitle,
+      style: TextStyle(
+        color: Color(0xFFC3262C),
+        fontSize: 10.sp,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontWeight: FontWeight.w600,
+        height: 0,
+      ),
     );
   }
 

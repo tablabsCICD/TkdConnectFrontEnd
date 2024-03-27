@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/screen/my_route/select_one_city.dart';
+import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/transport_directory_search.dart';
 import '../../network/api_helper.dart';
+import '../../route/app_routes.dart';
 import '../../screen/my_route/select_city.dart';
 
 class DirectoryProvider extends  BaseProvider{
@@ -33,7 +35,9 @@ class DirectoryProvider extends  BaseProvider{
   String toCity="All";
 
   getAllData() async {
-    String myUrl = ApiConstant.DIRECTORYALL(selectedPage);
+    //String myUrl = ApiConstant.DIRECTORYALL(selectedPage);
+    String myUrl = ApiConstant.GET_DIRECT_USER_LIST(selectedPage);
+
     if(filterisVisible){
       if(fromCity != "All" && toCity!="All"){
         myUrl=ApiConstant.DIRECTORYFILTER+"source=$fromCity&destination=$toCity";
@@ -46,7 +50,9 @@ class DirectoryProvider extends  BaseProvider{
     }
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
 
-    if(apiResponse.status==200){TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
+    if(apiResponse.status==200){
+      TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
+
    if(selectedPage==0){
      user.clear();
      userTemp.clear();
@@ -147,6 +153,21 @@ class DirectoryProvider extends  BaseProvider{
     user.clear();
     notifyListeners();
     getAllData();
+  }
+
+
+  getDetailsOfUserDirectory(int id,BuildContext context) async{
+
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_DIRECT_USER_DETAILS(id));
+    if(apiResponse.status==200){
+      TransportSearchModel transportSearchData=TransportSearchModel.fromJson(apiResponse.response);
+      Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: transportSearchData.content.first);
+
+    }else {
+      ToastMessage.show(context, "Please try again");
+    }
+
+
   }
 
 }

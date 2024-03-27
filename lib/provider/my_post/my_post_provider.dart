@@ -63,11 +63,34 @@ class MyPostProvider extends BaseProvider{
   }
 
 
-  reSendPost(BuildContext context,PostBidData postBidData) async {
-    addedMemberIdList = await getTruckLoadById(postBidData.genericCardsDto!.id!);
-    createPost(context,postBidData);
+  // reSendPost(BuildContext context,PostBidData postBidData) async {
+  //   addedMemberIdList = await getTruckLoadById(postBidData.genericCardsDto!.id!);
+  //   createPost(context,postBidData);
+  //
+  // }
+
+
+  reSendPost(BuildContext context,PostBidData postBidData)async {
+    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${postBidData.genericCardsDto!.id!}&interchange=${false}");
+    if(apiResponse.status==200){
+      ToastMessage.show(context, "Re-post submitted successfully!");
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
 
   }
+
+  interChnageSendPost(BuildContext context,PostBidData postBidData) async{
+    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${postBidData.genericCardsDto!.id!}&interchange=${true}");
+    if(apiResponse.status==200){
+      ToastMessage.show(context, "Intercity post submitted successfully!");
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
 
   List<int> addedMemberIdList = [];
   getTruckLoadById(int id) async {

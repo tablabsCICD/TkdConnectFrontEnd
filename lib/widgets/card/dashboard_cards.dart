@@ -150,7 +150,7 @@ class AllCards {
           SizedBox(width: 8.w),
           BaseWidget().profileWithUser(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
-              verify: load.isPaid!,
+              verify: load.isverified!,
               transporterOrAgent: load.transporterOrAgent!),
           BaseWidget().routes(load.source!, load.destination!),
           SizedBox(
@@ -201,7 +201,13 @@ class AllCards {
                 }, true)
               : BaseWidget().bidButton((val) {
                   if (load.dnd == 1) {
-                    ToastMessage.show(context, "This is DND Post");
+                    if(val ==0){
+                      Utils()
+                          .openMenu(val, load, context, providerHome: provider);
+                    }else{
+                      ToastMessage.show(context, "This is DND Post");
+                    }
+
                   } else {
 
 
@@ -230,7 +236,7 @@ class AllCards {
   }
 
   cardLoadPrivateHome(int index, BuildContext context, TruckLoad load,
-      int userId, DeletePostInf postDelete) {
+      int userId, DeletePostInf postDelete,HomeScreenProvider provider) {
     return Container(
       width: 335.w,
       // height: 255.h,
@@ -295,13 +301,18 @@ class AllCards {
                   if (val == 10) {
                     postDelete.deleteOwnPost(load.id!, index);
                   } else {
-                    ToastMessage.show(context, "This is Private Post");
-                    //Utils().openMenu(val, load, context);
+
+
                   }
                 }, true)
               : BaseWidget().bidButton((val) {
                   // Utils().openMenu(val, load, context);
-                  ToastMessage.show(context, "This is Private Post");
+                  if(val==0){
+                    Utils().openMenu(val, load, context, providerHome: provider);
+                  }else{
+                    ToastMessage.show(context, "This is Private Post");
+                  }
+
                 })
         ],
       ),
@@ -397,7 +408,7 @@ class AllCards {
             transform: Matrix4.translationValues(0.0, -25.0.h, 00),
             child: BaseWidget().profileWithUser(truckLoad.companyLogo!,
                 truckLoad.nameOfPerson!, truckLoad.companyName!,
-                verify: truckLoad.isPaid!,
+                verify: truckLoad.isverified!,
                 transporterOrAgent: truckLoad.transporterOrAgent!),
           ),
           // SizedBox(
@@ -611,7 +622,7 @@ class AllCards {
           SizedBox(height: 8.w),
           BaseWidget().profileWithUser(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
-              verify: load.isPaid!,
+              verify: load.isverified!,
               transporterOrAgent: load.transporterOrAgent!),
           BaseWidget().headingWithDescription(
               load.topicName!,
@@ -689,7 +700,7 @@ class AllCards {
           SizedBox(height: 8.w),
           BaseWidget().profileWithUser(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
-              verify: load.isPaid!,
+              verify: load.isverified!,
               transporterOrAgent: load.transporterOrAgent!),
           BaseWidget().headingWithDescription("Job Title",
               getDateObject(load.postingTime), "-", load.topicName!, '', true),

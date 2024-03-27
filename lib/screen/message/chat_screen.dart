@@ -104,13 +104,15 @@ class ChatPageState extends State<ChatPage> {
 
   }
   void onSendMessage(String content, int type) {
+    chatProvider.sendNotification(widget.arguments.id, widget.arguments.notificationId);
+
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
       chatProvider.sendMessage(content, type, groupChatId, currentUserId, widget.arguments.peerId);
       if (listScrollController.hasClients) {
         listScrollController.animateTo(0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
       }
-    } else {
+        } else {
      //ToastMessage.show(msg: 'Nothing to send', backgroundColor: ColorConstants.greyColor);
     }
   }
@@ -743,9 +745,11 @@ backgroundColor: Colors.white,
 
 
 class ChatPageArguments {
+  final int id;
   final String peerId;
   final String peerAvatar;
   final String peerNickname;
+  final int notificationId;
 
-  ChatPageArguments({required this.peerId, required this.peerAvatar, required this.peerNickname});
+  ChatPageArguments(  {required this.id ,required this.peerId, required this.peerAvatar, required this.peerNickname,required this.notificationId});
 }

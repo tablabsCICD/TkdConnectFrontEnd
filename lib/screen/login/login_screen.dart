@@ -11,6 +11,7 @@ import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 import '../../provider/login_provider.dart';
+import '../../utils/utils.dart';
 import '../../widgets/editText_mobile.dart';
 class LoginScreen extends StatefulWidget {
   @override
@@ -118,15 +119,19 @@ class _LoginScreen extends State<LoginScreen> {
                   ),
                  // socialLogin(),
                   SizedBox(
-                    height: 60.h,
+                    height: 40.h,
                   ),
                   newRegistration(),
+
+
                 ],
               ),
             ),
           );
         },
       ),
+
+     bottomNavigationBar:   supportNumber(),
     );
   }
 
@@ -176,6 +181,64 @@ class _LoginScreen extends State<LoginScreen> {
                 title: S.current.RegisterHere),
           )
         ],
+      ),
+    );
+  }
+
+  supportNumber() {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Textview(
+                TextStyle(
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontSize: 12.sp,
+                    color: Colors.black),
+                title: S().helpSupport),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, AppRoutes.registration_personal_details);
+              },
+              child:
+
+              Row(
+                children: [
+                  InkWell(
+
+                    onTap: (){
+                      Utils().callFunction("8123006888");
+                    },child: subTitle('(+91)  8123006888 '),
+                  ),
+                  Text(" / "),
+                  InkWell(
+
+                    onTap: (){
+                      Utils().callFunction("8123004666");
+                    },child:   subTitle('(+91)  8123004666 '),
+                  ),
+                ],
+              )
+              ,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  subTitle(String subtitle) {
+    return Text(
+      subtitle,
+      style: TextStyle(
+        color: Color(0xFFC3262C),
+        fontSize: 10.sp,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontWeight: FontWeight.w600,
+        height: 0,
       ),
     );
   }

@@ -349,15 +349,15 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 ),
               ),
             ),
-            PopupMenuItem(
-                onTap: () {
-                  provider.changeDropDown("Full load available",context);
 
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("Full load required",context);
                 },
                 child: Row(
                   children: [
                     Text(
-                      'Full load available',
+                      'Full load required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -370,48 +370,49 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("Part load available ",context);
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      'Part load available ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
-                    )
-                  ],
-                )),
-            PopupMenuItem(
-                onTap: () {
-                  provider.changeDropDown("Full load Required",context);
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      'Full load Required ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
-                    )
-                  ],
-                )),
-            PopupMenuItem(
-                onTap: () {
-                  provider.changeDropDown("Part load Required",context);
+                  provider.changeDropDown("Part load required",context);
                 },
                 child: Row(
                   children: [
                     Text(
                       'Part load Required ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("Full vehicle required",context);
+
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Full vehicle required',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("Part vehicle required ",context);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Part vehicle required ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

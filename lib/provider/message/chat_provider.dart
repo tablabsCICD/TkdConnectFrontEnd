@@ -5,7 +5,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tkd_connect/model/api_response.dart';
+import 'package:tkd_connect/network/api_helper.dart';
 
+import '../../constant/api_constant.dart';
 import '../../constant/firestore_constant.dart';
 import '../../model/chat_message.dart';
 
@@ -63,6 +66,15 @@ class ChatProvider {
         messageChat.toJson(),
       );
     });
+  }
+
+  sendNotification(int id ,int userId)async{
+    print('Updated successfully ');
+    ApiResponse apiResponse = await ApiHelper().apiPutWithoutDialog(ApiConstant.CHAT_UPDATE_BY_TIME(id,userId));
+    print('Updated successfully ');
+    if(apiResponse.status==200){
+      print('Updated successfully ');
+    }
   }
 }
 

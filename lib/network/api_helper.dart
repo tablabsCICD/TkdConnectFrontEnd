@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
@@ -87,6 +87,17 @@ class ApiHelper{
 
 
 
+  }
+
+  Future<ApiResponse>  apiPutWithoutDialog(String URL) async{
+    try{
+      var request = await dio.put(URL);
+      ApiResponse apiResponseHelper = returnResponse(request);
+      return apiResponseHelper;
+    }catch (e){
+      print('$e');
+      return ApiResponse(500, null);
+    }
   }
 
   Future<ApiResponse>  apiPutDat(String URL) async{

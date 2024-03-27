@@ -9,6 +9,7 @@ import 'package:tkd_connect/utils/colors.dart';
 
 import '../../generated/l10n.dart';
 import '../../provider/mybids/my_bids_provider.dart';
+import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class PlacedBidScreen extends StatefulWidget {
@@ -79,7 +80,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Container(
-              width: 100.w,
+              width: 120.w,
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
@@ -89,7 +90,8 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
               ),
               child: Center(
                 child: Text(
-                  bids.mainTag!,
+                  Utils().mainTag(bids.mainTag!),
+
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 9.sp,

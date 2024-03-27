@@ -157,7 +157,9 @@ class ItemBottomSheet{
                  //listLang()
 
                  Expanded(
-                   child: ListView.builder(
+                   child:item.length==0 ?
+                     Center(child: Text(" No Group Found Please Create Group "))  :
+                   ListView.builder(
                        itemCount: item.length,
                        itemBuilder: (BuildContext context, int index) {
                          return InkWell(

@@ -190,12 +190,12 @@ class _JobListState extends State<JobListScreen> {
               ),
             ),
           ),
-          BaseWidget().profile(
+          BaseWidget().profileWithUser(
               "",
               jobData.name != null ? jobData.name! : "No Info",
               jobData.postJob!.companyName != null
                   ? jobData.postJob!.companyName!
-                  : "No Info"),
+                  : "No Info",verify: jobData.isVerified!,transporterOrAgent: jobData.transporterOrAgent!),
           SizedBox(width: 8.w),
           BaseWidget().jobHeading(jobData.postJob!.salary!),
           BaseWidget().heading(

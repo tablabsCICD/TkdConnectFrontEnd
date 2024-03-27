@@ -1,5 +1,6 @@
 
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -7,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:in_app_review/in_app_review.dart';
-import 'package:rate_my_app/rate_my_app.dart';
+
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/route/app_routes.dart';
@@ -16,10 +16,15 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:tkd_connect/widgets/verified_tag.dart';
 
+import '../../constant/api_constant.dart';
 import '../../constant/images.dart';
+import '../../model/api_response.dart';
+import '../../model/response/bid_state_response.dart';
+import '../../model/response/user_verified.dart';
 import '../../model/response/userdata.dart';
+import '../../network/api_helper.dart';
 import '../../utils/colors.dart';
 import '../kyc/kyc_screen_one.dart';
 
@@ -134,14 +139,25 @@ class _MoreScreen extends State<MoreScreen> {
   }
 
 
-  openVerifiedTag(){
+  openVerifiedTag()async{
+    int id=user.content!.first.id!;
 
-    if(user.content!.first.verified==1){
-      ToastMessage.show(context, "You Already Verified");
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.VERFIED_USER(id));
+    if(apiResponse.status==200){
+      VerifiedUser bidStateObj=VerifiedUser.fromJson(jsonDecode(apiResponse.response));
+      if(bidStateObj.data==0){
+        showBootomSheet(context);
+      }else{
+        ToastMessage.show(context, "You Already Verified");
+      }
+
     }else{
-      showBootomSheet(context);
     }
+
+
   }
+
+
 
 
   topBar(BuildContext context) {
@@ -179,7 +195,7 @@ class _MoreScreen extends State<MoreScreen> {
                 height: 0,
               ),
             ),
-            SizedBox(height:12.h,),
+            SizedBox(height:6.h,),
             Text(
               user.content!.first.companyAddress!,
               textAlign: TextAlign.center,
@@ -191,7 +207,7 @@ class _MoreScreen extends State<MoreScreen> {
                 height: 0,
               ),
             ),
-            SizedBox(height:12.h,),
+            SizedBox(height:6.h,),
             button(context)
           ],
         ));
@@ -250,7 +266,7 @@ class _MoreScreen extends State<MoreScreen> {
           ),
         ),
         SizedBox(width: 8.w,),
-        Visibility(visible:user.content!.first.isPaid!=0?true:false,child: SvgPicture.asset(Images.verified))
+        Visibility(visible:user.content!.first.verified!=0?true:false,child: VerifiedTag().onVeriedTag())
       ],
     );
   }
@@ -265,7 +281,7 @@ class _MoreScreen extends State<MoreScreen> {
        },
       child: Container(
         width: 117.w,
-        height: 27.h,
+        //height: 27.h,
         padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
