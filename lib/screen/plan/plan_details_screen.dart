@@ -87,7 +87,8 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
           fontFamily: GoogleFonts.poppins().fontFamily,
           fontWeight: FontWeight.w600,
         ), onClick: (){
-          Navigator.pushReplacementNamed(context, AppRoutes.intro_one);
+          //Navigator.pushReplacementNamed(context, AppRoutes.intro_one);
+          Navigator.pop(context);
 
 
         },),

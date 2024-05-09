@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/utils/razor_pay.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
@@ -82,9 +83,18 @@ class _MoreScreen extends State<MoreScreen> {
               },FontWeight.w600):SizedBox(),
               item(S().group,(){
 
+                //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
                 Navigator.pushNamed(context, AppRoutes.group,arguments: user.content!.first.id);
 
               },FontWeight.w600),
+              item(S().change_plan,(){
+
+                //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
+
+                Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+              },FontWeight.w600),
+
               item(S().getVerified,(){
 
                 openVerifiedTag();

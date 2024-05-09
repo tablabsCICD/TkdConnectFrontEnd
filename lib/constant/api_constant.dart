@@ -1,7 +1,9 @@
 import 'package:tkd_connect/model/response/userdata.dart';
 
 class ApiConstant {
-  static final String BASE_URL = "https://api.tkdost.com/tkd2/api/";
+ // static final String BASE_URL = "https://api.tkdost.com/tkd2/api/";
+   static final String BASE_URL = "http://ec2-13-127-77-140.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+
 
   // static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080//tkd3/api/";
 //static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080/tkd3/api/";
@@ -45,6 +47,10 @@ class ApiConstant {
   static String REMOVE_GROUP_MEMBER = BASE_URL + "groupMembers?id=";
   static String EDIT_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
   static String GROUP_MEMBER_LIST = BASE_URL + 'groupMembers/byGroupId/';
+
+  static String CREATE_ORDER_ID(amount) => BASE_URL + 'transaction/initiatePayment?amount=$amount';
+
+
 
   // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String OTP_VERIFICATION(mobile, otp) =>
@@ -147,4 +153,7 @@ class ApiConstant {
 
   static String CHAT_USER_LIST_DATE_SORT(id) => BASE_URL + "chatBackup/userIdSorted?userId=$id";
   static String CHAT_UPDATE_BY_TIME (id,sendTo)=> BASE_URL+"chatBackup/updateLoggedTime?id=$id&notificationSendTo=$sendTo";
+
+  static String PAYMENT_SIGNATURE=BASE_URL+"transaction/finalPaymentStatus";
+
 }

@@ -58,15 +58,29 @@ class _SearchEditState extends State<SearchEditScreen> {
 
               Container(
                 width: 320.w,
-                child: Textview(
-                  title: S().recent_search,
-                  TextStyle(
-                    color: Colors.black,
-                    fontSize: 12.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                    height: 0,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Textview(
+                      title: S().recent_search,
+                      TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                    InkWell(
+                        onTap: (){
+                          LocalSharePreferences().setString(AppConstant.RESENT_SEARCH, "");
+                          listSuggestes.clear();
+                          setState(() {
+                           // getSuggestions();
+                          });
+                        },
+                        child: SvgPicture.asset(Images.close_circle,height: 20.h,width: 20.h,))
+                  ],
                 ),
               ),
 
@@ -153,6 +167,7 @@ class _SearchEditState extends State<SearchEditScreen> {
           setState(() {});
         },
         onSubmitted: (val)async{
+           listSuggestes.add(val);
           String lastSearch=await LocalSharePreferences().getString(AppConstant.RESENT_SEARCH);
 
           if(lastSearch!=null){
@@ -162,6 +177,10 @@ class _SearchEditState extends State<SearchEditScreen> {
           }else{
             LocalSharePreferences().setString(AppConstant.RESENT_SEARCH, val);
           }
+          setState(() {
+
+          });
+
           Navigator.pushNamed(context, AppRoutes.searchresult,arguments: val);
 
         },

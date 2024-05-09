@@ -66,9 +66,10 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
                 editView(S().egPune, provider.locationController),
                 SizedBox(height: 12.h,),
 
-                labelText("Type of Company"),
+                labelText(S().business_type),
                 SizedBox(height: 4.h,),
-                editView("eg.Software", provider.companyNameController),
+                //editView("eg.Software", provider.companyNameController),
+
                 SizedBox(height: 28.h,),
 
                 SizedBox(

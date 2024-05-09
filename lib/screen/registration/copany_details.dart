@@ -426,31 +426,31 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
             //onMenuTap(val);
           },
           itemBuilder: (context) => [
-            PopupMenuItem(
-              onTap: () {
-                provider.changeDropDown("${S().agentBroker}",0);
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  children: [
-                    Text(
-                      '${S().agentBroker}',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 13.w,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // PopupMenuItem(
+            //   onTap: () {
+            //     provider.changeDropDown("${S().agentBroker}",0);
+            //   },
+            //   child: Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     child: Row(
+            //       children: [
+            //         Text(
+            //           '${S().agentBroker}',
+            //           style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 14.sp,
+            //             fontFamily: GoogleFonts.poppins().fontFamily,
+            //             fontWeight: FontWeight.w600,
+            //             height: 0,
+            //           ),
+            //         ),
+            //         SizedBox(
+            //           width: 13.w,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             PopupMenuItem(
                 onTap: () {
                   provider.changeDropDown("${S().transporter}",1);
@@ -471,12 +471,12 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().packersAndMovers}",0);
+                  provider.changeDropDown("${S().agentBroker}/${S().packersAndMovers}",0);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().packersAndMovers}',
+                      '${S().agentBroker}/${S().packersAndMovers}',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

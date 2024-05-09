@@ -167,7 +167,7 @@ class EditPostLoadProvider extends BaseProvider {
     vehicleSizeController.text = truckLoad.vehicleSize!;
 
     specialInstructionController.text = truckLoad.otherDetails!;
-    selectedGroup = '';
+    selectedGroup = 'Select any one';
 
     selectedPayment = truckLoad.typeOfPayment!;
     selectedRequriment = truckLoad.type!;
@@ -361,6 +361,7 @@ class EditPostLoadProvider extends BaseProvider {
             selectOption = listOptionShow[index];
           }
         }
+        notifyListeners();
 
         return;
     }

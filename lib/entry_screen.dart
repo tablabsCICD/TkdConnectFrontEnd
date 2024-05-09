@@ -279,19 +279,21 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
      String? token=await FirebaseMessaging.instance.getToken();
      ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
-     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}");
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}}");
       if(apiResponse.status==200){
-       User user=User.fromJson(apiResponse.response);
+
+        User user=User.fromJson(jsonDecode(apiResponse.response));
        if(user.content!.length>0){
+         print('added unb ${apiResponse.response.toString()}');
          LocalSharePreferences localSharePreferences=LocalSharePreferences();
          localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
-         localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));
+         localSharePreferences.setString(AppConstant.LOGIN_KEY, apiResponse.response);
 
      }
    }
    }
    catch (e){
-
+      print(e);
    }
 
   }

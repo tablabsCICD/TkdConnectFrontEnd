@@ -252,7 +252,10 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
 
                 labelText(S().type_of_company),
                 SizedBox(height: 4.h,),
-                editView("eg.Software", provider.companyTypeController,redOnly: true),
+               // editView("eg.Software", provider.companyTypeController,redOnly: true),
+                popUpmenu((_){
+
+                },context),
                 SizedBox(height: 28.h,),
 
                 SizedBox(
@@ -493,6 +496,198 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
 
           },
           child: SvgPicture.asset(Images.additional_label),
+        );
+      },
+    );
+  }
+
+
+  popUpmenu(Function(String) onMenuTap, BuildContext context) {
+    return Consumer<EditProfileProvider>(
+      builder: (context, provider, child) {
+        return PopupMenuButton(
+          position: PopupMenuPosition.values[1],
+          constraints:
+          BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: dropList(context)),
+          onSelected: (dynamic val) {
+            //onMenuTap(val);
+          },
+          itemBuilder: (context) => [
+            // PopupMenuItem(
+            //   onTap: () {
+            //     provider.changeDropDown("${S().agentBroker}",0);
+            //   },
+            //   child: Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     child: Row(
+            //       children: [
+            //         Text(
+            //           '${S().agentBroker}',
+            //           style: TextStyle(
+            //             color: Colors.black,
+            //             fontSize: 14.sp,
+            //             fontFamily: GoogleFonts.poppins().fontFamily,
+            //             fontWeight: FontWeight.w600,
+            //             height: 0,
+            //           ),
+            //         ),
+            //         SizedBox(
+            //           width: 13.w,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("${S().transporter}",1);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      '${S().transporter}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("${S().agentBroker}/${S().packersAndMovers}",0);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      '${S().agentBroker}/${S().packersAndMovers}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("${S().manufacturerDistributorTrade}",3);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      '${S().manufacturerDistributorTrade}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                )),
+            PopupMenuItem(
+                onTap: () {
+                  provider.changeDropDown("${S().truckDriver}",6);
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      '${S().truckDriver}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    )
+                  ],
+                ))
+          ],
+        );
+      },
+    );
+  }
+
+  dropList(BuildContext context) {
+    return Consumer<EditProfileProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 52.h,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 52.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1, color: Color(0x332C363F)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              child: Text(
+                                provider.valName,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Stack(children: [
+                              SvgPicture.asset(Images.dwon_arrow)
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

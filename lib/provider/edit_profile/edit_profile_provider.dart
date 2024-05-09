@@ -7,6 +7,7 @@ import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
+import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
@@ -20,7 +21,8 @@ class EditProfileProvider extends BaseProvider{
 
   //tabs
 
-
+  String valName="${S().business_type}";
+  int selectType=-1;
 
   //personal info feilds
   TextEditingController firstNameController = TextEditingController();
@@ -68,6 +70,7 @@ class EditProfileProvider extends BaseProvider{
 
   getData()async{
     user =await LocalSharePreferences().getLoginData();
+
     firstNameController.text=user.content!.first.firstName!;
     lastNameController.text=user.content!.first.lastName!;
     emailNameController.text=user.content!.first.emailId!;
@@ -76,17 +79,29 @@ class EditProfileProvider extends BaseProvider{
     locationController.text=user.content!.first.city!;
     if(user.content!.first.transporterOrAgent==0){
       companyTypeController.text=S().agentBroker;
+      valName=S().agentBroker+"/"+"${S().packersAndMovers}";
+      selectType=0;
     }else if(user.content!.first.transporterOrAgent==1){
       companyTypeController.text= S().transporter;
+      valName=S().transporter;
+      selectType=1;
     }else if(user.content!.first.transporterOrAgent==2){
       companyTypeController.text= S().packersAndMovers;
+      valName=S().packersAndMovers;
+      selectType=2;
     }
     else if(user.content!.first.transporterOrAgent==3){
       companyTypeController.text= S().manufacturerDistributorTrade;
+      valName=S().manufacturerDistributorTrade;
+      selectType=3;
     }else{
       companyTypeController.text= S().truckDriver;
+      valName=S().truckDriver;
+     selectType=3;
+
     }
     profilePic=user.content!.first.companyLogo!;
+
 
 
     getRouteListByUserId();
@@ -168,6 +183,7 @@ class EditProfileProvider extends BaseProvider{
 
   editProfileImage(BuildContext context)async{
     profilePic =await postImage(context);
+    saveChanges(context);
     notifyListeners();
   }
 
@@ -180,18 +196,31 @@ class EditProfileProvider extends BaseProvider{
     userData.companyAddress=locationController.text;
     userData.profilePicture=profilePic;
     userData.companyLogo=profilePic;
-   ApiResponse apiResponse=await ApiHelper().apiPut(ApiConstant.REGISTRATION, userData.toJson());
+    if(selectType!=-1){
+      userData.transporterOrAgent=selectType;
+    }
+    print('the select type $selectType');
+    ApiResponse apiResponse=await ApiHelper().apiPut(ApiConstant.REGISTRATION, userData.toJson());
     if(apiResponse.status==200){
       LocalSharePreferences localSharePreferences=LocalSharePreferences();
       localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));
       ToastMessage.show(context, "Profile updated");
-      Navigator.pop(context,1);
+      //Navigator.pop(context,1);
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => true);
       notifyListeners();
 
     }else{
       ToastMessage.show(context, "Please try again");
     }
   }
+
+  void changeDropDown(String name,int val) {
+    valName=name;
+    selectType=val;
+    //checkValidation();
+    notifyListeners();
+  }
+
 
 
 }

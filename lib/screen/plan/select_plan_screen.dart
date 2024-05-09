@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/provider/plan/select_plan.dart';
 import 'package:tkd_connect/screen/kyc/kyc_screen_one.dart';
 import 'package:tkd_connect/screen/plan/plan_details_screen.dart';
 import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/utils/phone_pay_payment.dart';
+
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/linear_progress.dart';
 import 'package:tkd_connect/widgets/sign_in_widget.dart';
 
 import '../../constant/images.dart';
+import '../../model/response/userdata.dart';
+import '../../utils/razor_pay.dart';
+import '../../utils/sharepreferences.dart';
 import '../../widgets/button.dart';
 import '../../widgets/plan_widget.dart';
 import '../../widgets/textview.dart';
@@ -129,7 +131,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                     child: PlanWidget(
                       isSelected:provider. bluePearl,
                       title: 'Blue pearl',
-                      amount: '299',
+                      amount: '1',
                       image: Images.pearls_blue,
                       subtitle: 'RECOMMENDED',
                       onClick: () {
@@ -165,7 +167,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                           false
                         ];
                         provider. onDeatilsPlan(context,listLaugaes, selectLang,
-                            Images.pearls_blue, "Blue pearl", "299");
+                            Images.pearls_blue, "Blue pearl", "1");
                       },
                     )),
                 SizedBox(
@@ -286,7 +288,8 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                         ToastMessage.show(context, "You have already this plan");
                       }else{
                         if (provider.planAmount == 0) {
-                          provider.goHome(context);
+                          //provider.goHome(context);
+                          provider.selectedPlan(context);
                         } else {
                           //provider.selectedPlan(context);
                          // print('verfiy data string ${PhonePayPayment().getSaltVerfy(100)}');
@@ -309,49 +312,10 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
 
 
   startTran(SelectPlanProvider provider) async {
+    User user=await LocalSharePreferences().getLoginData();
+    RazorPayClass(context).initalPay(provider.planAmount,user.content!.first.mobileNumber!,user.content!.first.emailId!,provider.selectPlan,provider.selectedPlanCode);
 
-    // await PhonePayPayment().getTranscation();
-    // if(AppConstant.PHONE_PAY_TRANSCATION_ID==""){
-    //   ToastMessage.show(context, "Please Try Again");
-    //   return null;
-    // }
-    await PhonePayPayment().getTranscation();
 
-    bool init = await PhonePayPayment().initPhonePay();
-    if (init) {
-      await PhonePePaymentSdk.startTransaction(
-              PhonePayPayment().getBody(provider.planAmount),
-              '',
-              PhonePayPayment().getSalt(provider.planAmount),
-              PhonePayPayment().packageName)
-          .then((response) => {
-                setState(() {
-                  if (response != null) {
-                    String status = response['status'].toString();
-                    String error = response['error'].toString();
-                    if (status == 'SUCCESS') {
-                      // "Flow Completed - Status: Success!";
-
-                      PhonePayPayment().getStatusOfTranscation();
-                     // provider.selectedPlan(context);
-
-                      print('the response is $response');
-                    } else {
-                      // "Flow Completed - Status: $status and Error: $error";
-                    }
-                  } else {
-                    // "Flow Incomplete";
-                  }
-                })
-              })
-          .catchError((error) {
-        print('${error}');
-        return <dynamic>{};
-      });
-    } else {
-      ToastMessage.show(context,
-          "Please Try Again or select free plan and then update now payment is not accepting");
-    }
   }
 
 

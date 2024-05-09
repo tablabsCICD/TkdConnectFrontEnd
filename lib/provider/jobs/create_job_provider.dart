@@ -26,7 +26,7 @@ class CreateJobProvider extends BaseProvider{
   bool expUpdate=false;
   String selectSal="Select salary";
 
-  List<String>salary=["1 LPA ","1LAP - 2LPA","2LAP - 3LPA","4LAP - 5LPA","6LAP - 7LPA","8LAP - 9LPA","9LAP - 10LPA","10LAP - Above"];
+  List<String>salary=["1 LPA ","1LPA - 2LPA","2LPA - 3LPA","4LPA - 5LPA","6LPA - 7LPA","8LPA - 9LPA","9LPA - 10LPA","10LPA - Above"];
 
 
   showExpDialog(BuildContext context)async{

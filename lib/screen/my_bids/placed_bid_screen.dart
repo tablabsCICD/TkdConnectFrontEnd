@@ -154,6 +154,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {
+
                         Navigator.of(context).pop(); // Close the dialog
                       },
                       child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,

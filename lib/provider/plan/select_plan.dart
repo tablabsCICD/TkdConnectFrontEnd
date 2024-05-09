@@ -28,12 +28,13 @@ class SelectPlanProvider extends BaseProvider {
   int planAmount = 0;
   int selectedPlanCode=0;
   int previousPlan=0;
+  static int previousPlanCheck=0;
   String expDate="";
 
   selectClearPerl() {
 
     selectedPlanCode=0;
-    if(selectedPlanCode==previousPlan){
+    if(selectedPlanCode==previousPlanCheck){
       selectPlan = "CURRENT PLAN";
     }else{
       selectPlan = "You Select this";
@@ -49,6 +50,7 @@ class SelectPlanProvider extends BaseProvider {
   checkPlan()async{
     User user=await LocalSharePreferences().getLoginData();
     previousPlan=user.content!.first.isPaid!;
+    previousPlanCheck=user.content!.first.isPaid!;
 
     selectedPlanCode=previousPlan;
     planAmount = 0;
@@ -56,27 +58,31 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = false;
     redPearl = false;
     blackPearl = false;
-    switch(previousPlan){
+    switch(previousPlanCheck){
       case 0:clearPearl=true;
+      notifyListeners();
             return;
       case 10:
         bluePearl=true;
+        notifyListeners();
         return;
       case 20:
         redPearl=true;
+        notifyListeners();
         return;
       case 30:
         blackPearl=true;
+        notifyListeners();
         return;
     }
 
-   notifyListeners();
+
 
   }
 
   selectBlue() {
     selectedPlanCode=10;
-    if(selectedPlanCode==previousPlan){
+    if(selectedPlanCode==previousPlanCheck){
       selectPlan = "CURRENT PLAN";
     }else{
       selectPlan = "You Select this";
@@ -85,12 +91,12 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = true;
     redPearl = false;
     blackPearl = false;
-    planAmount = 29900;
+    planAmount = 1;
     notifyListeners();
   }
 
   selectRed() {
-    if(selectedPlanCode==previousPlan){
+    if(selectedPlanCode==previousPlanCheck){
       selectPlan = "CURRENT PLAN";
     }else{
       selectPlan = "You Select this";
@@ -100,12 +106,12 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = false;
     redPearl = true;
     blackPearl = false;
-    planAmount = 34900;
+    planAmount = 349;
     notifyListeners();
   }
 
   selectBlack() {
-    if(selectedPlanCode==previousPlan){
+    if(selectedPlanCode==previousPlanCheck){
       selectPlan = "CURRENT PLAN";
     }else{
       selectPlan = "You Select this";
@@ -115,7 +121,7 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = false;
     redPearl = false;
     blackPearl = true;
-    planAmount = 44900;
+    planAmount = 449;
     notifyListeners();
   }
 

@@ -89,6 +89,7 @@ class MyBidsProvider extends BaseProvider{
     ApiResponse apiResponse=await ApiHelper().ApiDeleteData(ApiConstant.PLACED_BID+"?id=${bidings.bidingId}");
     if(apiResponse.status==200){
       listBids.removeAt(index);
+      ToastMessage.show(context, "Bid withdraw successful ");
       notifyListeners();
     }else{
       ToastMessage.show(context, "Please try again");
