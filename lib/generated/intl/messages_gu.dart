@@ -66,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chat": MessageLookupByLibrary.simpleMessage("ચેટ"),
         "chooseATopic":
             MessageLookupByLibrary.simpleMessage("એક વિષય પસંદ કરો"),
+        "cityInterchange":
+            MessageLookupByLibrary.simpleMessage("સિટી ઇન્ટરચેન્જ"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "માર્ગો ઉમેરવા માટે નીચેના બટન પર ક્લિક કરો"),
         "comment": MessageLookupByLibrary.simpleMessage("ટિપ્પણી"),
@@ -76,10 +78,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "createPost": MessageLookupByLibrary.simpleMessage("પોસ્ટ બનાવો"),
         "createPostLoadIssue":
             MessageLookupByLibrary.simpleMessage("પોસ્ટની સમસ્યા લોડ કરો"),
+        "creategroup": MessageLookupByLibrary.simpleMessage("જૂથ બનાવો"),
         "delete": MessageLookupByLibrary.simpleMessage("કાઢી નાખો"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "શું તમે આ પોસ્ટ કાઢી નાખવા માંગો છો."),
         "directory": MessageLookupByLibrary.simpleMessage("ડિરેક્ટરી"),
+        "editPost": MessageLookupByLibrary.simpleMessage("પોસ્ટ સંપાદિત કરો"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("પ્રોફાઇલ સંપાદિત કરો"),
         "editYourProfile":
@@ -109,6 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fromCity": MessageLookupByLibrary.simpleMessage("શહેરમાંથી"),
         "general": MessageLookupByLibrary.simpleMessage("સામાન્ય"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ચકાસણી કરો"),
+        "group": MessageLookupByLibrary.simpleMessage("જૂથ"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("સહાય અને સમર્થન"),
         "home": MessageLookupByLibrary.simpleMessage("ઘર"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
@@ -140,6 +145,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "may_be_letter": MessageLookupByLibrary.simpleMessage("બાદમાં"),
         "message": MessageLookupByLibrary.simpleMessage("સંદેશ"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("મોબાઇલ નંબર"),
+        "more": MessageLookupByLibrary.simpleMessage("વધુ"),
         "myPost": MessageLookupByLibrary.simpleMessage("મારી પોસ્ટ્સ"),
         "myQuotes": MessageLookupByLibrary.simpleMessage("મારા અવતરણો"),
         "myRoutes": MessageLookupByLibrary.simpleMessage("મારા માર્ગો"),
@@ -163,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "postAJob": MessageLookupByLibrary.simpleMessage("જોબ પોસ્ટ કરો"),
         "postLoad": MessageLookupByLibrary.simpleMessage("પોસ્ટ લોડ"),
         "posts": MessageLookupByLibrary.simpleMessage("પોસ્ટ્સ"),
+        "privacyAndPolicy":
+            MessageLookupByLibrary.simpleMessage("ગોપનીયતા નીતિ"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("હવે અવતરણ કરો"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("ક્વોટ કિંમત"),
         "quotesYouPlaced":
@@ -189,6 +197,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectOne": MessageLookupByLibrary.simpleMessage("એક પસંદ કરો"),
         "sell": MessageLookupByLibrary.simpleMessage("વેચવું"),
         "share": MessageLookupByLibrary.simpleMessage("શેર કરો"),
+        "shareapp": MessageLookupByLibrary.simpleMessage(
+            "એપ્લિકેશન શેર કરો અને આશ્ચર્યજનક ભેટ મેળવો"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("બધા ક્વોટ બતાવો"),
         "signIn": MessageLookupByLibrary.simpleMessage("સાઇન ઇન"),
@@ -197,6 +207,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("જરૂરી અનુભવનો ઉલ્લેખ કરો"),
         "submit": MessageLookupByLibrary.simpleMessage("સબમિટ કરો"),
         "subtitle": MessageLookupByLibrary.simpleMessage("સબટાઈટલ"),
+        "terms_condition":
+            MessageLookupByLibrary.simpleMessage("નિયમો અને શરતો"),
         "textlogin": MessageLookupByLibrary.simpleMessage("લોગ ઇન કરો"),
         "title": MessageLookupByLibrary.simpleMessage("શીર્ષક"),
         "toCity": MessageLookupByLibrary.simpleMessage("શહેરમાં"),

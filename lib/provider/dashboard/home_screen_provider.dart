@@ -13,8 +13,10 @@ import 'package:http/http.dart' as http;
 import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/AllCard.dart';
+import '../../model/response/post_upload.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
+import '../../route/app_routes.dart';
 import '../../screen/my_route/select_city.dart';
 import '../../screen/my_route/select_one_city.dart';
 import '../../utils/sharepreferences.dart';
@@ -277,7 +279,13 @@ class HomeScreenProvider extends BaseProvider{
   reSendPost(BuildContext context,TruckLoad load)async {
     ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${load.id}&interchange=${false}");
     if(apiResponse.status==200){
-      callDashboradApi(context,0);
+      PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        callDashboradApi(context,0);
+      }
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -287,7 +295,16 @@ class HomeScreenProvider extends BaseProvider{
   interChnageSendPost(BuildContext context,TruckLoad load) async{
     ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${load.id}&interchange=${true}");
     if(apiResponse.status==200){
-      callDashboradApi(context,0);
+      PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        callDashboradApi(context,0);
+      }
+
+
+
     }else{
       ToastMessage.show(context, "Please try again");
     }

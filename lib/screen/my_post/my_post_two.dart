@@ -14,6 +14,8 @@ import 'package:tkd_connect/widgets/verified_tag.dart';
 
 import '../../generated/l10n.dart';
 import '../../model/response/my_post_bid_list.dart';
+import '../../model/response/userdata.dart';
+import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
 import '../../utils/utils.dart';
 import '../my_bids/show_bids_screen.dart';
@@ -361,9 +363,16 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () {
+                  onTap: () async{
                     // widget.provider.deleteBid(index, bidings);
-                    Utils().callFunction("${bidings.bidings!.mobileNumber}");
+                    User use=await LocalSharePreferences().getLoginData();
+                    if(use.content!.first.isPaid==0){
+
+                      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+                    }else{
+                      Utils().callFunction("${bidings.bidings!.mobileNumber}");
+                    }
                   }
                   , child: Container(
                   width: 22.w,

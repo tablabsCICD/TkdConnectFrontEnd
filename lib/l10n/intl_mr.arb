@@ -177,5 +177,11 @@
   "rate_this_app": "या ॲपला रेट करा.",
   "how_do_you_rate_app": "तुम्ही आमच्या ॲपला कसे रेट करता?",
   "rate": "मूल्य",
-  "may_be_letter":"नंतर"
+  "may_be_letter":"नंतर",
+  "group": "गट",
+  "terms_condition": "नियम आणि अटी",
+  "privacyAndPolicy": "गोपनीयता धोरण",
+  "creategroup": "गट तयार करा",
+  "editPost": "पोस्ट संपादित करा",
+  "cityInterchange": "सिटी इंटरचेंज"
 }

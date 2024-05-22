@@ -14,7 +14,9 @@ import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
+import '../../model/response/userdata.dart';
 import '../../route/app_routes.dart';
+import '../../utils/sharepreferences.dart';
 
 class JobListScreen extends StatefulWidget {
   @override
@@ -76,13 +78,20 @@ class _JobListState extends State<JobListScreen> {
             visible: true,
             child: InkWell(
               onTap: () async {
-                Object? val =
-                    await Navigator.pushNamed(context, AppRoutes.createjob);
-                if (val != null) {
-                  provider.selectedPage = 0;
-                  provider.getAllJobs();
+                User use=await LocalSharePreferences().getLoginData();
+                if(use.content!.first.isPaid!=30){
+
+                  Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+                }else{
+                  Object? val =
+                  await Navigator.pushNamed(context, AppRoutes.createjob);
+                  if (val != null) {
+                    provider.selectedPage = 0;
+                    provider.getAllJobs();
+                  }
                 }
-              },
+             },
               child: Container(
                 width: 155.w,
                 height: 38.h,

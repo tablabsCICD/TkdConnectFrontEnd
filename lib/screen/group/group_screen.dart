@@ -17,6 +17,7 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/transport_directory_search.dart';
+import '../../model/response/userdata.dart';
 import '../../provider/directory/directory_provider.dart';
 import '../../provider/mybids/my_bids_provider.dart';
 import '../../utils/utils.dart';
@@ -71,9 +72,14 @@ class _GroupScreenState extends State<GroupScreen> {
                   .centerFloat,
               floatingActionButton: InkWell(
                 onTap: () async {
-                  var result = await Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
-                  if(result==1){
-                    provider.callSetState();
+                  User use=await LocalSharePreferences().getLoginData();
+                  if(use.content!.first.isPaid==0){
+                    Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+                  }else{
+                    var result = await Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
+                    if(result==1){
+                      provider.callSetState();
+                    }
                   }
                 },
                 child: Container(

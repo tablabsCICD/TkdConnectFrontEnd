@@ -58,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "call": MessageLookupByLibrary.simpleMessage("కాల్"),
         "change_plan": MessageLookupByLibrary.simpleMessage("ప్లాన్ మార్చండి"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("అక్షర మహత్తం"),
+        "cityInterchange":
+            MessageLookupByLibrary.simpleMessage("సిటీ ఇంటర్‌చేంజ్"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "మార్గాలను జోడించడానికి దిగువ బటన్‌ను క్లిక్ చేయండి"),
         "comment": MessageLookupByLibrary.simpleMessage("వ్యాఖ్య"),
@@ -68,11 +70,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("పోస్ట్‌ని సృష్టించు"),
         "createPostLoadIssue":
             MessageLookupByLibrary.simpleMessage("పోస్ట్ ఇష్యూ లోడ్ చేయి"),
+        "creategroup":
+            MessageLookupByLibrary.simpleMessage("సమూహాన్ని సృష్టించండి"),
         "delete": MessageLookupByLibrary.simpleMessage("తొలగించు"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "మీరు ఈ పోస్ట్‌ని తొలగించాలనుకుంటున్నారా."),
         "directory": MessageLookupByLibrary.simpleMessage("డైరెక్టరీ"),
         "done": MessageLookupByLibrary.simpleMessage("పూర్తయింది"),
+        "editPost": MessageLookupByLibrary.simpleMessage("పోస్ట్‌ని సవరించండి"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("ప్రోఫైల్ సంపాదిత కరో"),
         "editYourProfile":
@@ -96,7 +101,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "కోట్ మొత్తాన్ని నమోదు చేయండి"),
         "from": MessageLookupByLibrary.simpleMessage("నుండి"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ధృవీకరించబడండి"),
+        "group": MessageLookupByLibrary.simpleMessage("సమూహం"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("సహాయం & మద్దతు"),
+        "home": MessageLookupByLibrary.simpleMessage("హోమ్"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
             "మీరు మా యాప్‌ను ఎలా రేట్ చేస్తారు?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
@@ -113,6 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginIssue": MessageLookupByLibrary.simpleMessage("లాగిన్ సమస్య"),
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("కొనసాగించడానికి లాగిన్"),
+        "logout": MessageLookupByLibrary.simpleMessage("లాగ్అవుట్"),
         "logoutMsg": MessageLookupByLibrary.simpleMessage(
             "మీరు లాగ్ అవుట్ చేయాలనుకుంటున్నారా."),
         "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
@@ -120,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "may_be_letter": MessageLookupByLibrary.simpleMessage("తరువాత"),
         "message": MessageLookupByLibrary.simpleMessage("సందేశం"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("మొబైల్ నంబర్"),
+        "more": MessageLookupByLibrary.simpleMessage("మరింత"),
         "myPost": MessageLookupByLibrary.simpleMessage("నా పోస్ట్‌లు"),
         "myQuotes": MessageLookupByLibrary.simpleMessage("నా కోట్‌లు"),
         "myRoutes": MessageLookupByLibrary.simpleMessage("మారా మార్గో"),
@@ -136,6 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "postJob": MessageLookupByLibrary.simpleMessage("పోస్ట్ జాబ్"),
         "postLoad": MessageLookupByLibrary.simpleMessage("పోస్ట్ లోడ్"),
         "posts": MessageLookupByLibrary.simpleMessage("పోస్ట్‌లు"),
+        "privacyAndPolicy":
+            MessageLookupByLibrary.simpleMessage("గోప్యతా విధానం"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("ఇప్పుడే కోట్ చేయి"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("క్వాట్ కింమత్"),
         "quotesYouPlaced": MessageLookupByLibrary.simpleMessage("మీ మూలాధారం"),
@@ -159,6 +170,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectOne": MessageLookupByLibrary.simpleMessage("ఒకటి ఎంచుకోండి"),
         "sell": MessageLookupByLibrary.simpleMessage("అమ్మండి"),
         "share": MessageLookupByLibrary.simpleMessage("షేర్"),
+        "shareapp": MessageLookupByLibrary.simpleMessage(
+            "అప్లికేషన్ షేర్ చేయండి మరియు ఆశ్చర్యకరమైన బహుమతిని సంపాదించండి"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("అన్ని కోట్‌లను చూపించు"),
         "specialInstruction":
@@ -167,6 +180,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "అవసరమైన అనుభవాన్ని పేర్కొనండి"),
         "submit": MessageLookupByLibrary.simpleMessage("సబమిట్ కరో"),
         "subtitle": MessageLookupByLibrary.simpleMessage("ఉపశీర్షిక"),
+        "terms_condition":
+            MessageLookupByLibrary.simpleMessage("నియమాలు & నిబంధన"),
         "textlogin": MessageLookupByLibrary.simpleMessage("లాగిన్"),
         "to": MessageLookupByLibrary.simpleMessage("కు"),
         "toCity": MessageLookupByLibrary.simpleMessage("నగరానికి"),

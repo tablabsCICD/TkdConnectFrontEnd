@@ -12,6 +12,9 @@ import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../generated/l10n.dart';
 import '../../model/response/my_post_bid_list.dart';
+import '../../model/response/userdata.dart';
+import '../../route/app_routes.dart';
+import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
 import '../../utils/utils.dart';
 import '../my_bids/show_bids_screen.dart';
@@ -188,13 +191,21 @@ class _MyPostState extends State<MyPostScreen> {
     );
   }
 
-  void showBootomSheet(BuildContext context,List<Bidings>? bidings) {
+  void showBootomSheet(BuildContext context,List<Bidings>? bidings)async {
+    User use=await LocalSharePreferences().getLoginData();
+    if(use.content!.first.isPaid==0){
+
+      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+    }else{
+
     showModalBottomSheet<void>(
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
           return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
         });
+    }
   }
 
   iteams(PostBidData postBidData, int index) {
@@ -349,9 +360,18 @@ class _MyPostState extends State<MyPostScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () {
+                  onTap: () async{
                     // widget.provider.deleteBid(index, bidings);
-                    Utils().callFunction("${bidings.bidings!.mobileNumber}");
+
+                    User use=await LocalSharePreferences().getLoginData();
+                    if(use.content!.first.isPaid==0){
+
+                      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+                    }else{
+                      Utils().callFunction("${bidings.bidings!.mobileNumber}");
+                    }
+
                   }
                   , child: Container(
                   width: 22.w,

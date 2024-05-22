@@ -2,7 +2,7 @@ import 'package:tkd_connect/model/response/userdata.dart';
 
 class ApiConstant {
  // static final String BASE_URL = "https://api.tkdost.com/tkd2/api/";
-   static final String BASE_URL = "http://ec2-13-127-77-140.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+   static final String BASE_URL = "http://ec2-35-154-166-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
   // static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080//tkd3/api/";

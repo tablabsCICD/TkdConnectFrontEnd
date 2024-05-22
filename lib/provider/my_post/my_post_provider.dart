@@ -9,8 +9,10 @@ import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/request/post_load.dart';
 import '../../model/response/my_post_bid_list.dart';
+import '../../model/response/post_upload.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
+import '../../route/app_routes.dart';
 import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
 
@@ -72,9 +74,21 @@ class MyPostProvider extends BaseProvider{
 
   reSendPost(BuildContext context,PostBidData postBidData)async {
     ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${postBidData.genericCardsDto!.id!}&interchange=${false}");
+    print('the response is ${apiResponse.response}');
     if(apiResponse.status==200){
-      ToastMessage.show(context, "Re-post submitted successfully!");
-      Navigator.pop(context,1);
+      // ToastMessage.show(context, "Re-post submitted successfully!");
+      // Navigator.pop(context,1);
+
+      PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        ToastMessage.show(context, "Re-post submitted successfully!");
+
+        Navigator.pop(context, 1);
+      }
+
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -83,9 +97,19 @@ class MyPostProvider extends BaseProvider{
 
   interChnageSendPost(BuildContext context,PostBidData postBidData) async{
     ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${postBidData.genericCardsDto!.id!}&interchange=${true}");
+    print('the response is ${apiResponse.response}');
     if(apiResponse.status==200){
-      ToastMessage.show(context, "Intercity post submitted successfully!");
-      Navigator.pop(context,1);
+
+
+      PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        ToastMessage.show(context, "Intercity post submitted successfully!");
+        Navigator.pop(context, 1);
+      }
+
     }else{
       ToastMessage.show(context, "Please try again");
     }

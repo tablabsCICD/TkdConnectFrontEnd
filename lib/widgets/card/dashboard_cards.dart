@@ -608,7 +608,7 @@ class AllCards {
               ),
               child: Center(
                 child: Text(
-                  load.topicName!,
+                  load.mainTag!,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 8.sp,

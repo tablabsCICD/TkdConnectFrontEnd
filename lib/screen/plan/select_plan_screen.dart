@@ -55,9 +55,14 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SvgPicture.asset(Images.arrow_back),
+                   InkWell(
+                     onTap: (){
+                       Navigator.pop(context);
+                     },
+              child:  SvgPicture.asset(Images.arrow_back),
+                   ),
                     Textview(
-                      title: 'Select Plan',
+                      title: 'Upgrade Plan',
                       TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -71,7 +76,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                 SizedBox(
                   height: 21.h,
                 ),
-                LinearProgressBar(fillValue: 301.w),
+               // LinearProgressBar(fillValue: 301.w),
                 SizedBox(
                   height: 21.h,
                 ),

@@ -179,5 +179,11 @@
   "rate_this_app": "इस ऐप्लिकेशन को रेट करें।",
   "how_do_you_rate_app": "आप हमारे ऐप को कैसे रेट करते हैं?",
   "rate": "मूल्य",
-  "may_be_letter":"बाद में"
+  "may_be_letter":"बाद में",
+  "group": "समूह",
+  "terms_condition": "नियम व शर्त",
+  "privacyAndPolicy": "गोपनीयता नीति",
+  "creategroup": "समूह बनाना",
+  "editPost": "संपादित पोस्ट",
+  "cityInterchange": "सिटी इंटरचेंज"
 }

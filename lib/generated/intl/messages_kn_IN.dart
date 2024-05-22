@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
         "change_plan":
             MessageLookupByLibrary.simpleMessage("ಯೋಜನೆಯನ್ನು ಬದಲಾಯಿಸಿ"),
+        "cityInterchange":
+            MessageLookupByLibrary.simpleMessage("ಸಿಟಿ ಇಂಟರ್‌ಚೇಂಜ್"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "ಮಾರ್ಗಗಳನ್ನು ಸೇರಿಸಲು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ"),
         "companyName": MessageLookupByLibrary.simpleMessage("ಕಂಪನಿ ಹೆಸರು"),
@@ -74,10 +76,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "createPost": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ರಚಿಸಿ"),
         "createPostLoadIssue":
             MessageLookupByLibrary.simpleMessage("ಲೋಡ್ ಪೋಸ್ಟ್ ಸಂಚಿಕೆ"),
+        "creategroup": MessageLookupByLibrary.simpleMessage("ಗುಂಪು ರಚಿಸಿ"),
         "delete": MessageLookupByLibrary.simpleMessage("ಅಳಿಸು"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "ನೀವು ಈ ಪೋಸ್ಟ್ ಅನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ."),
         "directory": MessageLookupByLibrary.simpleMessage("ಡೈರೆಕ್ಟರಿ"),
+        "editPost": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಸಂಪಾದಿಸಿ"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸು"),
         "editYourProfile":
@@ -102,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "from": MessageLookupByLibrary.simpleMessage("ಇಂದ"),
         "general": MessageLookupByLibrary.simpleMessage("ಸಾಮಾನ್ಯ"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ಪರಿಶೀಲಿಸಿ"),
+        "group": MessageLookupByLibrary.simpleMessage("ಗುಂಪು"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ"),
         "home": MessageLookupByLibrary.simpleMessage("ಮುಖಪುಟ"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
@@ -145,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "postJob": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಜಾಬ್"),
         "postLoad": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಲೋಡ್"),
         "posts": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್‌ಗಳು"),
+        "privacyAndPolicy":
+            MessageLookupByLibrary.simpleMessage("ಗೌಪ್ಯತಾ ನೀತಿ"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("ಈಗ ಉಲ್ಲೇಖಿಸಿ"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("quote price"),
         "quotesYouPlaced":
@@ -180,6 +187,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ಅಗತ್ಯವಿರುವ ಅನುಭವವನ್ನು ಸೂಚಿಸಿ"),
         "submit": MessageLookupByLibrary.simpleMessage("ಸಲ್ಲಿಸು"),
         "subtitle": MessageLookupByLibrary.simpleMessage("ಉಪಶೀರ್ಷಿಕೆ"),
+        "terms_condition":
+            MessageLookupByLibrary.simpleMessage("ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತು"),
         "textlogin": MessageLookupByLibrary.simpleMessage("ಲಾಗಿನ್"),
         "title": MessageLookupByLibrary.simpleMessage("ಶೀರ್ಷಿಕೆ"),
         "to": MessageLookupByLibrary.simpleMessage("ಗೆ"),

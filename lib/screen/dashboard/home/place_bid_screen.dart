@@ -20,7 +20,9 @@ import 'package:tkd_connect/widgets/editText.dart';
 import '../../../constant/images.dart';
 import '../../../generated/l10n.dart';
 import '../../../model/response/bid_state_response.dart';
+import '../../../model/response/post_upload.dart';
 import '../../../model/response/userdata.dart';
+import '../../../route/app_routes.dart';
 import '../../../widgets/textview.dart';
 class PlaceBidScreen extends StatefulWidget{
   final TruckLoad truckLoad;
@@ -226,8 +228,15 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
     
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.PLACED_BID, bidPlace.toJson());
     if(apiResponse.status==200){
-      ToastMessage.show(context, "Quote submitted successfully");
-      Navigator.pop(context);
+        PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
+        if(postUpload.statusCode==401){
+          ToastMessage.show(context, "Please update your package");
+          Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+        }else{
+          ToastMessage.show(context, "Quote submitted successfully");
+          Navigator.pop(context);
+        }
+
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -241,6 +250,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
   
   callApiBidState()async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_STATE(widget.truckLoad.id,controller.text.toString()));
+    print('apires${apiResponse.response}');
     if(apiResponse.status==200){
       BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
       if(bidStateObj.data=="0"){
@@ -263,6 +273,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
   callAvrageBid() async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.AVG_BID(widget.truckLoad.id));
+    print('apires${apiResponse.response}');
     if(apiResponse.status==200){
       BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
       if(bidStateObj.data=="0"){

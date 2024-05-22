@@ -19,7 +19,7 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'generated/l10n.dart';
 import 'model/response/version.dart';
-
+import 'package:http/http.dart' as http;
 class EntryScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -32,6 +32,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   void initState() {
     // TODO: implement initState
    // startTimer();
+   // callApi();
     versionControllApi();
     //callNextScreen();
     super.initState();
@@ -279,7 +280,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
      String? token=await FirebaseMessaging.instance.getToken();
      ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}}");
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}");
+     print('${ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}}"}');
       if(apiResponse.status==200){
 
         User user=User.fromJson(jsonDecode(apiResponse.response));
@@ -297,5 +299,46 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
    }
 
   }
+
+
+  callApi()async{
+
+    for(int i=0;i<30;i++){
+      var headers = {
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('http://ec2-13-232-19-142.ap-south-1.compute.amazonaws.com:8080/tkd2/api/biding'));
+      request.body = json.encode({
+        "amount": "50005",
+        "bidderUserName": "user263770",
+        "description": "string",
+        "emailId": "paragd@yopmail.com",
+        "id": 0,
+        "idOfPost": 174083,
+        "loggedTime": "2024-05-21T12:30:50.065Z",
+        "loggedUserName": "user263770",
+        "mobileNumber": 9503334903,
+        "type": "string",
+        "userName": "user263770"
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      }
+      else {
+        print(response.reasonPhrase);
+      }
+    }
+
+
+
+
+  }
+
+
+
 
 }

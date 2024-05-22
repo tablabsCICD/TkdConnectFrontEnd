@@ -4,7 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/response/bid_placed.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/my_bids/show_bids_screen.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/verified_tag.dart';
@@ -140,13 +143,22 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     );
   }
 
-  void showBootomSheet(BuildContext context,List<Bidings>? bidings) {
-    showModalBottomSheet<void>(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
-        });
+  void showBootomSheet(BuildContext context,List<Bidings>? bidings) async{
+    User use=await LocalSharePreferences().getLoginData();
+    if(use.content!.first.isPaid==0){
+
+      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+    }else{
+      showModalBottomSheet<void>(
+          isScrollControlled: true,
+          context: context,
+          builder: (BuildContext context) {
+            return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
+          });
+    }
+
+
   }
 
   iteams(PostBidData postBidData, int index) {

@@ -8,7 +8,9 @@ import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
+import '../../model/response/post_upload.dart';
 import '../../model/response/userdata.dart';
+import '../../route/app_routes.dart';
 
 class CreateBuySellProvider extends BaseProvider{
   List<String>reqirement=["Buy","Sell"];
@@ -145,7 +147,7 @@ class CreateBuySellProvider extends BaseProvider{
 
 
   createBuySell(BuildContext context) async {
-    print('username${user.content!.first.userName}');
+
     Map<String, dynamic> data = {
       "additionalInformation": specialInstructionController.text,
       "agentName": user.content!.first.firstName!+" "+user.content!.first.lastName!,
@@ -184,8 +186,15 @@ class CreateBuySellProvider extends BaseProvider{
     print('${jsonEncode(data)}');
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.POST_BUY_SELL, data);
     if(apiResponse.status==200){
-      ToastMessage.show(context, "Post Sumbited Successfully");
-      Navigator.pop(context);
+
+      PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        ToastMessage.show(context, "Post Sumbited Successfully");
+        Navigator.pop(context);
+      }
     }else{
       ToastMessage.show(context, "Please try again");
     }

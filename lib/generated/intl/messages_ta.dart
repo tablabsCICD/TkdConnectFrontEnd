@@ -66,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("திட்டத்தை மாற்றவும்"),
         "chooseATopic":
             MessageLookupByLibrary.simpleMessage("ஒரு தலைப்பைத் தேர்ந்தெடு"),
+        "cityInterchange":
+            MessageLookupByLibrary.simpleMessage("நகர பரிமாற்றம்"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "வழிகளைச் சேர்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்"),
         "companyName":
@@ -76,9 +78,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ஒரு இடுகையை உருவாக்கு"),
         "createPostLoadIssue":
             MessageLookupByLibrary.simpleMessage("இடுகைச் சிக்கலை ஏற்றவும்"),
+        "creategroup":
+            MessageLookupByLibrary.simpleMessage("குழுவை உருவாக்கவும்"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "இந்த இடுகையை நீக்க விரும்புகிறீர்களா."),
         "directory": MessageLookupByLibrary.simpleMessage("அடைவு"),
+        "editPost": MessageLookupByLibrary.simpleMessage("இடுகையைத் திருத்து"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("சுயவிவரத்தைத் திருத்து"),
         "editYourProfile": MessageLookupByLibrary.simpleMessage(
@@ -106,7 +111,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstName": MessageLookupByLibrary.simpleMessage("முதல் பெயர்"),
         "from": MessageLookupByLibrary.simpleMessage("இருந்து"),
         "getVerified": MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்படு"),
+        "group": MessageLookupByLibrary.simpleMessage("குழு"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("உதவி & ஆதரவு"),
+        "home": MessageLookupByLibrary.simpleMessage("வீடு"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
             "எங்கள் பயன்பாட்டை எப்படி மதிப்பிடுகிறீர்கள்?"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
@@ -129,7 +136,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
             "உற்பத்தியாளர்/விநியோகஸ்தர்/வர்த்தகம்"),
         "may_be_letter": MessageLookupByLibrary.simpleMessage("பின்னர்"),
+        "message": MessageLookupByLibrary.simpleMessage("செய்தி"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("மொபைல் எண்"),
+        "more": MessageLookupByLibrary.simpleMessage("மேலும்"),
         "myPost": MessageLookupByLibrary.simpleMessage("எனது இடுகைகள்"),
         "myQuotes": MessageLookupByLibrary.simpleMessage("என் மேற்கோள்கள்"),
         "myRoutes": MessageLookupByLibrary.simpleMessage("எனது வழிகள்"),
@@ -143,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "postJob": MessageLookupByLibrary.simpleMessage("பதவிக்கான வேலை"),
         "postLoad": MessageLookupByLibrary.simpleMessage("போஸ்ட் லோட்"),
         "posts": MessageLookupByLibrary.simpleMessage("இடுகைகள்"),
+        "privacyAndPolicy":
+            MessageLookupByLibrary.simpleMessage("தனியுரிமைக் கொள்கை"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("இப்போது மேற்கோள்"),
         "quotesYouPlaced":
             MessageLookupByLibrary.simpleMessage("நீங்கள் வைத்த மேற்கோள்"),
@@ -166,11 +177,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_here": MessageLookupByLibrary.simpleMessage("இங்கே தேடவும்"),
         "selectOne": MessageLookupByLibrary.simpleMessage("ஒன்றை தேர்ந்தெடு"),
         "sell": MessageLookupByLibrary.simpleMessage("விற்க"),
+        "shareapp": MessageLookupByLibrary.simpleMessage(
+            "விண்ணப்பத்தைப் பகிர்ந்து, ஆச்சரியமான பரிசைப் பெறுங்கள்"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage(
             "அனைத்து மேற்கோள்களையும் காட்டு"),
         "specifyRequiredExperience": MessageLookupByLibrary.simpleMessage(
             "தேவையான அனுபவத்தைக் குறிப்பிடவும்"),
         "subtitle": MessageLookupByLibrary.simpleMessage("வசனம்"),
+        "terms_condition":
+            MessageLookupByLibrary.simpleMessage("விதிமுறைகள் & நிபந்தனை"),
         "textlogin": MessageLookupByLibrary.simpleMessage("உள்நுழை"),
         "title": MessageLookupByLibrary.simpleMessage("தலைப்பு"),
         "toCity": MessageLookupByLibrary.simpleMessage("நகரத்திற்கு"),

@@ -69,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("उर्वरित वर्ण"),
         "chat": MessageLookupByLibrary.simpleMessage("चॅट"),
         "chooseATopic": MessageLookupByLibrary.simpleMessage("विषय निवडा"),
+        "cityInterchange":
+            MessageLookupByLibrary.simpleMessage("सिटी इंटरचेंज"),
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "मार्ग जोडण्यासाठी खालील बटणावर क्लिक करा"),
         "comment": MessageLookupByLibrary.simpleMessage("टिप्पणी"),
@@ -79,11 +81,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "createPost": MessageLookupByLibrary.simpleMessage("पोस्ट तयार करा"),
         "createPostLoadIssue":
             MessageLookupByLibrary.simpleMessage("पोस्ट समस्या लोड करा"),
+        "creategroup": MessageLookupByLibrary.simpleMessage("गट तयार करा"),
         "delete": MessageLookupByLibrary.simpleMessage("हटवा"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "तुम्हाला ही पोस्ट हटवायची आहे का."),
         "directory": MessageLookupByLibrary.simpleMessage("निर्देशिका"),
         "done": MessageLookupByLibrary.simpleMessage("पूर्ण"),
+        "editPost": MessageLookupByLibrary.simpleMessage("पोस्ट संपादित करा"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("प्रोफाइल संपादित करा"),
         "editYourProfile":
@@ -113,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fromCity": MessageLookupByLibrary.simpleMessage("शहरातून"),
         "general": MessageLookupByLibrary.simpleMessage("सामान्य"),
         "getVerified": MessageLookupByLibrary.simpleMessage("सत्यापित करा"),
+        "group": MessageLookupByLibrary.simpleMessage("गट"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("मदत आणि समर्थन"),
         "home": MessageLookupByLibrary.simpleMessage("घर"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
@@ -169,6 +174,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "postAJob": MessageLookupByLibrary.simpleMessage("नोकरी पोस्ट करा"),
         "postLoad": MessageLookupByLibrary.simpleMessage("पोस्ट लोड"),
         "posts": MessageLookupByLibrary.simpleMessage("पोस्ट"),
+        "privacyAndPolicy":
+            MessageLookupByLibrary.simpleMessage("गोपनीयता धोरण"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("आता कोट करा"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("कोट किंमत"),
         "quotesYouPlaced":
@@ -205,6 +212,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sponsered": MessageLookupByLibrary.simpleMessage("प्रायोजित"),
         "submit": MessageLookupByLibrary.simpleMessage("सबमिट करा"),
         "subtitle": MessageLookupByLibrary.simpleMessage("उपशीर्षक"),
+        "terms_condition": MessageLookupByLibrary.simpleMessage("नियम आणि अटी"),
         "textlogin": MessageLookupByLibrary.simpleMessage("लॉग इन करा"),
         "title": MessageLookupByLibrary.simpleMessage("शीर्षक"),
         "to": MessageLookupByLibrary.simpleMessage("ला"),

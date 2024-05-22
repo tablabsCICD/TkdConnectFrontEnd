@@ -10,10 +10,12 @@ import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
+import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
 import '../../model/request/post_load.dart';
+import '../../model/response/post_upload.dart';
 import '../../model/response/search_data.dart';
 import '../../model/response/userdata.dart';
 import '../../model/response/verified_user.dart';
@@ -160,9 +162,17 @@ class PostLoadProvider extends BaseProvider {
     print('the resopnse is ${json.encode(postLoad.toJson())}');
     print('the resopnse is ${response.status}');
     if (response.status == 200) {
-      ToastMessage.show(context, "Post submitted successfully!");
-      Navigator.pop(context);
-      Navigator.pop(context, 1);
+      PostUpload postUpload=PostUpload.fromJson(response.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        ToastMessage.show(context, "Post submitted successfully!");
+        Navigator.pop(context);
+        Navigator.pop(context, 1);
+      }
+
+
     } else {
       ToastMessage.show(context, "Please try again");
     }
@@ -200,10 +210,22 @@ class PostLoadProvider extends BaseProvider {
     //postLoad.userList = null;
     ApiResponse response = await ApiHelper().postParameter(
         ApiConstant.BASE_URL + "fullTruckLoad", postLoad.toJson());
+
     if (response.status == 200) {
-      ToastMessage.show(context, "Post submitted successfully!");
-      Navigator.pop(context);
-      Navigator.pop(context, 1);
+      // ToastMessage.show(context, "Post submitted successfully!");
+      // Navigator.pop(context);
+      // Navigator.pop(context, 1);
+
+      PostUpload postUpload=PostUpload.fromJson(response.response);
+      if(postUpload.statusCode==401){
+        ToastMessage.show(context, "Please update your package");
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      }else{
+        ToastMessage.show(context, "Post submitted successfully!");
+        Navigator.pop(context);
+        Navigator.pop(context, 1);
+      }
+
     } else {
       ToastMessage.show(context, "Please try again");
     }
