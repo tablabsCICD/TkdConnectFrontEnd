@@ -8,6 +8,7 @@ import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/request/post_load.dart';
 import 'package:tkd_connect/model/response/comment_response.dart';
+import 'package:tkd_connect/model/response/oneadd.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:http/http.dart' as http;
 import '../../model/api_response.dart';
@@ -21,6 +22,7 @@ import '../../screen/my_route/select_city.dart';
 import '../../screen/my_route/select_one_city.dart';
 import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
+import '../../widgets/card/dashboard_cards.dart';
 class HomeScreenProvider extends BaseProvider{
 
 
@@ -41,11 +43,16 @@ class HomeScreenProvider extends BaseProvider{
 
   String drooDwonheading="All routes requirements";
   HomeScreenProvider(BuildContext context) : super('Ideal'){
+
     callUserData();
     callDashboradApi(context,selectedPage);
     pagenation(context);
     //callToken();
   }
+
+
+
+
 
   onCliclFilter(BuildContext context){
     if(filterisVisible){
@@ -122,7 +129,9 @@ class HomeScreenProvider extends BaseProvider{
       truckLoadTypeList.addAll(type.content);
 
       EasyLoading.dismiss();
+      callAddDiloag(context);
       notifyListeners();
+
     }
 
   }
@@ -360,6 +369,27 @@ class HomeScreenProvider extends BaseProvider{
     }else{
       ToastMessage.show(context, "Please try again");
     }
+  }
+
+
+  callAddDiloag(BuildContext context)async{
+    http.Response response=await http.get(Uri.parse("http://ec2-35-154-166-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/my-ads/getOne"));
+    if(response.statusCode==200){
+    Advertisement advertisement=Advertisement.fromJson(jsonDecode(response.body));
+      showDialog(
+          context: context,
+          builder: (context) {
+            Future.delayed(Duration(seconds: 5), () {
+              Navigator.of(context).pop(true);
+            });
+            return  AllCards().imageDialogOneAdd(
+                advertisement.data!.companyName,  context, advertisement.data!.images!.first!);
+          });
+
+    }else{
+
+    }
+
   }
 
 

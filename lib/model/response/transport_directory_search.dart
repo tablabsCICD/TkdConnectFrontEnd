@@ -5,7 +5,7 @@ class TransportSearchModel {
   bool? last;
   int? size;
   int? number;
-  String? sort;
+  //String? sort;
   bool? first;
   int? numberOfElements;
 
@@ -16,7 +16,7 @@ class TransportSearchModel {
         this.last,
         this.size,
         this.number,
-        this.sort,
+      //  this.sort,
         this.first,
         this.numberOfElements});
 
@@ -27,7 +27,7 @@ class TransportSearchModel {
     last = json['last']?? false;
     size = json['size']?? 0;
     number = json['number']?? 0;
-    sort = json['sort']?? '';
+  //  sort = json['sort']?? '';
     first = json['first']?? false;
     numberOfElements = json['numberOfElements']?? 0;
   }
@@ -43,7 +43,7 @@ class TransportSearchModel {
     data['last'] = this.last;
     data['size'] = this.size;
     data['number'] = this.number;
-    data['sort'] = this.sort;
+   // data['sort'] = this.sort;
     data['first'] = this.first;
     data['numberOfElements'] = this.numberOfElements;
     return data;

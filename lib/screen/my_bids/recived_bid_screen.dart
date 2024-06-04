@@ -157,8 +157,6 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
             return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
           });
     }
-
-
   }
 
   iteams(PostBidData postBidData, int index) {
@@ -303,9 +301,20 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () {
+                  onTap: () async{
                    // widget.provider.deleteBid(index, bidings);
-                    Utils().callFunction("${bidings.bidings!.mobileNumber}");
+
+                    User use=await LocalSharePreferences().getLoginData();
+                    if(use.content!.first.isPaid==0){
+
+                      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+                    }else{
+                      Utils().callFunction("${bidings.bidings!.mobileNumber}",);
+                    }
+
+
+
                   }
                   , child: Container(
                   width: 22.w,

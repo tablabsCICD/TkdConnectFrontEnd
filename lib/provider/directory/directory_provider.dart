@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/screen/my_route/select_one_city.dart';
+import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
@@ -36,7 +38,9 @@ class DirectoryProvider extends  BaseProvider{
 
   getAllData() async {
     //String myUrl = ApiConstant.DIRECTORYALL(selectedPage);
-    String myUrl = ApiConstant.GET_DIRECT_USER_LIST(selectedPage);
+    User userLogin=await LocalSharePreferences().getLoginData();
+
+    String myUrl = ApiConstant.GET_DIRECT_USER_LIST(selectedPage,userLogin.content!.first.id);
 
     if(filterisVisible){
       if(fromCity != "All" && toCity!="All"){

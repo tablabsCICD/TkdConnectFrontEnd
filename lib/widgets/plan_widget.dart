@@ -117,7 +117,7 @@ class PlanWidget extends StatelessWidget{
                                  ),
                                ),
                                Text(
-                                 amount+"/Month",
+                                 amount,
                                  textAlign: TextAlign.right,
                                  style: TextStyle(
                                    color: Colors.black,

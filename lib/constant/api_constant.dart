@@ -2,7 +2,7 @@ import 'package:tkd_connect/model/response/userdata.dart';
 
 class ApiConstant {
  // static final String BASE_URL = "https://api.tkdost.com/tkd2/api/";
-   static final String BASE_URL = "http://ec2-35-154-166-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+  static final String BASE_URL = "http://ec2-35-154-166-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
   // static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080//tkd3/api/";
@@ -48,7 +48,7 @@ class ApiConstant {
   static String EDIT_GROUP_MEMBER = BASE_URL + "groupMembers/bulk";
   static String GROUP_MEMBER_LIST = BASE_URL + 'groupMembers/byGroupId/';
 
-  static String CREATE_ORDER_ID(amount) => BASE_URL + 'transaction/initiatePayment?amount=$amount';
+  static String CREATE_ORDER_ID(amount,userId) => BASE_URL + 'transaction/initiatePayment?amount=$amount&userId=$userId';
 
 
 
@@ -145,7 +145,9 @@ class ApiConstant {
   //direcatory changes
   static String UPDATE_CHAT_LIST(connectId) => BASE_URL+"hatBackup/updateLoggedTime/${connectId}";
 
-  static String GET_DIRECT_USER_LIST(page)=> BASE_URL+"directory/allDirectoryUser?page=${page}&size=30";
+ // static String GET_DIRECT_USER_LIST(page)=> BASE_URL+"directory/allDirectoryUser?page=${page}&size=30";
+  static String GET_DIRECT_USER_LIST(page,userId)=> BASE_URL+"directory/allDirectoryUserGeoFence?page=${page}&size=30&userId=";
+
   static String GET_DIRECT_USER_DETAILS(userId)=> BASE_URL+"directory/detailsOfDirectoryUser?directoryUserId=${userId}";
 
 

@@ -212,13 +212,22 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     );
   }
 
-  void showBootomSheet(BuildContext context,List<Bidings>? bidings) {
-    showModalBottomSheet<void>(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
-        });
+  void showBootomSheet(BuildContext context,List<Bidings>? bidings)async {
+
+    User use=await LocalSharePreferences().getLoginData();
+    if(use.content!.first.isPaid==0){
+
+      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
+    }else{
+      showModalBottomSheet<void>(
+          isScrollControlled: true,
+          context: context,
+          builder: (BuildContext context) {
+            return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
+          });
+    }
+
   }
 
   iteams(PostBidData postBidData, int index) {

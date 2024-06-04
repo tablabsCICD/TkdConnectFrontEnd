@@ -26,7 +26,8 @@ class RazorPayClass {
 
 
     createOrderId(int amount) async {
-      ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.CREATE_ORDER_ID(amount));
+      User user=await LocalSharePreferences().getLoginData();
+      ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.CREATE_ORDER_ID(amount,user.content!.first.id));
       if(apiResponse.status==200){
        RazorPayOrderId payOrderId=RazorPayOrderId.fromJson(apiResponse.response);
        orderID=payOrderId.data!;

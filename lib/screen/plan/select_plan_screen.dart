@@ -4,20 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/provider/plan/select_plan.dart';
-import 'package:tkd_connect/screen/kyc/kyc_screen_one.dart';
-import 'package:tkd_connect/screen/plan/plan_details_screen.dart';
 import 'package:tkd_connect/utils/colors.dart';
-
 import 'package:tkd_connect/utils/toast.dart';
-import 'package:tkd_connect/widgets/linear_progress.dart';
-import 'package:tkd_connect/widgets/sign_in_widget.dart';
-
 import '../../constant/images.dart';
+import '../../generated/l10n.dart';
 import '../../model/response/userdata.dart';
 import '../../utils/razor_pay.dart';
 import '../../utils/sharepreferences.dart';
+import '../../utils/utils.dart';
 import '../../widgets/button.dart';
 import '../../widgets/plan_widget.dart';
 import '../../widgets/textview.dart';
@@ -30,6 +25,13 @@ class SelectPlanScreen extends StatefulWidget {
 }
 
 class _SelectPlanScreen extends State<SelectPlanScreen> {
+  int userType=-1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    checkUserType();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -38,7 +40,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
     );
   }
 
-  _buildPage(BuildContext context) {
+ _buildPage(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeColor.baground,
       body: SafeArea(
@@ -46,7 +48,86 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
           builder: (context, provider, child) {
             return Container(
               margin: EdgeInsets.only(left: 20.w, right: 20.w),
-              child:
+              child:userType==3?Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 21.5.h,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child:  SvgPicture.asset(Images.arrow_back),
+                      ),
+                      Textview(
+                        title: 'Upgrade Plan',
+                        TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox()
+                    ],
+                  ),
+                  SizedBox(
+                    height: 21.h,
+                  ),
+
+                  Textview(
+                    title: 'For Upgrade Plan Please Connect to the below Contact ',
+                    TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+                  titleText(S().email_id),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  subTitle('support@tkdconnect.in'),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  titleText(S().mobileNumber),
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+
+                        onTap: (){
+                          Utils().callFunction("8123006888");
+                        },child: subTitle('(+91)  8123006888 '),
+                      ),
+                      Text(" / "),
+                      InkWell(
+
+                        onTap: (){
+                          Utils().callFunction("8123004666");
+                        },child:   subTitle('(+91)  8123004666 '),
+                      ),
+                    ],
+                  )
+
+                ],
+
+              ):
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                 SizedBox(
                   height: 21.5.h,
@@ -136,43 +217,37 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                     child: PlanWidget(
                       isSelected:provider. bluePearl,
                       title: 'Blue pearl',
-                      amount: '1',
+                      amount: '2000/Month',
                       image: Images.pearls_blue,
                       subtitle: 'RECOMMENDED',
                       onClick: () {
                         List<String> listLaugaes = [
-                          "Post a Load/Post a Vechlie (Only 50)",
-                          'Email Notifications',
+                          "View Unlimited Client Loads",
+                          'Post Unlimited Loads',
                           'SMS Notifications',
                           'WHATSAPP Notifications',
-                          'Sponsered Ad/Google ad+ User posted add',
-                          'SELL POST Only(5)',
+                          'Add your Company website Link with Visiting Card',
+                          'One month Color Advertisement Complimentary',
                           'DIRECTORY ACCESS',
                           'JOB POSTING',
-                          'BIDDING Only (50)',
                           "PRIORITY DIRECTORY",
                           "VERIFIED GREEN MARK",
-                          "VERIFIED BLUE MARK(TRUSTED)",
-                          "GOOGLE Business SET UP"
                         ];
 
                         List<bool> selectLang = [
                           true,
-                          false,
-                          false,
-                          false,
                           true,
                           true,
                           true,
-                          false,
                           true,
-                          false,
-                          false,
-                          false,
-                          false
+                          true,
+                          true,
+                          true,
+                          true,
+                          true
                         ];
                         provider. onDeatilsPlan(context,listLaugaes, selectLang,
-                            Images.pearls_blue, "Blue pearl", "1");
+                            Images.pearls_blue, "Blue pearl", "2000/Month");
                       },
                     )),
                 SizedBox(
@@ -185,44 +260,38 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                     child: PlanWidget(
                       isSelected: provider.redPearl,
                       title: 'Red pearl',
-                      amount: '349',
+                      amount: '2500/Half Year',
                       image: Images.pearls_red,
                       subtitle: provider.selectPlan,
                       onClick: () {
                         List<String> listLaugaes = [
-                          "Post a Load/Post a Vechlie (Only 100 Post)",
-                          'Email Notifications',
+                          "View Unlimited Client Loads / Transporters Loads ",
+                          'Post Unlimited Loads',
                           'SMS Notifications',
                           'WHATSAPP Notifications',
-                          'Sponsered Ad/Google ad+ User posted add',
-                          'SELL POST (Only 10 Post)',
+                          'Add your Company website Link with Visiting Card',
+                          'Six Month Color Advertisement Complimentary',
                           'DIRECTORY ACCESS',
                           'JOB POSTING',
-                          'BIDDING (Only 100 Post)',
                           "PRIORITY DIRECTORY",
                           "VERIFIED GREEN MARK",
-                          "VERIFIED BLUE MARK(TRUSTED)",
-                          "GOOGLE Business SET UP"
                         ];
 
                         List<bool> selectLang = [
                           true,
                           true,
                           true,
-                          false,
                           true,
                           true,
                           true,
-                          false,
                           true,
-                          false,
-                          false,
-                          false,
-                          false
+                          true,
+                          true,
+                          true
                         ];
 
                         provider.onDeatilsPlan(context,listLaugaes, selectLang,
-                            Images.pearls_red, "Red pearl", "349");
+                            Images.pearls_red, "Red pearl", "2500/Half Year");
                       },
                     )),
                 SizedBox(
@@ -235,24 +304,21 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                     child: PlanWidget(
                       isSelected:provider. blackPearl,
                       title: 'Black pearl',
-                      amount: '449',
+                      amount: '5000/Annual',
                       image: Images.pearls_black,
                       subtitle:provider. selectPlan,
                       onClick: () {
                         List<String> listLaugaes = [
-                          "Post a Load/Post a Vechlie (Unlimited Post)",
-                          'Email Notifications',
+                          "View Unlimited Client Loads / Transporters Loads ",
+                          'Post Unlimited Loads',
                           'SMS Notifications',
+                          'Get More Loads with Verified Listing  '
                           'WHATSAPP Notifications',
-                          'Sponsered Ad/Google ad+ User posted add',
-                          'SELL POST (Only 20 Post)',
-                          'DIRECTORY ACCESS',
+                          'Add your Company website Link with Visiting Card',
+                          'Be top on Search In Transport Directory.',
                           'JOB POSTING',
-                          'BIDDING (Unlimited Post)',
                           "PRIORITY DIRECTORY",
                           "VERIFIED GREEN MARK",
-                          "VERIFIED BLUE MARK(TRUSTED)",
-                          "GOOGLE Business SET UP"
                         ];
 
                         List<bool> selectLang = [
@@ -265,13 +331,10 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                           true,
                           true,
                           true,
-                          true,
-                          true,
-                          true,
                           true
                         ];
                         provider.onDeatilsPlan(context,listLaugaes, selectLang,
-                            Images.pearls_black, "Black pearl", "449");
+                            Images.pearls_black, "Black pearl", "5000/Annual");
                       },
                     )),
                 SizedBox(
@@ -313,15 +376,65 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
       ),
     );
   }
-
-
-
   startTran(SelectPlanProvider provider) async {
     User user=await LocalSharePreferences().getLoginData();
     RazorPayClass(context).initalPay(provider.planAmount,user.content!.first.mobileNumber!,user.content!.first.emailId!,provider.selectPlan,provider.selectedPlanCode);
+  }
 
+  void checkUserType() async{
+
+    User user=await LocalSharePreferences().getLoginData();
+   userType= user.content!.first.transporterOrAgent!;
+   setState(() {
+
+   });
+
+    // if(user.content!.first.transporterOrAgent==3){
+    //
+    // }
 
   }
 
+
+  titleText(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 12.sp,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontWeight: FontWeight.w600,
+        height: 0,
+      ),
+    );
+  }
+
+  subTitle(String subtitle) {
+    return Text(
+      subtitle,
+      style: TextStyle(
+        color: Color(0xFFC3262C),
+        fontSize: 12.sp,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontWeight: FontWeight.w600,
+        height: 0,
+      ),
+    );
+  }
+
+  drwaLine() {
+    return Container(
+      width: 89.w,
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+            strokeAlign: BorderSide.strokeAlignCenter,
+            color: Color(0x332C363F),
+          ),
+        ),
+      ),
+    );
+  }
 
 }

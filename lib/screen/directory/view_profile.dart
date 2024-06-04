@@ -149,6 +149,20 @@ class ViewProfileDirectory extends StatelessWidget {
               ),
             ),
             SizedBox(
+              height: 6.h,
+            ),
+            Text(
+              data.website!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontFamily: AppConstant.FONTFAMILY,
+                fontWeight: FontWeight.w700,
+                height: 0,
+              ),
+            ),
+            SizedBox(
               height: 12.h,
             ),
             Text(
@@ -232,11 +246,13 @@ class ViewProfileDirectory extends StatelessWidget {
     List<Widget>list=[];
     for(int i=0;i<data.listOfPreferredRoutes.length;i++){
       list.add(cityTag(data.listOfPreferredRoutes[i].routeSource!));
+      list.add(Text("<->"));
       list.add(cityTag(data.listOfPreferredRoutes[i].routeDestination!));
+      list.add(Text(","));
     }
 
     return Wrap(
-      spacing: 6.0,
+      spacing: 10.0,
       runSpacing: 6.0,
       children: list,
     );

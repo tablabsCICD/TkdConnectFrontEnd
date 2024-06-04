@@ -91,7 +91,7 @@ class Utils {
   }
 
   callPrivacyAndPolicy(BuildContext context) async {
-    const url = 'https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1713253757588-1711368168541-termsadnCondition_(1).pdf';
+    const url = 'https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1716531122336-tkd_privacy_policy.txt';
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
@@ -106,11 +106,27 @@ class Utils {
   }
 
   callFunction(String mobile)async{
+    // User use=await LocalSharePreferences().getLoginData();
+    // if(use.content!.first.isPaid==0){
+    //
+    //   Navigator.pushNamed(, AppRoutes.registration_plan_details);
+    //
+    // }else{
+    //  final call = Uri.parse('tel:+91$mobile');
+    //       if (!await launchUrl(call)) {
+    //         throw Exception('Could not launch $call');
+    //       }
+    // }
+
     final call = Uri.parse('tel:+91$mobile');
     if (!await launchUrl(call)) {
       throw Exception('Could not launch $call');
     }
+
   }
+
+
+
 
   callShareFunction(String des){
     Share.share(des);

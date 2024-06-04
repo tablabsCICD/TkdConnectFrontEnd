@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,11 +16,21 @@ import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/screen/dashboard/home/place_bid_screen.dart';
+import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
+import 'package:tkd_connect/screen/deeplink/place_bid_deeplink.dart';
+import 'package:tkd_connect/screen/deeplink/show_bidds.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
+import 'package:tkd_connect/utils/toast.dart';
+import 'package:uni_links2/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'generated/l10n.dart';
+import 'model/response/AllCard.dart';
+import 'model/response/deep_link_load.dart';
 import 'model/response/version.dart';
 import 'package:http/http.dart' as http;
+
+
 class EntryScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -33,8 +44,11 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     // TODO: implement initState
    // startTimer();
    // callApi();
-    versionControllApi();
+
+
     //callNextScreen();
+
+    initUniLinks();
     super.initState();
   }
   @override
@@ -87,6 +101,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
    // print('the version is ${version.version}');
     if(version.version == AppConstant.APP_VERSION){
       callNextScreen();
+      //callScreen();
     }else{
       upDateDailog();
     }
@@ -332,11 +347,55 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
         print(response.reasonPhrase);
       }
     }
+  }
 
-
-
+  callScreen(){
+    Navigator.push(context, MaterialPageRoute(builder: (_)=>ShowAllBids( id: "22",)));
 
   }
+
+  Future<void> initUniLinks() async {
+    print('the link is ');
+
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      String? initialLink = await getInitialLink();
+
+      print('the link is $initialLink');
+      if(initialLink!=null){
+        print('the link is $initialLink');
+        LocalSharePreferences localSharePreferences=LocalSharePreferences();
+        bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
+        if(isLogin){
+          String number=initialLink.split("/").last;
+
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>DeepLink(id: number)));
+
+
+
+
+
+
+
+        }else{
+          versionControllApi();
+        }
+
+
+        //   print(' the link is $number');
+      }else{
+        versionControllApi();
+      }
+
+      // Parse the link and warn the user, if it is not correct,
+      // but keep in mind it could be `null`.
+    } on PlatformException {
+      // Handle exception by warning the user their action did not succeed
+      // return?
+      versionControllApi();
+    }
+  }
+
 
 
 

@@ -813,6 +813,71 @@ class AllCards {
     );
   }
 
+  Widget imageDialogOneAdd(text, context, imageUrl) {
+    return Dialog(
+      // backgroundColor: Colors.transparent,
+      // elevation: 0,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '$text',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.close_rounded),
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+          imageAddOne(context,imageUrl),
+        ],
+      ),
+    );
+  }
+
+  imageAddOne(context,imageUrl){
+
+      return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: CachedNetworkImage(
+            imageUrl: imageUrl,
+            placeholder: (context, url) =>
+                SvgPicture.asset("assets/svg/logo.svg"),
+            errorWidget: (context, url, error) => ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.network(
+                  "https://igps.net/wp-content/uploads/2018/08/shutterstock_711168088.jpg",
+                  fit: BoxFit.fill,
+                  width: MediaQuery.of(context).size.width - 100,
+                  height: MediaQuery.of(context).size.height - 100,
+                )),
+            fit: BoxFit.fill,
+            width: 500.w,
+            height: 500.h,
+          ),
+        ),
+        SizedBox(
+          height: 9,
+        ),
+      ],
+    );
+
+  }
+
+
   imageLoadAddA(TruckLoad load, BuildContext context) {
     if (load.postImages!.length == 0) {
       return Column(

@@ -91,7 +91,7 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = true;
     redPearl = false;
     blackPearl = false;
-    planAmount = 1;
+    planAmount = 2000;
     notifyListeners();
   }
 
@@ -106,7 +106,7 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = false;
     redPearl = true;
     blackPearl = false;
-    planAmount = 349;
+    planAmount = 2500;
     notifyListeners();
   }
 
@@ -121,7 +121,7 @@ class SelectPlanProvider extends BaseProvider {
     bluePearl = false;
     redPearl = false;
     blackPearl = true;
-    planAmount = 449;
+    planAmount = 5000;
     notifyListeners();
   }
 

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -13,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tkd_connect/provider/message/chat_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/route/routes.dart';
+
 import 'generated/l10n.dart';
 import 'dart:io' show Platform;
 
@@ -49,7 +52,6 @@ void main() async{
     getFCMToken();
   }
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
   runApp( MyApp(prefs: prefs,));
 
 
@@ -124,4 +126,7 @@ getFCMToken(){
 void setToken(String? token) {
   print('FCM Token: $token');
 }
+
+
+
 
