@@ -4,7 +4,7 @@ import '../model/request/register_company.dart';
 
 class AppConstant{
 
-  static final String APP_VERSION = "3.0.7"; // 53
+  static final String APP_VERSION = "3.0.8"; // 54
   static final String GOOGLE_KEY ="AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30";
   static final String LOGIN_KEY="login";
   static final String CURRENT_GROUP="group";

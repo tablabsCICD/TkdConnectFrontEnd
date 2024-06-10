@@ -101,7 +101,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
    // print('the version is ${version.version}');
     if(version.version == AppConstant.APP_VERSION){
       callNextScreen();
-      //callScreen();
+      //callScreen();Api
     }else{
       upDateDailog();
     }
@@ -296,7 +296,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
      String? token=await FirebaseMessaging.instance.getToken();
      ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
       ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}");
-     print('${ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}}"}');
+     print('${ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}"}');
       if(apiResponse.status==200){
 
         User user=User.fromJson(jsonDecode(apiResponse.response));
