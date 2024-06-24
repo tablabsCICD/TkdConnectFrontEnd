@@ -91,7 +91,8 @@ class TruckLoad {
     this.likes,
     this.postImages,
     this.transporterOrAgent,
-    this.userList
+    this.userList,
+    this.mobileOrLandline
   });
   late final int? id;
   late final int? userId;
@@ -136,6 +137,8 @@ class TruckLoad {
   late final List<dynamic>?postImages;
   late final int?transporterOrAgent;
   late final String? userList;
+  late final String? mobileOrLandline;
+
   late final int? isverified;
 
 
@@ -190,6 +193,7 @@ class TruckLoad {
     comment=json['comment']??'';;
     postImages=json['images']??'';
     userList=json['userList']??'';
+    mobileOrLandline=json['mobileOrLandline']??'';
   }
 
   Map<String, dynamic> toJson() {
@@ -238,6 +242,8 @@ class TruckLoad {
     _data['transporterOrAgent'] = transporterOrAgent;
     _data['userList'] = userList;
     _data['isverified'] = isverified;
+    _data['mobileOrLandline'] = mobileOrLandline;
+
 
 
     return _data;

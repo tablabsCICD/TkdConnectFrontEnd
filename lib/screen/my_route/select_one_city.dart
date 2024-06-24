@@ -53,7 +53,7 @@ class _SelectOneCityScreen extends State<SelectOneCityScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Textview(
-                      title: 'Add routes',
+                      title: 'Add City',
                       TextStyle(
                         color: Colors.black,
                         fontSize: 20.sp,

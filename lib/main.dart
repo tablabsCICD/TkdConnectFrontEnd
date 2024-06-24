@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tkd_connect/provider/message/chat_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/route/routes.dart';
-
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'generated/l10n.dart';
 import 'dart:io' show Platform;
 
@@ -45,11 +46,19 @@ void main() async{
 
 
     ));
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
     FirebaseMessaging.onMessage.listen(backgroundHandler);
     FirebaseMessaging.onMessageOpenedApp.listen(backgroundHandler);
     LocalNotificationService.initialize();
     getFCMToken();
+
   }
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp( MyApp(prefs: prefs,));
@@ -64,6 +73,7 @@ class MyApp extends StatelessWidget {
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
    MyApp({super.key, required this.prefs});
+
 
   // This widget is the root of your application.
   @override
@@ -103,6 +113,7 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoutes.entryScreen,
           onGenerateRoute: RouteGenerator.generateRoute,
           builder: EasyLoading.init(),
+
 
         ),
       );

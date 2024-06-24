@@ -444,13 +444,13 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                        // provider.selectCityFilter(context);
                         provider.selectCityFromFilter(context);
                       },
-                      child: fromRoute(provider.fromCity),
+                      child: fromRoute(provider.fromCity=="All"?"From": provider.fromCity),
                     )),
                 Align(alignment: Alignment.bottomRight, child: InkWell(
                   onTap: (){
                     provider.selectToCityFilter(context);
                   },
-                  child: fromRoute(provider.toCity),
+                  child: fromRoute(provider.toCity=="All"?"To":provider.toCity),
                 )),
                 Align(
                     alignment: Alignment.center,

@@ -373,7 +373,7 @@ class HomeScreenProvider extends BaseProvider{
 
 
   callAddDiloag(BuildContext context)async{
-    http.Response response=await http.get(Uri.parse("http://ec2-35-154-166-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/my-ads/getOne"));
+    http.Response response=await http.get(Uri.parse("${ApiConstant.BASE_URL}my-ads/getOne"));
     if(response.statusCode==200){
     Advertisement advertisement=Advertisement.fromJson(jsonDecode(response.body));
       showDialog(

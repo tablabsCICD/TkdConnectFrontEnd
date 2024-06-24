@@ -1540,10 +1540,10 @@ class S {
     );
   }
 
-  /// `Change Plan`
+  /// `Choose Plan`
   String get change_plan {
     return Intl.message(
-      'Change Plan',
+      'Choose Plan',
       name: 'change_plan',
       desc: '',
       args: [],

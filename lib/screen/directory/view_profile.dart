@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/utils/colors.dart';
@@ -50,6 +51,20 @@ class ViewProfileDirectory extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: marginContainer(callButton(), 10.h, 20.h),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+
+          FloatingActionButton(
+            child: FaIcon(FontAwesomeIcons.whatsapp),
+            backgroundColor: Colors.green.shade800,
+            onPressed: () {
+              Utils().openwhatsapp(context, data.mobileNumber!, "Hi We send message from from TKD connect application ");
+            },
+          ),
+        ],
+      ),
     );
   }
   callButton(){

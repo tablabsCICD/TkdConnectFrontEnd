@@ -68,7 +68,8 @@ class SelectCityProvider extends BaseProvider {
 
 
   selectCity(int index){
-    clearCity();
+
+
     if(isSelectStartLocation){
       listCity[index].isSelect=true;
       _selectedStartCity=listCity[index].name;
@@ -89,6 +90,7 @@ class SelectCityProvider extends BaseProvider {
   }
 
   clearCityTab(){
+
     for(int i=0;i<listCity.length;i++){
        listCity[i].isSelect=false;
     }
@@ -112,6 +114,10 @@ class SelectCityProvider extends BaseProvider {
     }
   }
   selectTab(String name){
+    searchController.clear();
+    searchController.text="";
+
+
     if(name.compareTo("Start")==0){
        isSelectStartLocation=true;
        isSelectDestination=false;
@@ -121,6 +127,9 @@ class SelectCityProvider extends BaseProvider {
       isSelectDestination=true;
       clearCityTab();
     }
+    // listCity.clear();
+    // listCity.addAll(temListCity);
+
     buttonEnable();
     notifyListeners();
   }

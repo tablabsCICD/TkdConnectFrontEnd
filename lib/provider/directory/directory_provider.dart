@@ -52,6 +52,7 @@ class DirectoryProvider extends  BaseProvider{
       }
 
     }
+    print("Url ${myUrl}");
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
 
     if(apiResponse.status==200){

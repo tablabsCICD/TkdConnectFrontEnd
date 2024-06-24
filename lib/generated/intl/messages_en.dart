@@ -64,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cargoType": MessageLookupByLibrary.simpleMessage("Cargo Type"),
         "changeLanguage":
             MessageLookupByLibrary.simpleMessage("Change language"),
-        "change_plan": MessageLookupByLibrary.simpleMessage("Change Plan"),
+        "change_plan": MessageLookupByLibrary.simpleMessage("Choose Plan"),
         "charactersMax": MessageLookupByLibrary.simpleMessage("characters max"),
         "charactersRemaining":
             MessageLookupByLibrary.simpleMessage("characters remaining"),

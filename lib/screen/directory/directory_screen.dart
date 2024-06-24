@@ -932,7 +932,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                       '${load.website}');
                   await launchUrl(url);
                 },
-                child: BaseWidget().headingMobile(load.companyName!, load.mobileNumber.toString(), load.website!),
+                child: BaseWidget().headingMobile(load.companyName!, load.mobileOrLandline.toString(), load.website!),
               ),
             ],
           ),
