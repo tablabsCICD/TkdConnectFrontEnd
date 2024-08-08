@@ -19,16 +19,16 @@ import 'package:tkd_connect/route/routes.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'generated/l10n.dart';
 import 'dart:io' show Platform;
-
 import 'notification/local_notification.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print("Notification Received ::::::"+message.data.toString());
- // print(message.notification!.title);
+  debugPrint("Notification Received ::::::"+message.data.toString());
+  //print(message.notification!.title);
   LocalNotificationService.createanddisplaynotification(message);
 }
-
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -42,85 +42,190 @@ void main() async{
         storageBucket: "tkdost-50f52.appspot.com",
         messagingSenderId: "24675079714",
         appId: "1:24675079714:android:42f78f78215191b7471c7b",
-
-
-
-    ));
+ ));
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     PlatformDispatcher.instance.onError = (error, stack) {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       return true;
     };
+    LocalNotificationService.initialize();
     FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
     FirebaseMessaging.onMessage.listen(backgroundHandler);
     FirebaseMessaging.onMessageOpenedApp.listen(backgroundHandler);
-    LocalNotificationService.initialize();
+
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        LocalNotificationService.createanddisplaynotification(message);
+      }
+    });
+
+
     getFCMToken();
 
   }
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
   runApp( MyApp(prefs: prefs,));
 
 
 }
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
+  final SharedPreferences prefs;
+  MyApp({required this.prefs});
+
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+   return _MyApp(prefs: prefs);
+  }
+
+}
+
+
+class _MyApp extends State<MyApp> {
 
   final SharedPreferences prefs;
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-   MyApp({super.key, required this.prefs});
+  _MyApp({required this.prefs});
 
 
   // This widget is the root of your application.
+
+
+    @override
+  void initState() {
+    // TODO: implement initState
+
+      sendNotification();
+      super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return  ScreenUtilInit(
 
-     designSize: const Size(375, 812),
+        designSize: const Size(375, 812),
         minTextAdapt: true,
-    splitScreenMode: true,
-    builder: (context , child) {
-      return MultiProvider(
-        providers: [
+        splitScreenMode: true,
+        builder: (context , child) {
+          return MultiProvider(
+            providers: [
 
-          Provider<ChatProvider>(
-            create: (_) => ChatProvider(
-              prefs: this.prefs,
-              firebaseFirestore: this.firebaseFirestore,
-              firebaseStorage: this.firebaseStorage,
-            ),
-          ),
-        ],
-        child: MaterialApp(
+              Provider<ChatProvider>(
+                create: (_) => ChatProvider(
+                  prefs: this.prefs,
+                  firebaseFirestore: this.firebaseFirestore,
+                  firebaseStorage: this.firebaseStorage,
+                ),
+              ),
+            ],
+            child: MaterialApp(
 
-          localizationsDelegates: [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
+              localizationsDelegates: [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
 
-          supportedLocales: S.delegate.supportedLocales,
-          title: 'TKD Connect',
+              supportedLocales: S.delegate.supportedLocales,
+              title: 'TKD Connect',
 //showPerformanceOverlay: true,
-          theme:    ThemeData(
-              primarySwatch: Colors.blue,
-              fontFamily: GoogleFonts.poppins().fontFamily),
-          initialRoute: AppRoutes.entryScreen,
-          onGenerateRoute: RouteGenerator.generateRoute,
-          builder: EasyLoading.init(),
+              theme:    ThemeData(
+                  primarySwatch: Colors.blue,
+                  fontFamily: GoogleFonts.poppins().fontFamily),
+              initialRoute: AppRoutes.entryScreen,
+              onGenerateRoute: RouteGenerator.generateRoute,
+              builder: EasyLoading.init(),
+              navigatorKey: navigatorKey,
 
 
-        ),
-      );
-    }
+            ),
+          );
+        }
     );
   }
+
+
+  sendNotification()async{
+
+    await FirebaseMessaging.instance.subscribeToTopic('all');
+
+  }
 }
+
+
+
+
+
+// class MyApp extends StatelessWidget {
+//
+//   final SharedPreferences prefs;
+//   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+//   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+//
+//    MyApp({super.key, required this.prefs});
+//
+//
+//   // This widget is the root of your application.
+//
+//
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return  ScreenUtilInit(
+//
+//      designSize: const Size(375, 812),
+//         minTextAdapt: true,
+//     splitScreenMode: true,
+//     builder: (context , child) {
+//       return MultiProvider(
+//         providers: [
+//
+//           Provider<ChatProvider>(
+//             create: (_) => ChatProvider(
+//               prefs: this.prefs,
+//               firebaseFirestore: this.firebaseFirestore,
+//               firebaseStorage: this.firebaseStorage,
+//             ),
+//           ),
+//         ],
+//         child: MaterialApp(
+//
+//           localizationsDelegates: [
+//             S.delegate,
+//             GlobalMaterialLocalizations.delegate,
+//             GlobalWidgetsLocalizations.delegate,
+//             GlobalCupertinoLocalizations.delegate,
+//           ],
+//
+//           supportedLocales: S.delegate.supportedLocales,
+//           title: 'TKD Connect',
+// //showPerformanceOverlay: true,
+//           theme:    ThemeData(
+//               primarySwatch: Colors.blue,
+//               fontFamily: GoogleFonts.poppins().fontFamily),
+//           initialRoute: AppRoutes.entryScreen,
+//           onGenerateRoute: RouteGenerator.generateRoute,
+//           builder: EasyLoading.init(),
+//           navigatorKey: navigatorKey,
+//
+//
+//         ),
+//       );
+//     }
+//     );
+//   }
+// }
 
 
 

@@ -158,6 +158,8 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
           BaseWidget().deleteMyPostButton(((val){
             if(val==10 || val== 1){
               _showMyDialog(index);
+            }else if(val==5){
+              callRePost(truckLoad.id!);
             }
 
             else{
@@ -202,7 +204,7 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
 
   void callApi() async{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-
+    listOwnPost.clear();
     ApiResponse response=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.BASE_URL}/getBuySellByUserId/${user.content!.first.id}");
     if(response.status==200){
       var type = OwnBuySelllPostList.fromJson(jsonDecode(response.response));
@@ -252,6 +254,22 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
       },
     );
   }
+
+  callRePost(int id )async{
+
+    String myUrl = ApiConstant.POST_BUY_SELL+'/repost?id=$id';
+    ApiResponse apiResponse= await ApiHelper().apiPost(myUrl);
+    if(apiResponse.status==200){
+     callApi();
+      setState(() {
+      });
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+
+
 
 
   deletePost(int index,BuildContext context)async{

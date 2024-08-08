@@ -128,6 +128,9 @@ class MyJobPost extends State<MyJobPostScreen> {
               );
 
             }
+            if(val==5){
+              callRePost( ownData.postJob!.id!);
+            }
             if(val==1){
 
               Future.delayed(
@@ -153,6 +156,7 @@ class MyJobPost extends State<MyJobPostScreen> {
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     print("the url is ${ApiConstant.BASE_URL}getPostJobsByUserId/${user.content!.first.id}");
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.BASE_URL}getPostJobsByUserId/${user.content!.first.id}");
+    listOwnPost.clear();
     print('the status code is ${apiResponse.status}');
     if(apiResponse.status==200){
       MyJobList myJobList=MyJobList.fromJson(jsonDecode(apiResponse.response));
@@ -217,6 +221,20 @@ class MyJobPost extends State<MyJobPostScreen> {
       isLoad=true;
     }else{
       isLoad=false;
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+  callRePost(int id )async{
+
+    String myUrl = ApiConstant.BASE_URL+'PostJob/repost?id=$id';
+    print('the url $myUrl');
+    ApiResponse apiResponse= await ApiHelper().apiPost(myUrl);
+    if(apiResponse.status==200){
+      callApi();
+      setState(() {
+      });
+    }else{
       ToastMessage.show(context, "Please try again");
     }
   }

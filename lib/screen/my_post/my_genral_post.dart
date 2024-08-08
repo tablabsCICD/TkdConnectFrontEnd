@@ -127,6 +127,10 @@ class MyGenralPost extends State<MyGenralPostScreen> {
               );
 
             }
+
+            if(val==5){
+              callRePost(ownData.id!);
+            }
             if(val==1){
 
               Future.delayed(
@@ -152,10 +156,12 @@ class MyGenralPost extends State<MyGenralPostScreen> {
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     String url="${ApiConstant.BASE_URL}getBuySellByUserId?userId=${user.content!.first.id}";
     print("the url ${url}");
+    listOwnPost.clear();
     ApiResponse apiResponse=await ApiHelper().apiGet(url);
     print("the url ${apiResponse.response}");
     if(apiResponse.status==200){
       OwnGenralPostList ownGenralPostList=OwnGenralPostList.fromJson(apiResponse.response);
+
       listOwnPost.addAll(ownGenralPostList.data!);
       print('the lenghth is ${listOwnPost.length}');
 
@@ -213,6 +219,20 @@ class MyGenralPost extends State<MyGenralPostScreen> {
      listOwnPost.removeAt(index);
     setState(() {
     });
+   }else{
+     ToastMessage.show(context, "Please try again");
+   }
+ }
+
+ callRePost(int id )async{
+
+   String myUrl = ApiConstant.BASE_URL+'GeneralPost/repost?Id=$id';
+   print('the url $myUrl');
+    ApiResponse apiResponse= await ApiHelper().apiPost(myUrl);
+   if(apiResponse.status==200){
+     callApi();
+     setState(() {
+     });
    }else{
      ToastMessage.show(context, "Please try again");
    }

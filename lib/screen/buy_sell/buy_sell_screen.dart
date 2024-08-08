@@ -199,7 +199,7 @@ class _BuySellScreen extends State<BuySellScreen>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buyListIteam(truckLoad.modelName!,false),
+                  buyListIteam(truckLoad.modelName!.substring(0,truckLoad.modelName!.length >30?30:truckLoad.modelName!.length).toString(),false),
                   buyListIteam(truckLoad.makerName!,false),
                   buyListIteam(truckLoad.estPrice!,false),
                 ],

@@ -21,7 +21,9 @@ import '../../model/response/userdata.dart';
 import '../../model/response/verified_user.dart';
 import '../../screen/create_post/select_userlist_for_post.dart';
 import '../../utils/colors.dart';
+import '../../utils/razorpayload.dart';
 import '../../widgets/bottomsheet.dart';
+import '../../widgets/paypostsheet.dart';
 
 class PostLoadProvider extends BaseProvider {
   List<String> reqirement = ["Full Load", "Part Load"];
@@ -152,7 +154,9 @@ class PostLoadProvider extends BaseProvider {
     postLoad.vehicleSize = vehicleSizeController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    postLoad.image = images;
+   if(images.length>0){
+     postLoad.images = images.join(",");
+   }
     postLoad.listOfUserIds = addedMemberIdList;
     //postLoad.userList = null;
 
@@ -165,7 +169,7 @@ class PostLoadProvider extends BaseProvider {
       PostUpload postUpload=PostUpload.fromJson(response.response);
       if(postUpload.statusCode==401){
         ToastMessage.show(context, "Please update your package");
-        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+        callSubDailog(context,postLoad);
       }else{
         ToastMessage.show(context, "Post submitted successfully!");
         Navigator.pop(context);
@@ -205,11 +209,17 @@ class PostLoadProvider extends BaseProvider {
     postLoad.vehicleSize = vehicleSizeController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    postLoad.image = images;
+    if(images.length>0){
+      postLoad.images = images.join(",");
+    }
     postLoad.listOfUserIds = addedMemberIdList;
     //postLoad.userList = null;
+
+
+
     ApiResponse response = await ApiHelper().postParameter(
         ApiConstant.BASE_URL + "fullTruckLoad", postLoad.toJson());
+    print('the constand ${ jsonEncode(postLoad.toJson())}');
 
     if (response.status == 200) {
       // ToastMessage.show(context, "Post submitted successfully!");
@@ -219,7 +229,8 @@ class PostLoadProvider extends BaseProvider {
       PostUpload postUpload=PostUpload.fromJson(response.response);
       if(postUpload.statusCode==401){
         ToastMessage.show(context, "Please update your package");
-        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+        callSubDailog(context,postLoad);
+        // Navigator.pushNamed(context, AppRoutes.registration_plan_details);
       }else{
         ToastMessage.show(context, "Post submitted successfully!");
         Navigator.pop(context);
@@ -531,4 +542,33 @@ class PostLoadProvider extends BaseProvider {
     hideMyID = val;
     notifyListeners();
   }
+
+
+  payment(BuildContext  context,PostLoad postLoad)async{
+
+    User user=await LocalSharePreferences().getLoginData();
+    RazorPayClassLoad(context).initalPay(199,user.content!.first.mobileNumber!,user.content!.first.emailId!,postLoad);
+
+  }
+
+  void callSubDailog(BuildContext context,PostLoad postLoad) async{
+
+    bool plan=  await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return FractionallySizedBox(
+              heightFactor: 0.6,
+              child: PayPostSheet());
+        });
+    if(plan){
+        payment(context,postLoad);
+
+    }else{
+      ToastMessage.show(context, "Please Try Again");
+    }
+
+  }
+
+
 }

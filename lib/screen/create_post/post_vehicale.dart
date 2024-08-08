@@ -4,17 +4,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:tkd_connect/utils/razorpayload.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
+import '../../model/response/userdata.dart';
 import '../../provider/dashboard/post_provider.dart';
 import '../../utils/colors.dart';
+import '../../utils/razor_pay.dart';
+import '../../utils/sharepreferences.dart';
 import '../../widgets/bottomsheet.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/drop_down.dart';
 import '../../widgets/editText.dart';
+import '../../widgets/paypostsheet.dart';
 import '../my_route/select_one_city.dart';
 
 class PostVehicleScreen extends StatefulWidget {
@@ -245,7 +251,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
 
-                  ), onClick: (){
+                  ), onClick: ()async{
 
                     provider.checkVehicaleValidation(context);
 
@@ -501,6 +507,8 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
       },
     );
   }
+
+
 
 
 }

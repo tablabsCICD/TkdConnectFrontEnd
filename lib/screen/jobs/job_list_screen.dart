@@ -79,17 +79,19 @@ class _JobListState extends State<JobListScreen> {
             child: InkWell(
               onTap: () async {
                 User use=await LocalSharePreferences().getLoginData();
-                if(use.content!.first.isPaid!=30){
-
-                  Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-
-                }else{
+                if(use.content!.first.isPaid!=0){
                   Object? val =
                   await Navigator.pushNamed(context, AppRoutes.createjob);
                   if (val != null) {
                     provider.selectedPage = 0;
                     provider.getAllJobs();
                   }
+
+                }else{
+
+
+                  Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+
                 }
              },
               child: Container(

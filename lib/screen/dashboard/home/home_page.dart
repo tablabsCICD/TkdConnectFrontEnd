@@ -207,7 +207,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                           Container(
                             transform:
                                 Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                            width: 38.w,
+                            width: 42.w,
                             height: 12.h,
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             decoration: ShapeDecoration(
@@ -263,7 +263,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                       ),
                     ),
                     SizedBox(
-                      width: 22.5.w,
+                      width: 15.5.w,
                     ),
                     InkWell(
                       onTap: () {

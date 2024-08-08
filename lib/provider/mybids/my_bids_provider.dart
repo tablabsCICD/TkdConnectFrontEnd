@@ -119,7 +119,7 @@ class MyBidsProvider extends BaseProvider{
 
   changeDropDown(String tab,BuildContext context){
     selectedString=tab;
-    print('the selcted tab $selectedString');
+    //print('the selcted tab $selectedString');
     if(tab.contains("All bids")){
       fla = false;pla = false;flr = false;plr = false;
     }

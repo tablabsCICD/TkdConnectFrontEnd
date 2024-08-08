@@ -81,7 +81,7 @@ class TruckLoadDeepLink {
   String? postingTime;
   String? type;
   String? topicName;
-  String? rating;
+  //String? rating;
 
   String? material;
   String? expireDate;
@@ -115,7 +115,7 @@ class TruckLoadDeepLink {
         this.postingTime,
         this.type,
         this.topicName,
-        this.rating,
+       // this.rating,
 
         this.material,
         this.expireDate,
@@ -149,7 +149,7 @@ class TruckLoadDeepLink {
     postingTime = json['postingTime'];
     type = json['type'];
     topicName = json['topicName'];
-    rating = json['rating'];
+    //rating = json['rating'];
 
     material = json['material'];
     expireDate = json['expireDate'];
@@ -185,7 +185,7 @@ class TruckLoadDeepLink {
     data['postingTime'] = this.postingTime;
     data['type'] = this.type;
     data['topicName'] = this.topicName;
-    data['rating'] = this.rating;
+   // data['rating'] = this.rating;
 
     data['material'] = this.material;
     data['expireDate'] = this.expireDate;

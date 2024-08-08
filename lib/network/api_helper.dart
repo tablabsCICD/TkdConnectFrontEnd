@@ -137,7 +137,7 @@ class ApiHelper{
 
   Future<ApiResponse>  apiPut(String URL,Map<String,dynamic>data) async{
     var body = json.encode(data);
-    print(body);
+   // print(body);
     var request = await dio.put(URL,data: body);
     ApiResponse apiResponseHelper = returnResponse(request);
     return apiResponseHelper;
@@ -163,7 +163,7 @@ class ApiHelper{
     try{
       var body = json.encode(data);
       final request = await dio.post(url,data: body);
-      print("Post Parameter:"+request.data);
+      //print("Post Parameter:"+request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       EasyLoading.dismiss();
       return apiResponseHelper;

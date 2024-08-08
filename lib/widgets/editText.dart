@@ -21,7 +21,7 @@ class EditText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: height,
+     // height: height,
       padding: EdgeInsets.symmetric(horizontal: 12.h),
       decoration: ShapeDecoration(
         color: Colors.white,
@@ -107,7 +107,7 @@ class EditTextError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: height,
+     // height: height,
       padding: EdgeInsets.symmetric(horizontal: 12.h),
       decoration: ShapeDecoration(
         color: Colors.white,

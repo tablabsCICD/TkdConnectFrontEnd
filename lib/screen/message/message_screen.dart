@@ -661,7 +661,7 @@ class _MessageScreenState extends State<MessageScreen> {
           },
           child: Container(
             width: 375.w,
-            height: 66.h,
+           // height: 66.h,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -679,7 +679,7 @@ class _MessageScreenState extends State<MessageScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    height: 33.h,
+                   // height: 33.h,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -734,14 +734,16 @@ class _MessageScreenState extends State<MessageScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        '${data.name}',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontFamily: AppConstant.FONTFAMILY,
-                                          fontWeight: FontWeight.w600,
-                                          height: 0,
+                                      Flexible(
+                                        child: Text(
+                                          '${data.name}',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12.sp,
+                                            fontFamily: AppConstant.FONTFAMILY,
+                                            fontWeight: FontWeight.w600,
+                                            height: 0,
+                                          ),
                                         ),
                                       ),
                                     ],

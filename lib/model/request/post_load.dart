@@ -7,6 +7,7 @@ class PostLoad {
   String? fullLoadChoice;
   int? id;
   List<String>? image;
+  String? images;
   String? instructions;
   List<int>? listOfUserIds;
   String? loadWeight;
@@ -58,6 +59,7 @@ class PostLoad {
         this.typeOfCargo,
         this.typeOfPayment,
         this.userList,
+        this.images,
         this.vehicleSize});
 
   PostLoad.fromJson(Map<String, dynamic> json) {
@@ -90,6 +92,7 @@ class PostLoad {
     typeOfPayment = json['typeOfPayment'];
     vehicleSize = json['vehicleSize'];
     userList = json['userList'];
+    images="";
   }
 
   Map<String, dynamic> toJson() {
@@ -101,7 +104,8 @@ class PostLoad {
     data['emailId'] = this.emailId;
     data['fullLoadChoice'] = this.fullLoadChoice;
     data['id'] = this.id;
-    data['images'] = this.image;
+    data['image'] = this.images;
+
     data['instructions'] = this.instructions;
     data['listOfUserIds'] = this.listOfUserIds;
     data['loadWeight'] = this.loadWeight;

@@ -250,7 +250,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
   
   callApiBidState()async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_STATE(widget.truckLoad.id,controller.text.toString()));
-    print('apires${apiResponse.response}');
+   // print('apires${apiResponse.response}');
     if(apiResponse.status==200){
       BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
       if(bidStateObj.data=="0"){
@@ -273,7 +273,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
   callAvrageBid() async{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.AVG_BID(widget.truckLoad.id));
-    print('apires${apiResponse.response}');
+    //print('apires${apiResponse.response}');
     if(apiResponse.status==200){
       BidState bidStateObj=BidState.fromJson(jsonDecode(apiResponse.response));
       if(bidStateObj.data=="0"){

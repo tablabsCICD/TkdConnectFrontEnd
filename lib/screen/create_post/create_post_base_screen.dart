@@ -127,7 +127,7 @@ class _CreatePostBase extends State<CreatePostBase>{
 
              });
           }),
-          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==AppConstant.USERTYPE ?   tabItem(isVehicle,S().vehicle,(){
+          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==AppConstant.USERTYPE || AppConstant.MANUFACTURE==AppConstant.USERTYPE ?   tabItem(isVehicle,S().vehicle,(){
             isLoad=false;
             isVehicle=true;
             isGeneral=false;

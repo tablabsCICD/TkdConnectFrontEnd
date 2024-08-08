@@ -16,19 +16,16 @@ import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
-import 'package:tkd_connect/screen/dashboard/home/place_bid_screen.dart';
 import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
-import 'package:tkd_connect/screen/deeplink/place_bid_deeplink.dart';
 import 'package:tkd_connect/screen/deeplink/show_bidds.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
-import 'package:tkd_connect/utils/toast.dart';
 import 'package:uni_links2/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'generated/l10n.dart';
-import 'model/response/AllCard.dart';
-import 'model/response/deep_link_load.dart';
+
 import 'model/response/version.dart';
-import 'package:http/http.dart' as http;
+
+import 'notification/local_notification.dart';
 
 
 class EntryScreen extends StatefulWidget {
@@ -47,7 +44,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
 
     //callNextScreen();
-
     initUniLinks();
     super.initState();
   }
@@ -106,6 +102,13 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
       upDateDailog();
     }
 
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    super.dispose();
   }
 
 
@@ -296,12 +299,12 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
      String? token=await FirebaseMessaging.instance.getToken();
      ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
       ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}");
-     print('${ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}"}');
+     //print('${ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}"}');
       if(apiResponse.status==200){
 
         User user=User.fromJson(jsonDecode(apiResponse.response));
        if(user.content!.length>0){
-         print('added unb ${apiResponse.response.toString()}');
+        // print('added unb ${apiResponse.response.toString()}');
          LocalSharePreferences localSharePreferences=LocalSharePreferences();
          localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
          localSharePreferences.setString(AppConstant.LOGIN_KEY, apiResponse.response);
@@ -316,38 +319,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   }
 
 
-  callApi()async{
 
-    for(int i=0;i<30;i++){
-      var headers = {
-        'Content-Type': 'application/json'
-      };
-      var request = http.Request('POST', Uri.parse('http://ec2-13-232-19-142.ap-south-1.compute.amazonaws.com:8080/tkd2/api/biding'));
-      request.body = json.encode({
-        "amount": "50005",
-        "bidderUserName": "user263770",
-        "description": "string",
-        "emailId": "paragd@yopmail.com",
-        "id": 0,
-        "idOfPost": 174083,
-        "loggedTime": "2024-05-21T12:30:50.065Z",
-        "loggedUserName": "user263770",
-        "mobileNumber": 9503334903,
-        "type": "string",
-        "userName": "user263770"
-      });
-      request.headers.addAll(headers);
-
-      http.StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
-      }
-      else {
-        print(response.reasonPhrase);
-      }
-    }
-  }
 
   callScreen(){
     Navigator.push(context, MaterialPageRoute(builder: (_)=>ShowAllBids( id: "22",)));
@@ -355,34 +327,28 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   }
 
   Future<void> initUniLinks() async {
-    print('the link is ');
+   // print('the link is ');
 
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       String? initialLink = await getInitialLink();
 
-      print('the link is $initialLink');
+     // print('the link is $initialLink');
       if(initialLink!=null){
-        print('the link is $initialLink');
+        debugPrint('the link is $initialLink');
         LocalSharePreferences localSharePreferences=LocalSharePreferences();
         bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
         if(isLogin){
           String number=initialLink.split("/").last;
-
+          debugPrint('the link is $number');
           Navigator.push(context, MaterialPageRoute(builder: (_)=>DeepLink(id: number)));
-
-
-
-
-
-
 
         }else{
           versionControllApi();
         }
 
 
-        //   print(' the link is $number');
+         //  print(' the link is $number');
       }else{
         versionControllApi();
       }

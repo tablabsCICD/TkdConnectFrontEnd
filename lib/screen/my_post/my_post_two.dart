@@ -149,9 +149,6 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                  provider.reSendPost(context,postBidData);
                 }
                 if(val==6){
-                  print('the edit call');
-
-
                   Future.delayed(Duration(seconds: 1), () async {
 
                        //  int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));

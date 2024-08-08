@@ -2,7 +2,7 @@ import 'package:tkd_connect/model/response/userdata.dart';
 
 class ApiConstant {
   static final String BASE_URL = "https://api.tkdost.com/tkd2/api/";
- // static final String BASE_URL = "http://ec2-35-154-166-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+ // static final String BASE_URL = "http://ec2-13-233-252-48.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
   // static final String BASE_URL="http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080//tkd3/api/";
@@ -93,7 +93,7 @@ class ApiConstant {
   static String BUY_SELL_ALL_CARD(type, currentPage) =>
       BASE_URL + "allCards/buySell?type=${type}&&page=${currentPage}";
   static String POST_JOB = BASE_URL + "/postJob";
-  static String GET_CURRENT_VERSION = BASE_URL + 'GetLatestVaersion';
+  static String GET_CURRENT_VERSION = BASE_URL + 'VersionAndroidAndroid/GetLatestVaersion';
   static String ADHAR_CREATE_TOKEN = BASE_URL + 'Aadhaar/authenticate';
   static String ADHAR_SEND_OTP = BASE_URL + 'Aadhaar/sendOpt';
   static String ADHAR_VERFIY_OTP = BASE_URL + 'Aadhaar/verifyOtp';
@@ -157,5 +157,6 @@ class ApiConstant {
   static String CHAT_UPDATE_BY_TIME (id,sendTo)=> BASE_URL+"chatBackup/updateLoggedTime?id=$id&notificationSendTo=$sendTo";
 
   static String PAYMENT_SIGNATURE=BASE_URL+"transaction/finalPaymentStatus";
+ static String LOAD_PAYMENT_SIGNATURE=BASE_URL+"transaction/finalPaymentStatusWithPost";
 
 }

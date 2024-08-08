@@ -14,6 +14,7 @@ import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/verified_tag.dart';
 
 import '../../constant/images.dart';
+import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../route/app_routes.dart';
 import '../textview.dart';
@@ -1315,6 +1316,33 @@ class BaseWidget {
                 ),
                 Text(
                   S().share,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(5);
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  Images.return_route,
+                  color: Colors.black,
+                  width: 20.w,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().Re_post,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.sp,

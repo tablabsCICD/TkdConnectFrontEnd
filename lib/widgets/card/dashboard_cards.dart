@@ -126,8 +126,8 @@ class AllCards {
           Align(
             alignment: Alignment.topRight,
             child: Container(
-              width: 100.w,
-              height: 18.h,
+              width: 120.w,
+              height: 20.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
                 color: Color(0xFF2C8FEA),
@@ -185,6 +185,7 @@ class AllCards {
                           postBidData.genericCardsDto!.destination=load.destination;
                           postBidData.genericCardsDto!.dnd=load.dnd;
                           postBidData.genericCardsDto!.privatePost=load.privatePost;
+                          postBidData.genericCardsDto!.mainTag=load.mainTag;
                           int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
 
                           postDelete.refreshHomeScreen();
@@ -793,9 +794,11 @@ class AllCards {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '$text',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Flexible(
+                  child: Text(
+                    '$text',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 IconButton(
                   onPressed: () {

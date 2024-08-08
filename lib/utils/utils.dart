@@ -294,4 +294,20 @@ class Utils {
 
     return "";
   }
+
+
+  bool fullLoadMainTag(String tag){
+    switch(tag){
+      case 'Full load available':
+        return false;
+      case 'Part load available':
+        return false;
+      case 'Full load required':
+        return true;
+      case 'Part load required':
+        return true;
+
+    }
+    return false;
+  }
 }

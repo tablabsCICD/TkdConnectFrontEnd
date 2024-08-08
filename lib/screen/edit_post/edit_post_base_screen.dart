@@ -49,15 +49,13 @@ class _EditPostBase extends State<EditPostBase>{
   }
 
   setData(){
-    if(widget.postBidData.genericCardsDto!.tableName=="FullTruckLoad"){
+    if(Utils().fullLoadMainTag(widget.postBidData.genericCardsDto!.mainTag!)){
       isLoad=true;
       isVehicle=false;
     }
-    else if(widget.postBidData.genericCardsDto!.tableName=="FullTruckVehicle"){
+    else {
       isVehicle=true;
       isLoad=false;
-    }else{
-
     }
     setState(() {
 

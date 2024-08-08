@@ -147,7 +147,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
-                      BaseWidget().getImageclip( widget.memberList[index].profilePicture!,height: 34.h,width: 34.w),
+                      BaseWidget().getImageclip( widget.memberList[index].profilePicture==null?"":widget.memberList[index].profilePicture!,height: 34.h,width: 34.w),
                       SizedBox(width: 10.w,),
                       Text(
                           widget.memberList[index].firstName!+" "+widget.memberList[index].lastName!,

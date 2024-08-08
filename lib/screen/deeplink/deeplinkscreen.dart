@@ -48,26 +48,36 @@ class _DeppLink extends State<DeepLink>{
 
 
   callApiPost()async{
-    User user=await LocalSharePreferences().getLoginData();
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.BASE_URL}fullTruckLoad/${widget.id}");
-    print('${apiResponse.status}');
-    if(apiResponse.status==200){
-      TruckDeep truckLoadType =TruckDeep.fromJson(apiResponse.response);
-      TruckLoadDeepLink load=truckLoadType.content!.first;
-      if(load.contactNumber==user.content!.first.mobileNumber){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>ShowAllBids( id: widget.id,)));
+
+    try{
+      User user=await LocalSharePreferences().getLoginData();
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.BASE_URL}fullTruckLoad/${widget.id}");
+      print('the response ${apiResponse.status}');
+      if(apiResponse.status==200){
+        print('the response ${apiResponse.response}');
+        TruckDeep truckLoadType =TruckDeep.fromJson(apiResponse.response);
+        TruckLoadDeepLink load=truckLoadType.content!.first;
+        if(load.contactNumber==user.content!.first.mobileNumber){
+          print('the response in navi');
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>ShowAllBids( id: widget.id,)));
+
+        }else{
+          print('the response in deep');
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>PlaceDeepBidScreen( truckLoad: load,)));
+
+        }
+
 
       }else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>PlaceDeepBidScreen( truckLoad: load,)));
+        ToastMessage.show(context, "Error to find the load");
+        Navigator.pushNamed(context, AppRoutes.home);
 
       }
-
-
-    }else{
-       ToastMessage.show(context, "Error to find the load");
-       Navigator.pushNamed(context, AppRoutes.home);
-
+    }catch(e){
+      ToastMessage.show(context, "Post is not avilable");
+      Navigator.pop(context);
     }
+
   }
 
 }
