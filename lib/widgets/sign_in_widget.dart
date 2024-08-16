@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,9 +7,11 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../generated/l10n.dart';
 
 class AlredayAccountWidget extends StatelessWidget{
+  const AlredayAccountWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
-   return Container(
+   return SizedBox(
        width: 335.w,
        height: 24.h,
        child: Row(
@@ -18,7 +19,7 @@ class AlredayAccountWidget extends StatelessWidget{
          mainAxisAlignment: MainAxisAlignment.center,
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
-           Container(
+           SizedBox(
              width: 335.w,
              child: Row(
                mainAxisSize: MainAxisSize.min,

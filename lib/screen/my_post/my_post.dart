@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +19,8 @@ import '../../utils/utils.dart';
 import '../my_bids/show_bids_screen.dart';
 
 class MyPostScreen extends StatefulWidget {
+  const MyPostScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MyPostState();
@@ -81,9 +82,9 @@ class _MyPostState extends State<MyPostScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -97,7 +98,7 @@ class _MyPostState extends State<MyPostScreen> {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -127,7 +128,7 @@ class _MyPostState extends State<MyPostScreen> {
           SizedBox(height: 8.h,),
           BaseWidget().showBidButton((val) async{
             if (val == 0) {
-              if (postBidData.bidings!.length > 0) {
+              if (postBidData.bidings!.isNotEmpty) {
                 showBootomSheet(context,postBidData.bidings);
               } else {
                 ToastMessage.show(context, "No any Bids to show");
@@ -209,7 +210,7 @@ class _MyPostState extends State<MyPostScreen> {
   }
 
   iteams(PostBidData postBidData, int index) {
-    if (postBidData.bidings!.length == 0) {
+    if (postBidData.bidings!.isEmpty) {
       return Container();
     } else {
       if (postBidData.bidings!.length == 1) {
@@ -237,12 +238,12 @@ class _MyPostState extends State<MyPostScreen> {
     return Container(
       width: 311.w,
       //  height: 69.h,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: isLast ? Colors.white : Color(0x332C363F),
+            color: isLast ? Colors.white : const Color(0x332C363F),
           ),
         ),
       ),
@@ -276,7 +277,7 @@ class _MyPostState extends State<MyPostScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  bidings.firstName! + " " + bidings.lastName!,
+                                  "${bidings.firstName!} ${bidings.lastName!}",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 10.sp,
@@ -292,7 +293,7 @@ class _MyPostState extends State<MyPostScreen> {
                                     width: 12.w,
                                     height: 12.h,
                                     clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(),
+                                    decoration: const BoxDecoration(),
                                     child: Stack(
                                       children: [
                                         SvgPicture.asset(Images.verified)
@@ -308,7 +309,7 @@ class _MyPostState extends State<MyPostScreen> {
                             child: Text(
                               bidings.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: AppConstant.FONTFAMILY,
                                 fontWeight: FontWeight.w400,
@@ -373,7 +374,7 @@ class _MyPostState extends State<MyPostScreen> {
                     }
 
                   }
-                  , child: Container(
+                  , child: SizedBox(
                   width: 22.w,
                   height: 22.h,
                   child: Row(
@@ -381,7 +382,7 @@ class _MyPostState extends State<MyPostScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 22.w,
                         height: 22.h,
                         child: Stack(children: [

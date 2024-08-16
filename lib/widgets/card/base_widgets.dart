@@ -1,19 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/utils/colors.dart';
-
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/verified_tag.dart';
 
-import '../../constant/images.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../route/app_routes.dart';
@@ -22,7 +18,7 @@ import '../textview.dart';
 class BaseWidget {
   Widget profile(String profileLink, String name, String companyName,
       {int verify = 0,double ratings= 4.5}) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -52,7 +48,7 @@ class BaseWidget {
           ),
           SizedBox(width: 8.w),
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 52.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -66,7 +62,7 @@ class BaseWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -113,7 +109,7 @@ class BaseWidget {
                                           child: Textview(
                                             title: companyName,
                                             TextStyle(
-                                              color: Color(0x99001E49),
+                                              color: const Color(0x99001E49),
                                               fontSize: 10.sp,
                                               fontFamily: GoogleFonts.poppins()
                                                   .fontFamily,
@@ -128,9 +124,9 @@ class BaseWidget {
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
-                                          itemPadding: EdgeInsets.symmetric(
+                                          itemPadding: const EdgeInsets.symmetric(
                                               horizontal: 1.0),
-                                          itemBuilder: (context, _) => Icon(
+                                          itemBuilder: (context, _) => const Icon(
                                             Icons.star,
                                             color: Colors.amber,
                                             size: 5,
@@ -162,7 +158,7 @@ class BaseWidget {
 
   Widget profileWithUser(String profileLink, String name, String companyName,
       {int verify = 0, int transporterOrAgent = 0,double ratings= 4.5}) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -206,7 +202,7 @@ class BaseWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -255,7 +251,7 @@ class BaseWidget {
                                           child: Textview(
                                             title: companyName,
                                             TextStyle(
-                                              color: Color(0x99001E49),
+                                              color: const Color(0x99001E49),
                                               fontSize: 10.sp,
                                               fontFamily: GoogleFonts.poppins()
                                                   .fontFamily,
@@ -269,7 +265,7 @@ class BaseWidget {
                                             title: Utils().getTranport(
                                                 transporterOrAgent),
                                             TextStyle(
-                                              color: Color(0x99001E49),
+                                              color: const Color(0x99001E49),
                                               fontSize: 10.sp,
                                               fontFamily: GoogleFonts.poppins()
                                                   .fontFamily,
@@ -284,9 +280,9 @@ class BaseWidget {
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
-                                          itemPadding: EdgeInsets.symmetric(
+                                          itemPadding: const EdgeInsets.symmetric(
                                               horizontal: 1.0),
-                                          itemBuilder: (context, _) => Icon(
+                                          itemBuilder: (context, _) => const Icon(
                                             Icons.star,
                                             color: Colors.amber,
                                             size: 5,
@@ -318,7 +314,7 @@ class BaseWidget {
 
   Widget profileDirectory(String profileLink, String name, String companyName,
       {int verify = 0}) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -347,7 +343,7 @@ class BaseWidget {
           ),
           SizedBox(width: 8.w),
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 52.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -361,7 +357,7 @@ class BaseWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -408,7 +404,7 @@ class BaseWidget {
                                           child: Textview(
                                             title: companyName,
                                             TextStyle(
-                                              color: Color(0x99001E49),
+                                              color: const Color(0x99001E49),
                                               fontSize: 10.sp,
                                               fontFamily: GoogleFonts.poppins()
                                                   .fontFamily,
@@ -423,9 +419,9 @@ class BaseWidget {
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
-                                          itemPadding: EdgeInsets.symmetric(
+                                          itemPadding: const EdgeInsets.symmetric(
                                               horizontal: 1.0),
-                                          itemBuilder: (context, _) => Icon(
+                                          itemBuilder: (context, _) => const Icon(
                                             Icons.star,
                                             color: Colors.amber,
                                             size: 5,
@@ -460,7 +456,7 @@ class BaseWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 8.h),
       decoration: ShapeDecoration(
-        color: Color(0xFFF4F6F6),
+        color: const Color(0xFFF4F6F6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
       child: Row(
@@ -474,7 +470,7 @@ class BaseWidget {
                 fromCity,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                  color: Color(0xCC001E49),
+                  color: const Color(0xCC001E49),
                   fontSize: 12.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w400,
@@ -482,14 +478,14 @@ class BaseWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
-          Icon(
+          const Icon(
             Icons.arrow_circle_right_rounded,
             color: Colors.grey,
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Expanded(
@@ -497,7 +493,7 @@ class BaseWidget {
               child: Text(
                 toCity,
                 style: TextStyle(
-                  color: Color(0xCC001E49),
+                  color: const Color(0xCC001E49),
                   fontSize: 12.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w400,
@@ -511,7 +507,7 @@ class BaseWidget {
   }
 
   Widget heading(String title, String date, String subTitle) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -520,13 +516,13 @@ class BaseWidget {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -550,7 +546,7 @@ class BaseWidget {
                           date,
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: Color(0x99001E49),
+                            color: const Color(0x99001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -565,7 +561,7 @@ class BaseWidget {
                     child: Text(
                       subTitle,
                       style: TextStyle(
-                        color: Color(0x99001E49),
+                        color: const Color(0x99001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
@@ -584,7 +580,7 @@ class BaseWidget {
 
 
   Widget headingMobile(String title, String date, String subTitle) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -593,13 +589,13 @@ class BaseWidget {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -643,7 +639,7 @@ class BaseWidget {
                     child: Text(
                       subTitle,
                       style: TextStyle(
-                        color: Color(0x99001E49),
+                        color: const Color(0x99001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
@@ -661,7 +657,7 @@ class BaseWidget {
 
 
   Widget headingWithDescription(String title, String date, String field1,String field2,String field3,bool isJobPost) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -670,13 +666,13 @@ class BaseWidget {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -697,7 +693,7 @@ class BaseWidget {
                           date,
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: Color(0x99001E49),
+                            color: const Color(0x99001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -717,7 +713,7 @@ class BaseWidget {
                             Text(
                               isJobPost?"Experience : ":"Mfg Year : ",
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w500,
@@ -726,7 +722,7 @@ class BaseWidget {
                             Text(
                               field1,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w400,
@@ -739,7 +735,7 @@ class BaseWidget {
                             Text(
                         isJobPost?"Role : ":"Model : ",
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w500,
@@ -748,7 +744,7 @@ class BaseWidget {
                             Text(
                               field2,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w400,
@@ -756,12 +752,12 @@ class BaseWidget {
                             ),
                           ],
                         ),
-                        isJobPost?SizedBox.shrink():Row(
+                        isJobPost?const SizedBox.shrink():Row(
                           children: [
                             Text(
                               "Price : ",
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w500,
@@ -770,7 +766,7 @@ class BaseWidget {
                             Text(
                               field3,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 12.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w400,
@@ -791,7 +787,7 @@ class BaseWidget {
   }
 
   Widget headingWithoutDate(String title, String subTitle) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -800,13 +796,13 @@ class BaseWidget {
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -831,7 +827,7 @@ class BaseWidget {
                     child: Text(
                       subTitle,
                       style: TextStyle(
-                        color: Color(0x99001E49),
+                        color: const Color(0x99001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
@@ -867,7 +863,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -879,7 +875,7 @@ class BaseWidget {
                   Text(
                     S().quotesNow,
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -917,7 +913,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -929,7 +925,7 @@ class BaseWidget {
                   Text(
                     S().applyNow,
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -967,7 +963,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -979,14 +975,14 @@ class BaseWidget {
                   Text(
                     S().getInTouch,
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(width: 5,),
-                  Icon(Icons.call,size:15)
+                  const SizedBox(width: 5,),
+                  const Icon(Icons.call,size:15)
                 ],
               ),
             ),
@@ -1019,7 +1015,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -1069,7 +1065,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -1121,7 +1117,7 @@ class BaseWidget {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                    side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -1173,7 +1169,7 @@ class BaseWidget {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                    side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -1224,7 +1220,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -1236,7 +1232,7 @@ class BaseWidget {
                   Text(
                     S().showAllQuotes,
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -1260,7 +1256,7 @@ class BaseWidget {
   popUpmenuOwnPost(Function(int) onMenuTap) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Center(child: SvgPicture.asset(Images.post_menu)),
@@ -1377,7 +1373,7 @@ class BaseWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -1389,7 +1385,7 @@ class BaseWidget {
                   Text(
                     S().showAllQuotes,
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -1413,7 +1409,7 @@ class BaseWidget {
   popUpmenuOwnRepostPost(Function(int) onMenuTap) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Center(child: SvgPicture.asset(Images.post_menu)),
@@ -1567,7 +1563,7 @@ class BaseWidget {
   popUpmenuOwnBid(Function(int) onMenuTap) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Center(child: SvgPicture.asset(Images.post_menu)),
@@ -1609,7 +1605,7 @@ class BaseWidget {
   popUpmenuForOwnPost(Function(int) onMenuTap) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Center(child: SvgPicture.asset(Images.post_menu)),
@@ -1813,7 +1809,7 @@ class BaseWidget {
   popUpmenu(Function(int) onMenuTap) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+        side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Center(child: SvgPicture.asset(Images.post_menu)),
@@ -1949,7 +1945,7 @@ class BaseWidget {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+            side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
             borderRadius: BorderRadius.circular(8),
           ),
         ),
@@ -1961,7 +1957,7 @@ class BaseWidget {
             Text(
               S().withdrawQuotes,
               style: TextStyle(
-                color: Color(0xFF001E49),
+                color: const Color(0xFF001E49),
                 fontSize: 12.sp,
                 fontFamily: GoogleFonts.poppins().fontFamily,
                 fontWeight: FontWeight.w600,
@@ -2105,13 +2101,13 @@ class BaseWidget {
         Navigator.pushNamed(context, AppRoutes.commentscreen,
             arguments: truckLoad);
       },
-      child: Container(
+      child: SizedBox(
         height: 20.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
+            SizedBox(
               width: 155.50.w,
               height: 18.h,
               child: Row(
@@ -2119,7 +2115,7 @@ class BaseWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 16.w,
                     height: 16.h,
                     child: Row(
@@ -2129,11 +2125,10 @@ class BaseWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            // provider.likeIncreamentApi(truckLoad.id!, context);
-                            Navigator.pushNamed(context, AppRoutes.commentscreen,
+                             Navigator.pushNamed(context, AppRoutes.commentscreen,
                                 arguments: truckLoad);
                           },
-                          child: Container(
+                          child: SizedBox(
                             width: 16.w,
                             height: 16.h,
                             child: Stack(
@@ -2143,7 +2138,7 @@ class BaseWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -2153,7 +2148,7 @@ class BaseWidget {
                         Text(
                           S().like,
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
@@ -2180,7 +2175,7 @@ class BaseWidget {
                 Navigator.pushNamed(context, AppRoutes.commentscreen,
                     arguments: truckLoad);
               },
-              child: Container(
+              child: SizedBox(
                 width: 155.50.w,
                 height: 18.h,
                 child: Row(
@@ -2188,7 +2183,7 @@ class BaseWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 16.w,
                       height: 16.h,
                       child: Row(
@@ -2196,7 +2191,7 @@ class BaseWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 16.w,
                             height: 16.h,
                             child: Stack(
@@ -2205,7 +2200,7 @@ class BaseWidget {
                         ],
                       ),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Container(
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -2215,7 +2210,7 @@ class BaseWidget {
                           Text(
                             S().comment,
                             style: TextStyle(
-                              color: Color(0xFF001E49),
+                              color: const Color(0xFF001E49),
                               fontSize: 12.sp,
                               fontFamily: GoogleFonts.poppins().fontFamily,
                               fontWeight: FontWeight.w600,
@@ -2246,13 +2241,13 @@ class BaseWidget {
 
   Widget likeCommentDetails(TruckLoad truckLoad,BuildContext context,Function onTabLikeCount,
       {int likeCount = 0, int commentCount = 0}) {
-    return Container(
+    return SizedBox(
       height: 20.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Container(
+          SizedBox(
             width: 155.50.w,
             height: 18.h,
             child: Row(
@@ -2260,7 +2255,7 @@ class BaseWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 16.w,
                   height: 16.h,
                   child: Row(
@@ -2270,11 +2265,10 @@ class BaseWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          // provider.likeIncreamentApi(truckLoad.id!, context);
-                          onTabLikeCount();
+                            onTabLikeCount();
 
                         },
-                        child: Container(
+                        child: SizedBox(
                           width: 16.w,
                           height: 16.h,
                           child: Stack(
@@ -2284,7 +2278,7 @@ class BaseWidget {
                     ],
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Container(
                   child: InkWell(
                     onTap: (){
@@ -2300,7 +2294,7 @@ class BaseWidget {
                         Text(
                           S().like,
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
@@ -2308,9 +2302,9 @@ class BaseWidget {
                         ),
                         const SizedBox(width: 2),
                         Text(
-                          '( ${likeCount} )',
+                          '( $likeCount )',
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -2328,7 +2322,7 @@ class BaseWidget {
               Navigator.pushNamed(context, AppRoutes.commentscreen,
                   arguments: truckLoad);
             },
-            child: Container(
+            child: SizedBox(
               width: 155.50.w,
               height: 18.h,
               child: Row(
@@ -2336,7 +2330,7 @@ class BaseWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 16.w,
                     height: 16.h,
                     child: Row(
@@ -2344,7 +2338,7 @@ class BaseWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 16.w,
                           height: 16.h,
                           child: Stack(
@@ -2353,7 +2347,7 @@ class BaseWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -2363,7 +2357,7 @@ class BaseWidget {
                         Text(
                           S().comment,
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
@@ -2371,9 +2365,9 @@ class BaseWidget {
                         ),
                         const SizedBox(width: 2),
                         Text(
-                          '( ${commentCount} )',
+                          '( $commentCount )',
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -2394,54 +2388,54 @@ class BaseWidget {
   getImage(String src, {double? height, double? width}) {
     return src == ""
         ? Container(
-            width: height == null ? 35 : height,
-            height: width == null ? 35 : width,
+            width: height ?? 35,
+            height: width ?? 35,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey[100],
-                image: new DecorationImage(
+                image: const DecorationImage(
                     fit: BoxFit.contain,
                     image: AssetImage('assets/images/my_profile.png'))))
         : Container(
-            width: height == null ? 35 : height,
-            height: width == null ? 35 : width,
+            width: height ?? 35,
+            height: width ?? 35,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey[100],
-                image: new DecorationImage(
+                image: DecorationImage(
                     fit: BoxFit.contain, image: NetworkImage(src))));
   }
 
   getGroupImage(String src, {double? height, double? width}) {
     return src == "string"
         ? Container(
-        width: height == null ? 35 : height,
-        height: width == null ? 35 : width,
+        width: height ?? 35,
+        height: width ?? 35,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.grey[100],
          ),
-      child:Icon(Icons.group_outlined,color: Colors.grey,)
+      child:const Icon(Icons.group_outlined,color: Colors.grey,)
     )
         : Container(
-        width: height == null ? 35 : height,
-        height: width == null ? 35 : width,
+        width: height ?? 35,
+        height: width ?? 35,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.grey[100],
-            image: new DecorationImage(
+            image: DecorationImage(
                 fit: BoxFit.contain, image: NetworkImage(src))));
   }
 
   getImageclip(String src, {double? height, double? width}) {
     return src == ""
         ? Container(
-            width: height == null ? 35 : height,
-            height: width == null ? 35 : width,
+            width: height ?? 35,
+            height: width ?? 35,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey[100],
-                image: new DecorationImage(
+                image: const DecorationImage(
                     fit: BoxFit.contain,
                     image: AssetImage('assets/images/my_profile.png'))))
         : CircleAvatar(
@@ -2455,8 +2449,8 @@ class BaseWidget {
                 placeholder: (context, url) =>
                     Image.asset("assets/images/my_profile.png"),
                 fit: BoxFit.cover,
-                width: height == null ? 35 : height,
-                height: width == null ? 35 : width,
+                width: height ?? 35,
+                height: width ?? 35,
               ),
             ),
           );
@@ -2466,12 +2460,12 @@ class BaseWidget {
   getImageclipGroup(String src, {double? height, double? width}) {
     return src.isEmpty
         ? Container(
-        width: height == null ? 35 : height,
-        height: width == null ? 35 : width,
+        width: height ?? 35,
+        height: width ?? 35,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.grey[100],
-            image: new DecorationImage(
+            image: const DecorationImage(
                 fit: BoxFit.contain,
                 image: AssetImage('assets/images/my_profile.png'))))
         : CircleAvatar(
@@ -2485,8 +2479,8 @@ class BaseWidget {
           placeholder: (context, url) =>
               Image.asset("assets/images/my_profile.png"),
           fit: BoxFit.cover,
-          width: height == null ? 35 : height,
-          height: width == null ? 35 : width,
+          width: height ?? 35,
+          height: width ?? 35,
         ),
       ),
     );
@@ -2591,7 +2585,7 @@ class BaseWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 8.h),
       decoration: ShapeDecoration(
-        color: Color(0xFFF4F6F6),
+        color: const Color(0xFFF4F6F6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
       child: Row(
@@ -2605,7 +2599,7 @@ class BaseWidget {
                 fromCity,
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                  color: Color(0xCC001E49),
+                  color: const Color(0xCC001E49),
                   fontSize: 12.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w400,

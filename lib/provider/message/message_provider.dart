@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -10,9 +9,7 @@ import 'package:tkd_connect/utils/toast.dart';
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/response/ChatList.dart';
-import '../../model/response/chat_list.dart';
 import '../../model/response/search_data.dart';
-import '../../model/response/transport_directory_search.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
 import '../../screen/message/chat_screen.dart';
@@ -63,7 +60,7 @@ class MessageProvider extends BaseProvider{
     if(apiResponse.status==200){
      // print('the ${apiResponse.response}');
       ChatListDate chatList=ChatListDate.fromJson(jsonDecode(apiResponse.response));
-      if(chatList.data!.length!=0){
+      if(chatList.data!.isNotEmpty){
         for(int i=0;i<chatList.data!.length;i++){
           if(chatList.data![i].mobileNumber1 ==user.content!.first.mobileNumber){
             userAdded userChatAdded=userAdded(chatList.data![i].name2!,chatList.data![i].mobileNumber2!.toString(),chatList.data![i].userProfile2==null?"":chatList.data![i].userProfile2!,chatList.data![i].id!,chatList.data![i].userId2!);
@@ -120,7 +117,7 @@ class MessageProvider extends BaseProvider{
     if(apiResponse.status==200){
      // print('the ${apiResponse.response}');
       ChatListDate chatList=ChatListDate.fromJson(jsonDecode(apiResponse.response));
-      if(chatList.data!.length!=0){
+      if(chatList.data!.isNotEmpty){
         for(int i=0;i<chatList.data!.length;i++){
           if(chatList.data![i].mobileNumber1 ==user.content!.first.mobileNumber){
             userAdded userChatAdded=userAdded(chatList.data![i].name2!,chatList.data![i].mobileNumber2!.toString(),chatList.data![i].userProfile2==null?"":chatList.data![i].userProfile2!,chatList.data![i].id!,chatList.data![i].userId2!);
@@ -191,8 +188,8 @@ class MessageProvider extends BaseProvider{
       "loggedUserName2": data.userName!,
       "mobileNumber1": user.content!.first.mobileNumber,
       "mobileNumber2": data.mobileNumber,
-      "name1": user.content!.first.firstName!+" "+user.content!.first.lastName!,
-      "name2": data.firstName!+" "+data.lastName!,
+      "name1": "${user.content!.first.firstName!} ${user.content!.first.lastName!}",
+      "name2": "${data.firstName!} ${data.lastName!}",
       "os": "string",
       "rating": 0,
       "userId": user.content!.first.id!,
@@ -210,7 +207,7 @@ class MessageProvider extends BaseProvider{
               id: data.id!,
               peerId: data.mobileNumber!.toString(),
               peerAvatar: data.profilePicture.toString(),
-              peerNickname: data.firstName!+" "+data.lastName!,
+              peerNickname: "${data.firstName!} ${data.lastName!}",
               notificationId: data.id!
             ),
           ),
@@ -234,7 +231,7 @@ class MessageProvider extends BaseProvider{
     if(apiResponse.status==200){
       print('the ${apiResponse.response}');
       ChatListDate chatList=ChatListDate.fromJson(jsonDecode(apiResponse.response));
-      if(chatList.data!.length!=0){
+      if(chatList.data!.isNotEmpty){
         for(int i=0;i<chatList.data!.length;i++){
           if(chatList.data![i].mobileNumber1 ==user.content!.first.mobileNumber){
             userAdded userChatAdded=userAdded(chatList.data![i].name2!,chatList.data![i].mobileNumber2!.toString(),chatList.data![i].userProfile2==null?"":chatList.data![i].userProfile2!,chatList.data![i].id!,chatList.data![i].userId2!);
@@ -255,7 +252,7 @@ class MessageProvider extends BaseProvider{
 
   late Timer time;
   setUpTimedFetch() {
-   time= Timer.periodic(Duration(milliseconds: 5000), (timer) {
+   time= Timer.periodic(const Duration(milliseconds: 5000), (timer) {
       getChatListWithoutDialog();
 
     });

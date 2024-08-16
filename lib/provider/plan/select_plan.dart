@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
@@ -148,7 +147,7 @@ class SelectPlanProvider extends BaseProvider {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor: 0.7, child: KYCScreenOne());
+          return const FractionallySizedBox(heightFactor: 0.7, child: KYCScreenOne());
         });
   }
 
@@ -171,7 +170,7 @@ class SelectPlanProvider extends BaseProvider {
     ApiResponse apiResponse = await ApiHelper().apiPutDat(ApiConstant.UPDATE_YOUR_PLAN(user.content!.first.id,selectedPlanCode));
     if (apiResponse.status == 200) {
    User user=User.fromJson(apiResponse.response);
-      if(user.content!.length>0){
+      if(user.content!.isNotEmpty){
         LocalSharePreferences localSharePreferences=LocalSharePreferences();
         localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
         localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));

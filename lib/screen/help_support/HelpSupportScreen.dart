@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +13,8 @@ import '../../generated/l10n.dart';
 import '../../provider/help_support/help_support_provider.dart';
 
 class HelpSupportScreen extends StatelessWidget {
+  const HelpSupportScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -40,7 +41,7 @@ class HelpSupportScreen extends StatelessWidget {
               ),
 
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +70,7 @@ class HelpSupportScreen extends StatelessWidget {
                             Utils().callFunction("8123006888");
                           },child: subTitle('(+91)  8123006888 '),
                         ),
-                        Text(" / "),
+                        const Text(" / "),
                         InkWell(
 
                           onTap: (){
@@ -176,7 +177,7 @@ class HelpSupportScreen extends StatelessWidget {
     return Text(
       subtitle,
       style: TextStyle(
-        color: Color(0xFFC3262C),
+        color: const Color(0xFFC3262C),
         fontSize: 12.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w600,
@@ -185,10 +186,10 @@ class HelpSupportScreen extends StatelessWidget {
     );
   }
 
-  drwaLine() {
+  drawLine() {
     return Container(
       width: 89.w,
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         shape: RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
@@ -205,14 +206,14 @@ class HelpSupportScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        drwaLine(),
+        drawLine(),
         SizedBox(
           width: 20.w,
         ),
         Text(
           S().OR,
           style: TextStyle(
-            color: Color(0x99001E49),
+            color: const Color(0x99001E49),
             fontSize: 12.sp,
             fontFamily: GoogleFonts.poppins().fontFamily,
             fontWeight: FontWeight.w400,
@@ -222,7 +223,7 @@ class HelpSupportScreen extends StatelessWidget {
         SizedBox(
           width: 20.w,
         ),
-        drwaLine(),
+        drawLine(),
       ],
     );
   }
@@ -230,7 +231,7 @@ class HelpSupportScreen extends StatelessWidget {
   dropList(BuildContext context) {
     return Consumer<HelpSupportProvider>(
       builder: (context, provider, child) {
-        return Container(
+        return SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 52.h,
           child: Column(
@@ -245,7 +246,7 @@ class HelpSupportScreen extends StatelessWidget {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0x332C363F)),
+                    side: const BorderSide(width: 1, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -254,7 +255,7 @@ class HelpSupportScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -276,7 +277,7 @@ class HelpSupportScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          Container(
+                          SizedBox(
                             width: 24,
                             height: 24,
                             child: Stack(children: [
@@ -299,7 +300,7 @@ class HelpSupportScreen extends StatelessWidget {
   editTextBox(BuildContext context) {
     return Consumer<HelpSupportProvider>(
       builder: (context, provider, child) {
-        return Container(
+        return SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 145.h,
           child: Column(
@@ -315,7 +316,7 @@ class HelpSupportScreen extends StatelessWidget {
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1, color: Color(0x332C363F)),
+                      side: const BorderSide(width: 1, color: Color(0x332C363F)),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -324,7 +325,7 @@ class HelpSupportScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -343,11 +344,11 @@ class HelpSupportScreen extends StatelessWidget {
                                   obscureText: false,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
-                                      counter: Offstage(),
+                                      counter: const Offstage(),
                                       hintText: S().explainYourConcern,
                                       border: InputBorder.none,
                                       hintStyle: TextStyle(
-                                        color: Color(0x662C363F),
+                                        color: const Color(0x662C363F),
                                         fontSize: 14.sp,
                                         fontFamily:
                                             GoogleFonts.poppins().fontFamily,
@@ -385,10 +386,10 @@ class HelpSupportScreen extends StatelessWidget {
           constraints:
               BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+            side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8.r),
           ),
-          child: Container(
+          child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: dropList(context)),
           onSelected: (dynamic val) {
@@ -399,7 +400,7 @@ class HelpSupportScreen extends StatelessWidget {
               onTap: () {
                 provider.changeDropDown(S().createPostLoadIssue);
               },
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [

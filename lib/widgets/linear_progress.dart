@@ -10,7 +10,7 @@ class LinearProgressBar extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 335.w,
       height: 6.h,
       child: Stack(
@@ -22,7 +22,7 @@ class LinearProgressBar extends StatelessWidget{
               width: 335.w,
               height: 6.h,
               decoration: ShapeDecoration(
-                color: Color(0x4CB7B7B7),
+                color: const Color(0x4CB7B7B7),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100.r),
                 ),

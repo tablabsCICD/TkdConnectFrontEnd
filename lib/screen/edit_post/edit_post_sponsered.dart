@@ -9,14 +9,13 @@ import 'package:tkd_connect/utils/colors.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
-import '../../provider/dashboard/post_provider.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/editText.dart';
 
 class EditPostSponseredScreen extends StatefulWidget{
   TruckLoad truckLoad;
-  EditPostSponseredScreen(this.truckLoad);
+  EditPostSponseredScreen(this.truckLoad, {super.key});
   @override
   State<StatefulWidget> createState() {
     return _EditPostSponseredScreen();
@@ -65,7 +64,7 @@ class _EditPostSponseredScreen extends State<EditPostSponseredScreen>{
                   height: 12.h,
                 ),
 
-                provider.images.length>0? BaseWidget().carouseImage(provider.images):SizedBox(),
+                provider.images.isNotEmpty? BaseWidget().carouseImage(provider.images):const SizedBox(),
                 InkWell(
                     onTap: () {
                       provider.uploadImage(context);
@@ -75,7 +74,7 @@ class _EditPostSponseredScreen extends State<EditPostSponseredScreen>{
                   S().addImagesAt,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF001E49),
+                    color: const Color(0xFF001E49),
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
@@ -146,7 +145,7 @@ class _EditPostSponseredScreen extends State<EditPostSponseredScreen>{
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

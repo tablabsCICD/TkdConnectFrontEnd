@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,15 +11,11 @@ import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
-import 'package:tkd_connect/widgets/textview.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
-import '../../model/response/transport_directory_search.dart';
 import '../../model/response/userdata.dart';
 import '../../provider/directory/directory_provider.dart';
-import '../../provider/mybids/my_bids_provider.dart';
-import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class GroupScreen extends StatefulWidget {
@@ -57,12 +52,12 @@ class _GroupScreenState extends State<GroupScreen> {
                   children: [
                     BaseWidget().appBar(context, "Groups"),
                     serachBar(),
-                    provider.groupListByUserId.length == 0 && provider.isLoadDone
+                    provider.groupListByUserId.isEmpty && provider.isLoadDone
                         ? Center(child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Text(S().noRecordFound),
                     ))
-                        : SizedBox(),
+                        : const SizedBox(),
                     allGroupData()
 
                   ],
@@ -110,7 +105,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       SizedBox(
                         width: 2.w,
                       ),
-                      Container(
+                      SizedBox(
                         width: 16.w,
                         height: 16.w,
                         child: Row(
@@ -118,7 +113,7 @@ class _GroupScreenState extends State<GroupScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 16.w,
                               height: 16.w,
                               child: Stack(children: [
@@ -161,7 +156,7 @@ class _GroupScreenState extends State<GroupScreen> {
       builder: (context, provider, child) {
         return Container(
           // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -174,7 +169,7 @@ class _GroupScreenState extends State<GroupScreen> {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                    side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -183,7 +178,7 @@ class _GroupScreenState extends State<GroupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -199,7 +194,7 @@ class _GroupScreenState extends State<GroupScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 24.w,
                                   height: 24.h,
                                   child: Stack(children: [
@@ -221,7 +216,7 @@ class _GroupScreenState extends State<GroupScreen> {
                                     hintText: "Search groups ",
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(
-                                      color: Color(0x662C363F),
+                                      color: const Color(0x662C363F),
                                       fontSize: 14.sp,
                                       fontFamily:
                                       GoogleFonts.poppins().fontFamily,
@@ -281,7 +276,7 @@ class _GroupScreenState extends State<GroupScreen> {
         width: 375.w,
 
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           border: Border(
             left: BorderSide(color: Color(0x192C363F)),
@@ -339,7 +334,7 @@ class _GroupScreenState extends State<GroupScreen> {
                               child: Text(
                                 formattedDate,
                                 style: TextStyle(
-                                  color: Color(0x99001E49),
+                                  color: const Color(0x99001E49),
                                   fontSize: 10.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
@@ -360,7 +355,7 @@ class _GroupScreenState extends State<GroupScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 24.w,
                     height: 24.h,
                     child: Stack(children: [
@@ -458,7 +453,7 @@ class _GroupScreenState extends State<GroupScreen> {
                 Align(
                     alignment: Alignment.center,
                     child: Container(
-                        margin: EdgeInsets.only(top: 5),
+                        margin: const EdgeInsets.only(top: 5),
                         child: SvgPicture.asset(Images.route_return_home))),
               ],
             ),
@@ -477,7 +472,7 @@ class _GroupScreenState extends State<GroupScreen> {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+          side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -486,7 +481,7 @@ class _GroupScreenState extends State<GroupScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -495,7 +490,7 @@ class _GroupScreenState extends State<GroupScreen> {
               children: [
                 Opacity(
                   opacity: 0.40,
-                  child: Container(
+                  child: SizedBox(
                     width: 24.w,
                     height: 24.h,
                     child: Row(
@@ -503,7 +498,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 24.w,
                           height: 24.h,
                           child: Stack(
@@ -520,7 +515,7 @@ class _GroupScreenState extends State<GroupScreen> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: '$cityName',
+                            text: cityName,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12.sp,
@@ -566,7 +561,7 @@ class _GroupScreenState extends State<GroupScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),

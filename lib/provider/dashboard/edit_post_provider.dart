@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -64,8 +63,8 @@ class EditPostLoadProvider extends BaseProvider {
   initData() async {
     User user =
         await LocalSharePreferences.localSharePreferences.getLoginData();
-    emailIdController.text = user.content!.first!.emailId!;
-    mobileNumberController.text = user.content!.first!.mobileNumber!.toString();
+    emailIdController.text = user.content!.first.emailId!;
+    mobileNumberController.text = user.content!.first.mobileNumber!.toString();
     selectedCargo = postBidData.genericCardsDto!.cargoType!;
     loadWeightController.text = postBidData.genericCardsDto!.vehicleWeight!;
     await getTruckLoadById(postBidData.genericCardsDto!.id!);
@@ -98,9 +97,9 @@ class EditPostLoadProvider extends BaseProvider {
       groupListName.clear();
       groupListByUserId
           .addAll(groupListResponse.content as Iterable<GroupData>);
-      groupListByUserId.forEach((element) {
+      for (var element in groupListByUserId) {
         groupListName.add(element.groupName!);
-      });
+      }
     }
     notifyListeners();
   }
@@ -109,16 +108,16 @@ class EditPostLoadProvider extends BaseProvider {
     listAddedMember.clear();
     addedMemberIdList.clear();
     ApiHelper apiHelper = ApiHelper();
-    String myUrl = ApiConstant.GROUP_MEMBER_LIST + groupId!.toString();
+    String myUrl = ApiConstant.GROUP_MEMBER_LIST + groupId.toString();
     print(myUrl);
     var response = await apiHelper.apiWithoutDecodeGet(myUrl);
     print(response.response);
     GroupMemberListResponse groupListModel =
         GroupMemberListResponse.fromJson(response.response);
     listAddedMember.addAll(groupListModel.content!);
-    listAddedMember.forEach((element) {
+    for (var element in listAddedMember) {
       addedMemberIdList.add(element.id!);
-    });
+    }
     print(addedMemberIdList.length);
     notifyListeners();
   }
@@ -126,24 +125,24 @@ class EditPostLoadProvider extends BaseProvider {
   List<String> addedUserListIdInPost=[];
   List<int> addedUserListInPost=[];
   List<UserData> addedUsers = [];
-  getUserListFromString(String userList){
+  getUserListFromString(String userList)async{
     if(userList.isNotEmpty){
       addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
       print(addedUserListIdInPost);
-      addedUserListIdInPost.forEach((element) async {
+      for (var element in addedUserListIdInPost)  {
         UserData userData = await getUserById(int.parse(element));
         addedUserListInPost.add(int.parse(element));
         print(userData.id);
         print(userData.firstName);
         addedUsers.add(userData);
-      });
+      }
     }
     return addedUserListIdInPost;
   }
 
   getUserById(int userId) async {
     ApiHelper apiHelper = ApiHelper();
-    String myUrl = ApiConstant.BASE_URL +"/companyRegistration/"+ userId.toString();
+    String myUrl = "${ApiConstant.BASE_URL}/companyRegistration/$userId";
     print(myUrl);
     ApiResponse response = await apiHelper.apiWithoutDecodeGet(myUrl);
     print(response.response);
@@ -184,14 +183,14 @@ class EditPostLoadProvider extends BaseProvider {
     User user =
         await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad = PostLoad();
-    postLoad.contactNumber = user.content!.first!.mobileNumber!;
+    postLoad.contactNumber = user.content!.first.mobileNumber!;
     postLoad.destination = destinationCity;
     postLoad.dnd = dnd ? 1 : 0;
-    postLoad.emailId = user.content!.first!.emailId!;
+    postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Have Vehicle";
     postLoad.instructions = specialInstructionController.text;
     postLoad.loadWeight = loadWeightController.text;
-    postLoad.loggedUserName = user.content!.first!.userName;
+    postLoad.loggedUserName = user.content!.first.userName;
     postLoad.mainTag = selectedRequriment;
     postLoad.os = 'App';
     postLoad.otherDetails = specialInstructionController.text;
@@ -210,7 +209,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.listOfUserIds = addedMemberIdList;
     postLoad.id = postBidData.genericCardsDto!.id;
     ApiResponse response = await ApiHelper()
-        .apiPut(ApiConstant.BASE_URL + "UpdatePost", postLoad.toJson());
+        .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());
     print('the request is ${json.encode(postLoad.toJson())}');
     print('the resopnse is ${response.response}');
     if (response.status == 200) {
@@ -253,7 +252,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.listOfUserIds = addedMemberIdList;
 
     ApiResponse response = await ApiHelper()
-        .apiPut(ApiConstant.BASE_URL + "UpdatePost", postLoad.toJson());
+        .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());
     if (response.status == 200) {
       ToastMessage.show(context, "Post edited successfully!");
       Navigator.pop(context);

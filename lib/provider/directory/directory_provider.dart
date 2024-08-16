@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
@@ -6,14 +5,12 @@ import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/screen/my_route/select_one_city.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
-import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/transport_directory_search.dart';
 import '../../network/api_helper.dart';
 import '../../route/app_routes.dart';
-import '../../screen/my_route/select_city.dart';
 
 class DirectoryProvider extends  BaseProvider{
   DirectoryProvider() : super('Ideal'){
@@ -44,15 +41,15 @@ class DirectoryProvider extends  BaseProvider{
 
     if(filterisVisible){
       if(fromCity != "All" && toCity!="All"){
-        myUrl=ApiConstant.DIRECTORYFILTER+"source=$fromCity&destination=$toCity";
+        myUrl="${ApiConstant.DIRECTORYFILTER}source=$fromCity&destination=$toCity";
       }else if(fromCity != "All" && toCity=="All"){
-        myUrl=ApiConstant.DIRECTORYFILTER+"source=$fromCity";
+        myUrl="${ApiConstant.DIRECTORYFILTER}source=$fromCity";
       }else{
-        myUrl=ApiConstant.DIRECTORYFILTER+"destination=$toCity";
+        myUrl="${ApiConstant.DIRECTORYFILTER}destination=$toCity";
       }
 
     }
-    print("Url ${myUrl}");
+    print("Url $myUrl");
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(myUrl);
 
     if(apiResponse.status==200){
@@ -135,7 +132,7 @@ class DirectoryProvider extends  BaseProvider{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(
+          return const FractionallySizedBox(
               heightFactor: 0.9, child: SelectOneCityScreen());
         });
     fromCity=routeRequest.startLocation;
@@ -150,7 +147,7 @@ class DirectoryProvider extends  BaseProvider{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(
+          return const FractionallySizedBox(
               heightFactor: 0.9, child: SelectOneCityScreen());
         });
     toCity=routeRequest.startLocation;

@@ -1,16 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tkd_connect/model/request/rating_request.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/rating_model.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/toast.dart';
-import 'package:http/http.dart' as http;
+
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
-import '../../model/response/comment_response.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
 import '../../utils/sharepreferences.dart';
@@ -20,10 +16,7 @@ class RatingProvider extends BaseProvider {
   bool isLoading=true;
   RatingProvider(
       this.context
-      ):super("Ideal"){
-
-
-  }
+      ):super("Ideal");
 
   int rating = 0;
   TextEditingController commentController = TextEditingController();

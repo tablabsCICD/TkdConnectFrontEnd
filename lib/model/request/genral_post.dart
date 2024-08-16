@@ -39,18 +39,18 @@ class GeneralPost {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['active'] = this.active;
-    data['comment'] = this.comment;
-    data['description'] = this.description;
-    data['disLikes'] = this.disLikes;
-    data['id'] = this.id;
-    data['images'] = this.images;
-    data['likes'] = this.likes;
-    data['loggedTime'] = this.loggedTime;
-    data['userId'] = this.loggedUserName;
-    data['title'] = this.title;
-    data['typeName'] = this.typeName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['active'] = active;
+    data['comment'] = comment;
+    data['description'] = description;
+    data['disLikes'] = disLikes;
+    data['id'] = id;
+    data['images'] = images;
+    data['likes'] = likes;
+    data['loggedTime'] = loggedTime;
+    data['userId'] = loggedUserName;
+    data['title'] = title;
+    data['typeName'] = typeName;
     return data;
   }
 }

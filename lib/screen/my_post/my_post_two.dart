@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,6 +20,8 @@ import '../../utils/utils.dart';
 import '../my_bids/show_bids_screen.dart';
 
 class MyPostScreenTwo extends StatefulWidget {
+  const MyPostScreenTwo({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MyPostStateTwo();
@@ -45,7 +46,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
           child: Consumer<MyPostProvider>(
             builder: (context, provider, child) {
               return
-                provider.listOwnBid.length==0?Center(
+                provider.listOwnBid.isEmpty?Center(
                   child: Text(S().noRecordFound),
                 ):
                 ListView.builder(
@@ -80,9 +81,9 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
             ),
             shadows: [
               BoxShadow(
-                color: Color(0x114A5568),
+                color: const Color(0x114A5568),
                 blurRadius: 8.r,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
                 spreadRadius: 0,
               )
             ],
@@ -96,7 +97,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   height: 18.h,
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                   decoration: ShapeDecoration(
-                    color: Color(0xFF2C8FEA),
+                    color: const Color(0xFF2C8FEA),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.r)),
                   ),
@@ -126,7 +127,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               SizedBox(height: 8.h,),
               BaseWidget().showBidRepostButton((val) async{
                 if (val == 0) {
-                  if (postBidData.bidings!.length > 0) {
+                  if (postBidData.bidings!.isNotEmpty) {
                     showBootomSheet(context,postBidData.bidings);
                   } else {
                     ToastMessage.show(context, "No any Bids to show");
@@ -149,7 +150,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                  provider.reSendPost(context,postBidData);
                 }
                 if(val==6){
-                  Future.delayed(Duration(seconds: 1), () async {
+                  Future.delayed(const Duration(seconds: 1), () async {
 
                        //  int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
                     Navigator.pushNamed(context, AppRoutes.editpost,arguments: postBidData);
@@ -228,7 +229,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
   }
 
   iteams(PostBidData postBidData, int index) {
-    if (postBidData.bidings!.length == 0) {
+    if (postBidData.bidings!.isEmpty) {
       return Container();
     } else {
       if (postBidData.bidings!.length == 1) {
@@ -256,12 +257,12 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     return Container(
       width: 311.w,
       //  height: 69.h,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: isLast ? Colors.white : Color(0x332C363F),
+            color: isLast ? Colors.white : const Color(0x332C363F),
           ),
         ),
       ),
@@ -295,7 +296,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  bidings.firstName! + " " + bidings.lastName!,
+                                  "${bidings.firstName!} ${bidings.lastName!}",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 10.sp,
@@ -317,7 +318,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                             child: Text(
                               bidings.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: AppConstant.FONTFAMILY,
                                 fontWeight: FontWeight.w400,
@@ -380,7 +381,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                       Utils().callFunction("${bidings.bidings!.mobileNumber}");
                     }
                   }
-                  , child: Container(
+                  , child: SizedBox(
                   width: 22.w,
                   height: 22.h,
                   child: Row(
@@ -388,7 +389,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 22.w,
                         height: 22.h,
                         child: Stack(children: [

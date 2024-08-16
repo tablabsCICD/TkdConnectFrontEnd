@@ -25,7 +25,7 @@ class NotificationListProvider extends BaseProvider{
     User user=await LocalSharePreferences().getLoginData();
 
   //  String myUrl = ApiConstant.BASE_URL +'Notifications/forSpecificUser/${user.content!.first.id}';
-    String myUrl = ApiConstant.BASE_URL +'getNotification/${user.content!.first.id}';
+    String myUrl = '${ApiConstant.BASE_URL}getNotification/${user.content!.first.id}';
     print(myUrl);
     ApiResponse req = await ApiHelper().apiWithoutDecodeGet(myUrl);
     print(req.response);

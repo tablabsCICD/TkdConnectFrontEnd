@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +15,6 @@ import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../utils/sharepreferences.dart';
 import '../../utils/utils.dart';
-import '../../widgets/app_bar.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/textview.dart';
 import '../../widgets/verified_tag.dart';
@@ -50,7 +48,7 @@ class _ShowAllBids extends State<ShowAllBids>{
        backgroundColor: Colors.white,
        leading:  InkWell(onTap: (){
          Navigator.pushReplacementNamed(context, AppRoutes.home);
-       },child: Container(height:10,width:10,child: SvgPicture.asset(Images.arrow_back,height: 10,width: 10,))),
+       },child: SizedBox(height:10,width:10,child: SvgPicture.asset(Images.arrow_back,height: 10,width: 10,))),
        title: Center(
          child: Textview(
            title: "Bids",
@@ -68,7 +66,7 @@ class _ShowAllBids extends State<ShowAllBids>{
      body: Container(
       // margin: EdgeInsets.all(10),
        color: ThemeColor.baground,
-       child:!isLoad?SizedBox(height: 10,width: 10,): ListView.builder(
+       child:!isLoad?const SizedBox(height: 10,width: 10,): ListView.builder(
 
          itemCount:postBidData.length,
          itemBuilder: (context, i) {
@@ -96,9 +94,9 @@ class _ShowAllBids extends State<ShowAllBids>{
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -112,7 +110,7 @@ class _ShowAllBids extends State<ShowAllBids>{
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -141,7 +139,7 @@ class _ShowAllBids extends State<ShowAllBids>{
           SizedBox(height: 8.h,),
           BaseWidget().showBidButton((val) async{
             if (val == 0) {
-              if (postBidData.bidings!.length > 0) {
+              if (postBidData.bidings!.isNotEmpty) {
                 showBootomSheet(context,postBidData.bidings);
               } else {
                 ToastMessage.show(context, "There are no bids to show ");
@@ -161,7 +159,7 @@ class _ShowAllBids extends State<ShowAllBids>{
 
 
   iteams(PostBidData postBidData, int index) {
-    if (postBidData.bidings!.length == 0) {
+    if (postBidData.bidings!.isEmpty) {
       return Container();
     } else {
 
@@ -191,12 +189,12 @@ class _ShowAllBids extends State<ShowAllBids>{
     return Container(
       width: 311.w,
       //  height: 69.h,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: isLast ? Colors.white : Color(0x332C363F),
+            color: isLast ? Colors.white : const Color(0x332C363F),
           ),
         ),
       ),
@@ -230,7 +228,7 @@ class _ShowAllBids extends State<ShowAllBids>{
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  bidings.firstName! + " " + bidings.lastName!,
+                                  "${bidings.firstName!} ${bidings.lastName!}",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 10.sp,
@@ -252,7 +250,7 @@ class _ShowAllBids extends State<ShowAllBids>{
                             child: Text(
                               bidings.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: AppConstant.FONTFAMILY,
                                 fontWeight: FontWeight.w400,
@@ -319,7 +317,7 @@ class _ShowAllBids extends State<ShowAllBids>{
 
 
                   }
-                  , child: Container(
+                  , child: SizedBox(
                   width: 22.w,
                   height: 22.h,
                   child: Row(
@@ -327,7 +325,7 @@ class _ShowAllBids extends State<ShowAllBids>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 22.w,
                         height: 22.h,
                         child: Stack(children: [

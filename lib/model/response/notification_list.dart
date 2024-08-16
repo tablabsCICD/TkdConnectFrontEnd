@@ -10,19 +10,19 @@ class NotificationListModel {
     if (json['data'] != null) {
       data = <NotificationModel>[];
       json['data'].forEach((v) {
-        data!.add(new NotificationModel.fromJson(v));
+        data!.add(NotificationModel.fromJson(v));
       });
     }
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -69,18 +69,18 @@ class NotificationModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['type'] = this.type;
-    data['title'] = this.title;
-    data['message'] = this.message;
-    data['deviceId'] = this.deviceId;
-    data['featureName'] = this.featureName;
-    data['dateAndTime'] = this.dateAndTime;
-    data['isNotificationRead'] = this.isNotificationRead;
-    data['tableId']==null?0:this.tableId;
-    data['tableName']==null?'':this.tableName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['type'] = type;
+    data['title'] = title;
+    data['message'] = message;
+    data['deviceId'] = deviceId;
+    data['featureName'] = featureName;
+    data['dateAndTime'] = dateAndTime;
+    data['isNotificationRead'] = isNotificationRead;
+    data['tableId']==null?0:tableId;
+    data['tableName']==null?'':tableName;
     return data;
   }
 }

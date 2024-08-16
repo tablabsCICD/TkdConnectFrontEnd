@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/edit_profile/edit_profile_provider.dart';
 import 'package:tkd_connect/screen/more/edit_profile/personal_info.dart';
 import 'package:tkd_connect/screen/more/edit_profile/plan_selected.dart';
-import 'package:tkd_connect/screen/plan/plan_details_screen.dart';
-import 'package:tkd_connect/screen/plan/select_plan_screen.dart';
 
 import '../../../constant/images.dart';
 import '../../../generated/l10n.dart';
@@ -18,9 +15,10 @@ import '../../../widgets/app_bar.dart';
 import '../../../widgets/button.dart';
 import '../../../widgets/editText.dart';
 import '../../../widgets/textview.dart';
-import 'company_info.dart';
 
 class EditProfileBaseScreen extends StatefulWidget {
+  const EditProfileBaseScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _EditProfileBaseState();
@@ -44,14 +42,14 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
       backgroundColor: ThemeColor.white,
       body: SafeArea(child: Consumer<EditProfileProvider>(
         builder: (context, provider, child) {
-          return Container(
+          return SizedBox(
             width: MediaQuery.of(context).size.width,
 
             // margin: EdgeInsets.all(20),
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   height: 70.h,
                   color: ThemeColor.baground,
                   child: ApplicationAppBar()
@@ -112,13 +110,13 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
           height: 32.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Color(0x332C363F),
+            color: const Color(0x332C363F),
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(5),
             ),
           ),
-          padding: EdgeInsets.all(1),
+          padding: const EdgeInsets.all(1),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -164,7 +162,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
         child: Container(
           height: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 4.h),
-          color: isSelect ? Color(0x19001E49) : ThemeColor.white,
+          color: isSelect ? const Color(0x19001E49) : ThemeColor.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -193,17 +191,17 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
       padding: const EdgeInsets.all(32),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x192C363F),
+        color: const Color(0x192C363F),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(200),
         ),
       ),
-      child: Row(
+      child: const Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: 36,
             height: 36,
             child: Row(
@@ -211,7 +209,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 36,
                   height: 36,
                   child: Stack(children: []),
@@ -308,7 +306,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
 
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -366,7 +364,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
   routeItem(RouteData routeRequest, int index) {
     return Consumer<EditProfileProvider>(
   builder: (context, provider, child) {
-  return Container(
+  return SizedBox(
       width: 335.w,
       height: 40.65.h,
       //padding: EdgeInsets.only(left: 20.w,right: 20.w),
@@ -383,7 +381,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -398,7 +396,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                         routeRequest.routeSource!,
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          color: Color(0xCC001E49),
+                          color: const Color(0xCC001E49),
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts
                               .poppins()
@@ -417,7 +415,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                       child: Text(
                         routeRequest.routeDestination!,
                         style: TextStyle(
-                          color: Color(0xCC001E49),
+                          color: const Color(0xCC001E49),
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts
                               .poppins()
@@ -432,7 +430,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
             ),
           ),
           SizedBox(width: 20.w,),
-          Container(
+          SizedBox(
             width: 24.w,
             height: 24.h,
             child: Row(
@@ -440,7 +438,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
@@ -456,7 +454,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
             ),
           ),
           SizedBox(width: 20.w,),
-          Container(
+          SizedBox(
             width: 24.w,
             height: 24.h,
             child: Row(
@@ -464,7 +462,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
@@ -510,10 +508,10 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
           constraints:
           BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+            side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8.r),
           ),
-          child: Container(
+          child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: dropList(context)),
           onSelected: (dynamic val) {
@@ -547,12 +545,12 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
             // ),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().transporter}",1);
+                  provider.changeDropDown(S().transporter,1);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().transporter}',
+                      S().transporter,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -584,12 +582,12 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
 
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().manufacturerDistributorTrade}",3);
+                  provider.changeDropDown(S().manufacturerDistributorTrade,3);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().manufacturerDistributorTrade}',
+                      S().manufacturerDistributorTrade,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -602,12 +600,12 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().truckDriver}",6);
+                  provider.changeDropDown(S().truckDriver,6);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().truckDriver}',
+                      S().truckDriver,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -627,7 +625,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
   dropList(BuildContext context) {
     return Consumer<EditProfileProvider>(
       builder: (context, provider, child) {
-        return Container(
+        return SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 52.h,
           child: Column(
@@ -642,7 +640,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0x332C363F)),
+                    side: const BorderSide(width: 1, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -651,7 +649,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -673,7 +671,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          Container(
+                          SizedBox(
                             width: 24,
                             height: 24,
                             child: Stack(children: [

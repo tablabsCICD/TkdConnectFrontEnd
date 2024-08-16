@@ -96,37 +96,37 @@ class PostLoad {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['contactNumber'] = this.contactNumber;
-    data['date'] = this.date;
-    data['destination'] = this.destination;
-    data['dnd'] = this.dnd;
-    data['emailId'] = this.emailId;
-    data['fullLoadChoice'] = this.fullLoadChoice;
-    data['id'] = this.id;
-    data['image'] = this.images;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['contactNumber'] = contactNumber;
+    data['date'] = date;
+    data['destination'] = destination;
+    data['dnd'] = dnd;
+    data['emailId'] = emailId;
+    data['fullLoadChoice'] = fullLoadChoice;
+    data['id'] = id;
+    data['image'] = images;
 
-    data['instructions'] = this.instructions;
-    data['listOfUserIds'] = this.listOfUserIds;
-    data['loadWeight'] = this.loadWeight;
-    data['loggedTime'] = this.loggedTime;
-    data['loggedUserName'] = this.loggedUserName;
-    data['mainTag'] = this.mainTag;
-    data['os'] = this.os;
-    data['otherDetails'] = this.otherDetails;
-    data['partLoad'] = this.partLoad;
-    data['postingTime'] = this.postingTime;
-    data['privatePost'] = this.privatePost;
-    data['rating'] = this.rating;
-    data['source'] = this.source;
-    data['tableName'] = this.tableName;
-    data['topicName'] = this.topicName;
-    data['transporterOrCustomerName'] = this.transporterOrCustomerName;
-    data['type'] = this.type;
-    data['typeOfCargo'] = this.typeOfCargo;
-    data['typeOfPayment'] = this.typeOfPayment;
-    data['vehicleSize'] = this.vehicleSize;
-    data['userList'] = this.userList;
+    data['instructions'] = instructions;
+    data['listOfUserIds'] = listOfUserIds;
+    data['loadWeight'] = loadWeight;
+    data['loggedTime'] = loggedTime;
+    data['loggedUserName'] = loggedUserName;
+    data['mainTag'] = mainTag;
+    data['os'] = os;
+    data['otherDetails'] = otherDetails;
+    data['partLoad'] = partLoad;
+    data['postingTime'] = postingTime;
+    data['privatePost'] = privatePost;
+    data['rating'] = rating;
+    data['source'] = source;
+    data['tableName'] = tableName;
+    data['topicName'] = topicName;
+    data['transporterOrCustomerName'] = transporterOrCustomerName;
+    data['type'] = type;
+    data['typeOfCargo'] = typeOfCargo;
+    data['typeOfPayment'] = typeOfPayment;
+    data['vehicleSize'] = vehicleSize;
+    data['userList'] = userList;
     return data;
   }
 }

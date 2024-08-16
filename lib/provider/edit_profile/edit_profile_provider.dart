@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -21,7 +20,7 @@ class EditProfileProvider extends BaseProvider{
 
   //tabs
 
-  String valName="${S().business_type}";
+  String valName=S().business_type;
   int selectType=-1;
 
   //personal info feilds
@@ -74,12 +73,12 @@ class EditProfileProvider extends BaseProvider{
     firstNameController.text=user.content!.first.firstName!;
     lastNameController.text=user.content!.first.lastName!;
     emailNameController.text=user.content!.first.emailId!;
-    mobileNameController.text=user.content!.first.mobileNumber.toString()!;
+    mobileNameController.text=user.content!.first.mobileNumber.toString();
     companyNameController.text=user.content!.first.companyName!;
     locationController.text=user.content!.first.city!;
     if(user.content!.first.transporterOrAgent==0){
       companyTypeController.text=S().agentBroker;
-      valName=S().agentBroker+"/"+"${S().packersAndMovers}";
+      valName="${S().agentBroker}/${S().packersAndMovers}";
       selectType=0;
     }else if(user.content!.first.transporterOrAgent==1){
       companyTypeController.text= S().transporter;
@@ -123,7 +122,7 @@ class EditProfileProvider extends BaseProvider{
     }
 
     deleteRoute(int index)async{
-      String url = ApiConstant.ROUTE +'?id=${routeList[index].id}';
+      String url = '${ApiConstant.ROUTE}?id=${routeList[index].id}';
       var req = await ApiHelper().ApiDeleteData(url);
       if(req.status==200){
         routeList.removeAt(index);

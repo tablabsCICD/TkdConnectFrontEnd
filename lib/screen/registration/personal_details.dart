@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,12 +7,15 @@ import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 import 'package:tkd_connect/widgets/sign_in_widget.dart';
 import 'package:tkd_connect/widgets/textview.dart';
+
 import '../../generated/l10n.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
 
 
 class PersonalDetailsScreen extends StatefulWidget {
+  const PersonalDetailsScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -120,7 +122,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                       SizedBox(
                         height: 40.h,
                       ),
-                      AlredayAccountWidget(),
+                      const AlredayAccountWidget(),
                       SizedBox(
                         height: 10.h,
                       ),
@@ -140,7 +142,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
 
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -173,7 +175,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
   }
 
   progressBar() {
-    return Container(
+    return SizedBox(
       width: 335.w,
       height: 6.h,
       child: Stack(
@@ -185,7 +187,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
               width: 335.w,
               height: 6.h,
               decoration: ShapeDecoration(
-                color: Color(0x4CB7B7B7),
+                color: const Color(0x4CB7B7B7),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100.r),
                 ),
@@ -215,7 +217,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
   supportNumber() {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -239,7 +241,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
                       Utils().callFunction("8123006888");
                     },child: subTitle('(+91)  8123006888 '),
                   ),
-                  Text(" / "),
+                  const Text(" / "),
                   InkWell(
 
                     onTap: (){
@@ -261,7 +263,7 @@ class _BaseScreen extends State<PersonalDetailsScreen> {
     return Text(
       subtitle,
       style: TextStyle(
-        color: Color(0xFFC3262C),
+        color: const Color(0xFFC3262C),
         fontSize: 10.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w600,

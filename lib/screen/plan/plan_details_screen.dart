@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constant/images.dart';
-import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../widgets/button.dart';
-import '../../widgets/plan_widget.dart';
 import '../../widgets/textview.dart';
 
 class PlanDetailsScreen extends StatefulWidget{
@@ -165,7 +162,7 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
          SvgPicture.asset(image),
 
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 52.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -193,7 +190,7 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
                         Text(
                           'Basic plan',
                           style: TextStyle(
-                            color: Color(0x99001E49),
+                            color: const Color(0x99001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
@@ -210,7 +207,7 @@ class _PlanDetailsScreen extends State<PlanDetailsScreen>{
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,

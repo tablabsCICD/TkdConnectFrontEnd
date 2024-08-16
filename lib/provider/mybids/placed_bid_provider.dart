@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
-import 'package:tkd_connect/provider/mybids/my_bids_provider.dart';
 
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
@@ -30,15 +29,16 @@ class PlacedBidProvider extends BaseProvider {
 
 
   getAllBids(BuildContext context,bool tabChang)async{
-    print('the flas is ${fla}');
     User user=await LocalSharePreferences().getLoginData();
+    print('the flas is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)}');
+
     ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids));
-    print('the response is ${apiResponse.response}');
+    //print('the response is ${apiResponse.response}');
     if(apiResponse.status==200){
       BidPlaced bidPlaced=BidPlaced.fromJson(apiResponse.response);
       listBids.clear();
       listBids.addAll(bidPlaced.content!);
-      print('the size is ${listBids.length}');
+      //print('the size is ${listBids.length}');
       selectedPageAllBids++;
       isLoad=true;
       notifyListeners();

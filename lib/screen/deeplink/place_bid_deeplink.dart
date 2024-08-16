@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,14 +8,12 @@ import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/request/bid_place.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/deep_link_load.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/button.dart';
-import 'package:tkd_connect/widgets/card/dashboard_cards.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 
 import '../../../constant/images.dart';
@@ -57,7 +54,7 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: ListView(
             controller: null,
             children: [
@@ -82,7 +79,7 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
               ),
               SizedBox(height: 50.h,),
               Text(
-                "Vehicale Size "+widget.truckLoad!.vehicleSize! +" Cargo Type "+ widget.truckLoad!.typeOfCargo!,
+                "Vehicale Size ${widget.truckLoad.vehicleSize!} Cargo Type ${widget.truckLoad.typeOfCargo!}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -93,14 +90,14 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
                 ),
               ),
               SizedBox(height: 8.h,),
-              BaseWidget().routes(widget.truckLoad!.source!,widget.truckLoad!.destination!),
+              BaseWidget().routes(widget.truckLoad.source!,widget.truckLoad.destination!),
               
               SizedBox(height: 8.h,),
               Text(
                 widget.truckLoad.otherDetails!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0x99001E49),
+                  color: const Color(0x99001E49),
                   fontSize: 14.sp,
                   fontFamily: AppConstant.FONTFAMILY,
                   fontWeight: FontWeight.w400,
@@ -108,8 +105,8 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
                 ),
               ),
               SizedBox(height: 10.h,),
-              avgBid=="0"?SizedBox.shrink():Text(
-                "Average Bid is "+avgBid,
+              avgBid=="0"?const SizedBox.shrink():Text(
+                "Average Bid is $avgBid",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -132,7 +129,7 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
 
               ),
               SizedBox(height: 8.h,),
-              Container(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "\u{20B9}", controller: controller,keybordType: TextInputType.number,
+              SizedBox(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "\u{20B9}", controller: controller,keybordType: TextInputType.number,
                 onChange: (val){
                   if(val==0){
                     buttonEnable=false;
@@ -145,7 +142,7 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
 
 
                 },)),
-              SizedBox(height: 8,),
+              const SizedBox(height: 8,),
               Text(
                 bidState,
                 style: TextStyle(
@@ -163,7 +160,7 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
         ),
 
       ),
-      bottomNavigationBar: Padding(padding: EdgeInsets.all(20),child: Button(width: 327.w, height: 49.h, title: S().submit, textStyle: TextStyle(
+      bottomNavigationBar: Padding(padding: const EdgeInsets.all(20),child: Button(width: 327.w, height: 49.h, title: S().submit, textStyle: TextStyle(
         color: Colors.white,
         fontSize: 14.sp,
         fontFamily: AppConstant.FONTFAMILY,
@@ -226,7 +223,7 @@ class _PlaceDeepBidScreen extends State<PlaceDeepBidScreen> {
     bidPlace.id=0;
     bidPlace.mobileNumber=user.content!.first.mobileNumber;
     bidPlace.userName=user.content!.first.userName;
-    bidPlace.bidderUserName=user.content!.first.userName;;
+    bidPlace.bidderUserName=user.content!.first.userName;
     bidPlace.emailId=user.content!.first.emailId;
     bidPlace.description="No ANY";
     bidPlace.loggedUserName=user.content!.first.userName;

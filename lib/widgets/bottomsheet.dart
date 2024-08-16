@@ -17,7 +17,7 @@ class ItemBottomSheet{
       builder: (BuildContext context) {
         return Container(
           height: 200.h,
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: Center(
             
             child: Column(
@@ -64,7 +64,7 @@ class ItemBottomSheet{
                             padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
                             decoration: BoxDecoration(
                               color: ThemeColor.white,
-                              border: Border(
+                              border: const Border(
 
                                 bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
                               ),
@@ -125,7 +125,7 @@ class ItemBottomSheet{
        builder: (BuildContext context) {
          return Container(
            height: MediaQuery.of(context).size.height/2,
-           margin: EdgeInsets.all(10),
+           margin: const EdgeInsets.all(10),
            child: Center(
 
              child: Column(
@@ -157,8 +157,8 @@ class ItemBottomSheet{
                  //listLang()
 
                  Expanded(
-                   child:item.length==0 ?
-                     Center(child: Text(" No Group Found Please Create Group "))  :
+                   child:item.isEmpty ?
+                     const Center(child: Text(" No Group Found Please Create Group "))  :
                    ListView.builder(
                        itemCount: item.length,
                        itemBuilder: (BuildContext context, int index) {
@@ -174,7 +174,7 @@ class ItemBottomSheet{
                              padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
                              decoration: BoxDecoration(
                                color: ThemeColor.white,
-                               border: Border(
+                               border: const Border(
 
                                  bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
                                ),
@@ -230,7 +230,7 @@ class ItemBottomSheet{
         padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
         decoration: BoxDecoration(
           color: ThemeColor.white,
-          border: Border(
+          border: const Border(
 
             bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
           ),

@@ -1,23 +1,19 @@
 
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:provider/provider.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
-import 'package:tkd_connect/provider/my_post/my_post_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/group/select_user_for_group_screen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/rating_dailog.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
@@ -41,16 +37,16 @@ class Utils {
       );
       rateMyApp.init().then((value) {
         if(rateMyApp.shouldOpenDialog){
-          rateMyApp.conditions.forEach((element) { if(element is DebuggableCondition){
+          for (var element in rateMyApp.conditions) { if(element is DebuggableCondition){
             print(element.valuesAsString);
           }
-          });
+          }
           rateMyApp.showRateDialog(
               context,
-              title: '${S().rate_this_app}',
-              message: '${S().how_do_you_rate_app}',
-              rateButton: "${S().rate}",
-              laterButton: "${S().may_be_letter}",
+              title: S().rate_this_app,
+              message: S().how_do_you_rate_app,
+              rateButton: S().rate,
+              laterButton: S().may_be_letter,
               ignoreNativeDialog: true,
               dialogStyle: DialogStyle(titleStyle: TextStyle(color: Colors.green,
                 fontSize: 16.sp,
@@ -77,8 +73,8 @@ class Utils {
         }
       });
     } else {
-        final String packageName = 'com.pdk.tkd';
-        final String appId = 'your_app_id';
+        const String packageName = 'com.pdk.tkd';
+        const String appId = 'your_app_id';
         final String url = Platform.isAndroid
             ? 'https://play.google.com/store/apps/details?id=$packageName'
             : 'https://apps.apple.com/app/your_app_name/id$appId';
@@ -159,7 +155,7 @@ class Utils {
 
   Future openwhatsapp(BuildContext context,int number,String text,) async{
     final link = WhatsAppUnilink(
-      phoneNumber: "+91 ${number}",
+      phoneNumber: "+91 $number",
       text: text,
     );
     await launch('$link');

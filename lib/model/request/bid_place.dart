@@ -39,18 +39,18 @@ class BidPlace {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['amount'] = this.amount;
-    data['bidderUserName'] = this.bidderUserName;
-    data['description'] = this.description;
-    data['emailId'] = this.emailId;
-    data['id'] = this.id;
-    data['idOfPost'] = this.idOfPost;
-    data['loggedTime'] = this.loggedTime;
-    data['loggedUserName'] = this.loggedUserName;
-    data['mobileNumber'] = this.mobileNumber;
-    data['type'] = this.type;
-    data['userName'] = this.userName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['amount'] = amount;
+    data['bidderUserName'] = bidderUserName;
+    data['description'] = description;
+    data['emailId'] = emailId;
+    data['id'] = id;
+    data['idOfPost'] = idOfPost;
+    data['loggedTime'] = loggedTime;
+    data['loggedUserName'] = loggedUserName;
+    data['mobileNumber'] = mobileNumber;
+    data['type'] = type;
+    data['userName'] = userName;
     return data;
   }
 }

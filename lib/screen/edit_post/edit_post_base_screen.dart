@@ -1,21 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/my_post_bid_list.dart';
-import 'package:tkd_connect/screen/create_post/post_genral.dart';
-import 'package:tkd_connect/screen/create_post/post_load.dart';
-import 'package:tkd_connect/screen/create_post/post_sponsered.dart';
-import 'package:tkd_connect/screen/create_post/post_vehicale.dart';
-import 'package:tkd_connect/screen/edit_post/edit_post_general.dart';
 import 'package:tkd_connect/screen/edit_post/edit_post_load.dart';
-import 'package:tkd_connect/screen/edit_post/edit_post_sponsered.dart';
 import 'package:tkd_connect/screen/edit_post/edit_post_vehicle.dart';
-import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/utils.dart';
+
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/userdata.dart';
@@ -24,7 +16,7 @@ import '../../widgets/app_bar.dart';
 
 class EditPostBase extends StatefulWidget {
   PostBidData postBidData;
-  EditPostBase(this.postBidData);
+  EditPostBase(this.postBidData, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -72,7 +64,7 @@ class _EditPostBase extends State<EditPostBase>{
           child:Container(
             width: MediaQuery.of(context).size.width,
             color: ThemeColor.baground,
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: Column(
 
               children: [
@@ -106,9 +98,9 @@ class _EditPostBase extends State<EditPostBase>{
       height: 32.h,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x332C363F),
+        color: const Color(0x332C363F),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.75, color: Color(0x332C363F)),
+          side: const BorderSide(width: 0.75, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -140,7 +132,7 @@ class _EditPostBase extends State<EditPostBase>{
             });
 
 
-          }):SizedBox(),
+          }):const SizedBox(),
          /* tabItem(isGeneral,S().general,(){
             isLoad=false;
             isVehicle=false;
@@ -181,7 +173,7 @@ class _EditPostBase extends State<EditPostBase>{
           decoration: ShapeDecoration(
             color: isSelect?ThemeColor.theme_blue:ThemeColor.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: isSelect?Color(0x332C363F):ThemeColor.white),
+              side: BorderSide(color: isSelect?const Color(0x332C363F):ThemeColor.white),
             ),
           ),
           child: Column(

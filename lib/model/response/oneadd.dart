@@ -7,17 +7,17 @@ class Advertisement {
 
   Advertisement.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -123,38 +123,38 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userName'] = this.userName;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['emailId'] = this.emailId;
-    data['mobileNumber'] = this.mobileNumber;
-    data['companyName'] = this.companyName;
-    data['companyAddress'] = this.companyAddress;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['landlineNumber'] = this.landlineNumber;
-    data['verified'] = this.verified;
-    data['companyLogo'] = this.companyLogo;
-    data['aadharCard'] = this.aadharCard;
-    data['ratings'] = this.ratings;
-    data['profilePicture'] = this.profilePicture;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['transporterOrAgent'] = this.transporterOrAgent;
-    data['isPaid'] = this.isPaid;
-    data['paidStartDate'] = this.paidStartDate;
-    data['validTill'] = this.validTill;
-    data['website'] = this.website;
-    data['mobileOrLandline'] = this.mobileOrLandline;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userName'] = userName;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['emailId'] = emailId;
+    data['mobileNumber'] = mobileNumber;
+    data['companyName'] = companyName;
+    data['companyAddress'] = companyAddress;
+    data['city'] = city;
+    data['state'] = state;
+    data['country'] = country;
+    data['landlineNumber'] = landlineNumber;
+    data['verified'] = verified;
+    data['companyLogo'] = companyLogo;
+    data['aadharCard'] = aadharCard;
+    data['ratings'] = ratings;
+    data['profilePicture'] = profilePicture;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['transporterOrAgent'] = transporterOrAgent;
+    data['isPaid'] = isPaid;
+    data['paidStartDate'] = paidStartDate;
+    data['validTill'] = validTill;
+    data['website'] = website;
+    data['mobileOrLandline'] = mobileOrLandline;
 
-    data['category'] = this.category;
-    data['title'] = this.title;
-    data['mainTag'] = this.mainTag;
-    data['images'] = this.images;
-    data['type'] = this.type;
+    data['category'] = category;
+    data['title'] = title;
+    data['mainTag'] = mainTag;
+    data['images'] = images;
+    data['type'] = type;
     return data;
   }
 }

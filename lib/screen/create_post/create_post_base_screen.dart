@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,8 +7,6 @@ import 'package:tkd_connect/screen/create_post/post_genral.dart';
 import 'package:tkd_connect/screen/create_post/post_load.dart';
 import 'package:tkd_connect/screen/create_post/post_sponsered.dart';
 import 'package:tkd_connect/screen/create_post/post_vehicale.dart';
-import 'package:tkd_connect/utils/sharepreferences.dart';
-import 'package:tkd_connect/utils/utils.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/userdata.dart';
@@ -17,6 +14,8 @@ import '../../utils/colors.dart';
 import '../../widgets/app_bar.dart';
 
 class CreatePostBase extends StatefulWidget {
+  const CreatePostBase({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _CreatePostBase();
@@ -51,7 +50,7 @@ class _CreatePostBase extends State<CreatePostBase>{
          child:Container(
            width: MediaQuery.of(context).size.width,
            color: ThemeColor.baground,
-           margin: EdgeInsets.all(20),
+           margin: const EdgeInsets.all(20),
            child: Column(
 
              children: [
@@ -65,10 +64,10 @@ class _CreatePostBase extends State<CreatePostBase>{
                ),
                SizedBox(height: 10.h,),
                tabs(),
-               Visibility(visible: isLoad,child: PostLoadScreen()),
-               Visibility(visible: isVehicle,child: PostVehicleScreen()) ,
-               Visibility(visible: isGeneral,child: PostGenralScreen()),
-               Visibility(visible: isSponsered,child: PostSponseredScreen())
+               Visibility(visible: isLoad,child: const PostLoadScreen()),
+               Visibility(visible: isVehicle,child: const PostVehicleScreen()) ,
+               Visibility(visible: isGeneral,child: const PostGenralScreen()),
+               Visibility(visible: isSponsered,child: const PostSponseredScreen())
 
                // Expanded(
                //   child: PageView(
@@ -105,9 +104,9 @@ class _CreatePostBase extends State<CreatePostBase>{
       height: 32.h,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x332C363F),
+        color: const Color(0x332C363F),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.75, color: Color(0x332C363F)),
+          side: const BorderSide(width: 0.75, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -139,7 +138,7 @@ class _CreatePostBase extends State<CreatePostBase>{
             });
 
 
-          }):SizedBox(),
+          }):const SizedBox(),
           tabItem(isGeneral,S().general,(){
             isLoad=false;
             isVehicle=false;
@@ -180,7 +179,7 @@ class _CreatePostBase extends State<CreatePostBase>{
           decoration: ShapeDecoration(
             color: isSelect?ThemeColor.theme_blue:ThemeColor.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: isSelect?Color(0x332C363F):ThemeColor.white),
+              side: BorderSide(color: isSelect?const Color(0x332C363F):ThemeColor.white),
             ),
           ),
           child: Column(

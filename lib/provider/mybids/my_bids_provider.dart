@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -32,8 +30,8 @@ class MyBidsProvider extends BaseProvider{
     }else{
       User user=await LocalSharePreferences().getLoginData();
 
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}");
-     // print('the response is ${apiResponse.response}');
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr");
+      print('the response is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr}');
       if(apiResponse.status==200){
         BidPlaced bidPlaced=BidPlaced.fromJson(apiResponse.response);
         listBids.clear();
@@ -54,7 +52,7 @@ class MyBidsProvider extends BaseProvider{
       notifyListeners();
     }else{
       User user=await LocalSharePreferences().getLoginData();
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content![0].userName,selectedPage)+"&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}");
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet("${ApiConstant.MYPOSTBID(user.content![0].userName,selectedPage)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr");
        if(apiResponse.status==200){
         MyPostBids bidPlaced=MyPostBids.fromJson(apiResponse.response);
         if(selectedPage==0){
@@ -86,7 +84,7 @@ class MyBidsProvider extends BaseProvider{
   deleteBid(int index,Bids bidings,BuildContext context)async{
     // listOwnBid[index].bidings!.remove(bidings);
     // notifyListeners();
-    ApiResponse apiResponse=await ApiHelper().ApiDeleteData(ApiConstant.PLACED_BID+"?id=${bidings.bidingId}");
+    ApiResponse apiResponse=await ApiHelper().ApiDeleteData("${ApiConstant.PLACED_BID}?id=${bidings.bidingId}");
     if(apiResponse.status==200){
       listBids.removeAt(index);
       ToastMessage.show(context, "Bid withdraw successful ");

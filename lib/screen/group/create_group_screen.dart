@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
-import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/search_data.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
-import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/create_group_provider.dart';
-import 'package:tkd_connect/provider/group/group_provider.dart';
-import 'package:tkd_connect/route/app_routes.dart';
-import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 
-import '../../model/response/group_member_list.dart';
-
 class CreateGroupScreen extends StatefulWidget {
   List<SearchData> memberList;
-  CreateGroupScreen(this.memberList);
+  CreateGroupScreen(this.memberList, {super.key});
 
   @override
   _CreateGroupScreenState createState() => _CreateGroupScreenState();
@@ -31,7 +21,7 @@ class CreateGroupScreen extends StatefulWidget {
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
   bool isEdit=false;
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   ScrollController horizantalControllet=ScrollController();
 
   @override
@@ -52,11 +42,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BaseWidget().appBar(context, "Create Group"),
-                  SizedBox(height: 50,),
+                  const SizedBox(height: 50,),
                   groupName(),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   particepent(),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   selectUserList()
                 ],
               ),
@@ -64,7 +54,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
 
 
           bottomNavigationBar: Consumer<CreateGroupProvider>(
-            builder: (context, provider, child) => Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),
+            builder: (context, provider, child) => Padding(padding: const EdgeInsets.fromLTRB(20,10,20,20),
               child: Button(width: 327.w, height: 49.h, title: S().creategroup, textStyle: TextStyle(
               color: Colors.white,
               fontSize: 14.sp,
@@ -105,7 +95,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               ),
             ),
           ),
-          Container(height: 50,width: 250,
+          SizedBox(height: 50,width: 250,
               child: EditText(controller: provider.groupNameController, hint: "Enter Group Name", keybordType: TextInputType.text,
             onChange: (val){
                 if(val==0) {
@@ -150,7 +140,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                       BaseWidget().getImageclip( widget.memberList[index].profilePicture==null?"":widget.memberList[index].profilePicture!,height: 34.h,width: 34.w),
                       SizedBox(width: 10.w,),
                       Text(
-                          widget.memberList[index].firstName!+" "+widget.memberList[index].lastName!,
+                          "${widget.memberList[index].firstName!} ${widget.memberList[index].lastName!}",
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontFamily: AppConstant.FONTFAMILY,
@@ -159,7 +149,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     ],
                   ),
                 ),
-                Divider()
+                const Divider()
               ],
             ));
           }),

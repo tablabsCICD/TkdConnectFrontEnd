@@ -5,23 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
-import 'package:tkd_connect/generated/l10n.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
-import 'package:tkd_connect/model/response/userdata.dart';
-import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/group_provider.dart';
-import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/utils/rating_star.dart';
-import 'package:tkd_connect/utils/sharepreferences.dart';
-import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
-import 'package:tkd_connect/widgets/editText.dart';
 
 class GroupInfo extends StatefulWidget {
   GroupData groupData;
-  GroupInfo(this.groupData);
+  GroupInfo(this.groupData, {super.key});
 
   @override
   _GroupInfoState createState() => _GroupInfoState();
@@ -53,14 +44,14 @@ class _GroupInfoState extends State<GroupInfo> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BaseWidget().appBar(context, "Group Details"),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 groupName(),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 particepent(),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Container(
                   color: Colors.white,
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: selectedUserList(),),
               ],
             ),
@@ -124,7 +115,7 @@ class _GroupInfoState extends State<GroupInfo> {
               child: Text(
                 formattedDate,
                 style: TextStyle(
-                  color: Color(0x99001E49),
+                  color: const Color(0x99001E49),
                   fontSize: 14.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w400,
@@ -166,11 +157,11 @@ class _GroupInfoState extends State<GroupInfo> {
                     children: [
                       Row(
                         children: <Widget>[
-                          Icon(
+                          const Icon(
                             Icons.account_circle,
                             size: 30.0,
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
                           Text(
                               provider.memberList[index].displayName!,
                               style: TextStyle(
@@ -229,7 +220,7 @@ class _GroupInfoState extends State<GroupInfo> {
                     ],
                   ),
                 ),
-                Divider()
+                const Divider()
               ],
             ));
           });

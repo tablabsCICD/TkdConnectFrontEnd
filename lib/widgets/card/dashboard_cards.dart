@@ -1,23 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tkd_connect/model/response/my_post_bid_list.dart';
-import 'package:tkd_connect/screen/edit_post/edit_post_base_screen.dart';
-import 'package:tkd_connect/utils/toast.dart';
-import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
+import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
+import 'package:tkd_connect/screen/edit_post/edit_post_base_screen.dart';
+import 'package:tkd_connect/utils/colors.dart';
+import 'package:tkd_connect/utils/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../constant/images.dart';
 import '../../model/response/AllCard.dart';
 import '../../provider/dashboard/delete_interface.dart';
 import '../../route/app_routes.dart';
 import '../../utils/utils.dart';
 import 'base_widgets.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class AllCards {
   cardLoad(int index, BuildContext context, TruckLoad load, {int userId = 0}) {
@@ -33,9 +33,9 @@ class AllCards {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -51,7 +51,7 @@ class AllCards {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -112,9 +112,9 @@ class AllCards {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -123,31 +123,71 @@ class AllCards {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              width: 120.w,
-              height: 20.h,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-              decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.r)),
-              ),
-              child: Center(
-                child: Text(
-                  Utils().mainTag(load.mainTag!),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 8.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+              Visibility(
+                visible: load.isSharedInGroup!,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    width: 120.w,
+                    height: 20.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(2)
+                      ),
+                      border: Border.all(
+                        width: 0.5,
+                        color: ThemeColor.red,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Only For You",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 8.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 120.w,
+                  height: 20.h,
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF2C8FEA),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.r)),
+                  ),
+                  child: Center(
+                    child: Text(
+                      Utils().mainTag(load.mainTag!),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(width: 8.w),
+
+
+          SizedBox(height: 10.w),
           BaseWidget().profileWithUser(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,
               verify: load.isverified!,
@@ -170,7 +210,7 @@ class AllCards {
                       if (val == 6) {
                         //Navigator.pop(context);
 
-                        Future.delayed(Duration(seconds: 1), () async {
+                        Future.delayed(const Duration(seconds: 1), () async {
 
                           PostBidData postBidData=PostBidData();
                           postBidData.genericCardsDto=GenericCardsDto();
@@ -250,9 +290,9 @@ class AllCards {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -268,7 +308,7 @@ class AllCards {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -321,7 +361,7 @@ class AllCards {
   }
 
   imageLoad(TruckLoad load) {
-    if (load.postImages!.length == 0) {
+    if (load.postImages!.isEmpty) {
       return Column(
         children: [
           SizedBox(
@@ -344,7 +384,7 @@ class AllCards {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget()
-                  .carouseImage(new List<String>.from(load.postImages!))),
+                  .carouseImage(List<String>.from(load.postImages!))),
           SizedBox(
             height: 9.h,
           ),
@@ -367,7 +407,7 @@ class AllCards {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
             offset: const Offset(0, 3),
             spreadRadius: 0,
@@ -382,19 +422,10 @@ class AllCards {
             alignment: Alignment.topRight,
             child: InkWell(
               onTap: () {
-                String des = "Type: General Post" +
-                    "\n " +
-                    "Title: " +
-                    truckLoad.topicName! +
-                    "\n " +
-                    "Description: " +
-                    truckLoad.content! +
-                    "\n " +
-                    "Link: " +
-                    truckLoad.sharableLink!;
+                String des = "Type: General Post\n Title: ${truckLoad.topicName!}\n Description: ${truckLoad.content!}\n Link: ${truckLoad.sharableLink!}";
                 Utils().callShareFunction(des);
               },
-              child: Container(
+              child: SizedBox(
                 width: 38.w,
                 height: 38.h,
                 child: SvgPicture.asset(
@@ -430,7 +461,7 @@ class AllCards {
   }
 
   imagePost(TruckLoad load, BuildContext context) {
-    if (load.postImages!.length == 0) {
+    if (load.postImages!.isEmpty) {
       return Column(
         children: [
           Container(
@@ -448,7 +479,7 @@ class AllCards {
                       side: BorderSide(
                         width: 0.50.w,
                         strokeAlign: BorderSide.strokeAlignCenter,
-                        color: Color(0x332C363F),
+                        color: const Color(0x332C363F),
                       ),
                     ),
                   ),
@@ -484,7 +515,7 @@ class AllCards {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget()
-                  .carouseImage(new List<String>.from(load.postImages!))),
+                  .carouseImage(List<String>.from(load.postImages!))),
           SizedBox(
             height: 9.h,
           ),
@@ -518,9 +549,9 @@ class AllCards {
           ),
           shadows: [
             BoxShadow(
-              color: Color(0x114A5568),
+              color: const Color(0x114A5568),
               blurRadius: 8.r,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
               spreadRadius: 0,
             )
           ],
@@ -536,7 +567,7 @@ class AllCards {
                 height: 18.h,
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                 decoration: ShapeDecoration(
-                  color: Color(0xFFD9462A),
+                  color: const Color(0xFFD9462A),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.r)),
                 ),
@@ -585,9 +616,9 @@ class AllCards {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -603,7 +634,7 @@ class AllCards {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xffd0a232),
+                color: const Color(0xffd0a232),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -663,9 +694,9 @@ class AllCards {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -681,7 +712,7 @@ class AllCards {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFFd35e61),
+                color: const Color(0xFFd35e61),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -743,7 +774,7 @@ class AllCards {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -755,7 +786,7 @@ class AllCards {
                   Text(
                     'Call now',
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -771,8 +802,7 @@ class AllCards {
           InkWell(
               onTap: () {
                 String Message =
-                    "I am writing to express my strong interest in the our department" +
-                        " From TKD Connect Application";
+                    "I am writing to express my strong interest in the our department" " From TKD Connect Application";
                 Utils().openwhatsapp(context, load.mobileNumber!, Message);
               },
               child: SvgPicture.asset(Images.message_job)),
@@ -797,14 +827,14 @@ class AllCards {
                 Flexible(
                   child: Text(
                     '$text',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.close_rounded),
+                  icon: const Icon(Icons.close_rounded),
                   color: Colors.red,
                 ),
               ],
@@ -831,13 +861,13 @@ class AllCards {
               children: [
                 Text(
                   '$text',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.close_rounded),
+                  icon: const Icon(Icons.close_rounded),
                   color: Colors.red,
                 ),
               ],
@@ -858,7 +888,7 @@ class AllCards {
           child: CachedNetworkImage(
             imageUrl: imageUrl,
             placeholder: (context, url) =>
-                SvgPicture.asset("assets/svg/logo.svg"),
+                SvgPicture.asset(Images.logo),
             errorWidget: (context, url, error) => ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
@@ -872,7 +902,7 @@ class AllCards {
             height: 500.h,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 9,
         ),
       ],
@@ -882,8 +912,8 @@ class AllCards {
 
 
   imageLoadAddA(TruckLoad load, BuildContext context) {
-    if (load.postImages!.length == 0) {
-      return Column(
+    if (load.postImages!.isEmpty) {
+      return const Column(
         children: [
           SizedBox(
             height: 0,
@@ -912,7 +942,7 @@ class AllCards {
               height: 500.h,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 9,
           ),
         ],
@@ -938,7 +968,7 @@ class AllCards {
                         ))
                     .toList(),
               ))),
-          SizedBox(
+          const SizedBox(
             height: 9,
           ),
         ],

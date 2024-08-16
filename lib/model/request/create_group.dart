@@ -24,13 +24,13 @@ class GroupCreateModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['createByUserId'] = this.createByUserId;
-    data['date'] = this.date;
-    data['groupName'] = this.groupName;
-    data['isPrivate'] = this.isPrivate;
-    data['imageUrl'] = this.imageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['createByUserId'] = createByUserId;
+    data['date'] = date;
+    data['groupName'] = groupName;
+    data['isPrivate'] = isPrivate;
+    data['imageUrl'] = imageUrl;
     return data;
   }
 }

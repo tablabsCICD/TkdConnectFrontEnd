@@ -22,7 +22,7 @@ import 'dart:io' show Platform;
 import 'notification/local_notification.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  debugPrint("Notification Received ::::::"+message.data.toString());
+  print("Notification Received ::::::${message.data}");
   //print(message.notification!.title);
   LocalNotificationService.createanddisplaynotification(message);
 }
@@ -35,7 +35,7 @@ void main() async{
   ]);
   WidgetsFlutterBinding.ensureInitialized();
   if(Platform.isAndroid==true){
-    await Firebase.initializeApp(options: FirebaseOptions(
+    await Firebase.initializeApp(options: const FirebaseOptions(
         apiKey: "AIzaSyBWKkzTGCX53nAzzyFYgeJ9op4dajnDqF4",
         authDomain: "tkd-crm.firebaseapp.com",
         projectId: "tkdost-50f52",
@@ -76,7 +76,7 @@ void main() async{
 
 class MyApp extends StatefulWidget {
   final SharedPreferences prefs;
-  MyApp({required this.prefs});
+  const MyApp({super.key, required this.prefs});
 
 
   @override
@@ -121,15 +121,16 @@ class _MyApp extends State<MyApp> {
 
               Provider<ChatProvider>(
                 create: (_) => ChatProvider(
-                  prefs: this.prefs,
-                  firebaseFirestore: this.firebaseFirestore,
-                  firebaseStorage: this.firebaseStorage,
+                  prefs: prefs,
+                  firebaseFirestore: firebaseFirestore,
+                  firebaseStorage: firebaseStorage,
                 ),
               ),
             ],
             child: MaterialApp(
 
-              localizationsDelegates: [
+
+              localizationsDelegates: const [
                 S.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
@@ -140,9 +141,10 @@ class _MyApp extends State<MyApp> {
               title: 'TKD Connect',
 //showPerformanceOverlay: true,
               theme:    ThemeData(
+                  useMaterial3: false,
                   primarySwatch: Colors.blue,
                   fontFamily: GoogleFonts.poppins().fontFamily),
-              initialRoute: AppRoutes.entryScreen,
+              initialRoute: "/",
               onGenerateRoute: RouteGenerator.generateRoute,
               builder: EasyLoading.init(),
               navigatorKey: navigatorKey,

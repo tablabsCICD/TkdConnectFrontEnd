@@ -24,7 +24,7 @@ class JobList {
     if (json['content'] != null) {
       content = <JobData>[];
       json['content'].forEach((v) {
-        content!.add(new JobData.fromJson(v));
+        content!.add(JobData.fromJson(v));
       });
     }
     last = json['last'];
@@ -38,18 +38,18 @@ class JobList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
-    data['sort'] = this.sort;
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    data['last'] = last;
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
+    data['sort'] = sort;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
+    data['size'] = size;
+    data['number'] = number;
     return data;
   }
 }
@@ -76,7 +76,7 @@ class JobData {
 
   JobData.fromJson(Map<String, dynamic> json) {
     postJob =
-    json['postJob'] != null ? new PostJob.fromJson(json['postJob']) : null;
+    json['postJob'] != null ? PostJob.fromJson(json['postJob']) : null;
     profileImg = json['profileImg'];
     postingDate = json['postingDate'];
     name = json['name'];
@@ -87,16 +87,16 @@ class JobData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.postJob != null) {
-      data['postJob'] = this.postJob!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (postJob != null) {
+      data['postJob'] = postJob!.toJson();
     }
-    data['profileImg'] = this.profileImg;
-    data['postingDate'] = this.postingDate;
-    data['name'] = this.name;
-    data['isVerified'] = this.isVerified;
-    data['isPaid'] = this.isPaid;
-    data['transporterOrAgent'] = this.transporterOrAgent;
+    data['profileImg'] = profileImg;
+    data['postingDate'] = postingDate;
+    data['name'] = name;
+    data['isVerified'] = isVerified;
+    data['isPaid'] = isPaid;
+    data['transporterOrAgent'] = transporterOrAgent;
 
     return data;
   }
@@ -179,30 +179,30 @@ class PostJob {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['companyName'] = this.companyName;
-    data['emailId'] = this.emailId;
-    data['contactNumber'] = this.contactNumber;
-    data['jobLocation'] = this.jobLocation;
-    data['jobDescription'] = this.jobDescription;
-    data['jobType'] = this.jobType;
-    data['experience'] = this.experience;
-    data['jobDepartment'] = this.jobDepartment;
-    data['salary'] = this.salary;
-    data['isSalaryNegotiable'] = this.isSalaryNegotiable;
-    data['message'] = this.message;
-    data['isSelected'] = this.isSelected;
-    data['removedDate'] = this.removedDate;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['privatePost'] = this.privatePost;
-    data['tableName'] = this.tableName;
-    data['mainTag'] = this.mainTag;
-    data['postingTime'] = this.postingTime;
-    data['type'] = this.type;
-    data['topicName'] = this.topicName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['companyName'] = companyName;
+    data['emailId'] = emailId;
+    data['contactNumber'] = contactNumber;
+    data['jobLocation'] = jobLocation;
+    data['jobDescription'] = jobDescription;
+    data['jobType'] = jobType;
+    data['experience'] = experience;
+    data['jobDepartment'] = jobDepartment;
+    data['salary'] = salary;
+    data['isSalaryNegotiable'] = isSalaryNegotiable;
+    data['message'] = message;
+    data['isSelected'] = isSelected;
+    data['removedDate'] = removedDate;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['privatePost'] = privatePost;
+    data['tableName'] = tableName;
+    data['mainTag'] = mainTag;
+    data['postingTime'] = postingTime;
+    data['type'] = type;
+    data['topicName'] = topicName;
     return data;
   }
 }

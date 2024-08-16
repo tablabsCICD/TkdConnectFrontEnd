@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/buy_sell_provider/create_buy_sell_provider.dart';
+
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
 import '../../widgets/bottomsheet.dart';
@@ -14,6 +14,8 @@ import '../../widgets/editText.dart';
 import '../my_route/select_one_city.dart';
 
 class CreateBuySell extends StatelessWidget {
+  const CreateBuySell({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -48,7 +50,7 @@ class CreateBuySell extends StatelessWidget {
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                         int a = await itemBottomSheet.showIteam(
-                            context, provider.reqirement, "${S().selectOne}");
+                            context, provider.reqirement, S().selectOne);
                         provider.selectedRequrimentType(a);
                       },
                       hint: provider.selectedRequriment,
@@ -93,7 +95,7 @@ class CreateBuySell extends StatelessWidget {
                             isScrollControlled: true,
                             context: context,
                             builder: (BuildContext context) {
-                              return FractionallySizedBox(
+                              return const FractionallySizedBox(
                                   heightFactor: 0.9,
                                   child: SelectOneCityScreen());
                             });
@@ -113,7 +115,7 @@ class CreateBuySell extends StatelessWidget {
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                         int a = await itemBottomSheet.showIteam(
-                            context, provider.makerList, "${S().selectOne}");
+                            context, provider.makerList, S().selectOne);
                         provider.selectedMakerType(a);
                       },
                       hint: provider.selectedMakerName,
@@ -174,7 +176,7 @@ class CreateBuySell extends StatelessWidget {
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                         int a = await itemBottomSheet.showIteam(
-                            context, provider.yearList, "${S().selectOne}");
+                            context, provider.yearList, S().selectOne);
                         provider.selectedyearType(a);
                       },
                       hint: provider.selectedYear,
@@ -190,7 +192,7 @@ class CreateBuySell extends StatelessWidget {
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                         int a = await itemBottomSheet.showIteam(context,
-                            provider.vehicleSizeList, "${S().selectOne}");
+                            provider.vehicleSizeList, S().selectOne);
                         provider.selectedvehicleSizeType(a);
                       },
                       hint: provider.selectedVehicleSize,
@@ -206,7 +208,7 @@ class CreateBuySell extends StatelessWidget {
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                         int a = await itemBottomSheet.showIteam(context,
-                            provider.conditionList, "${S().selectOne}");
+                            provider.conditionList, S().selectOne);
                         provider.selectedConditionType(a);
                       },
                       hint: provider.selectedCondition,
@@ -261,7 +263,7 @@ class CreateBuySell extends StatelessWidget {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

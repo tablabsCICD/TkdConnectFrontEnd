@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';
@@ -32,9 +31,9 @@ class HelpSupportProvider extends BaseProvider{
       ToastMessage.show(context, S().pleaseSelectTopic);
     }else{
       User user=await LocalSharePreferences().getLoginData();
-      final now = new DateTime.now();
+      final now = DateTime.now();
 
-      if(textEditingController.text.length>0){
+      if(textEditingController.text.isNotEmpty){
         Map<String,dynamic>parameter={
           "concern": textEditingController.text,
           "id": 0,
@@ -72,7 +71,7 @@ class HelpSupportProvider extends BaseProvider{
   }
 
   validation(){
-    if(dropValue!=S().chooseATopic&&textEditingController.text.length>0){
+    if(dropValue!=S().chooseATopic&&textEditingController.text.isNotEmpty){
       enableButton=true;
     }else{
       enableButton=false;

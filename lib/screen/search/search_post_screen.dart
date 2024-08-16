@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import '../../model/response/AllCard.dart';
 import '../../provider/search_provider/search_provider.dart';
 import '../../widgets/card/dashboard_cards.dart';
@@ -42,7 +42,7 @@ class _SearchPostState extends State<SearchPostScreen>{
   return Container(
       child:
 
-      provider.truckLoadTypeList.length==0 && !provider.isLoading?Center(
+      provider.truckLoadTypeList.isEmpty && !provider.isLoading?Center(
         child: Text(
           "No Data found",
           style: TextStyle(

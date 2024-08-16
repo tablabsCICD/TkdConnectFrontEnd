@@ -1,9 +1,9 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -44,7 +44,7 @@ class CreateGroupProvider extends BaseProvider{
     selectedUsers=[];
     notifyListeners();
     EasyLoading.show(status: "Loading");
-    if(allUserList.length==0){
+    if(allUserList.isEmpty){
      // String myUrl = ApiConstant.BASE_URL +'companyRegistration?page=${0}&size=1000';
       String myUrl = ApiConstant.CHAT_USER_LIST_COMPANY(' ');
       print(myUrl);
@@ -83,7 +83,7 @@ class CreateGroupProvider extends BaseProvider{
   getGroupMember(int groupId)async{
     listAddedMember.clear();
     ApiHelper apiHelper=ApiHelper();
-    var response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId!.toString());
+    var response=await apiHelper.apiWithoutDecodeGet(ApiConstant.GROUP_MEMBER_LIST+groupId.toString());
     GroupMemberListResponse groupListModel=GroupMemberListResponse.fromJson(response.response);
     LocalSharePreferences().setString(AppConstant.GROUP_MEMBER, jsonEncode(groupListModel.content));
     listAddedMember.addAll(groupListModel.content!);
@@ -126,7 +126,7 @@ class CreateGroupProvider extends BaseProvider{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     List<GroupMember>selectedUserId=[];
     for(int i=0;i<memberList.length;i++){
-      String? dpName= memberList[i].firstName!+" "+memberList[i].lastName!;
+      String? dpName= "${memberList[i].firstName!} ${memberList[i].lastName!}";
       selectedUserId.add(GroupMember(displayName:dpName,userId: memberList[i].id));
     }
     ApiHelper apiHelper=ApiHelper();

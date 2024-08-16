@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,7 +16,7 @@ import '../../widgets/verified_tag.dart';
 class ShowBidsScreen extends StatelessWidget{
   final List<Bidings>? listBidings;
 
-   ShowBidsScreen({super.key, required this.listBidings});
+   const ShowBidsScreen({super.key, required this.listBidings});
   @override
   @override
   Widget build(BuildContext context) {
@@ -75,12 +74,12 @@ class ShowBidsScreen extends StatelessWidget{
     return Container(
       width: 311.w,
       //  height: 69.h,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: isLast ? Colors.white : Color(0x332C363F),
+            color: isLast ? Colors.white : const Color(0x332C363F),
           ),
         ),
       ),
@@ -114,7 +113,7 @@ class ShowBidsScreen extends StatelessWidget{
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  bidings.firstName! + " " + bidings.lastName!,
+                                  "${bidings.firstName!} ${bidings.lastName!}",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 12.sp,
@@ -136,7 +135,7 @@ class ShowBidsScreen extends StatelessWidget{
                             child: Text(
                               bidings.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: AppConstant.FONTFAMILY,
                                 fontWeight: FontWeight.w400,
@@ -193,7 +192,7 @@ class ShowBidsScreen extends StatelessWidget{
                     Utils().callFunction("${bidings.bidings!.mobileNumber}");
 
                   }
-                  , child: Container(
+                  , child: SizedBox(
                   width: 22.w,
                   height: 22.h,
                   child: Row(
@@ -201,7 +200,7 @@ class ShowBidsScreen extends StatelessWidget{
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 22,
                         height: 22,
                         child: Stack(children: [

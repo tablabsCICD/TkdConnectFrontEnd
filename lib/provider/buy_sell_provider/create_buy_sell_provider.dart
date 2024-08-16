@@ -150,7 +150,7 @@ class CreateBuySellProvider extends BaseProvider{
 
     Map<String, dynamic> data = {
       "additionalInformation": specialInstructionController.text,
-      "agentName": user.content!.first.firstName!+" "+user.content!.first.lastName!,
+      "agentName": "${user.content!.first.firstName!} ${user.content!.first.lastName!}",
       "bodyType": specialInstructionController.text,
       "buySelltype": selectedRequriment,
       "city": destinationCity,
@@ -158,7 +158,7 @@ class CreateBuySellProvider extends BaseProvider{
       "conditionOfVehicle": selectedCondition,
       "contactNumber": mobileNumberController.text,
       "date": "2022-01-22T11:29:53.473Z",
-      "estimatedPrice": this.price.text,
+      "estimatedPrice": price.text,
       "id": 0,
       "image1": "",
       "image2": " ",
@@ -173,7 +173,7 @@ class CreateBuySellProvider extends BaseProvider{
       "model": modelName.text,
       "negotiable": 0,
       "os": " ",
-      "ownerName": user.content!.first.firstName!+" "+user.content!.first.lastName!,
+      "ownerName": "${user.content!.first.firstName!} ${user.content!.first.lastName!}",
       "postingTime": "2022-01-22T11:29:53.473Z",
       "privatePost": 0,
       "tableName": "Buy/Sell",
@@ -183,7 +183,7 @@ class CreateBuySellProvider extends BaseProvider{
       "vehicleRegistrationNumber": vehicleRno.text,
       "yearOfBuying": selectedYear
     };
-    print('${jsonEncode(data)}');
+    print(jsonEncode(data));
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.POST_BUY_SELL, data);
     if(apiResponse.status==200){
 

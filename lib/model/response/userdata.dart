@@ -3,7 +3,7 @@ class User {
   bool? last;
   int? totalPages;
   int? totalElements;
-  dynamic? sort;
+  dynamic sort;
   bool? first;
   int? numberOfElements;
   int? size;
@@ -24,7 +24,7 @@ class User {
     if (json['content'] != null) {
       content = <UserData>[];
       json['content'].forEach((v) {
-        content!.add(new UserData.fromJson(v));
+        content!.add(UserData.fromJson(v));
       });
     }
     last = json['last'];
@@ -38,18 +38,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
-    data['sort'] = this.sort;
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    data['last'] = last;
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
+    data['sort'] = sort;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
+    data['size'] = size;
+    data['number'] = number;
     return data;
   }
 }
@@ -172,42 +172,42 @@ class UserData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userName'] = this.userName;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['emailId'] = this.emailId;
-    data['mobileNumber'] = this.mobileNumber;
-    data['companyName'] = this.companyName;
-    data['companyAddress'] = this.companyAddress;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['landlineNumber'] = this.landlineNumber;
-    data['mainBranch'] = this.mainBranch;
-    data['idOfMainBranch'] = this.idOfMainBranch;
-    data['verified'] = this.verified;
-    data['companyLogo'] = this.companyLogo;
-    data['aadharCard'] = this.aadharCard;
-    data['otp'] = this.otp;
-    data['ratings'] = this.ratings;
-    data['numberOfTimesRating'] = this.numberOfTimesRating;
-    data['password'] = this.password;
-    data['deviceId'] = this.deviceId;
-    data['profilePicture'] = this.profilePicture;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['transporterOrAgent'] = this.transporterOrAgent;
-    data['preferredRouresEntered'] = this.preferredRouresEntered;
-    data['isPaid'] = this.isPaid;
-    data['paidStartDate'] = this.paidStartDate;
-    data['validTill'] = this.validTill;
-    data['website'] = this.website;
-    data['alternativeNumber'] = this.alternativeNumber;
-    data['companyId'] = this.companyId;
-    data['isUserVerifiedByCompany'] = this.isUserVerifiedByCompany;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userName'] = userName;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['emailId'] = emailId;
+    data['mobileNumber'] = mobileNumber;
+    data['companyName'] = companyName;
+    data['companyAddress'] = companyAddress;
+    data['city'] = city;
+    data['state'] = state;
+    data['country'] = country;
+    data['landlineNumber'] = landlineNumber;
+    data['mainBranch'] = mainBranch;
+    data['idOfMainBranch'] = idOfMainBranch;
+    data['verified'] = verified;
+    data['companyLogo'] = companyLogo;
+    data['aadharCard'] = aadharCard;
+    data['otp'] = otp;
+    data['ratings'] = ratings;
+    data['numberOfTimesRating'] = numberOfTimesRating;
+    data['password'] = password;
+    data['deviceId'] = deviceId;
+    data['profilePicture'] = profilePicture;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['transporterOrAgent'] = transporterOrAgent;
+    data['preferredRouresEntered'] = preferredRouresEntered;
+    data['isPaid'] = isPaid;
+    data['paidStartDate'] = paidStartDate;
+    data['validTill'] = validTill;
+    data['website'] = website;
+    data['alternativeNumber'] = alternativeNumber;
+    data['companyId'] = companyId;
+    data['isUserVerifiedByCompany'] = isUserVerifiedByCompany;
     return data;
   }
 }

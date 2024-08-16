@@ -4,15 +4,15 @@ import '../model/request/register_company.dart';
 
 class AppConstant{
 
-  static final String APP_VERSION = "3.0.11"; // 58
-  static final String GOOGLE_KEY ="AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30";
-  static final String LOGIN_KEY="login";
-  static final String CURRENT_GROUP="group";
-  static final String GROUP_MEMBER="member";
+  static const String APP_VERSION = "3.0.11"; // 58
+  static const String GOOGLE_KEY ="AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30";
+  static const String LOGIN_KEY="login";
+  static const String CURRENT_GROUP="group";
+  static const String GROUP_MEMBER="member";
 
-  static final String LOGIN_BOOl="loginbool";
+  static const String LOGIN_BOOl="loginbool";
 
-  static final String RESENT_SEARCH="search";
+  static const String RESENT_SEARCH="search";
   static String PHONE_PAY_TRANSCATION_ID="";
  
   static RegisterCompany registerCompany=RegisterCompany();

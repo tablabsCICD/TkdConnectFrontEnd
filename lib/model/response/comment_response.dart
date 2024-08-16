@@ -7,17 +7,17 @@ class CommentResponse {
 
   CommentResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -31,26 +31,26 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     generalPost = json['generalPost'] != null
-        ? new GeneralPost.fromJson(json['generalPost'])
+        ? GeneralPost.fromJson(json['generalPost'])
         : null;
     if (json['comments'] != null) {
       comments = <Comments>[];
       json['comments'].forEach((v) {
-        comments!.add(new Comments.fromJson(v));
+        comments!.add(Comments.fromJson(v));
       });
     }
     commentCount = json['commentCount'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.generalPost != null) {
-      data['generalPost'] = this.generalPost!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (generalPost != null) {
+      data['generalPost'] = generalPost!.toJson();
     }
-    if (this.comments != null) {
-      data['comments'] = this.comments!.map((v) => v.toJson()).toList();
+    if (comments != null) {
+      data['comments'] = comments!.map((v) => v.toJson()).toList();
     }
-    data['commentCount'] = this.commentCount;
+    data['commentCount'] = commentCount;
     return data;
   }
 }
@@ -90,16 +90,16 @@ class GeneralPost {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['typeName'] = this.typeName;
-    data['images'] = this.images;
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['likes'] = this.likes;
-    data['comment'] = this.comment;
-    data['userId'] = this.userId;
-    data['loggedTime'] = this.loggedTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['typeName'] = typeName;
+    data['images'] = images;
+    data['description'] = description;
+    data['title'] = title;
+    data['likes'] = likes;
+    data['comment'] = comment;
+    data['userId'] = userId;
+    data['loggedTime'] = loggedTime;
     return data;
   }
 }
@@ -133,14 +133,14 @@ class Comments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['discussionId'] = this.discussionId;
-    data['userId'] = this.userId;
-    data['comment'] = this.comment;
-    data['date'] = this.date;
-    data['profileImage'] = this.profileImage;
-    data['userName'] = this.userName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['discussionId'] = discussionId;
+    data['userId'] = userId;
+    data['comment'] = comment;
+    data['date'] = date;
+    data['profileImage'] = profileImage;
+    data['userName'] = userName;
 
     return data;
   }

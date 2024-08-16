@@ -33,17 +33,17 @@ class RouteModel {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['content'] = content.map((e)=>e.toJson()).toList();
-    _data['totalPages'] = totalPages;
-    _data['totalElements'] = totalElements;
-    _data['last'] = last;
-    _data['size'] = size;
-    _data['number'] = number;
-    _data['sort'] = sort;
-    _data['first'] = first;
-    _data['numberOfElements'] = numberOfElements;
-    return _data;
+    final data = <String, dynamic>{};
+    data['content'] = content.map((e)=>e.toJson()).toList();
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
+    data['last'] = last;
+    data['size'] = size;
+    data['number'] = number;
+    data['sort'] = sort;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
+    return data;
   }
 }
 
@@ -73,13 +73,13 @@ class RouteData {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['userId'] = userId;
-    _data['routeSource'] = routeSource;
-    _data['routeDestination'] = routeDestination;
-    _data['loggedUserName'] = loggedUserName;
-    _data['loggedTime'] = loggedTime;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['routeSource'] = routeSource;
+    data['routeDestination'] = routeDestination;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    return data;
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
-import 'package:tkd_connect/constant/color.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
 class VerifiedTag {
@@ -12,9 +11,9 @@ class VerifiedTag {
   onVeriedTag(){
    return Center(
       child: Container(
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         decoration:  BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(2)
+          borderRadius: const BorderRadius.all(Radius.circular(2)
           ),
           border: Border.all(
             width: 0.5,

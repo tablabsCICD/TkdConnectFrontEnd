@@ -5,12 +5,8 @@ import 'package:flutter/cupertino.dart';
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/response/group_member_list.dart';
-import '../../model/response/group_response.dart';
-import '../../model/response/search_data.dart';
-import '../../model/response/userdata.dart';
 import '../../model/response/verified_user.dart';
 import '../../network/api_helper.dart';
-import '../../utils/sharepreferences.dart';
 import '../base_provider.dart';
 
 class VerifiedUserProvider extends BaseProvider {

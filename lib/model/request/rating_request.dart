@@ -14,11 +14,11 @@ class RatingRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['companyId'] = this.companyId;
-    data['rating'] = this.rating;
-    data['review'] = this.review;
-    data['userId'] = this.userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['companyId'] = companyId;
+    data['rating'] = rating;
+    data['review'] = review;
+    data['userId'] = userId;
     return data;
   }
 }

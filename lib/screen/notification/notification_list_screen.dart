@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/provider/notification/notification_list_provider.dart';
@@ -10,10 +7,11 @@ import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
-import '../../constant/images.dart';
 import '../../model/response/notification_list.dart';
 
 class NotificationListScreen extends StatefulWidget {
+  const NotificationListScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _NotificationListScreen();
@@ -45,7 +43,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
             SizedBox(height: 20.h,),
             Consumer<NotificationListProvider>(
               builder: (context, provider, child) {
-                return  provider.notificationList.isNotEmpty?  listView() : Expanded(child: Center(child: Text("Notification not found"),));
+                return  provider.notificationList.isNotEmpty?  listView() : const Expanded(child: Center(child: Text("Notification not found"),));
               },
             )
           ],
@@ -80,7 +78,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
 
           if(model.tableName=="FullTruckLoad"){
 
-            int id =model!.tableId!;
+            int id =model.tableId!;
             Navigator.push(context, MaterialPageRoute(builder: (context)=>DeepLink(id: id.toString())));
 
           }
@@ -93,7 +91,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
             .width,
 
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           border: Border(
             left: BorderSide(color: Color(0x192C363F)),
@@ -148,7 +146,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
                               child: Text(
                                 model.message!,
                                 style: TextStyle(
-                                  color: Color(0x99001E49),
+                                  color: const Color(0x99001E49),
                                   fontSize: 10.sp,
                                   fontFamily: AppConstant.FONTFAMILY,
                                   fontWeight: FontWeight.w400,
@@ -174,7 +172,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
                   Text(
                     model.dateAndTime!,
                     style: TextStyle(
-                      color: Color(0x99001E49),
+                      color: const Color(0x99001E49),
                       fontSize: 10.sp,
                       fontFamily: AppConstant.FONTFAMILY,
                       fontWeight: FontWeight.w400,

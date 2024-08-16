@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/response/general_post_model.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
@@ -17,9 +18,8 @@ class GeneralPostProvider extends BaseProvider{
   }
 
   getAllPost()async {
-    String myUrl = ApiConstant.BASE_URL +
-        '/GeneralPost/getAll';
-    print("Get All General Post : " + myUrl);
+    String myUrl = '${ApiConstant.BASE_URL}/GeneralPost/getAll';
+    print("Get All General Post : $myUrl");
     var req = await http.get(Uri.parse(myUrl));
     var response = json.decode(req.body);
     print(response);
@@ -49,9 +49,8 @@ class GeneralPostProvider extends BaseProvider{
   }
 
   getCommentList(int postId)async {
-    String myUrl = ApiConstant.BASE_URL +
-        '/GeneralPost/getAll';
-    print("Get All General Post : " + myUrl);
+    String myUrl = '${ApiConstant.BASE_URL}/GeneralPost/getAll';
+    print("Get All General Post : $myUrl");
     var req = await http.get(Uri.parse(myUrl));
     var response = json.decode(req.body);
     print(response);

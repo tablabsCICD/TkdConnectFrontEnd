@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/button.dart';
+
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -17,6 +18,8 @@ import '../../widgets/editText.dart';
 import '../my_route/select_one_city.dart';
 
 class PostLoadScreen extends StatefulWidget {
+  const PostLoadScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _PostLoadScreen();
@@ -73,7 +76,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedSourceCity(routeRequest.startLocation);
@@ -93,7 +96,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedDestinationCity(routeRequest.startLocation);
@@ -212,11 +215,11 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 30.h,
                 ),
-                provider.images.length>0? BaseWidget().carouseImageDelete(provider.images,(item){
+                provider.images.isNotEmpty? BaseWidget().carouseImageDelete(provider.images,(item){
                   provider.images.remove(item);
                   provider.notifyListeners();
                 }
-                ):SizedBox(),
+                ):const SizedBox(),
                 SizedBox(
                   height: 44.h,
                 ),
@@ -229,7 +232,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                   S().addImagesAt,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF001E49),
+                    color: const Color(0xFF001E49),
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
@@ -261,7 +264,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -318,7 +321,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
       decoration: ShapeDecoration(
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: 1, color: Color(0x332C363F)),
+        side: const BorderSide(width: 1, color: Color(0x332C363F)),
         borderRadius: BorderRadius.circular(8),
       ),
     ),
@@ -328,7 +331,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 33.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -342,7 +345,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -362,7 +365,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: double.infinity,
                             child: Text(
                               '',
@@ -384,7 +387,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
             ),
           ),
           const SizedBox(width: 129),
-          Container(
+          SizedBox(
             width: 100.w,
             height: 40.sp,
             child:Switch.adaptive(
@@ -414,7 +417,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -424,7 +427,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -438,7 +441,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -458,7 +461,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -480,7 +483,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 ),
               ),
 
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(

@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/provider/dashboard/edit_post_provider.dart';
 import 'package:tkd_connect/widgets/button.dart';
+
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -21,7 +20,7 @@ import '../my_route/select_one_city.dart';
 
 class EditPostVehicleScreen extends StatefulWidget {
   PostBidData postBidData;
-  EditPostVehicleScreen(this.postBidData);
+  EditPostVehicleScreen(this.postBidData, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -55,7 +54,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                 //   height: 133.h,
                 //   width: 200.w,
                 // ),
-                labelText(S().vehicle+" "+S().loads),
+                labelText("${S().vehicle} ${S().loads}"),
                 SizedBox(
                   height: 4.h,
                 ),
@@ -80,7 +79,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedSourceCity(routeRequest.startLocation);
@@ -100,7 +99,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedDestinationCity(routeRequest.startLocation);
@@ -204,14 +203,14 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                   hint: provider.selectedGroup,
                 ),*/
                 Visibility(
-                  visible: provider.addedUserListIdInPost.length == 0 ? false : true,
+                  visible: provider.addedUserListIdInPost.isEmpty ? false : true,
                   child: Container(
                     color: Colors.black12,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Container(
+                          child: SizedBox(
                             child: selectedUsers(),
                             height: 60.h,
                           ),
@@ -223,11 +222,11 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                 SizedBox(
                   height: 30.h,
                 ),
-                provider.images.length>0? BaseWidget().carouseImageDelete(provider.images,(item){
+                provider.images.isNotEmpty? BaseWidget().carouseImageDelete(provider.images,(item){
                   provider.images.remove(item);
                   provider.notifyListeners();
                 }
-                ):SizedBox(),
+                ):const SizedBox(),
                 SizedBox(
                   height: 44.h,
                 ),
@@ -240,7 +239,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                   S().addImagesAt,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF001E49),
+                    color: const Color(0xFF001E49),
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
@@ -316,7 +315,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
           controller: horizantalControllet,
           itemCount: model.addedUsers.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
+            return SizedBox(
               height: 50.h,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
@@ -330,7 +329,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                     Text(
                       model.addedUsers[index].firstName!,
                       style: TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 14.sp,
                         fontFamily: AppConstant.FONTFAMILY,
                         fontWeight: FontWeight.w400,
@@ -345,7 +344,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -402,7 +401,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -412,7 +411,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -426,7 +425,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -446,7 +445,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -468,7 +467,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                 ),
               ),
               const SizedBox(width: 129),
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(
@@ -498,7 +497,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -508,7 +507,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -522,7 +521,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -542,7 +541,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -564,7 +563,7 @@ class _EditPostVehicleScreen extends State<EditPostVehicleScreen> {
                 ),
               ),
 
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(

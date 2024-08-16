@@ -17,7 +17,7 @@ class JobListProvider extends BaseProvider{
   }
 
   getAllJobs()async{
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.BASE_URL+'postJob/getAllJobsWithSearch?page=$selectedPage');
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet('${ApiConstant.BASE_URL}postJob/getAllJobsWithSearch?page=$selectedPage');
     if(apiResponse.status==200){
       JobList jobList=JobList.fromJson(apiResponse.response);
       if(selectedPage==0){

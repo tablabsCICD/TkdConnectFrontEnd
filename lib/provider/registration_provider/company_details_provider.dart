@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/provider/registration_provider/base_registration_provider.dart';
 
 import '../../constant/app_constant.dart';
 import '../../generated/l10n.dart';
+import '../../model/request/RegistrationUserWithRoute.dart';
 import '../../model/request/route_request.dart';
 import '../../screen/my_route/select_city.dart';
 
@@ -11,12 +11,14 @@ class CompanyDetailsProvider extends BaseRegistartionProvider{
 
   CompanyDetailsProvider(super.appState);
   List<RouteRequest> listRoute=[];
+  List<RouteReq> listRoutes=[];
+
 
   TextEditingController companyNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController companyTypeController = TextEditingController();
   bool isEnbale=false;
-  String valName="${S().business_type}";
+  String valName=S().business_type;
   int selectType=-1;
 
   addRoute(RouteRequest routeRequest){
@@ -34,6 +36,10 @@ class CompanyDetailsProvider extends BaseRegistartionProvider{
               heightFactor: 0.9, child: SelectCityScreen());
         });
     listRoute.add(routeRequest);
+   RouteReq req =RouteReq();
+    req.destination=routeRequest.endLocation;
+    req.source=routeRequest.startLocation;
+    listRoutes.add(req);
     notifyListeners();
 
   }
@@ -60,7 +66,7 @@ class CompanyDetailsProvider extends BaseRegistartionProvider{
     AppConstant.registerCompany.city=locationController.text.toString();
     AppConstant.registerCompany.companyAddress=companyTypeController.text.toString();
     AppConstant.registerCompany.transporterOrAgent=selectType;
-    registerCompany(buildContext);
+    registerCompany(buildContext,listRoutes);
   }
 
   void changeDropDown(String name,int val) {

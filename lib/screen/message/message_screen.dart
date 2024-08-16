@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,11 +8,12 @@ import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../constant/images.dart';
 import '../../model/response/search_data.dart';
-import '../../model/response/transport_directory_search.dart';
 import '../../provider/message/message_provider.dart';
 import 'chat_screen.dart';
 
 class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MessageScreenState();
@@ -62,12 +62,12 @@ class _MessageScreenState extends State<MessageScreen> {
             Consumer<MessageProvider>(
               builder: (context, provider, child) {
                 return Visibility(
-                    visible:provider.userChat.length == 0, child: Column(
+                    visible:provider.userChat.isEmpty, child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 200.h,),
-                    Center(child: Text("Please search the user and start the connection"),),
+                    const Center(child: Text("Please search the user and start the connection"),),
 
                   ],
                 ));
@@ -97,7 +97,7 @@ class _MessageScreenState extends State<MessageScreen> {
       width: MediaQuery.of(context).size.width,
       height: 87.h,
       //padding: const EdgeInsets.only(bottom: 16),
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: Color(0xFFC3262C),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -106,7 +106,7 @@ class _MessageScreenState extends State<MessageScreen> {
           ),
         ),
       ),
-      child: SizedBox(),
+      child: const SizedBox(),
     );
   }
 
@@ -131,7 +131,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                      side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -140,7 +140,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -156,7 +156,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: 24.w,
                                     height: 24.h,
                                     child: Stack(children: [
@@ -178,7 +178,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       hintText: "Search users ",
                                       border: InputBorder.none,
                                       hintStyle: TextStyle(
-                                        color: Color(0x662C363F),
+                                        color: const Color(0x662C363F),
                                         fontSize: 14.sp,
                                         fontFamily:
                                             GoogleFonts.poppins().fontFamily,
@@ -257,9 +257,9 @@ class _MessageScreenState extends State<MessageScreen> {
         margin: EdgeInsets.symmetric(horizontal: 20.w),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: Color(0x332C363F),
+          color: const Color(0x332C363F),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1, color: Color(0x332C363F)),
+            side: const BorderSide(width: 1, color: Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8),
           ),
         ),
@@ -272,13 +272,13 @@ class _MessageScreenState extends State<MessageScreen> {
               child: Container(
                 height: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: ShapeDecoration(
+                decoration: const ShapeDecoration(
                   color: Color(0x19001E49),
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
                 ),
-                child: Column(
+                child: const Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -311,7 +311,7 @@ class _MessageScreenState extends State<MessageScreen> {
       width: 375.w,
       height: 66.h,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(color: Color(0x192C363F)),
@@ -326,7 +326,7 @@ class _MessageScreenState extends State<MessageScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 33.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -337,7 +337,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     width: 32.w,
                     height: 32.h,
                     decoration: ShapeDecoration(
-                      color: Color(0x14001E49),
+                      color: const Color(0x14001E49),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100),
                       ),
@@ -416,7 +416,7 @@ class _MessageScreenState extends State<MessageScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            child: Row(
+                            child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -434,7 +434,7 @@ class _MessageScreenState extends State<MessageScreen> {
                               ],
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Lorem ipsum dolor sit amet',
                             style: TextStyle(
                               color: Color(0x99001E49),
@@ -459,7 +459,7 @@ class _MessageScreenState extends State<MessageScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   '15:21',
                   style: TextStyle(
                     color: Color(0xFFC3262C),
@@ -477,17 +477,17 @@ class _MessageScreenState extends State<MessageScreen> {
                     children: [
                       Container(
                         decoration: ShapeDecoration(
-                          color: Color(0xFFC3262C),
+                          color: const Color(0xFFC3262C),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40),
                           ),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 20,
                               height: 20,
                               child: Column(
@@ -535,7 +535,7 @@ class _MessageScreenState extends State<MessageScreen> {
             width: 375.w,
             height: 66.h,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(
                 left: BorderSide(color: Color(0x192C363F)),
@@ -550,7 +550,7 @@ class _MessageScreenState extends State<MessageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: 33.h,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -561,7 +561,7 @@ class _MessageScreenState extends State<MessageScreen> {
                           width: 32.w,
                           height: 32.h,
                           decoration: ShapeDecoration(
-                            color: Color(0x14001E49),
+                            color: const Color(0x14001E49),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -607,7 +607,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '${data.firstName! + " " + data.lastName!}',
+                                        "${data.firstName!} ${data.lastName!}",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 12.sp,
@@ -649,10 +649,10 @@ class _MessageScreenState extends State<MessageScreen> {
               MaterialPageRoute(
                 builder: (context) => ChatPage(
                   arguments: ChatPageArguments(
-                    id: data.id!,
-                    peerId: data.userId!,
-                    peerAvatar: data.profile!,
-                    peerNickname: data.name!,
+                    id: data.id,
+                    peerId: data.userId,
+                    peerAvatar: data.profile,
+                    peerNickname: data.name,
                     notificationId: data.notificationUserId
                   ),
                 ),
@@ -663,7 +663,7 @@ class _MessageScreenState extends State<MessageScreen> {
             width: 375.w,
            // height: 66.h,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(
                 left: BorderSide(color: Color(0x192C363F)),
@@ -689,7 +689,7 @@ class _MessageScreenState extends State<MessageScreen> {
                           width: 32.w,
                           height: 32.h,
                           decoration: ShapeDecoration(
-                            color: Color(0x14001E49),
+                            color: const Color(0x14001E49),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -711,7 +711,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                 ),
                                 child: Stack(
                                   children: [
-                                    BaseWidget().getImage("${data.profile}",
+                                    BaseWidget().getImage(data.profile,
                                         height: 32.h, width: 32.w)
                                   ],
                                 ),
@@ -736,7 +736,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                     children: [
                                       Flexible(
                                         child: Text(
-                                          '${data.name}',
+                                          data.name,
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 12.sp,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -57,11 +56,11 @@ class ViewProfileDirectory extends StatelessWidget {
         children: [
 
           FloatingActionButton(
-            child: FaIcon(FontAwesomeIcons.whatsapp),
             backgroundColor: Colors.green.shade800,
             onPressed: () {
               Utils().openwhatsapp(context, data.mobileNumber!, "Hi We send message from from TKD connect application ");
             },
+            child: const FaIcon(FontAwesomeIcons.whatsapp),
           ),
         ],
       ),
@@ -77,7 +76,7 @@ class ViewProfileDirectory extends StatelessWidget {
         height: 49.h,
 
         decoration: ShapeDecoration(
-          color: Color(0xFF001E49),
+          color: const Color(0xFF001E49),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         child: Row(
@@ -95,8 +94,8 @@ class ViewProfileDirectory extends StatelessWidget {
                 height: 0,
               ),
             ),
-            SizedBox(width: 3,),
-            Container(
+            const SizedBox(width: 3,),
+            SizedBox(
               width: 16.w,
               height: 16.h,
               child: Row(
@@ -104,7 +103,7 @@ class ViewProfileDirectory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 16.w,
                     height: 16.h,
                     child: Stack(children: [
@@ -136,7 +135,7 @@ class ViewProfileDirectory extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         decoration: ShapeDecoration(
           color: ThemeColor.red,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16),
@@ -201,7 +200,7 @@ class ViewProfileDirectory extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          data.firstName!+" "+data.lastName!,
+          "${data.firstName!} ${data.lastName!}",
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.sp,
@@ -235,7 +234,7 @@ class ViewProfileDirectory extends StatelessWidget {
     return Text(
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in dapibus ex, id aliquet lorem. Aliquam ornare lacus augue, eu auctor libero ullamcorper sit amet. Pellentesque a lectus id lorem consectetur suscipit vel tristique ante.',
       style: TextStyle(
-        color: Color(0x99001E49),
+        color: const Color(0x99001E49),
         fontSize: 12.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w400,
@@ -261,9 +260,9 @@ class ViewProfileDirectory extends StatelessWidget {
     List<Widget>list=[];
     for(int i=0;i<data.listOfPreferredRoutes.length;i++){
       list.add(cityTag(data.listOfPreferredRoutes[i].routeSource!));
-      list.add(Text("<->"));
+      list.add(const Text("<->"));
       list.add(cityTag(data.listOfPreferredRoutes[i].routeDestination!));
-      list.add(Text(","));
+      list.add(const Text(","));
     }
 
     return Wrap(
@@ -278,7 +277,7 @@ class ViewProfileDirectory extends StatelessWidget {
       height: 26.w,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: ShapeDecoration(
-        color: Color(0xFFF4F6F6),
+        color: const Color(0xFFF4F6F6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Row(
@@ -290,7 +289,7 @@ class ViewProfileDirectory extends StatelessWidget {
             cityName,
             textAlign: TextAlign.right,
             style: TextStyle(
-              color: Color(0xCC001E49),
+              color: const Color(0xCC001E49),
               fontSize: 12.sp,
               fontFamily: AppConstant.FONTFAMILY,
               fontWeight: FontWeight.w400,
@@ -319,7 +318,7 @@ class ViewProfileDirectory extends StatelessWidget {
     return Text(
       email,
       style: TextStyle(
-        color: Color(0xFFC3262C),
+        color: const Color(0xFFC3262C),
         fontSize: 12.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w600,

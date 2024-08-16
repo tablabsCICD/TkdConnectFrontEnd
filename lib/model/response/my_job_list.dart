@@ -10,19 +10,19 @@ class MyJobList {
     if (json['data'] != null) {
       data = <MyJobData>[];
       json['data'].forEach((v) {
-        data!.add(new MyJobData.fromJson(v));
+        data!.add(MyJobData.fromJson(v));
       });
     }
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -43,7 +43,7 @@ class MyJobData {
 
   MyJobData.fromJson(Map<String, dynamic> json) {
     postJob =
-    json['postJob'] != null ? new PostJob.fromJson(json['postJob']) : null;
+    json['postJob'] != null ? PostJob.fromJson(json['postJob']) : null;
     profileImg = json['profileImg'];
     postingDate = json['postingDate'];
     name = json['name'];
@@ -51,13 +51,13 @@ class MyJobData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.postJob != null) {
-      data['postJob'] = this.postJob!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (postJob != null) {
+      data['postJob'] = postJob!.toJson();
     }
-    data['profileImg'] = this.profileImg;
-    data['postingDate'] = this.postingDate;
-    data['name'] = this.name;
+    data['profileImg'] = profileImg;
+    data['postingDate'] = postingDate;
+    data['name'] = name;
     return data;
   }
 }
@@ -142,31 +142,31 @@ class PostJob {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['companyName'] = this.companyName;
-    data['emailId'] = this.emailId;
-    data['contactNumber'] = this.contactNumber;
-    data['jobLocation'] = this.jobLocation;
-    data['jobDescription'] = this.jobDescription;
-    data['jobType'] = this.jobType;
-    data['experience'] = this.experience;
-    data['jobDepartment'] = this.jobDepartment;
-    data['salary'] = this.salary;
-    data['isSalaryNegotiable'] = this.isSalaryNegotiable;
-    data['message'] = this.message;
-    data['isSelected'] = this.isSelected;
-    data['removedDate'] = this.removedDate;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['privatePost'] = this.privatePost;
-    data['tableName'] = this.tableName;
-    data['mainTag'] = this.mainTag;
-    data['postingTime'] = this.postingTime;
-    data['type'] = this.type;
-    data['topicName'] = this.topicName;
-    data['userId'] = this.userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['companyName'] = companyName;
+    data['emailId'] = emailId;
+    data['contactNumber'] = contactNumber;
+    data['jobLocation'] = jobLocation;
+    data['jobDescription'] = jobDescription;
+    data['jobType'] = jobType;
+    data['experience'] = experience;
+    data['jobDepartment'] = jobDepartment;
+    data['salary'] = salary;
+    data['isSalaryNegotiable'] = isSalaryNegotiable;
+    data['message'] = message;
+    data['isSelected'] = isSelected;
+    data['removedDate'] = removedDate;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['privatePost'] = privatePost;
+    data['tableName'] = tableName;
+    data['mainTag'] = mainTag;
+    data['postingTime'] = postingTime;
+    data['type'] = type;
+    data['topicName'] = topicName;
+    data['userId'] = userId;
     return data;
   }
 }

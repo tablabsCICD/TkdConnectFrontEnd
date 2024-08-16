@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:http/http.dart' as http;
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/toast.dart';
-import 'package:http/http.dart' as http;
+
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/response/comment_response.dart';
@@ -55,7 +56,7 @@ class CommentProvider extends BaseProvider {
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     EasyLoading.show(status: "Loading");
-    String url=ApiConstant.BASE_URL+"comments";
+    String url="${ApiConstant.BASE_URL}comments";
 
     print('the url $url');
 
@@ -90,7 +91,7 @@ class CommentProvider extends BaseProvider {
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     EasyLoading.show(status: "Loading");
-    String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}&userId=${user.content!.first.id}";
+    String url="${ApiConstant.BASE_URL}GeneralPost/incrementLike?postId=$postId&userId=${user.content!.first.id}";
 
     print('the url $url');
 

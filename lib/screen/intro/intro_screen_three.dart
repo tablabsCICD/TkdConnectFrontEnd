@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/images.dart';
-import 'package:tkd_connect/utils/colors.dart';
 
 import '../../generated/l10n.dart';
 import '../../route/app_routes.dart';
 
 class IntroScreenThree extends StatelessWidget{
+  const IntroScreenThree({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      backgroundColor: Color(0xFFF4F6F6),
+      backgroundColor: const Color(0xFFF4F6F6),
       body: Container(
 
         margin: EdgeInsets.only(left: 32.w,right: 32.w),
@@ -55,7 +55,7 @@ class IntroScreenThree extends StatelessWidget{
   }
 
   image(){
-    return Container(
+    return SizedBox(
       width: 335.w,
       height: 335.h,
       child:
@@ -88,7 +88,7 @@ class IntroScreenThree extends StatelessWidget{
         height: 24.h,
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          shadows: [
+          shadows: const [
             BoxShadow(
               color: Color(0x1E00B398),
               blurRadius: 24,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,14 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/provider/kyc/kyc_provider.dart';
-import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
-import '../../route/app_routes.dart';
 import '../../widgets/button.dart';
-import '../../widgets/otp_textview.dart';
 
 class KYCScreenTwo extends StatefulWidget {
+  const KYCScreenTwo({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _KYCScreenTwo();
@@ -70,7 +68,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
                     'Please enter your valid Aadhar number that matches your name and mobile number',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0x99001E49),
+                      color: const Color(0x99001E49),
                       fontSize: 14.sp,
                       fontFamily: AppConstant.FONTFAMILY,
                       fontWeight: FontWeight.w400,
@@ -141,7 +139,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+              side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -150,7 +148,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -175,7 +173,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "eg.1020 XXXX XXXx",
-                              counter: Offstage(),
+                              counter: const Offstage(),
                               contentPadding: EdgeInsets.only(bottom: 8.h),
                               hintStyle: TextStyle(
                                 color: Colors.black,
@@ -233,11 +231,11 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
             height: 27.h,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: ShapeDecoration(
-              color: Color(0xFF001E49),
+              color: const Color(0xFF001E49),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -276,7 +274,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
   OtpBox() {
     return Consumer<KycProvider>(
   builder: (context, provider, child) {
-  return Container(
+  return SizedBox(
       height: 90.h,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -320,7 +318,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.50),
+          side: const BorderSide(width: 0.50),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -343,7 +341,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: "-",
-            counter: Offstage(),
+            counter: const Offstage(),
             contentPadding: EdgeInsets.only(bottom: 8.h),
             hintStyle: TextStyle(
               color: Colors.black,
@@ -353,7 +351,7 @@ class _KYCScreenTwo extends State<KYCScreenTwo> {
             )),
 
         onChanged: (value) {
-          if (value.length >= 1) {
+          if (value.isNotEmpty) {
             FocusScope.of(context).nextFocus();
           } else {
             FocusScope.of(context).previousFocus();

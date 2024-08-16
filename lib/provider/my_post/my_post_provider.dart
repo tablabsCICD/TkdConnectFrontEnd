@@ -53,7 +53,7 @@ class MyPostProvider extends BaseProvider{
   }
 
   deletePost(int index,BuildContext context)async{
-    String myUrl = ApiConstant.BASE_URL+'fullTruckLoad?id=${listOwnBid[index].genericCardsDto!.id!}';
+    String myUrl = '${ApiConstant.BASE_URL}fullTruckLoad?id=${listOwnBid[index].genericCardsDto!.id!}';
 
     ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
     if(apiResponse.status==200){
@@ -73,7 +73,7 @@ class MyPostProvider extends BaseProvider{
 
 
   reSendPost(BuildContext context,PostBidData postBidData)async {
-    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${postBidData.genericCardsDto!.id!}&interchange=${false}");
+    ApiResponse apiResponse=await ApiHelper().apiPost("${ApiConstant.BASE_URL}repost?id=${postBidData.genericCardsDto!.id!}&interchange=${false}");
     print('the response is ${apiResponse.response}');
     if(apiResponse.status==200){
       // ToastMessage.show(context, "Re-post submitted successfully!");
@@ -96,7 +96,7 @@ class MyPostProvider extends BaseProvider{
   }
 
   interChnageSendPost(BuildContext context,PostBidData postBidData) async{
-    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${postBidData.genericCardsDto!.id!}&interchange=${true}");
+    ApiResponse apiResponse=await ApiHelper().apiPost("${ApiConstant.BASE_URL}repost?id=${postBidData.genericCardsDto!.id!}&interchange=${true}");
     print('the response is ${apiResponse.response}');
     if(apiResponse.status==200){
 
@@ -133,10 +133,10 @@ class MyPostProvider extends BaseProvider{
   getUserListFromString(String userList){
     addedUserListIdInPost = userList.split(',').map((e) => e.trim()).toList();
     print(addedUserListIdInPost);
-    addedUserListIdInPost.forEach((element) async {
+    for (var element in addedUserListIdInPost)  {
       addedMemberIdList.add(int.parse(element));
       print(element);
-    });
+    }
     return addedMemberIdList;
   }
 
@@ -145,15 +145,15 @@ class MyPostProvider extends BaseProvider{
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
-    postLoad.contactNumber= user.content!.first!.mobileNumber! ;
+    postLoad.contactNumber= user.content!.first.mobileNumber! ;
     postLoad.destination=postBidData.genericCardsDto!.destination;
     postLoad.dnd =postBidData.genericCardsDto!.dnd;
-    postLoad.emailId=user.content!.first!.emailId!;
+    postLoad.emailId=user.content!.first.emailId!;
     postLoad.fullLoadChoice= postBidData.genericCardsDto!.mainTag =="Full load required"?"I Have Vehicle":"I Want Vehicle";
 
     postLoad.instructions= postBidData.genericCardsDto!.content;
     postLoad.loadWeight= postBidData.genericCardsDto!.vehicleWeight.toString();
-    postLoad.loggedUserName= user.content!.first!.userName;
+    postLoad.loggedUserName= user.content!.first.userName;
     postLoad.mainTag= postBidData.genericCardsDto!.mainTag;
     postLoad.os= 'App';
     postLoad.otherDetails= postBidData.genericCardsDto!.content;
@@ -172,7 +172,7 @@ class MyPostProvider extends BaseProvider{
     postLoad.listOfUserIds=addedMemberIdList;
 
     postLoad.id=0;
-    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
+    ApiResponse response=await ApiHelper().postParameter("${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
     print('the resopnse is ${json.encode(postLoad.toJson())}');
     print('the resopnse is ${response.status}');
     if(response.status==200){

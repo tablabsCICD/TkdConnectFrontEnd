@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,6 +19,8 @@ import '../../model/response/userdata.dart';
 import '../../route/app_routes.dart';
 
 class BuySellScreen extends StatefulWidget {
+  const BuySellScreen({super.key});
+
 
   @override
   State<StatefulWidget> createState() {
@@ -52,7 +53,7 @@ class _BuySellScreen extends State<BuySellScreen>{
             BaseWidget().appBar(context, S().buySell),
             Container(
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               color: Colors.white,
               child: tabBuySell(),
             ),
@@ -95,7 +96,7 @@ class _BuySellScreen extends State<BuySellScreen>{
               SizedBox(
                 width: 2.w,
               ),
-              Container(
+              SizedBox(
                 width: 16.w,
                 height: 16.w,
                 child: Row(
@@ -103,7 +104,7 @@ class _BuySellScreen extends State<BuySellScreen>{
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 16.w,
                       height: 16.w,
                       child: Stack(children: [
@@ -134,9 +135,9 @@ class _BuySellScreen extends State<BuySellScreen>{
           ),
           shadows: [
             BoxShadow(
-              color: Color(0x114A5568),
+              color: const Color(0x114A5568),
               blurRadius: 8.r,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
               spreadRadius: 0,
             )
           ],
@@ -151,7 +152,7 @@ class _BuySellScreen extends State<BuySellScreen>{
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -259,9 +260,9 @@ class _BuySellScreen extends State<BuySellScreen>{
       height: 32.h,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x332C363F),
+        color: const Color(0x332C363F),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: Color(0x332C363F)),
+          side: const BorderSide(width: 1, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -289,13 +290,13 @@ class _BuySellScreen extends State<BuySellScreen>{
                 height: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.h),
                 decoration:
-                !isTabBuy?ShapeDecoration(
+                !isTabBuy?const ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
                 ):
-                ShapeDecoration(
+                const ShapeDecoration(
                   color: Color(0x19001E49),
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
@@ -309,13 +310,13 @@ class _BuySellScreen extends State<BuySellScreen>{
                     Text(
                       S().sell,
                       style: !isTabBuy? TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ):TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w600,
@@ -346,12 +347,12 @@ class _BuySellScreen extends State<BuySellScreen>{
               child: Container(
                 height: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.h),
-                decoration: isTabBuy?ShapeDecoration(
+                decoration: isTabBuy?const ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
-                ): ShapeDecoration(
+                ): const ShapeDecoration(
                   color: Color(0x19001E49),
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
@@ -365,13 +366,13 @@ class _BuySellScreen extends State<BuySellScreen>{
                     Text(
                       S().buy,
                       style: isTabBuy?TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ):TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w600,
@@ -447,7 +448,7 @@ class _BuySellScreen extends State<BuySellScreen>{
   }
 
   void callDeleteApi(int id,int index)async {
-    String myUrl = ApiConstant.POST_BUY_SELL+'?id=${id}';
+    String myUrl = '${ApiConstant.POST_BUY_SELL}?id=$id';
     ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
     if(apiResponse.status==200){
       buyVehicleList .removeAt(index);

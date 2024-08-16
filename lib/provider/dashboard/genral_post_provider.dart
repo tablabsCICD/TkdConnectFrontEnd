@@ -44,9 +44,9 @@ class GenralPostProvider extends BaseProvider{
     generalPost.typeName="Genral Post";
     generalPost.comment=0;
     generalPost.likes=0;
-    generalPost.loggedUserName=user.content!.first!.id!;
+    generalPost.loggedUserName=user.content!.first.id!;
     generalPost.disLikes=0;
-    ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.BASE_URL+"GeneralPost/save", generalPost.toJson());
+    ApiResponse apiResponse=await ApiHelper().postParameter("${ApiConstant.BASE_URL}GeneralPost/save", generalPost.toJson());
       if(apiResponse.status==200){
         ToastMessage.show(context, "Post saved successfully");
         Navigator.pop(context,1);
@@ -65,7 +65,7 @@ class GenralPostProvider extends BaseProvider{
     generalPost.typeName="Sponsored";
     generalPost.sponsorshipAmount=0;
     generalPost.sponsorshipId=0;
-    generalPost.loggedUserName=user.content!.first!.loggedUserName!;
+    generalPost.loggedUserName=user.content!.first.loggedUserName!;
     generalPost.paymentStatus="Done";
     ApiResponse apiResponse=await ApiHelper().postParameter("http://ec2-3-111-144-125.ap-south-1.compute.amazonaws.com:8080/TKDConnect1/api/SponsorShip/save", generalPost.toJson());
     if(apiResponse.status==200){

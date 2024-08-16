@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';

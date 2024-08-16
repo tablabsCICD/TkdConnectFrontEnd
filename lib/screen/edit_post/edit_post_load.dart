@@ -4,11 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/request/route_request.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/provider/dashboard/edit_post_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/button.dart';
+
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -20,7 +20,7 @@ import '../my_route/select_one_city.dart';
 
 class EditPostLoadScreen extends StatefulWidget {
   PostBidData postBidData;
-  EditPostLoadScreen(this.postBidData);
+  EditPostLoadScreen(this.postBidData, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -80,7 +80,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedSourceCity(routeRequest.startLocation);
@@ -100,7 +100,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedDestinationCity(routeRequest.startLocation);
@@ -194,7 +194,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                provider.addedUserListIdInPost.length == 0 ? Text("All Users"): Visibility(
+                provider.addedUserListIdInPost.isEmpty ? const Text("All Users"): Visibility(
                   visible: true,
                   child: Container(
                     color: Colors.grey.shade50,
@@ -202,7 +202,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Container(
+                          child: SizedBox(
                             child: selectedUsers(),
                             height: 60.h,
                           ),
@@ -224,11 +224,11 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 SizedBox(
                   height: 30.h,
                 ),
-                provider.images.length>0? BaseWidget().carouseImageDelete(provider.images,(item){
+                provider.images.isNotEmpty? BaseWidget().carouseImageDelete(provider.images,(item){
                   provider.images.remove(item);
                   provider.notifyListeners();
                 }
-                ):SizedBox(),
+                ):const SizedBox(),
                 SizedBox(
                   height: 44.h,
                 ),
@@ -241,7 +241,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                   S().addImagesAt,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF001E49),
+                    color: const Color(0xFF001E49),
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
@@ -321,7 +321,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
         controller: horizantalControllet,
         itemCount: model.addedUsers.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
+          return SizedBox(
           height: 50.h,
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
@@ -335,7 +335,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 Text(
                   model.addedUsers[index].firstName!,
                   style: TextStyle(
-                    color: Color(0xCC001E49),
+                    color: const Color(0xCC001E49),
                     fontSize: 14.sp,
                     fontFamily: AppConstant.FONTFAMILY,
                     fontWeight: FontWeight.w400,
@@ -350,7 +350,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -407,7 +407,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -417,7 +417,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -431,7 +431,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -451,7 +451,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -473,7 +473,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 ),
               ),
               const SizedBox(width: 129),
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(
@@ -503,7 +503,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -513,7 +513,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -527,7 +527,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -547,7 +547,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -569,7 +569,7 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 ),
               ),
 
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(

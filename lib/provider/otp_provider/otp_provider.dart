@@ -37,9 +37,9 @@ class OtpProvider extends BaseProvider{
 
   void startTimer() {
 
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     resendButtonEnble=false;
-    _timer = new Timer.periodic(
+    _timer = Timer.periodic(
       oneSec,
           (Timer timer) {
         if (start == 0) {
@@ -85,13 +85,13 @@ class OtpProvider extends BaseProvider{
   }
 
   verifyOtp(BuildContext context) async{
-    String  _deviceId="null";
+    String  deviceId="null";
     try {
-      _deviceId = (await FirebaseMessaging.instance.getToken())!;
+      deviceId = (await FirebaseMessaging.instance.getToken())!;
     } on PlatformException {
-      _deviceId = 'Failed to get deviceId.';
+      deviceId = 'Failed to get deviceId.';
     }
-    print('the device id is $_deviceId');
+    print('the device id is $deviceId');
     String otp=textControllerOne.text+textControllerTwo.text+textControllerThree.text+textControllerFour.text+textControllerFive.text+textControllerSix.text;
 
     String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp);
@@ -99,7 +99,7 @@ class OtpProvider extends BaseProvider{
     if(req.status== 200){
      // try{
         User user=User.fromJson(req.response);
-        if(user.content!.length>0){
+        if(user.content!.isNotEmpty){
           LocalSharePreferences localSharePreferences=LocalSharePreferences();
           localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
           localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(req.response));

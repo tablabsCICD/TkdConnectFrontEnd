@@ -45,20 +45,20 @@ class SponserdPost {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['active'] = this.active;
-    data['contractDetails'] = this.contractDetails;
-    data['description'] = this.description;
-    data['endDate'] = this.endDate;
-    data['images'] = this.images;
-    data['loggedTime'] = this.loggedTime;
-    data['loggedUserName'] = this.loggedUserName;
-    data['paymentStatus'] = this.paymentStatus;
-    data['sponsorshipAmount'] = this.sponsorshipAmount;
-    data['sponsorshipId'] = this.sponsorshipId;
-    data['startDate'] = this.startDate;
-    data['title'] = this.title;
-    data['typeName'] = this.typeName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['active'] = active;
+    data['contractDetails'] = contractDetails;
+    data['description'] = description;
+    data['endDate'] = endDate;
+    data['images'] = images;
+    data['loggedTime'] = loggedTime;
+    data['loggedUserName'] = loggedUserName;
+    data['paymentStatus'] = paymentStatus;
+    data['sponsorshipAmount'] = sponsorshipAmount;
+    data['sponsorshipId'] = sponsorshipId;
+    data['startDate'] = startDate;
+    data['title'] = title;
+    data['typeName'] = typeName;
     return data;
   }
 }

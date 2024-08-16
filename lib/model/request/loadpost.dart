@@ -8,20 +8,20 @@ class LoadPay {
 
   LoadPay.fromJson(Map<String, dynamic> json) {
     postLoad = json['fullTruckLoad'] != null
-        ? new PostLoad.fromJson(json['fullTruckLoad'])
+        ? PostLoad.fromJson(json['fullTruckLoad'])
         : null;
     razorPayObject = json['razorPayObject'] != null
-        ? new RazorPayObject.fromJson(json['razorPayObject'])
+        ? RazorPayObject.fromJson(json['razorPayObject'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.postLoad != null) {
-      data['fullTruckLoad'] = this.postLoad!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (postLoad != null) {
+      data['fullTruckLoad'] = postLoad!.toJson();
     }
-    if (this.razorPayObject != null) {
-      data['razorPayObject'] = this.razorPayObject!.toJson();
+    if (razorPayObject != null) {
+      data['razorPayObject'] = razorPayObject!.toJson();
     }
     return data;
   }
@@ -52,12 +52,12 @@ class RazorPayObject {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['plan'] = this.plan;
-    data['razorPayOrderId'] = this.razorPayOrderId;
-    data['signature'] = this.signature;
-    data['transactionId'] = this.transactionId;
-    data['userId'] = this.userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['plan'] = plan;
+    data['razorPayOrderId'] = razorPayOrderId;
+    data['signature'] = signature;
+    data['transactionId'] = transactionId;
+    data['userId'] = userId;
     return data;
   }
 }

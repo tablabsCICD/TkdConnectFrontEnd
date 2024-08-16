@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,7 +88,7 @@ class _EditProfileState extends State<PersonalInfoScreen>{
       onTap: (){
         widget.editProfileProvider.editProfileImage(context);
       },
-      child: Container(
+      child: SizedBox(
         width: 100.w,
         height: 100.h,
         child: EditProfileProvider.profilePic==""?SvgPicture.asset(Images.edit_profile):BaseWidget().getImageclip(EditProfileProvider.profilePic,width: 100.w,height: 100.h),
@@ -99,7 +98,7 @@ class _EditProfileState extends State<PersonalInfoScreen>{
 
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

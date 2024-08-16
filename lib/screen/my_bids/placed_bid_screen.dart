@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,7 +34,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
   Widget build(BuildContext context) {
     return Consumer<MyBidsProvider>(
       builder: (context, provider, child) {
-        return widget.provider.isLoad && provider.listBids.length==0 ? Container(
+        return widget.provider.isLoad && provider.listBids.isEmpty ? Container(
           child: Center(
             child: Text(S().noRecordFound),
           ),
@@ -66,9 +65,9 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -84,7 +83,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -109,7 +108,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                 Text(
                   S().quotesPrice,
                   style: TextStyle(
-                    color: Color(0x99001E49),
+                    color: const Color(0x99001E49),
                     fontSize: 10.sp,
                     fontFamily: AppConstant.FONTFAMILY,
                     fontWeight: FontWeight.w400,

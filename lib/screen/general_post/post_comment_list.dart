@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
-import 'package:intl/intl.dart';
 import 'package:tkd_connect/provider/dashboard/comment_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
@@ -17,7 +16,7 @@ import '../../widgets/textview.dart';
 class PostCommentList extends StatefulWidget {
   TruckLoad truckLoad;
 
-  PostCommentList(this.truckLoad);
+  PostCommentList(this.truckLoad, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -72,7 +71,7 @@ class _PostCommentListState extends State<PostCommentList> {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.only(left: 20, right: 20),
+                          margin: const EdgeInsets.only(left: 20, right: 20),
                           padding: EdgeInsets.only(top: 12.h, left: 16.w),
                           decoration: ShapeDecoration(
                             color: Colors.white,
@@ -83,9 +82,9 @@ class _PostCommentListState extends State<PostCommentList> {
                             ),
                             shadows: [
                               BoxShadow(
-                                color: Color(0x114A5568),
+                                color: const Color(0x114A5568),
                                 blurRadius: 8.r,
-                                offset: Offset(0, 3),
+                                offset: const Offset(0, 3),
                                 spreadRadius: 0,
                               )
                             ],
@@ -95,7 +94,7 @@ class _PostCommentListState extends State<PostCommentList> {
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff000000),
+                              color: const Color(0xff000000),
                             ),
                           ),
                         ),
@@ -103,9 +102,9 @@ class _PostCommentListState extends State<PostCommentList> {
                           child: Container(
                             color: Colors.white,
                             width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.only(left: 20, right: 20),
+                            margin: const EdgeInsets.only(left: 20, right: 20),
                             padding: EdgeInsets.all(12.r),
-                            child: !provider.isLoading && provider.commentList.length==0?Column(
+                            child: !provider.isLoading && provider.commentList.isEmpty?const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -132,7 +131,7 @@ class _PostCommentListState extends State<PostCommentList> {
                                                   .commentList[i].profileImage!,
                                               height: 20.h,
                                               width: 20.w),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 7,
                                           ),
                                           Column(
@@ -161,7 +160,7 @@ class _PostCommentListState extends State<PostCommentList> {
                                                       GoogleFonts.poppins()
                                                           .fontFamily,
                                                   fontWeight: FontWeight.w400,
-                                                  color: Color(0xff1f1f1f),
+                                                  color: const Color(0xff1f1f1f),
                                                 ),
                                               )
                                             ],
@@ -169,17 +168,17 @@ class _PostCommentListState extends State<PostCommentList> {
                                         ],
                                       ),
                                       trailing: Text(
-                                        "${readTimestamp(provider.commentList[i].date!)}",
+                                        readTimestamp(provider.commentList[i].date!),
                                         style: TextStyle(
                                           fontSize: 9.sp,
                                           fontFamily:
                                               GoogleFonts.poppins().fontFamily,
                                           fontWeight: FontWeight.w400,
-                                          color: Color(0xff1f1f1f),
+                                          color: const Color(0xff1f1f1f),
                                         ),
                                       ),
                                     ),
-                                    Divider(
+                                    const Divider(
                                       height: 0.2,
                                       thickness: 0.5,
                                     )
@@ -193,11 +192,11 @@ class _PostCommentListState extends State<PostCommentList> {
                           color: ThemeColor.baground,
                           height: 90.h,
                           child: Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: TextField(
                               controller: provider.commentController,
                               style: TextStyle(
-                                color: Color(0xff1B1B1B),
+                                color: const Color(0xff1B1B1B),
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -249,15 +248,15 @@ class _PostCommentListState extends State<PostCommentList> {
       time = format.format(date);
     } else if (diff.inDays > 0 && diff.inDays < 7) {
       if (diff.inDays == 1) {
-        time = diff.inDays.toString() + ' DAY AGO';
+        time = '${diff.inDays} DAY AGO';
       } else {
-        time = diff.inDays.toString() + ' DAYS AGO';
+        time = '${diff.inDays} DAYS AGO';
       }
     } else {
       if (diff.inDays == 7) {
-        time = (diff.inDays / 7).floor().toString() + ' WEEK AGO';
+        time = '${(diff.inDays / 7).floor()} WEEK AGO';
       } else {
-        time = (diff.inDays / 7).floor().toString() + ' WEEKS AGO';
+        time = '${(diff.inDays / 7).floor()} WEEKS AGO';
       }
     }
 
@@ -276,9 +275,9 @@ class _PostCommentListState extends State<PostCommentList> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -291,10 +290,10 @@ class _PostCommentListState extends State<PostCommentList> {
             alignment: Alignment.topRight,
             child: InkWell(
               onTap: () {
-                String des = truckLoad.topicName! + "\n " + truckLoad.content!;
+                String des = "${truckLoad.topicName!}\n ${truckLoad.content!}";
                 Utils().callShareFunction(des);
               },
-              child: Container(
+              child: SizedBox(
                 width: 38.w,
                 height: 38.h,
                 child: SvgPicture.asset(
@@ -328,7 +327,7 @@ class _PostCommentListState extends State<PostCommentList> {
   }
 
   imagePost(TruckLoad load) {
-    if (load.postImages!.length == 0) {
+    if (load.postImages!.isEmpty) {
       return Consumer<CommentProvider>(
         builder: (context, provider, child) {
           return Column(
@@ -348,7 +347,7 @@ class _PostCommentListState extends State<PostCommentList> {
                           side: BorderSide(
                             width: 0.50.w,
                             strokeAlign: BorderSide.strokeAlignCenter,
-                            color: Color(0x332C363F),
+                            color: const Color(0x332C363F),
                           ),
                         ),
                       ),
@@ -402,7 +401,7 @@ class _PostCommentListState extends State<PostCommentList> {
               Container(
                   transform: Matrix4.translationValues(0.0, -25.0.h, 00),
                   child: BaseWidget()
-                      .carouseImage(new List<String>.from(load.postImages!))),
+                      .carouseImage(List<String>.from(load.postImages!))),
               SizedBox(
                 height: 9.h,
               ),

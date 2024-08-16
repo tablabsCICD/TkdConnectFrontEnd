@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tkd_connect/screen/laguage/list_language.dart';
-import 'package:tkd_connect/screen/laguage/select_language.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
@@ -11,6 +8,8 @@ import '../../generated/l10n.dart';
 import 'lang_change.dart';
 
 class AppSettingScreen extends StatelessWidget {
+  const AppSettingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +40,7 @@ class AppSettingScreen extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       //height: 64.h,
       padding:  EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(color: Color(0x192C363F)),
@@ -87,7 +86,7 @@ class AppSettingScreen extends StatelessWidget {
                             Text(
                               'English, हिंदी, ಕನ್ನಡ, தமிழ், ગુજરાતી',
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily:AppConstant.FONTFAMILY,
                                 fontWeight: FontWeight.w400,
@@ -114,7 +113,7 @@ class AppSettingScreen extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 61.h,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(color: Color(0x192C363F)),
@@ -129,7 +128,7 @@ class AppSettingScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 33.h,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -143,7 +142,7 @@ class AppSettingScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -163,7 +162,7 @@ class AppSettingScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: double.infinity,
                             child: Text(
                               '',
@@ -190,9 +189,9 @@ class AppSettingScreen extends StatelessWidget {
             height: 32.sp,
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: Color(0x332C363F),
+              color: const Color(0x332C363F),
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: Color(0x332C363F)),
+                side: const BorderSide(width: 1, color: Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -205,7 +204,7 @@ class AppSettingScreen extends StatelessWidget {
                   child: Container(
                     height: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: ShapeDecoration(
+                    decoration: const ShapeDecoration(
                       color: Color(0x19001E49),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
@@ -219,7 +218,7 @@ class AppSettingScreen extends StatelessWidget {
                         Text(
                           S().on,
                           style: TextStyle(
-                            color: Color(0xCC001E49),
+                            color: const Color(0xCC001E49),
                             fontSize: 12.sp,
                             fontFamily: AppConstant.FONTFAMILY,
                             fontWeight: FontWeight.w600,
@@ -234,7 +233,7 @@ class AppSettingScreen extends StatelessWidget {
                   child: Container(
                     height: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: ShapeDecoration(
+                    decoration: const ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
@@ -248,7 +247,7 @@ class AppSettingScreen extends StatelessWidget {
                         Text(
                           S().off,
                           style: TextStyle(
-                            color: Color(0xCC001E49),
+                            color: const Color(0xCC001E49),
                             fontSize: 12.sp,
                             fontFamily: AppConstant.FONTFAMILY,
                             fontWeight: FontWeight.w400,
@@ -272,7 +271,7 @@ class AppSettingScreen extends StatelessWidget {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child:ListLanguageChange());
+          return const FractionallySizedBox(heightFactor:0.7,child:ListLanguageChange());
         });
   }
 }

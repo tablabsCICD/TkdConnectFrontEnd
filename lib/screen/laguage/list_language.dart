@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,12 +9,13 @@ import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
 import '../../generated/l10n.dart';
-import '../../main.dart';
 import '../../model/request/language_select.dart';
 import '../../route/app_routes.dart';
 import '../../widgets/button.dart';
 
 class ListLanguage extends StatefulWidget{
+  const ListLanguage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _ListLanguageState();
@@ -112,7 +112,7 @@ class _ListLanguageState extends State<ListLanguage>{
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -121,14 +121,14 @@ class _ListLanguageState extends State<ListLanguage>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 24.w,
                         height: 24.h,
                         child: Row(
@@ -136,7 +136,7 @@ class _ListLanguageState extends State<ListLanguage>{
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 24.w,
                               height: 24.h,
                               child: Stack(children: [
@@ -153,7 +153,7 @@ class _ListLanguageState extends State<ListLanguage>{
                           child: Text(
                             'Search a language',
                             style: TextStyle(
-                              color: Color(0x662C363F),
+                              color: const Color(0x662C363F),
                               fontSize: 14.sp,
                               fontFamily:GoogleFonts.poppins().fontFamily,
                               fontWeight: FontWeight.w400,
@@ -195,7 +195,7 @@ class _ListLanguageState extends State<ListLanguage>{
         padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
         decoration: BoxDecoration(
           color: listLaugaes[index].isSelect!?ThemeColor.select_green:ThemeColor.white,
-          border: Border(
+          border: const Border(
 
             bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
           ),
@@ -220,7 +220,7 @@ class _ListLanguageState extends State<ListLanguage>{
               ),
 
             ),
-            listLaugaes[index].isSelect!? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):SizedBox()
+            listLaugaes[index].isSelect!? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):const SizedBox()
           ],
         ),
       ),

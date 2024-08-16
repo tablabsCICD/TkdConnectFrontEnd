@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +14,7 @@ class CameraBottomsheet{
    bottomSheet(BuildContext context)async {
    await showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(20),
           ),
@@ -27,12 +26,12 @@ class CameraBottomsheet{
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Text("Select Option",style: TextStyle(color: ThemeColor.subColor,fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: AppConstant.FONTFAMILY),),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 ListTile(
-                  leading: new Icon(Icons.camera_alt_outlined,color: ThemeColor.theme_blue,),
-                  title: new Text("Camera",style:TextStyle(color: ThemeColor.theme_blue,fontSize: 16.sp,fontWeight: FontWeight.w400,fontFamily: AppConstant.FONTFAMILY)),
+                  leading: Icon(Icons.camera_alt_outlined,color: ThemeColor.theme_blue,),
+                  title: Text("Camera",style:TextStyle(color: ThemeColor.theme_blue,fontSize: 16.sp,fontWeight: FontWeight.w400,fontFamily: AppConstant.FONTFAMILY)),
                   onTap: () async{
                     pickedImage=await  callCamera();
                     Navigator.pop(context);
@@ -41,8 +40,8 @@ class CameraBottomsheet{
                   trailing: Icon(Icons.arrow_forward_ios_rounded,color:ThemeColor. theme_blue,),
                 ),
                 ListTile(
-                  leading: new Icon(Icons.camera,color: ThemeColor.theme_blue,),
-                  title: new Text("Gallery",style:TextStyle(color: ThemeColor.theme_blue,fontSize: 16.sp,fontWeight: FontWeight.w400,fontFamily: AppConstant.FONTFAMILY)),
+                  leading: Icon(Icons.camera,color: ThemeColor.theme_blue,),
+                  title: Text("Gallery",style:TextStyle(color: ThemeColor.theme_blue,fontSize: 16.sp,fontWeight: FontWeight.w400,fontFamily: AppConstant.FONTFAMILY)),
                   onTap: () async{
                     pickedImage= await callGallery();
                     Navigator.pop(context);
@@ -51,7 +50,7 @@ class CameraBottomsheet{
                   
                 ),
 
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
 
               ],
             ),
@@ -60,14 +59,14 @@ class CameraBottomsheet{
   }
 
    Future<XFile>  callCamera()async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
     return pickedFile!;
   }
 
    Future<XFile> callGallery()async {
-     final ImagePicker _picker = ImagePicker();
-     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+     final ImagePicker picker = ImagePicker();
+     final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
       return pickedFile!;
    }
 

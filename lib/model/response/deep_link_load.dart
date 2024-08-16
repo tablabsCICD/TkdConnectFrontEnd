@@ -24,7 +24,7 @@ class TruckDeep {
     if (json['content'] != null) {
       content = <TruckLoadDeepLink>[];
       json['content'].forEach((v) {
-        content!.add(new TruckLoadDeepLink.fromJson(v));
+        content!.add(TruckLoadDeepLink.fromJson(v));
       });
     }
     last = json['last'];
@@ -38,18 +38,18 @@ class TruckDeep {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalElements'] = this.totalElements;
-    data['totalPages'] = this.totalPages;
-    data['first'] = this.first;
+    data['last'] = last;
+    data['totalElements'] = totalElements;
+    data['totalPages'] = totalPages;
+    data['first'] = first;
  
-    data['numberOfElements'] = this.numberOfElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    data['numberOfElements'] = numberOfElements;
+    data['size'] = size;
+    data['number'] = number;
     return data;
   }
 }
@@ -158,38 +158,38 @@ class TruckLoadDeepLink {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['fullLoadChoice'] = this.fullLoadChoice;
-    data['transporterOrCustomerName'] = this.transporterOrCustomerName;
-    data['contactNumber'] = this.contactNumber;
-    data['emailId'] = this.emailId;
-    data['source'] = this.source;
-    data['destination'] = this.destination;
-    data['typeOfCargo'] = this.typeOfCargo;
-    data['otherDetails'] = this.otherDetails;
-    data['vehicleSize'] = this.vehicleSize;
-    data['loadWeight'] = this.loadWeight;
-    data['instructions'] = this.instructions;
-    data['partLoad'] = this.partLoad;
-    data['date'] = this.date;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['privatePost'] = this.privatePost;
-    data['dnd'] = this.dnd;
-    data['typeOfPayment'] = this.typeOfPayment;
-    data['image'] = this.image;
-    data['tableName'] = this.tableName;
-    data['mainTag'] = this.mainTag;
-    data['postingTime'] = this.postingTime;
-    data['type'] = this.type;
-    data['topicName'] = this.topicName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['fullLoadChoice'] = fullLoadChoice;
+    data['transporterOrCustomerName'] = transporterOrCustomerName;
+    data['contactNumber'] = contactNumber;
+    data['emailId'] = emailId;
+    data['source'] = source;
+    data['destination'] = destination;
+    data['typeOfCargo'] = typeOfCargo;
+    data['otherDetails'] = otherDetails;
+    data['vehicleSize'] = vehicleSize;
+    data['loadWeight'] = loadWeight;
+    data['instructions'] = instructions;
+    data['partLoad'] = partLoad;
+    data['date'] = date;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['privatePost'] = privatePost;
+    data['dnd'] = dnd;
+    data['typeOfPayment'] = typeOfPayment;
+    data['image'] = image;
+    data['tableName'] = tableName;
+    data['mainTag'] = mainTag;
+    data['postingTime'] = postingTime;
+    data['type'] = type;
+    data['topicName'] = topicName;
    // data['rating'] = this.rating;
 
-    data['material'] = this.material;
-    data['expireDate'] = this.expireDate;
-    data['transporterType'] = this.transporterType;
+    data['material'] = material;
+    data['expireDate'] = expireDate;
+    data['transporterType'] = transporterType;
 
     return data;
   }

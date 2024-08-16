@@ -51,22 +51,22 @@ class ChatList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['userId2'] = this.userId2;
-    data['mobileNumber1'] = this.mobileNumber1;
-    data['mobileNumber2'] = this.mobileNumber2;
-    data['connectionKey'] = this.connectionKey;
-    data['dateAndTime'] = this.dateAndTime;
-    data['chat'] = this.chat;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedUserName2'] = this.loggedUserName2;
-    data['loggedTime'] = this.loggedTime;
-    data['rating'] = this.rating;
-    data['name1'] = this.name1;
-    data['name2'] = this.name2;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['userId2'] = userId2;
+    data['mobileNumber1'] = mobileNumber1;
+    data['mobileNumber2'] = mobileNumber2;
+    data['connectionKey'] = connectionKey;
+    data['dateAndTime'] = dateAndTime;
+    data['chat'] = chat;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedUserName2'] = loggedUserName2;
+    data['loggedTime'] = loggedTime;
+    data['rating'] = rating;
+    data['name1'] = name1;
+    data['name2'] = name2;
     return data;
   }
 }

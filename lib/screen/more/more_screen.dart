@@ -1,18 +1,14 @@
 
 
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/generated/l10n.dart';
 import 'package:tkd_connect/route/app_routes.dart';
-import 'package:tkd_connect/utils/razor_pay.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
@@ -22,7 +18,6 @@ import 'package:tkd_connect/widgets/verified_tag.dart';
 import '../../constant/api_constant.dart';
 import '../../constant/images.dart';
 import '../../model/api_response.dart';
-import '../../model/response/bid_state_response.dart';
 import '../../model/response/user_verified.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
@@ -30,6 +25,8 @@ import '../../utils/colors.dart';
 import '../kyc/kyc_screen_one.dart';
 
 class MoreScreen extends StatefulWidget {
+  const MoreScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MoreScreen();
@@ -80,7 +77,7 @@ class _MoreScreen extends State<MoreScreen> {
               item(S().buySell,(){
                 Navigator.pushNamed(context, AppRoutes.buysell);
 
-              },FontWeight.w600):SizedBox(),
+              },FontWeight.w600):const SizedBox(),
               item(S().group,(){
 
                 //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
@@ -177,7 +174,7 @@ class _MoreScreen extends State<MoreScreen> {
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         decoration: ShapeDecoration(
           color: ThemeColor.red,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16),
@@ -266,7 +263,7 @@ class _MoreScreen extends State<MoreScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          user.content!.first.firstName!+" "+user.content!.first.lastName!,
+          "${user.content!.first.firstName!} ${user.content!.first.lastName!}",
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.sp,
@@ -329,7 +326,7 @@ class _MoreScreen extends State<MoreScreen> {
       child: Container(
         width: 327.w,
         height: 60.h,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
 
             bottom: BorderSide(width: 1, color: Color(0x192C363F)),
@@ -358,7 +355,7 @@ class _MoreScreen extends State<MoreScreen> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: 24.w,
               height: 24.h,
               child: Row(
@@ -366,7 +363,7 @@ class _MoreScreen extends State<MoreScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 24.w,
                     height: 24.h,
                     child: Stack(children: [
@@ -388,7 +385,7 @@ class _MoreScreen extends State<MoreScreen> {
       onTap: (){
         onClick();
       },
-      child: Container(
+      child: SizedBox(
         width: 327.w,
         height: 60.h,
         child: Row(
@@ -413,7 +410,7 @@ class _MoreScreen extends State<MoreScreen> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: 24.w,
               height: 24.h,
               child: Row(
@@ -421,10 +418,10 @@ class _MoreScreen extends State<MoreScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 24.w,
                     height: 24.h,
-                    child: Stack(children: [
+                    child: const Stack(children: [
                     //  SvgPicture.asset(Images.arrow_right)
                     ]),
                   ),
@@ -444,7 +441,7 @@ class _MoreScreen extends State<MoreScreen> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child: KYCScreenOne());
+          return const FractionallySizedBox(heightFactor:0.7,child: KYCScreenOne());
         });
 
   }

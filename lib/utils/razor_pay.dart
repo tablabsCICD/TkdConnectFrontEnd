@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -64,12 +63,12 @@ class RazorPayClass {
       'key': 'rzp_live_LraIKZvldr9N1J',
       'amount': amount, //in the smallest currency sub-unit.
       'name': 'Package.',
-      'order_id': '$orderID', // Generate order_id using Orders API
+      'order_id': orderID, // Generate order_id using Orders API
       'description': 'TKD',
       'timeout': 60, // in seconds
       'prefill': {
         'contact': '$contact',
-        'email': '$email'
+        'email': email
       }
     };
     razorpay.on(
@@ -102,10 +101,10 @@ class RazorPayClass {
     * 3. Signature
     * */
     print(response.data.toString());
-    String razorpay_signature=response.data!["razorpay_signature"];
-    String  razorpay_order_id=response.data!["razorpay_order_id"];
+    String razorpaySignature=response.data!["razorpay_signature"];
+    String  razorpayOrderId=response.data!["razorpay_order_id"];
     String? paymentId=response.paymentId;
-  callSignature(razorpay_signature,razorpay_order_id,paymentId,planId);
+  callSignature(razorpaySignature,razorpayOrderId,paymentId,planId);
 
 
 
@@ -136,13 +135,13 @@ class RazorPayClass {
     );
   }
 
-  void callSignature(String razorpay_signature,String  razorpay_order_id,String? paymentId,int plan)async {
+  void callSignature(String razorpaySignature,String  razorpayOrderId,String? paymentId,int plan)async {
       User user=await LocalSharePreferences().getLoginData();
 
       Map<String,dynamic>parameter={
           "plan": plan,
-          "razorPayOrderId": razorpay_order_id,
-          "signature": razorpay_signature,
+          "razorPayOrderId": razorpayOrderId,
+          "signature": razorpaySignature,
           "transactionId": paymentId,
           "userId": user.content!.first.id
 

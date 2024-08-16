@@ -24,7 +24,7 @@ class HomeList {
     if (json['content'] != null) {
       content = <Content>[];
       json['content'].forEach((v) {
-        content!.add(new Content.fromJson(v));
+        content!.add(Content.fromJson(v));
       });
     }
     last = json['last'];
@@ -38,18 +38,18 @@ class HomeList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
-    data['sort'] = this.sort;
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
+    data['last'] = last;
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
+    data['size'] = size;
+    data['number'] = number;
+    data['sort'] = sort;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
     return data;
   }
 }
@@ -185,48 +185,48 @@ class Content {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['type'] = this.type;
-    data['postingTime'] = this.postingTime;
-    data['companyName'] = this.companyName;
-    data['nameOfPerson'] = this.nameOfPerson;
-    data['companyRating'] = this.companyRating;
-    data['content'] = this.content;
-    data['topicName'] = this.topicName;
-    data['tableName'] = this.tableName;
-    data['companyLogo'] = this.companyLogo;
-    data['partLoadOrNot'] = this.partLoadOrNot;
-    data['reminderUserName'] = this.reminderUserName;
-    data['sharableLink'] = this.sharableLink;
-    data['deviceId'] = this.deviceId;
-    data['ratings'] = this.ratings;
-    data['mobileNumber'] = this.mobileNumber;
-    data['source'] = this.source;
-    data['destination'] = this.destination;
-    data['mainTag'] = this.mainTag;
-    data['privatePost'] = this.privatePost;
-    data['makerName'] = this.makerName;
-    data['modelName'] = this.modelName;
-    data['mfgYear'] = this.mfgYear;
-    data['estPrice'] = this.estPrice;
-    data['dnd'] = this.dnd;
-    data['vehicleSize'] = this.vehicleSize;
-    data['association'] = this.association;
-    data['isPaid'] = this.isPaid;
-    data['website'] = this.website;
-    data['alterativeNumber'] = this.alterativeNumber;
-    data['companyDetailsName'] = this.companyDetailsName;
-    data['isVerifiedByCompany'] = this.isVerifiedByCompany;
-    data['typeOfPayment'] = this.typeOfPayment;
-    data['typeName'] = this.typeName;
-    data['images'] = this.images;
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['likes'] = this.likes;
-    data['comment'] = this.comment;
-    data['disLike'] = this.disLike;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['type'] = type;
+    data['postingTime'] = postingTime;
+    data['companyName'] = companyName;
+    data['nameOfPerson'] = nameOfPerson;
+    data['companyRating'] = companyRating;
+    data['content'] = content;
+    data['topicName'] = topicName;
+    data['tableName'] = tableName;
+    data['companyLogo'] = companyLogo;
+    data['partLoadOrNot'] = partLoadOrNot;
+    data['reminderUserName'] = reminderUserName;
+    data['sharableLink'] = sharableLink;
+    data['deviceId'] = deviceId;
+    data['ratings'] = ratings;
+    data['mobileNumber'] = mobileNumber;
+    data['source'] = source;
+    data['destination'] = destination;
+    data['mainTag'] = mainTag;
+    data['privatePost'] = privatePost;
+    data['makerName'] = makerName;
+    data['modelName'] = modelName;
+    data['mfgYear'] = mfgYear;
+    data['estPrice'] = estPrice;
+    data['dnd'] = dnd;
+    data['vehicleSize'] = vehicleSize;
+    data['association'] = association;
+    data['isPaid'] = isPaid;
+    data['website'] = website;
+    data['alterativeNumber'] = alterativeNumber;
+    data['companyDetailsName'] = companyDetailsName;
+    data['isVerifiedByCompany'] = isVerifiedByCompany;
+    data['typeOfPayment'] = typeOfPayment;
+    data['typeName'] = typeName;
+    data['images'] = images;
+    data['description'] = description;
+    data['title'] = title;
+    data['likes'] = likes;
+    data['comment'] = comment;
+    data['disLike'] = disLike;
     return data;
   }
 }

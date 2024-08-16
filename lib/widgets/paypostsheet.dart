@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +9,8 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../constant/images.dart';
 
 class PayPostSheet extends StatelessWidget {
+  const PayPostSheet({super.key});
+
 
 
   @override
@@ -18,7 +19,7 @@ class PayPostSheet extends StatelessWidget {
       child: Container(
         child: Column(
           children: [
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Textview(TextStyle(
               color: Colors.black,
               fontSize: 20.sp,

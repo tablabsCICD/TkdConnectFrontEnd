@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,10 +24,11 @@ import 'generated/l10n.dart';
 
 import 'model/response/version.dart';
 
-import 'notification/local_notification.dart';
 
 
 class EntryScreen extends StatefulWidget {
+  const EntryScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _EntryScreen();
@@ -36,22 +36,20 @@ class EntryScreen extends StatefulWidget {
 
 }
 class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
+
   @override
   void initState() {
     // TODO: implement initState
-   // startTimer();
-   // callApi();
+    inPermision();
 
-
-    //callNextScreen();
-    initUniLinks();
+    // initUniLinks();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
    return Scaffold(
 
-     body: Container(
+     body: SizedBox(
        width: MediaQuery.of(context).size.width,
 
        height: MediaQuery.of(context).size.height,
@@ -92,9 +90,11 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
   }
 
   versionControllApi() async{
+    print('the version ${ApiConstant.GET_CURRENT_VERSION}');
     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
+     print('the version is ${apiResponse.response}');
     Version version=Version.fromJson(apiResponse.response);
-   // print('the version is ${version.version}');
+
     if(version.version == AppConstant.APP_VERSION){
       callNextScreen();
       //callScreen();Api
@@ -159,7 +159,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     //permissionStatusFuture=permissionStatusFutures.toString() as Future<String>;
     WidgetsBinding.instance.addObserver(this);
     if(permissionStatusFutures.toString().compareTo(permGranted)==0 || permissionStatusFutures.toString().compareTo(permProvisional)==0){
-        versionControllApi();
+      initUniLinks();
 
     }else {
       permissionDialog();
@@ -172,7 +172,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         //textWidget,
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         TextButton(
@@ -297,13 +297,13 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
      User user=await LocalSharePreferences.localSharePreferences.getLoginData();
 
      String? token=await FirebaseMessaging.instance.getToken();
-     ApiResponse result=await ApiHelper().apiPostWithoutDialog(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
-      ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}");
+     ApiResponse result=await ApiHelper().apiPostWithoutDialog("${ApiConstant.UPDATE_DEVICE_ID}?userId=${user.content!.first.id}&deviceId=$token");
+      ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet("${ApiConstant.BASE_URL}companyRegistration/getSameLoginResponse/${user.content!.first.id}");
      //print('${ApiConstant.BASE_URL+"companyRegistration/getSameLoginResponse/${user.content!.first.id}"}');
       if(apiResponse.status==200){
 
         User user=User.fromJson(jsonDecode(apiResponse.response));
-       if(user.content!.length>0){
+       if(user.content!.isNotEmpty){
         // print('added unb ${apiResponse.response.toString()}');
          LocalSharePreferences localSharePreferences=LocalSharePreferences();
          localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
@@ -322,44 +322,36 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
 
 
   callScreen(){
-    Navigator.push(context, MaterialPageRoute(builder: (_)=>ShowAllBids( id: "22",)));
+    Navigator.push(context, MaterialPageRoute(builder: (_)=>const ShowAllBids( id: "22",)));
 
   }
 
   Future<void> initUniLinks() async {
-   // print('the link is ');
+      try {
+        String? initialLink = await getInitialLink();
+        if(initialLink!=null){
+          LocalSharePreferences localSharePreferences=LocalSharePreferences();
+          bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
+          if(isLogin){
+            String number=initialLink.split("/").last;
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>DeepLink(id: number)));
+    }else{
 
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      String? initialLink = await getInitialLink();
-
-     // print('the link is $initialLink');
-      if(initialLink!=null){
-        debugPrint('the link is $initialLink');
-        LocalSharePreferences localSharePreferences=LocalSharePreferences();
-        bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
-        if(isLogin){
-          String number=initialLink.split("/").last;
-          debugPrint('the link is $number');
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>DeepLink(id: number)));
-
+            versionControllApi();
+          }
         }else{
           versionControllApi();
         }
 
-
-         //  print(' the link is $number');
-      }else{
+        // Parse the link and warn the user, if it is not correct,
+        // but keep in mind it could be `null`.
+      } on PlatformException {
+        // Handle exception by warning the user their action did not succeed
+        // return?
         versionControllApi();
       }
 
-      // Parse the link and warn the user, if it is not correct,
-      // but keep in mind it could be `null`.
-    } on PlatformException {
-      // Handle exception by warning the user their action did not succeed
-      // return?
-      versionControllApi();
-    }
+
   }
 
 

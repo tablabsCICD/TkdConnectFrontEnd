@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,7 +8,6 @@ import 'package:tkd_connect/model/response/job_list.dart';
 import 'package:tkd_connect/provider/jobs/job_list_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
-import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../constant/images.dart';
@@ -19,6 +17,8 @@ import '../../route/app_routes.dart';
 import '../../utils/sharepreferences.dart';
 
 class JobListScreen extends StatefulWidget {
+  const JobListScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _JobListState();
@@ -120,7 +120,7 @@ class _JobListState extends State<JobListScreen> {
                     SizedBox(
                       width: 2.w,
                     ),
-                    Container(
+                    SizedBox(
                       width: 16.w,
                       height: 16.w,
                       child: Row(
@@ -128,7 +128,7 @@ class _JobListState extends State<JobListScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 16.w,
                             height: 16.w,
                             child: Stack(children: [
@@ -166,9 +166,9 @@ class _JobListState extends State<JobListScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -182,14 +182,14 @@ class _JobListState extends State<JobListScreen> {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFFD25D5D),
+                color: const Color(0xFFD25D5D),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
               child: Center(
                 child: Text(
                   jobData.postJob!.experience != null
-                      ? "Exp: "+jobData.postJob!.experience! + " Year"
+                      ? "Exp: ${jobData.postJob!.experience!} Year"
                       : "No Info",
                   style: TextStyle(
                     color: Colors.white,
@@ -241,7 +241,7 @@ class _JobListState extends State<JobListScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -253,7 +253,7 @@ class _JobListState extends State<JobListScreen> {
                   Text(
                     'Call now',
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -268,7 +268,7 @@ class _JobListState extends State<JobListScreen> {
           SizedBox(width: 12.w),
           InkWell(
               onTap: (){
-                String Message="I am writing to express my strong interest in the "+jobData.postJob!.jobDepartment!+" From TKD Connect Application";
+                String Message="I am writing to express my strong interest in the ${jobData.postJob!.jobDepartment!} From TKD Connect Application";
                 Utils().openwhatsapp(context, jobData.postJob!.contactNumber!, Message);
               },
               child: SvgPicture.asset(Images.message_job)),

@@ -10,19 +10,19 @@ class OwnBuySelllPostList {
     if (json['data'] != null) {
       data = <OwnBuySellData>[];
       json['data'].forEach((v) {
-        data!.add(new OwnBuySellData.fromJson(v));
+        data!.add(OwnBuySellData.fromJson(v));
       });
     }
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -155,47 +155,47 @@ class OwnBuySellData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['ownerName'] = this.ownerName;
-    data['agentName'] = this.agentName;
-    data['contactNumber'] = this.contactNumber;
-    data['city'] = this.city;
-    data['maker'] = this.maker;
-    data['model'] = this.model;
-    data['mfgYear'] = this.mfgYear;
-    data['vehicleRegistrationNumber'] = this.vehicleRegistrationNumber;
-    data['yearOfBuying'] = this.yearOfBuying;
-    data['conditionOfVehicle'] = this.conditionOfVehicle;
-    data['conditionOfTyres'] = this.conditionOfTyres;
-    data['insaurancePaidUpto'] = this.insaurancePaidUpto;
-    data['estimatedPrice'] = this.estimatedPrice;
-    data['negotiable'] = this.negotiable;
-    data['additionalInformation'] = this.additionalInformation;
-    data['bodyType'] = this.bodyType;
-    data['date'] = this.date;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['image1'] = this.image1;
-    data['image2'] = this.image2;
-    data['image3'] = this.image3;
-    data['image4'] = this.image4;
-    data['privatePost'] = this.privatePost;
-    data['vehicleInfo'] = this.vehicleInfo;
-    data['enginePower'] = this.enginePower;
-    data['documents'] = this.documents;
-    data['weight'] = this.weight;
-    data['driverType'] = this.driverType;
-    data['transmission'] = this.transmission;
-    data['userId'] = this.userId;
-    data['transporterType'] = this.transporterType;
-    data['tableName'] = this.tableName;
-    data['mainTag'] = this.mainTag;
-    data['postingTime'] = this.postingTime;
-    data['buySelltype'] = this.buySelltype;
-    data['topicName'] = this.topicName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['type'] = type;
+    data['ownerName'] = ownerName;
+    data['agentName'] = agentName;
+    data['contactNumber'] = contactNumber;
+    data['city'] = city;
+    data['maker'] = maker;
+    data['model'] = model;
+    data['mfgYear'] = mfgYear;
+    data['vehicleRegistrationNumber'] = vehicleRegistrationNumber;
+    data['yearOfBuying'] = yearOfBuying;
+    data['conditionOfVehicle'] = conditionOfVehicle;
+    data['conditionOfTyres'] = conditionOfTyres;
+    data['insaurancePaidUpto'] = insaurancePaidUpto;
+    data['estimatedPrice'] = estimatedPrice;
+    data['negotiable'] = negotiable;
+    data['additionalInformation'] = additionalInformation;
+    data['bodyType'] = bodyType;
+    data['date'] = date;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['image1'] = image1;
+    data['image2'] = image2;
+    data['image3'] = image3;
+    data['image4'] = image4;
+    data['privatePost'] = privatePost;
+    data['vehicleInfo'] = vehicleInfo;
+    data['enginePower'] = enginePower;
+    data['documents'] = documents;
+    data['weight'] = weight;
+    data['driverType'] = driverType;
+    data['transmission'] = transmission;
+    data['userId'] = userId;
+    data['transporterType'] = transporterType;
+    data['tableName'] = tableName;
+    data['mainTag'] = mainTag;
+    data['postingTime'] = postingTime;
+    data['buySelltype'] = buySelltype;
+    data['topicName'] = topicName;
     return data;
   }
 }

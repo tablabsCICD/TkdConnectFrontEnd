@@ -6,20 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/generated/l10n.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
-import 'package:tkd_connect/provider/dashboard/rating_provider.dart';
 import 'package:tkd_connect/provider/group/create_group_provider.dart';
-import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/utils/rating_star.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 class SelectUserForGroupScreen extends StatefulWidget {
   bool isEdit;
 
-  SelectUserForGroupScreen(this.isEdit);
+  SelectUserForGroupScreen(this.isEdit, {super.key});
 
   @override
   _SelectUserForGroupScreenState createState() =>
@@ -27,7 +23,7 @@ class SelectUserForGroupScreen extends StatefulWidget {
 }
 
 class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   ScrollController horizantalControllet = ScrollController();
 
   @override
@@ -58,14 +54,14 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                     BaseWidget().appBar(context, "Users"),
                     serachBar(),
                     Visibility(
-                      visible: model.selectedUsers.length == 0 ? false : true,
+                      visible: model.selectedUsers.isEmpty ? false : true,
                       child: Container(
                         color: Colors.black12,
                         child: Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Container(
+                              child: SizedBox(
                                 child: selectedUsers(),
                                 height: 60.h,
                               ),
@@ -80,7 +76,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
         }),
         bottomNavigationBar: Consumer<CreateGroupProvider>(
           builder: (context, provider, child) => Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Button(
                 width: 327.w,
                 height: 49.h,
@@ -107,7 +103,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                     }
                   }
                 },
-                isEnbale: provider.selectedUsers.length == 0 ? false : true),
+                isEnbale: provider.selectedUsers.isEmpty ? false : true),
           ),
         ),
       ),
@@ -119,7 +115,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
       width: MediaQuery.of(context).size.width,
       height: 87.h,
       //padding: const EdgeInsets.only(bottom: 16),
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: Color(0xFFC3262C),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -128,7 +124,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           ),
         ),
       ),
-      child: SizedBox(),
+      child: const SizedBox(),
     );
   }
 
@@ -150,7 +146,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                    side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -159,7 +155,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -175,7 +171,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 24.w,
                                   height: 24.h,
                                   child: Stack(children: [
@@ -198,7 +194,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                                     hintText: "Search users ",
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(
-                                      color: Color(0x662C363F),
+                                      color: const Color(0x662C363F),
                                       fontSize: 14.sp,
                                       fontFamily:
                                           GoogleFonts.poppins().fontFamily,
@@ -241,18 +237,16 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   groupTile(int index, CreateGroupProvider model) {
-    String displayName = model.filterByName[index].firstName! +
-        " " +
-        model.filterByName[index].lastName!;
+    String displayName = "${model.filterByName[index].firstName!} ${model.filterByName[index].lastName!}";
     if (displayName.length > 18) {
       displayName = displayName.substring(0, 18);
-      displayName = displayName + "...";
+      displayName = "$displayName...";
     }
     return Container(
       width: 375.w,
       height: 90.h,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(color: Color(0x192C363F)),
@@ -283,7 +277,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                         child: Text(
                           displayName,
                           style: TextStyle(
-                            color: Color(0xCC001E49),
+                            color: const Color(0xCC001E49),
                             fontSize: 14.sp,
                             fontFamily: AppConstant.FONTFAMILY,
                             fontWeight: FontWeight.w400,
@@ -314,7 +308,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
         scrollDirection: Axis.horizontal,
         controller: horizantalControllet,
         itemCount: model.selectedUsers.length,
-        itemBuilder: (BuildContext context, int index) => Container(
+        itemBuilder: (BuildContext context, int index) => SizedBox(
           height: 50.h,
 
           child: Padding(
@@ -329,7 +323,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                 Text(
                   model.selectedUsers[index].firstName!,
                   style: TextStyle(
-                    color: Color(0xCC001E49),
+                    color: const Color(0xCC001E49),
                     fontSize: 14.sp,
                     fontFamily: AppConstant.FONTFAMILY,
                     fontWeight: FontWeight.w400,
@@ -348,7 +342,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
       visible: model.filterByName[index].addedIngroup == true ? true : true,
       child: Checkbox(
           value: model.filterByName[index].isSelected,
-          activeColor: Color(0xFFC3262C),
+          activeColor: const Color(0xFFC3262C),
           checkColor: Colors.white,
           onChanged: (value) {
             model.selectedUser(value, model.filterByName[index]);
@@ -356,12 +350,12 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
             if (value == true) {
               horizantalControllet.animateTo(
                   horizantalControllet.position.maxScrollExtent + 200,
-                  duration: Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 400),
                   curve: Curves.fastOutSlowIn);
             } else {
               horizantalControllet.animateTo(
                   horizantalControllet.position.maxScrollExtent,
-                  duration: Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 400),
                   curve: Curves.slowMiddle);
             }
           }),
@@ -371,7 +365,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   callCreateCheckBox(int index, CreateGroupProvider model) {
     return Checkbox(
         value: model.filterByName[index].isSelected,
-        activeColor: Color(0xFFC3262C),
+        activeColor: const Color(0xFFC3262C),
         checkColor: Colors.white,
         onChanged: (value) {
           model.selectedUser(value, model.filterByName[index]);
@@ -380,12 +374,12 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           if (value == true) {
             horizantalControllet.animateTo(
                 horizantalControllet.position.maxScrollExtent + 200,
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 curve: Curves.fastOutSlowIn);
           } else {
             horizantalControllet.animateTo(
                 horizantalControllet.position.maxScrollExtent,
-                duration: Duration(milliseconds: 400),
+                duration: const Duration(milliseconds: 400),
                 curve: Curves.slowMiddle);
           }
         });

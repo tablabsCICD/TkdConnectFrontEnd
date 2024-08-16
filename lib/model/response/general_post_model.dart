@@ -10,19 +10,19 @@ class GeneralPostModel {
     if (json['data'] != null) {
       data = <GeneralPost>[];
       json['data'].forEach((v) {
-        data!.add(new GeneralPost.fromJson(v));
+        data!.add(GeneralPost.fromJson(v));
       });
     }
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -65,17 +65,17 @@ class GeneralPost {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['typeName'] = this.typeName;
-    data['images'] = this.images;
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['likes'] = this.likes;
-    data['comment'] = this.comment;
-    data['userId'] = this.userId;
-    data['loggedTime'] = this.loggedTime;
-    data['userName'] = this.userName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['typeName'] = typeName;
+    data['images'] = images;
+    data['description'] = description;
+    data['title'] = title;
+    data['likes'] = likes;
+    data['comment'] = comment;
+    data['userId'] = userId;
+    data['loggedTime'] = loggedTime;
+    data['userName'] = userName;
     return data;
   }
 }

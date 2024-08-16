@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,9 +7,7 @@ import 'package:tkd_connect/provider/edit_profile/edit_profile_provider.dart';
 
 import '../../../constant/images.dart';
 import '../../../generated/l10n.dart';
-import '../../../model/request/route_request.dart';
 import '../../../model/response/route_model.dart';
-import '../../../provider/registration_provider/company_details_provider.dart';
 import '../../../widgets/editText.dart';
 import '../../../widgets/textview.dart';
 
@@ -122,7 +119,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
 
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -175,7 +172,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
   }
 
   routeItem(RouteData routeRequest, int index) {
-    return Container(
+    return SizedBox(
       width: 335.w,
       height: 40.65.h,
       //padding: EdgeInsets.only(left: 20.w,right: 20.w),
@@ -192,7 +189,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -207,7 +204,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
                         routeRequest.routeSource!,
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          color: Color(0xCC001E49),
+                          color: const Color(0xCC001E49),
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts
                               .poppins()
@@ -226,7 +223,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
                       child: Text(
                         routeRequest.routeDestination!,
                         style: TextStyle(
-                          color: Color(0xCC001E49),
+                          color: const Color(0xCC001E49),
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts
                               .poppins()
@@ -241,7 +238,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
             ),
           ),
           SizedBox(width: 20.w,),
-          Container(
+          SizedBox(
             width: 24.w,
             height: 24.h,
             child: Row(
@@ -249,7 +246,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
@@ -265,7 +262,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
             ),
           ),
           SizedBox(width: 20.w,),
-          Container(
+          SizedBox(
             width: 24.w,
             height: 24.h,
             child: Row(
@@ -273,7 +270,7 @@ class _CompanyInfoState extends State<CompanyInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [

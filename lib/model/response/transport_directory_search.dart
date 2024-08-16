@@ -36,18 +36,16 @@ class TransportSearchModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content.map((e) => e.toJson()).toList();
-    }
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
-    data['last'] = this.last;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['content'] = content.map((e) => e.toJson()).toList();
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
+    data['last'] = last;
+    data['size'] = size;
+    data['number'] = number;
     // data['sort'] = this.sort;
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
     return data;
   }
 }
@@ -156,41 +154,39 @@ class TransportSearchData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userName'] = this.userName;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['emailId'] = this.emailId;
-    data['mobileNumber'] = this.mobileNumber;
-    data['companyName'] = this.companyName;
-    data['companyAddress'] = this.companyAddress;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['landlineNumber'] = this.landlineNumber;
-    data['verified'] = this.verified;
-    data['companyLogo'] = this.companyLogo;
-    data['aadharCard'] = this.aadharCard;
-    data['ratings'] = this.ratings;
-    data['profilePicture'] = this.profilePicture;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
-    data['transporterOrAgent'] = this.transporterOrAgent;
-    data['isPaid'] = this.isPaid;
-    data['paidStartDate'] = this.paidStartDate;
-    data['validTill'] = this.validTill;
-    data['website'] = this.website;
-    data['type'] = this.type;
-    data['mainTag'] = this.mainTag;
-    data['title'] = this.title;
-    data['images'] = this.images;
-    data['mobileOrLandline'] = this.mobileOrLandline;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userName'] = userName;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['emailId'] = emailId;
+    data['mobileNumber'] = mobileNumber;
+    data['companyName'] = companyName;
+    data['companyAddress'] = companyAddress;
+    data['city'] = city;
+    data['state'] = state;
+    data['country'] = country;
+    data['landlineNumber'] = landlineNumber;
+    data['verified'] = verified;
+    data['companyLogo'] = companyLogo;
+    data['aadharCard'] = aadharCard;
+    data['ratings'] = ratings;
+    data['profilePicture'] = profilePicture;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
+    data['transporterOrAgent'] = transporterOrAgent;
+    data['isPaid'] = isPaid;
+    data['paidStartDate'] = paidStartDate;
+    data['validTill'] = validTill;
+    data['website'] = website;
+    data['type'] = type;
+    data['mainTag'] = mainTag;
+    data['title'] = title;
+    data['images'] = images;
+    data['mobileOrLandline'] = mobileOrLandline;
 
-    if (this.listOfPreferredRoutes != null) {
-      data['listOfPreferredRoutes'] =
-          this.listOfPreferredRoutes.map((e) => e.toJson()).toList();
-    }
+    data['listOfPreferredRoutes'] =
+        listOfPreferredRoutes.map((e) => e.toJson()).toList();
     return data;
   }
 }
@@ -221,13 +217,13 @@ class ListOfPreferredRoutes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['routeSource'] = this.routeSource;
-    data['routeDestination'] = this.routeDestination;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['routeSource'] = routeSource;
+    data['routeDestination'] = routeDestination;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
     return data;
   }
 }

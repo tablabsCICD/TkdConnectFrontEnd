@@ -24,7 +24,7 @@ class GroupListResponse {
     if (json['content'] != null) {
       content = <GroupData>[];
       json['content'].forEach((v) {
-        content!.add(new GroupData.fromJson(v));
+        content!.add(GroupData.fromJson(v));
       });
     }
     last = json['last'];
@@ -38,18 +38,18 @@ class GroupListResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalElements'] = this.totalElements;
-    data['totalPages'] = this.totalPages;
-    data['sort'] = this.sort;
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    data['last'] = last;
+    data['totalElements'] = totalElements;
+    data['totalPages'] = totalPages;
+    data['sort'] = sort;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
+    data['size'] = size;
+    data['number'] = number;
     return data;
   }
 }
@@ -80,13 +80,13 @@ class GroupData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['createByUserId'] = this.createByUserId;
-    data['date'] = this.date;
-    data['groupName'] = this.groupName;
-    data['isPrivate'] = this.isPrivate;
-    data['imageUrl'] = this.imageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['createByUserId'] = createByUserId;
+    data['date'] = date;
+    data['groupName'] = groupName;
+    data['isPrivate'] = isPrivate;
+    data['imageUrl'] = imageUrl;
     return data;
   }
 }

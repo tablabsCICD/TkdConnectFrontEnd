@@ -13,9 +13,7 @@ class LoginProvider extends BaseProvider{
   LoginProvider(super.appState);
 
   void callOtp(BuildContext context,String mobileNumber) async{
-    print(ApiConstant.SEND_OTP(mobileNumber));
     var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(mobileNumber));
-    print(req);
     if(req.status==200){
       Navigator.pushNamed(context,AppRoutes.otp,arguments: mobileNumber);
     }else{

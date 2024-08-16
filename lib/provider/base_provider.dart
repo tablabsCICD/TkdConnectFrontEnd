@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tkd_connect/model/request/register_company.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 
 import '../utils/camerabottomsheet.dart';
@@ -11,7 +8,7 @@ class BaseProvider extends ChangeNotifier {
   String appState = "Ideal";
 
 
-  BaseProvider(this.appState) {}
+  BaseProvider(this.appState);
 
   Future<String> postImage(BuildContext context) async {
 
@@ -22,7 +19,7 @@ class BaseProvider extends ChangeNotifier {
   }
   
   sendBid(){
-    ApiHelper().postParameter("url", Map());
+    ApiHelper().postParameter("url", {});
   }
 
 

@@ -1,29 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:tkd_connect/utils/razorpayload.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
-import '../../model/response/userdata.dart';
 import '../../provider/dashboard/post_provider.dart';
 import '../../utils/colors.dart';
-import '../../utils/razor_pay.dart';
-import '../../utils/sharepreferences.dart';
 import '../../widgets/bottomsheet.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/drop_down.dart';
 import '../../widgets/editText.dart';
-import '../../widgets/paypostsheet.dart';
 import '../my_route/select_one_city.dart';
 
 class PostVehicleScreen extends StatefulWidget {
+  const PostVehicleScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _PostVehicleScreen();
@@ -54,7 +49,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 //   height: 133.h,
                 //   width: 200.w,
                 // ),
-                labelText(S().vehicle+" "+S().loads),
+                labelText("${S().vehicle} ${S().loads}"),
                 SizedBox(
                   height: 4.h,
                 ),
@@ -79,7 +74,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedSourceCity(routeRequest.startLocation);
@@ -99,7 +94,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                         isScrollControlled: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return FractionallySizedBox(
+                          return const FractionallySizedBox(
                               heightFactor: 0.9, child: SelectOneCityScreen());
                         });
                     provider.selectedDestinationCity(routeRequest.startLocation);
@@ -217,11 +212,11 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 30.h,
                 ),
-                provider.images.length>0? BaseWidget().carouseImageDelete(provider.images,(item){
+                provider.images.isNotEmpty? BaseWidget().carouseImageDelete(provider.images,(item){
                   provider.images.remove(item);
                   provider.notifyListeners();
                 }
-                ):SizedBox(),
+                ):const SizedBox(),
                 SizedBox(
                   height: 44.h,
                 ),
@@ -234,7 +229,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                   S().addImagesAt,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF001E49),
+                    color: const Color(0xFF001E49),
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
@@ -269,7 +264,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -326,7 +321,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -336,7 +331,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -350,7 +345,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -370,7 +365,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -392,7 +387,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 ),
               ),
               const SizedBox(width: 129),
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(
@@ -422,7 +417,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -432,7 +427,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: 33.h,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -446,7 +441,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: double.infinity,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -466,7 +461,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: double.infinity,
                                 child: Text(
                                   '',
@@ -488,7 +483,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 ),
               ),
 
-              Container(
+              SizedBox(
                 width: 100.w,
                 height: 40.sp,
                 child:Switch.adaptive(

@@ -26,7 +26,7 @@ class BidPlaced {
     if (json['content'] != null) {
       content = <Bids>[];
       json['content'].forEach((v) {
-        content!.add(new Bids.fromJson(v));
+        content!.add(Bids.fromJson(v));
       });
     }
     last = json['last'];
@@ -40,18 +40,18 @@ class BidPlaced {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
+    data['last'] = last;
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
 
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
+    data['size'] = size;
+    data['number'] = number;
     return data;
   }
 }
@@ -136,31 +136,31 @@ class Bids {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['type'] = this.type;
-    data['postingTime'] = this.postingTime;
-    data['companyName'] = this.companyName;
-    data['nameOfPerson'] = this.nameOfPerson;
-    data['companyRating'] = this.companyRating;
-    data['content'] = this.content;
-    data['topicName'] = this.topicName;
-    data['tableName'] = this.tableName;
-    data['companyLogo'] = this.companyLogo;
-    data['partLoadOrNot'] = this.partLoadOrNot;
-    data['reminderUserName'] = this.reminderUserName;
-    data['sharableLink'] = this.sharableLink;
-    data['deviceId'] = this.deviceId;
-    data['ratings'] = this.ratings;
-    data['mobileNumber'] = this.mobileNumber;
-    data['source'] = this.source;
-    data['destination'] = this.destination;
-    data['mainTag'] = this.mainTag;
-    data['privatePost'] = this.privatePost;
-    data['amount'] = this.amount;
-    data['description'] = this.description;
-    data['bidingId'] = this.bidingId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['type'] = type;
+    data['postingTime'] = postingTime;
+    data['companyName'] = companyName;
+    data['nameOfPerson'] = nameOfPerson;
+    data['companyRating'] = companyRating;
+    data['content'] = content;
+    data['topicName'] = topicName;
+    data['tableName'] = tableName;
+    data['companyLogo'] = companyLogo;
+    data['partLoadOrNot'] = partLoadOrNot;
+    data['reminderUserName'] = reminderUserName;
+    data['sharableLink'] = sharableLink;
+    data['deviceId'] = deviceId;
+    data['ratings'] = ratings;
+    data['mobileNumber'] = mobileNumber;
+    data['source'] = source;
+    data['destination'] = destination;
+    data['mainTag'] = mainTag;
+    data['privatePost'] = privatePost;
+    data['amount'] = amount;
+    data['description'] = description;
+    data['bidingId'] = bidingId;
     return data;
   }
 }

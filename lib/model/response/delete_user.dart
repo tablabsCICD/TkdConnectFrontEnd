@@ -10,9 +10,9 @@ class DeleteUser {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['errorMessage'] = this.errorMessage;
-    data['errorCode'] = this.errorCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['errorMessage'] = errorMessage;
+    data['errorCode'] = errorCode;
     return data;
   }
 }

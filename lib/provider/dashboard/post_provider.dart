@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,13 +9,11 @@ import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
-import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
 import '../../model/request/post_load.dart';
 import '../../model/response/post_upload.dart';
-import '../../model/response/search_data.dart';
 import '../../model/response/userdata.dart';
 import '../../model/response/verified_user.dart';
 import '../../screen/create_post/select_userlist_for_post.dart';
@@ -71,14 +68,13 @@ class PostLoadProvider extends BaseProvider {
   initData() async {
     User user =
         await LocalSharePreferences.localSharePreferences.getLoginData();
-    emailIdController.text = user.content!.first!.emailId!;
-    mobileNumberController.text = user.content!.first!.mobileNumber!.toString();
+    emailIdController.text = user.content!.first.emailId!;
+    mobileNumberController.text = user.content!.first.mobileNumber!.toString();
   }
 
   uploadImage(BuildContext context) async {
     String image = await postImage(context);
     images.add(image);
-    print('the images is ${images.length}');
     notifyListeners();
   }
 
@@ -102,9 +98,9 @@ class PostLoadProvider extends BaseProvider {
       groupListName.clear();
       groupListByUserId
           .addAll(groupListResponse.content as Iterable<GroupData>);
-      groupListByUserId.forEach((element) {
+      for (var element in groupListByUserId) {
         groupListName.add(element.groupName!);
-      });
+      }
     }
     notifyListeners();
   }
@@ -113,16 +109,16 @@ class PostLoadProvider extends BaseProvider {
     listAddedMember.clear();
     addedMemberIdList.clear();
     ApiHelper apiHelper = ApiHelper();
-    String myUrl = ApiConstant.GROUP_MEMBER_LIST + groupId!.toString();
+    String myUrl = ApiConstant.GROUP_MEMBER_LIST + groupId.toString();
     print(myUrl);
     var response = await apiHelper.apiWithoutDecodeGet(myUrl);
 
     GroupMemberListResponse groupListModel =
         GroupMemberListResponse.fromJson(response.response);
     listAddedMember.addAll(groupListModel.content!);
-    listAddedMember.forEach((element) {
+    for (var element in listAddedMember) {
       addedMemberIdList.add(element.userId!);
-    });
+    }
     print(addedMemberIdList.length);
     notifyListeners();
   }
@@ -131,15 +127,15 @@ class PostLoadProvider extends BaseProvider {
     User user =
         await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad = PostLoad();
-    postLoad.contactNumber = user.content!.first!.mobileNumber!;
+    postLoad.contactNumber = user.content!.first.mobileNumber!;
     postLoad.destination = destinationCity;
     postLoad.dnd = dnd ? 1 : 0;
-    postLoad.emailId = user.content!.first!.emailId!;
+    postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Have Vehicle"; //I Have Vehicle (Vheicle Load Pahejay) (Vehicle Load ahe vehicle )
 
     postLoad.instructions = specialInstructionController.text;
     postLoad.loadWeight = loadWeightController.text;
-    postLoad.loggedUserName = user.content!.first!.userName;
+    postLoad.loggedUserName = user.content!.first.userName;
     postLoad.mainTag = selectedRequriment;
     postLoad.os = 'App';
     postLoad.otherDetails = specialInstructionController.text;
@@ -154,7 +150,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.vehicleSize = vehicleSizeController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-   if(images.length>0){
+   if(images.isNotEmpty){
      postLoad.images = images.join(",");
    }
     postLoad.listOfUserIds = addedMemberIdList;
@@ -162,7 +158,7 @@ class PostLoadProvider extends BaseProvider {
 
     postLoad.id = 0;
     ApiResponse response = await ApiHelper().postParameter(
-        ApiConstant.BASE_URL + "fullTruckLoad", postLoad.toJson());
+        "${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
     print('the resopnse is ${json.encode(postLoad.toJson())}');
     print('the resopnse is ${response.status}');
     if (response.status == 200) {
@@ -209,7 +205,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.vehicleSize = vehicleSizeController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    if(images.length>0){
+    if(images.isNotEmpty){
       postLoad.images = images.join(",");
     }
     postLoad.listOfUserIds = addedMemberIdList;
@@ -218,7 +214,7 @@ class PostLoadProvider extends BaseProvider {
 
 
     ApiResponse response = await ApiHelper().postParameter(
-        ApiConstant.BASE_URL + "fullTruckLoad", postLoad.toJson());
+        "${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
     print('the constand ${ jsonEncode(postLoad.toJson())}');
 
     if (response.status == 200) {
@@ -557,7 +553,7 @@ class PostLoadProvider extends BaseProvider {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(
+          return const FractionallySizedBox(
               heightFactor: 0.6,
               child: PayPostSheet());
         });

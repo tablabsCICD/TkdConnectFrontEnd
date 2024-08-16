@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +8,6 @@ import 'package:tkd_connect/provider/search_provider/search_provider.dart';
 import 'package:tkd_connect/screen/search/search_post_screen.dart';
 import 'package:tkd_connect/screen/search/search_user_screen.dart';
 import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/widgets/textview.dart';
 
 import '../../generated/l10n.dart';
 
@@ -62,7 +60,7 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 14,
                   ),
                   Visibility(
@@ -115,7 +113,7 @@ class _SearchResultScreen extends State<SearchResultScreen> {
             child: textFiled(),
           ),
           SizedBox(width: 8.w),
-          Spacer(),
+          const Spacer(),
           Visibility(
               visible: isCloseVisible,
               child: InkWell(
@@ -158,9 +156,9 @@ class _SearchResultScreen extends State<SearchResultScreen> {
           height: 32.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Color(0x332C363F),
+            color: const Color(0x332C363F),
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1, color: Color(0x332C363F)),
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -178,13 +176,13 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.h),
                     decoration: provider.tabPost
-                        ? ShapeDecoration(
+                        ? const ShapeDecoration(
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
                             ),
                           )
-                        : ShapeDecoration(
+                        : const ShapeDecoration(
                             color: Color(0x19001E49),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
@@ -199,14 +197,14 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                           S().posts,
                           style: provider.tabPost
                               ? TextStyle(
-                                  color: Color(0xCC001E49),
+                                  color: const Color(0xCC001E49),
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 )
                               : TextStyle(
-                                  color: Color(0xCC001E49),
+                                  color: const Color(0xCC001E49),
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w600,
@@ -227,13 +225,13 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.h),
                     decoration: !provider.tabPost
-                        ? ShapeDecoration(
+                        ? const ShapeDecoration(
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
                             ),
                           )
-                        : ShapeDecoration(
+                        : const ShapeDecoration(
                             color: Color(0x19001E49),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
@@ -248,14 +246,14 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                           S().users,
                           style: !provider.tabPost
                               ? TextStyle(
-                                  color: Color(0xCC001E49),
+                                  color: const Color(0xCC001E49),
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 )
                               : TextStyle(
-                                  color: Color(0xCC001E49),
+                                  color: const Color(0xCC001E49),
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w600,

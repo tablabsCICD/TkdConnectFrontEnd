@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
@@ -13,7 +12,7 @@ import 'package:tkd_connect/widgets/button.dart';
 
 class RatingDialog extends StatefulWidget {
   TruckLoad? load;
-  RatingDialog(this.load);
+  RatingDialog(this.load, {super.key});
 
   @override
   _RatingDialogState createState() => _RatingDialogState();
@@ -48,7 +47,7 @@ class _RatingDialogState extends State<RatingDialog> {
 
                 ],
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Text(
                 widget.load!.companyName.toString(),
                 textAlign: TextAlign.center,
@@ -65,7 +64,7 @@ class _RatingDialogState extends State<RatingDialog> {
                 fontSize: 13.sp,
                 fontFamily: AppConstant.FONTFAMILY,
                 fontWeight: FontWeight.w500,),),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               StarRating(
                   rating: provider.rating,
                   onRatingChanged: (rating) {
@@ -76,7 +75,7 @@ class _RatingDialogState extends State<RatingDialog> {
                     }
                     provider.changeRating(rating);}
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: provider.commentController,
                 decoration: InputDecoration(
@@ -85,7 +84,7 @@ class _RatingDialogState extends State<RatingDialog> {
                     fontSize: 13.sp,
                     fontFamily: AppConstant.FONTFAMILY,
                     fontWeight: FontWeight.w500,),
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                 ),
                 maxLines: 3,
                 onChanged: (val){
@@ -152,7 +151,7 @@ class _RatingDialogState extends State<RatingDialog> {
         )*/,
       ),
       bottomNavigationBar: Consumer<RatingProvider>(
-        builder: (context, provider, child)=> Padding(padding: EdgeInsets.fromLTRB(20,10,20,20),child: Button(width: 327.w, height: 49.h, title: S().submit, textStyle: TextStyle(
+        builder: (context, provider, child)=> Padding(padding: const EdgeInsets.fromLTRB(20,10,20,20),child: Button(width: 327.w, height: 49.h, title: S().submit, textStyle: TextStyle(
           color: Colors.white,
           fontSize: 14.sp,
           fontFamily: AppConstant.FONTFAMILY,

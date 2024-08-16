@@ -1,11 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/network/api_helper.dart';
+
 import '../../constant/api_constant.dart';
 import '../../constant/app_constant.dart';
 import '../../generated/l10n.dart';
@@ -18,6 +16,8 @@ import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class MyGenralPostScreen extends StatefulWidget {
+  const MyGenralPostScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyGenralPost();
@@ -45,7 +45,7 @@ class MyGenralPost extends State<MyGenralPostScreen> {
 
 
   _buildPage(BuildContext context) {
-    return !isLoad || listOwnPost.length==0?Center(
+    return !isLoad || listOwnPost.isEmpty?const Center(
       child: Text("No Post Found"),
     ) :Column(
       children: [
@@ -78,9 +78,9 @@ class MyGenralPost extends State<MyGenralPostScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -94,7 +94,7 @@ class MyGenralPost extends State<MyGenralPostScreen> {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -141,7 +141,7 @@ class MyGenralPost extends State<MyGenralPostScreen> {
 
             }
             if(val==3){
-              String description= "'Type : ${ownData!.typeName!}, \nSubject : ${ownData.description}, \nPost Title : ${ownData!.title}, \nLink : https://api.tkdost.com/bids/?id=${ownData.id}'";
+              String description= "'Type : ${ownData.typeName!}, \nSubject : ${ownData.description}, \nPost Title : ${ownData.title}, \nLink : https://api.tkdost.com/bids/?id=${ownData.id}'";
               await Utils().callShareFunction(description);
            }
           })
@@ -155,7 +155,7 @@ class MyGenralPost extends State<MyGenralPostScreen> {
   void callApi() async{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     String url="${ApiConstant.BASE_URL}getBuySellByUserId?userId=${user.content!.first.id}";
-    print("the url ${url}");
+    print("the url $url");
     listOwnPost.clear();
     ApiResponse apiResponse=await ApiHelper().apiGet(url);
     print("the url ${apiResponse.response}");
@@ -213,7 +213,7 @@ class MyGenralPost extends State<MyGenralPostScreen> {
 
 
  deletePost(int index,BuildContext context)async{
-    String myUrl = ApiConstant.BASE_URL+'GeneralPost/deleteById?id=${listOwnPost[index].id!}';
+    String myUrl = '${ApiConstant.BASE_URL}GeneralPost/deleteById?id=${listOwnPost[index].id!}';
    ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
    if(apiResponse.status==200){
      listOwnPost.removeAt(index);
@@ -226,7 +226,7 @@ class MyGenralPost extends State<MyGenralPostScreen> {
 
  callRePost(int id )async{
 
-   String myUrl = ApiConstant.BASE_URL+'GeneralPost/repost?Id=$id';
+   String myUrl = '${ApiConstant.BASE_URL}GeneralPost/repost?Id=$id';
    print('the url $myUrl');
     ApiResponse apiResponse= await ApiHelper().apiPost(myUrl);
    if(apiResponse.status==200){

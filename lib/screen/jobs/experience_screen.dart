@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,6 +13,8 @@ import '../../widgets/button.dart';
 import '../../widgets/textview.dart';
 
 class ExperienceScreen extends StatelessWidget{
+  const ExperienceScreen({super.key});
+
 
 
   @override
@@ -109,7 +110,7 @@ class ExperienceScreen extends StatelessWidget{
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -118,7 +119,7 @@ class ExperienceScreen extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -134,7 +135,7 @@ class ExperienceScreen extends StatelessWidget{
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 24.w,
                               height: 24.h,
                               child: Stack(children: [
@@ -160,7 +161,7 @@ class ExperienceScreen extends StatelessWidget{
 
                                 border: InputBorder.none,
                                 hintStyle:TextStyle(
-                                  color: Color(0x662C363F),
+                                  color: const Color(0x662C363F),
                                   fontSize: 14.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
@@ -207,7 +208,7 @@ class ExperienceScreen extends StatelessWidget{
         padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
         decoration: BoxDecoration(
           color: provider.checkSelecte(index)?ThemeColor.select_green:ThemeColor.white,
-          border: Border(
+          border: const Border(
 
             bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
           ),
@@ -232,7 +233,7 @@ class ExperienceScreen extends StatelessWidget{
               ),
 
             ),
-            provider.checkSelecte(index) ? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):SizedBox()
+            provider.checkSelecte(index) ? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):const SizedBox()
           ],
         ),
       ),
@@ -250,9 +251,9 @@ class ExperienceScreen extends StatelessWidget{
       height: 32.h,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x332C363F),
+        color: const Color(0x332C363F),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+          side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8.r),
         ),
       ),
@@ -270,8 +271,8 @@ class ExperienceScreen extends StatelessWidget{
                 height: double.infinity,
                 padding:  EdgeInsets.symmetric(horizontal: 12.w),
                 decoration: ShapeDecoration(
-                  color: provider.onFrom?Colors.white:Color(0x19001E49),
-                  shape: RoundedRectangleBorder(
+                  color: provider.onFrom?Colors.white:const Color(0x19001E49),
+                  shape: const RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
                 ),
@@ -283,7 +284,7 @@ class ExperienceScreen extends StatelessWidget{
                     Text(
                       S().from,
                       style: TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: provider.onFrom?FontWeight.w400:FontWeight.w600,
@@ -303,8 +304,8 @@ class ExperienceScreen extends StatelessWidget{
                 height: double.infinity,
                 padding:  EdgeInsets.symmetric(horizontal: 12.w),
                 decoration: ShapeDecoration(
-                  color: !provider.onFrom?Colors.white:Color(0x19001E49),
-                  shape: RoundedRectangleBorder(
+                  color: !provider.onFrom?Colors.white:const Color(0x19001E49),
+                  shape: const RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
                 ),
@@ -316,7 +317,7 @@ class ExperienceScreen extends StatelessWidget{
                     Text(
                       S().to,
                       style: TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight:  !provider.onFrom?FontWeight.w400:FontWeight.w600,

@@ -8,8 +8,6 @@ import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
-import 'package:tkd_connect/utils/utils.dart';
-import 'package:tkd_connect/utils/validation.dart';
 
 import '../../constant/app_constant.dart';
 import '../../model/response/verification_send_otp.dart';
@@ -48,7 +46,7 @@ class KycProvider extends BaseProvider{
 
   createToken(BuildContext context)async{
     Map<String,dynamic>parameter={"version":1.0};
-    ApiResponse apiResponse =await ApiHelper().apiPost(ApiConstant.ADHAR_CREATE_TOKEN+"?version=1.0");
+    ApiResponse apiResponse =await ApiHelper().apiPost("${ApiConstant.ADHAR_CREATE_TOKEN}?version=1.0");
     print('the parameter ${apiResponse.status}');
     if(apiResponse.status==200){
       print('the parameter ${apiResponse.response}');
@@ -63,7 +61,7 @@ class KycProvider extends BaseProvider{
 
 
   sendOTPtoMobile(BuildContext context)async{
-    ApiResponse apiResponse =await ApiHelper().apiPost(ApiConstant.ADHAR_SEND_OTP+"?access-token=$tokenId&adharNumber=${adharNumberController.text}");
+    ApiResponse apiResponse =await ApiHelper().apiPost("${ApiConstant.ADHAR_SEND_OTP}?access-token=$tokenId&adharNumber=${adharNumberController.text}");
     print('the Send parameter ${apiResponse.status}');
     if(apiResponse.status==200){
       VerficationSendOTP verficationSendOTP=VerficationSendOTP.fromJson(apiResponse.response);
@@ -80,7 +78,7 @@ class KycProvider extends BaseProvider{
     User user=await LocalSharePreferences().getLoginData();
     String otp=otpController1.text+otpController2.text+otpController3.text+otpController4.text+otpController5.text+otpController6.text;
     print('the user id${user.content!.first.id}');
-    ApiResponse apiResponse =await ApiHelper().apiPost(ApiConstant.ADHAR_VERFIY_OTP+"?Authorization=$tokenId&otp=${otp}&refId=$refId&userId=${user.content!.first.id}");
+    ApiResponse apiResponse =await ApiHelper().apiPost("${ApiConstant.ADHAR_VERFIY_OTP}?Authorization=$tokenId&otp=$otp&refId=$refId&userId=${user.content!.first.id}");
     print('the Send parameter ${apiResponse.response}');
     if(apiResponse.status==200){
       print('response is  ${apiResponse.status}');

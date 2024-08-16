@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Textview extends StatelessWidget {
  final String title;
-  TextStyle style= TextStyle(
+
+ TextStyle style= const TextStyle(
    color: Colors.white,
    fontSize: 8,
    fontFamily: 'Poppins',

@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:google_places_flutter/model/prediction.dart';
+import 'package:http/http.dart' as http;
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/toast.dart';
-import 'package:http/http.dart' as http;
+
 import '../../model/request/route_request.dart';
 import '../../model/response/city_selection.dart';
 
@@ -229,9 +229,9 @@ class SelectCityProvider extends BaseProvider {
   }
 
   Future<void> fetchCities(String name) async {
-    final apiKey = AppConstant.GOOGLE_KEY;
+    const apiKey = AppConstant.GOOGLE_KEY;
     final url =//'https://maps.googleapis.com/maps/api/place/nearbysearch/json?${name}';
-       'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${name}&types=city&key=$apiKey';
+       'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$name&types=city&key=$apiKey';
     print(url);
 
     final response = await http.get(Uri.parse(url));

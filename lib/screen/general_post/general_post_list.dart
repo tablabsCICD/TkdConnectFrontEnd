@@ -1,24 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/general_post_model.dart';
 import 'package:tkd_connect/model/response/job_list.dart';
 import 'package:tkd_connect/provider/general_post/general_post_provider.dart';
-import 'package:tkd_connect/provider/jobs/job_list_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
-import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
-import '../../route/app_routes.dart';
 
 class GeneralPostScreen extends StatefulWidget {
+  const GeneralPostScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _GeneralPostState();
@@ -90,9 +87,9 @@ class _GeneralPostState extends State<GeneralPostScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -120,7 +117,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                    style: TextStyle(
                      fontSize:15.sp,
                      fontWeight: FontWeight.w600,
-                     color: Color(0xff000000),
+                     color: const Color(0xff000000),
                    ),
                   ),
                   subtitle: Text(
@@ -128,12 +125,12 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                     style: TextStyle(
                       fontSize:15.sp,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xff818080),
+                      color: const Color(0xff818080),
                     ),
                   ),
                 ),
                 SizedBox(height: 16.h,),
-                Divider(),
+                const Divider(),
                 SizedBox(height: 16.h,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -147,7 +144,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                         Text(
                           S().like,
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 14.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
@@ -157,7 +154,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                         Text(
                           '0',
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 14.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -173,7 +170,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                         Text(
                           S().comment,
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 14.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
@@ -183,7 +180,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                         Text(
                           '0',
                           style: TextStyle(
-                            color: Color(0xFF001E49),
+                            color: const Color(0xFF001E49),
                             fontSize: 14.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -221,7 +218,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x33001E49)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -233,7 +230,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
                   Text(
                     'Call now',
                     style: TextStyle(
-                      color: Color(0xFF001E49),
+                      color: const Color(0xFF001E49),
                       fontSize: 12.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
@@ -248,7 +245,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
           SizedBox(width: 12.w),
           InkWell(
               onTap: (){
-                String Message="I am writing to express my strong interest in the "+jobData.postJob!.jobDepartment!+" From TKD Connect Application";
+                String Message="I am writing to express my strong interest in the ${jobData.postJob!.jobDepartment!} From TKD Connect Application";
                 Utils().openwhatsapp(context, jobData.postJob!.contactNumber!, Message);
               },
               child: SvgPicture.asset(Images.message_job)),

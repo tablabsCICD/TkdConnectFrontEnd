@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/screen/kyc/kyc_screen_two.dart';
-import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
-import '../../route/app_routes.dart';
 import '../../widgets/button.dart';
 
 class KYCScreenOne extends StatefulWidget{
+  const KYCScreenOne({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _KYCScreenOne();
@@ -79,7 +78,7 @@ class _KYCScreenOne extends State<KYCScreenOne>{
                   'Please help us verify your identity in order to keep the community secure',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0x99001E49),
+                    color: const Color(0x99001E49),
                     fontSize: 14.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w400,
@@ -118,7 +117,7 @@ class _KYCScreenOne extends State<KYCScreenOne>{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child: KYCScreenTwo());
+          return const FractionallySizedBox(heightFactor:0.7,child: KYCScreenTwo());
         });
 
   }

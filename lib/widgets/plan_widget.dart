@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tkd_connect/screen/plan/plan_details_screen.dart';
 import 'package:tkd_connect/utils/colors.dart';
-
-import '../constant/images.dart';
 
 class PlanWidget extends StatelessWidget{
   bool isSelected;
@@ -42,7 +38,7 @@ class PlanWidget extends StatelessWidget{
          SvgPicture.asset(image),
 
          Expanded(
-           child: Container(
+           child: SizedBox(
              height: 52.h,
              child: Row(
                mainAxisSize: MainAxisSize.min,
@@ -99,7 +95,7 @@ class PlanWidget extends StatelessWidget{
                        mainAxisAlignment: MainAxisAlignment.start,
                        crossAxisAlignment: CrossAxisAlignment.end,
                        children: [
-                         Container(
+                         SizedBox(
                            width: double.infinity,
                            child: Row(
                              mainAxisSize: MainAxisSize.min,
@@ -135,7 +131,7 @@ class PlanWidget extends StatelessWidget{
                            child: Container(
                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                              decoration: ShapeDecoration(
-                               color: Color(0x19001E49),
+                               color: const Color(0x19001E49),
                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                              ),
                              child: Row(
@@ -145,7 +141,7 @@ class PlanWidget extends StatelessWidget{
                                children: [
                                  Text(
                                    subtitle,
-                                   style: TextStyle(
+                                   style: const TextStyle(
                                      color: Color(0xCC001E49),
                                      fontSize: 10,
                                      fontFamily: 'Poppins',

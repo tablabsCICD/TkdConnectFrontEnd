@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +12,8 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 
 class SearchEditScreen extends StatefulWidget {
+  const SearchEditScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SearchEditState();
@@ -54,9 +55,9 @@ class _SearchEditState extends State<SearchEditScreen> {
                 ),
               ),
 
-              SizedBox(height: 14,),
+              const SizedBox(height: 14,),
 
-              Container(
+              SizedBox(
                 width: 320.w,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,7 +85,7 @@ class _SearchEditState extends State<SearchEditScreen> {
                 ),
               ),
 
-              listSuggestes.isEmpty?Expanded(child: Center(child: Text("No Data found"),),):Expanded(
+              listSuggestes.isEmpty?const Expanded(child: Center(child: Text("No Data found"),),):Expanded(
             child: ListView.builder(
 
                 itemCount: listSuggestes.length,
@@ -129,7 +130,7 @@ class _SearchEditState extends State<SearchEditScreen> {
             child: textFiled(),
           ),
           SizedBox(width: 8.w),
-          Spacer(),
+          const Spacer(),
           Visibility(
               visible: isCloseVisible,
               child: InkWell(
@@ -159,7 +160,7 @@ class _SearchEditState extends State<SearchEditScreen> {
       child: TextField(
          controller: controller,
         onChanged: (value) {
-          if (value.length > 0) {
+          if (value.isNotEmpty) {
             isCloseVisible=true;
           } else {
             isCloseVisible=false;
@@ -170,14 +171,10 @@ class _SearchEditState extends State<SearchEditScreen> {
            listSuggestes.add(val);
           String lastSearch=await LocalSharePreferences().getString(AppConstant.RESENT_SEARCH);
 
-          if(lastSearch!=null){
-            print('the last search is $lastSearch');
-            String value=val+","+lastSearch;
-            LocalSharePreferences().setString(AppConstant.RESENT_SEARCH, value);
-          }else{
-            LocalSharePreferences().setString(AppConstant.RESENT_SEARCH, val);
-          }
-          setState(() {
+          print('the last search is $lastSearch');
+          String value="$val,$lastSearch";
+          LocalSharePreferences().setString(AppConstant.RESENT_SEARCH, value);
+                  setState(() {
 
           });
 
@@ -192,7 +189,7 @@ class _SearchEditState extends State<SearchEditScreen> {
             hintText: S().search_here,
             border: InputBorder.none,
             hintStyle: TextStyle(
-              color: Color(0x662C363F),
+              color: const Color(0x662C363F),
               fontSize: 14.sp,
               fontFamily: GoogleFonts.poppins().fontFamily,
               fontWeight: FontWeight.w400,
@@ -214,7 +211,7 @@ class _SearchEditState extends State<SearchEditScreen> {
       width: 375.w,
       height: 50.h,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           bottom: BorderSide(width: 1, color: Color(0x192C363F)),
@@ -230,7 +227,7 @@ class _SearchEditState extends State<SearchEditScreen> {
               onTap: (){
                 Navigator.pushNamed(context, AppRoutes.searchresult,arguments: val);
               },
-              child: Container(
+              child: SizedBox(
                 height: 18.h,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -263,20 +260,17 @@ class _SearchEditState extends State<SearchEditScreen> {
   getSuggestions()async{
     String lastSearch=await LocalSharePreferences().getString(AppConstant.RESENT_SEARCH);
 
-    if(lastSearch!=null){
-      List<String>listDemo=lastSearch.split(",");
-      for(int i=0;i<listDemo.length;i++){
-        if(listDemo[i]==""){
-        }else{
-          listSuggestes.add(listDemo[i]);
-        }
+    List<String>listDemo=lastSearch.split(",");
+    for(int i=0;i<listDemo.length;i++){
+      if(listDemo[i]==""){
+      }else{
+        listSuggestes.add(listDemo[i]);
       }
-
-      setState(() {
-
-      });
-
     }
+
+    setState(() {
+
+    });
   }
 
 

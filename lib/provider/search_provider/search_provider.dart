@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:http/http.dart' as http;
 import 'package:tkd_connect/model/response/transport_directory_search.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
-import 'package:http/http.dart' as http;
+
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/response/AllCard.dart';
@@ -42,7 +43,7 @@ class SearchProvider extends BaseProvider{
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
 
     EasyLoading.show(status: "Loading");
-    String url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&search=${search}&loggedUserId=${user.content!.first.id}';
+    String url = '${ApiConstant.FULL_LOAD_ALL_CARD}?page=$currentPage&size=10&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr&search=$search&loggedUserId=${user.content!.first.id}';
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
 

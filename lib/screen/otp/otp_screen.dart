@@ -1,15 +1,12 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:tkd_connect/provider/otp_provider/otp_provider.dart';
-import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/button.dart';
+
 import '../../generated/l10n.dart';
 import '../../widgets/otp_textview.dart';
 
@@ -123,7 +120,7 @@ class _OTPScreen extends State<OTPScreen> {
       mergeMode: true,
       onGetText: (double value) {
         return Text(
-          '${provider.timeRemaning}',
+          provider.timeRemaning,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: ThemeColor.theme_blue,
@@ -170,7 +167,7 @@ class _OTPScreen extends State<OTPScreen> {
       onTap: (){
         Navigator.of(context).pop();
       },
-      child: Container(
+      child: SizedBox(
         width: 118.w,
         height: 24.h,
         child: Row(
@@ -306,7 +303,7 @@ class _OTPScreen extends State<OTPScreen> {
   resendOTP() {
     return Consumer<OtpProvider>(
   builder: (context, provider, child) {
-  return Container(
+  return SizedBox(
       width: 335.w,
       height: 24.h,
       child: Row(
@@ -314,7 +311,7 @@ class _OTPScreen extends State<OTPScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 335.w,
             child: Row(
               mainAxisSize: MainAxisSize.min,

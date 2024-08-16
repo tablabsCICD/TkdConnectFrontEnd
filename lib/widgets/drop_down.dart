@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tkd_connect/constant/images.dart';
@@ -24,7 +23,7 @@ class DropDown extends StatelessWidget{
        decoration: ShapeDecoration(
          color: Colors.white,
          shape: RoundedRectangleBorder(
-           side: BorderSide(width: 1, color: Color(0x332C363F)),
+           side: const BorderSide(width: 1, color: Color(0x332C363F)),
            borderRadius: BorderRadius.circular(8),
          ),
        ),
@@ -33,7 +32,7 @@ class DropDown extends StatelessWidget{
          mainAxisAlignment: MainAxisAlignment.center,
          crossAxisAlignment: CrossAxisAlignment.start,
          children: [
-           Container(
+           SizedBox(
              width: double.infinity,
              child: Row(
                mainAxisSize: MainAxisSize.min,
@@ -45,7 +44,7 @@ class DropDown extends StatelessWidget{
                      child: Text(
                        hint,
                        style: TextStyle(
-                         color: hint.allMatches("Select One")==0?Color(0x662C363F):Colors.black,
+                         color: hint.allMatches("Select One")==0?const Color(0x662C363F):Colors.black,
                          fontSize: 14,
                          fontFamily: 'Poppins',
                          fontWeight: FontWeight.w400,
@@ -55,7 +54,7 @@ class DropDown extends StatelessWidget{
                    ),
                  ),
                  const SizedBox(width: 8),
-                 Container(
+                 SizedBox(
                    width: 24,
                    height: 24,
                    child: Stack(children: [

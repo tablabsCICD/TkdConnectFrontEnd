@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -11,7 +8,6 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
 import '../constant/api_constant.dart';
-import '../constant/app_constant.dart';
 import '../model/request/loadpost.dart';
 import '../model/request/post_load.dart';
 import '../route/app_routes.dart';
@@ -67,12 +63,12 @@ class RazorPayClassLoad {
       'key': 'rzp_live_LraIKZvldr9N1J',
       'amount': amount, //in the smallest currency sub-unit.
       'name': 'Post Load.',
-      'order_id': '$orderID', // Generate order_id using Orders API
+      'order_id': orderID, // Generate order_id using Orders API
       'description': 'TKD',
       'timeout': 90, // in seconds
       'prefill': {
         'contact': '$contact',
-        'email': '$email'
+        'email': email
       }
     };
     razorpay.on(
@@ -108,11 +104,11 @@ class RazorPayClassLoad {
     * 3. Signature
     * */
     print(response.data.toString());
-    String razorpay_signature=response.data!["razorpay_signature"];
-    String  razorpay_order_id=response.data!["razorpay_order_id"];
+    String razorpaySignature=response.data!["razorpay_signature"];
+    String  razorpayOrderId=response.data!["razorpay_order_id"];
     String? paymentId=response.paymentId;
 
-    callSignature(razorpay_signature,razorpay_order_id,paymentId);
+    callSignature(razorpaySignature,razorpayOrderId,paymentId);
 
 
 
@@ -143,7 +139,7 @@ class RazorPayClassLoad {
     );
   }
 
-  void callSignature(String razorpay_signature,String  razorpay_order_id,String? paymentId)async {
+  void callSignature(String razorpaySignature,String  razorpayOrderId,String? paymentId)async {
     User user=await LocalSharePreferences().getLoginData();
 
     LoadPay loadPay=LoadPay();
@@ -151,8 +147,8 @@ class RazorPayClassLoad {
     RazorPayObject objetRazorPay=RazorPayObject();
     objetRazorPay.userId=user.content!.first.id;
     objetRazorPay.plan=user.content!.first.isPaid;
-    objetRazorPay.razorPayOrderId=razorpay_order_id;
-    objetRazorPay.signature=razorpay_signature;
+    objetRazorPay.razorPayOrderId=razorpayOrderId;
+    objetRazorPay.signature=razorpaySignature;
     objetRazorPay.transactionId=paymentId;
     loadPay.razorPayObject=objetRazorPay;
     ApiResponse response=await ApiHelper().postParameter(ApiConstant.LOAD_PAYMENT_SIGNATURE, loadPay.toJson());

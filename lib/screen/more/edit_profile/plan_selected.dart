@@ -1,19 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/edit_profile/edit_profile_provider.dart';
 import 'package:tkd_connect/screen/kyc/kyc_screen_one.dart';
-import 'package:tkd_connect/utils/colors.dart';
-import 'package:tkd_connect/widgets/linear_progress.dart';
-import 'package:tkd_connect/widgets/sign_in_widget.dart';
 
 import '../../../constant/images.dart';
-import '../../../widgets/button.dart';
 import '../../../widgets/plan_widget.dart';
-import '../../../widgets/textview.dart';
 
 class SelectPlanScreenEdit extends StatefulWidget{
 
@@ -70,7 +62,7 @@ class _SelectPlanScreen extends State<SelectPlanScreenEdit>{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(heightFactor:0.7,child: KYCScreenOne());
+          return const FractionallySizedBox(heightFactor:0.7,child: KYCScreenOne());
         });
 
   }

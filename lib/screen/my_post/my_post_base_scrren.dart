@@ -1,13 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tkd_connect/screen/create_post/post_genral.dart';
-import 'package:tkd_connect/screen/create_post/post_load.dart';
-import 'package:tkd_connect/screen/create_post/post_sponsered.dart';
-import 'package:tkd_connect/screen/create_post/post_vehicale.dart';
-import 'package:tkd_connect/screen/my_post/my_post.dart';
+
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../utils/colors.dart';
@@ -18,6 +12,8 @@ import 'my_jobs.dart';
 import 'my_post_two.dart';
 
 class MyPostBase extends StatefulWidget {
+  const MyPostBase({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MyPostBase();
@@ -42,7 +38,7 @@ class _MyPostBase extends State<MyPostBase>{
       body: Container(
         width: MediaQuery.of(context).size.width,
         color: ThemeColor.baground,
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: Column(
 
           children: [
@@ -51,10 +47,10 @@ class _MyPostBase extends State<MyPostBase>{
             SizedBox(height: 20.h,),
             tabs(),
             SizedBox(height: 4.h,),
-            Visibility(visible: isLoad,child: Expanded(child: MyPostScreenTwo())),
-            Visibility(visible: isGeneralPost,child: Expanded(child: MyGenralPostScreen())),
-            Visibility(visible: isBuySell,child: Expanded(child: MyBuySellPostScreen())),
-            Visibility(visible: isJob,child: Expanded(child: MyJobPostScreen()))
+            Visibility(visible: isLoad,child: const Expanded(child: MyPostScreenTwo())),
+            Visibility(visible: isGeneralPost,child: const Expanded(child: MyGenralPostScreen())),
+            Visibility(visible: isBuySell,child: const Expanded(child: MyBuySellPostScreen())),
+            Visibility(visible: isJob,child: const Expanded(child: MyJobPostScreen()))
 
 
           ],
@@ -72,9 +68,9 @@ class _MyPostBase extends State<MyPostBase>{
       height: 32.h,
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x332C363F),
+        color: const Color(0x332C363F),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.75, color: Color(0x332C363F)),
+          side: const BorderSide(width: 0.75, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -107,7 +103,7 @@ class _MyPostBase extends State<MyPostBase>{
 
 
           }),
-          tabItem(isBuySell,S().buy+"/"+S().sell,(){
+          tabItem(isBuySell,"${S().buy}/${S().sell}",(){
             isLoad=false;
             isGeneralPost=false;
             isBuySell=true;
@@ -147,7 +143,7 @@ class _MyPostBase extends State<MyPostBase>{
           decoration: ShapeDecoration(
             color: isSelect?ThemeColor.theme_blue:ThemeColor.white,
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: isSelect?Color(0x332C363F):ThemeColor.white),
+              side: BorderSide(color: isSelect?const Color(0x332C363F):ThemeColor.white),
             ),
           ),
           child: Column(

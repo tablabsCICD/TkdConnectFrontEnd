@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,10 +9,11 @@ import 'package:tkd_connect/screen/my_bids/placed_bid_screen.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
-import '../../widgets/card/base_widgets.dart';
 import 'recived_bid_screen.dart';
 
 class MyBidsBaseScreen extends StatefulWidget {
+  const MyBidsBaseScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MyBidsBaseScreenState();
@@ -79,7 +79,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
           width: MediaQuery.of(context).size.width,
           height: 137.h,
           //padding: const EdgeInsets.only(bottom: 16),
-          decoration: ShapeDecoration(
+          decoration: const ShapeDecoration(
             color: Color(0xFFC3262C),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -93,7 +93,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 92.h,
                 child: Column(
@@ -121,9 +121,9 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                 height: 32.h,
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
-                                  color: Color(0x332C363F),
+                                  color: const Color(0x332C363F),
                                   shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Color(0xCCC3262C)),
+                                    side: const BorderSide(color: Color(0xCCC3262C)),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
@@ -138,8 +138,8 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 12.h),
                                         decoration: ShapeDecoration(
-                                          color: provider.isMyPlacedBids?Colors.white:Color(0xFF9D1C21),
-                                          shape: RoundedRectangleBorder(
+                                          color: provider.isMyPlacedBids?Colors.white:const Color(0xFF9D1C21),
+                                          shape: const RoundedRectangleBorder(
                                             side: BorderSide(
                                                 color: Color(0x332C363F)),
                                           ),
@@ -154,7 +154,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                             Text(
                                               S().quotesYouPlaced,
                                               style: TextStyle(
-                                                color:provider.isMyPlacedBids? Color(0xFFC3262C):Colors.white,
+                                                color:provider.isMyPlacedBids? const Color(0xFFC3262C):Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: AppConstant.FONTFAMILY,
                                                 fontWeight: provider.isMyPlacedBids?FontWeight.w600:FontWeight.w400,
@@ -176,8 +176,8 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 12.h),
                                           decoration: ShapeDecoration(
-                                            color: provider.isMyPlacedBids?Color(0xFF9D1C21):Colors.white,
-                                            shape: RoundedRectangleBorder(
+                                            color: provider.isMyPlacedBids?const Color(0xFF9D1C21):Colors.white,
+                                            shape: const RoundedRectangleBorder(
                                               side: BorderSide(
                                                   color: Color(0x332C363F)),
                                             ),
@@ -192,7 +192,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                               Text(
                                                 S().quotesYouReceived,
                                                 style: TextStyle(
-                                                  color:provider.isMyPlacedBids? Colors.white:Color(0xFFC3262C),
+                                                  color:provider.isMyPlacedBids? Colors.white:const Color(0xFFC3262C),
                                                   fontSize: 12,
                                                   fontFamily: AppConstant.FONTFAMILY,
                                                   fontWeight:provider.isMyPlacedBids? FontWeight.w400:FontWeight.w600,
@@ -228,7 +228,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
   return Container(
       //transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -248,7 +248,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                     decoration: ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: Color(0x332C363F)),
+                        side: const BorderSide(width: 1, color: Color(0x332C363F)),
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
@@ -257,7 +257,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -267,8 +267,8 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                               Expanded(
                                 child: SizedBox(
                                   child: Text(
-                                    '${provider.selectedString}',
-                                    style: TextStyle(
+                                    provider.selectedString,
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
                                       fontFamily: 'Poppins',
@@ -279,7 +279,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                 ),
                               ),
                               SizedBox(width: 8.w),
-                              Container(
+                              SizedBox(
                                 width: 24.w,
                                 height: 24.h,
                                 child: Stack(children: [
@@ -314,10 +314,10 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
           constraints:
           BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+            side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8.r),
           ),
-          child: Container(
+          child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: dropDwon()),
           onSelected: (dynamic val) {
@@ -328,7 +328,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
               onTap: () {
                 provider.changeDropDown("All bids",context);
               },
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [

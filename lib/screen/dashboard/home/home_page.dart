@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +11,7 @@ import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/textview.dart';
+
 import '../../../generated/l10n.dart';
 import '../../../model/response/AllCard.dart';
 import '../../../utils/utils.dart';
@@ -30,6 +30,8 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
 {
   late HomeScreenProvider homeScreenProvider;
   late BuildContext context;
+
+  HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -57,8 +59,8 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 SizedBox(
                   width: 11.5.w,
                 ),
-                provider.filterisVisible ? SizedBox() : filterBox(),
-                provider.filterisVisible ? routeSelect() : SizedBox(),
+                provider.filterisVisible ? const SizedBox() : filterBox(),
+                provider.filterisVisible ? routeSelect() : const SizedBox(),
                // listCard(),
             Expanded(
               child: RefreshIndicator(
@@ -169,7 +171,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             padding: EdgeInsets.symmetric(horizontal: 24.h),
             decoration: ShapeDecoration(
               color: ThemeColor.red,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16),
@@ -282,7 +284,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 SizedBox(
                   height: provider.filterisVisible ? 16 : 0,
                 ),
-                provider.filterisVisible ? filterBox() : SizedBox(),
+                provider.filterisVisible ? filterBox() : const SizedBox(),
               ],
             ));
       },
@@ -290,7 +292,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
   }
 
   switchNewAppOldApp() {
-    return Container(
+    return SizedBox(
       width: 136.w,
       height: 28.h,
       //clipBehavior: Clip.antiAlias,
@@ -377,7 +379,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -386,7 +388,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -407,7 +409,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                         ),
                       ),
                       SizedBox(width: 8.w),
-                      Container(
+                      SizedBox(
                         width: 24.w,
                         height: 24.h,
                         child: Stack(children: [
@@ -455,7 +457,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 Align(
                     alignment: Alignment.center,
                     child: Container(
-                        margin: EdgeInsets.only(top: 5),
+                        margin: const EdgeInsets.only(top: 5),
                         child: SvgPicture.asset(Images.route_return_home))),
               ],
             ),
@@ -474,7 +476,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+          side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -483,7 +485,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -492,7 +494,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
               children: [
                 Opacity(
                   opacity: 0.40,
-                  child: Container(
+                  child: SizedBox(
                     width: 24.w,
                     height: 24.h,
                     child: Row(
@@ -500,7 +502,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 24.w,
                           height: 24.h,
                           child: Stack(
@@ -517,7 +519,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: '$cityName',
+                            text: cityName,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12.sp,
@@ -565,7 +567,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -589,10 +591,10 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             width: 265.w,
           ),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+            side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8.r),
           ),
-          child: Container(width: 265.w, child: dropDown()),
+          child: SizedBox(width: 265.w, child: dropDown()),
           onSelected: (dynamic val) {
             //onMenuTap(val);
           },
@@ -605,7 +607,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 provider.notifyListeners();
                 provider.applyDropDwonFilter(context);
               },
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   children: [
@@ -786,9 +788,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
     );
   }
   refreshHome(){
-    if(homeScreenProvider!=null){
-      homeScreenProvider.callDashboradApi(context,0);
-    }
+    homeScreenProvider.callDashboradApi(context,0);
   }
 
   @override

@@ -1,16 +1,15 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:http/http.dart' as http;
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/request/post_load.dart';
-import 'package:tkd_connect/model/response/comment_response.dart';
 import 'package:tkd_connect/model/response/oneadd.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
-import 'package:http/http.dart' as http;
+
 import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/AllCard.dart';
@@ -53,7 +52,7 @@ class HomeScreenProvider extends BaseProvider{
 
 
 
-
+  //this method for the set the filters to home page
   onCliclFilter(BuildContext context){
     if(filterisVisible){
       filterisVisible=false;
@@ -84,35 +83,35 @@ class HomeScreenProvider extends BaseProvider{
       // bool  bool fla = false,pla = false,flr = false,plr = false,gp=false,buy_sell=false,jobs=false; = false,pla = false,flr = false,plr = false,gp=false,buy_sell=false,jobs=false;
       if(!fla && !pla && !flr & !plr &!gp & ! buy_sell  &!jobs){
       //  url = ApiConstant.ALL_CARD +'?page=${currentPage}&size=10';//&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
-        url = ApiConstant.ALL_CARD(user.content!.first!.id,currentPage);//&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+        url = ApiConstant.ALL_CARD(user.content!.first.id,currentPage);//&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
 
       }else{
         if(fla){
-          url=ApiConstant.FULL_LOAD_AVILABLE(user.content!.first!.id,currentPage);
+          url=ApiConstant.FULL_LOAD_AVILABLE(user.content!.first.id,currentPage);
         }else if(pla){
-          url=ApiConstant.PART_LOAD_AVILABLE(user.content!.first!.id,currentPage);
+          url=ApiConstant.PART_LOAD_AVILABLE(user.content!.first.id,currentPage);
         }else if(flr){
-          url=ApiConstant.FULL_LOAD_REQUIRED(user.content!.first!.id,currentPage);
+          url=ApiConstant.FULL_LOAD_REQUIRED(user.content!.first.id,currentPage);
         }else if(plr){
-          url=ApiConstant.PART_LOAD_REQUIRED(user.content!.first!.id,currentPage);
+          url=ApiConstant.PART_LOAD_REQUIRED(user.content!.first.id,currentPage);
         }else if(gp){
-          url=ApiConstant.General_POST_HOMEPAGE(user.content!.first!.id,currentPage);
+          url=ApiConstant.General_POST_HOMEPAGE(user.content!.first.id,currentPage);
         }else if(buy_sell){
-          url=ApiConstant.BUYSELL_HOMEPAGE(user.content!.first!.id,currentPage);
+          url=ApiConstant.BUYSELL_HOMEPAGE(user.content!.first.id,currentPage);
         }else if(jobs){
-          url=ApiConstant.JOBS_HOMEPAGE(user.content!.first!.id,currentPage);
+          url=ApiConstant.JOBS_HOMEPAGE(user.content!.first.id,currentPage);
         }else{
-          url = ApiConstant.FULL_LOAD_ALL_CARD +'?page=${currentPage}&size=50&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+          url = '${ApiConstant.FULL_LOAD_ALL_CARD}?page=$currentPage&size=50&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
         }
       }
 
     }else{
    if(fromCity != "All" && toCity!="All"){
-        url = ApiConstant.HOMEPAGE_FILTER +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+        url = '${ApiConstant.HOMEPAGE_FILTER}?page=$currentPage&size=10&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr&source=$fromCity&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
       }else if(fromCity != "All" && toCity=="All"){
-        url = ApiConstant.HOMEPAGE_FILTER +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&source=$fromCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+        url = '${ApiConstant.HOMEPAGE_FILTER}?page=$currentPage&size=10&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr&source=$fromCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
            }else{
-        url = ApiConstant.HOMEPAGE_FILTER +'?page=${currentPage}&size=10&fullLoadAvailable=${fla}&fullLoadRequired=${flr}&partLoadAvailable=${pla}&partLoadRequired=${plr}&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
+        url = '${ApiConstant.HOMEPAGE_FILTER}?page=$currentPage&size=10&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr&destination=$toCity&loggedUserId=${user.content!.first.id}&generalPost=$gp&postJob=$jobs&buySell=$buy_sell';
       }
 
     }
@@ -139,29 +138,6 @@ class HomeScreenProvider extends BaseProvider{
   getUserListFromString(String userList){
     List<String> addedUserListInPost = userList.split(',').map((e) => e.trim()).toList();
 
-  }
-
-  likeIncreamentApi(int postId, BuildContext context)async{
-
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    EasyLoading.show(status: "Loading");
-    String url=ApiConstant.BASE_URL+"GeneralPost/incrementLike?postId=${postId}";
-
-   // print('the url $url');
-
-    var req = await http.post(Uri.parse(url));
-   if(req.statusCode == 200) {
-     var response = json.decode(req.body);
-      if(response['success']==true){
-        //
-
-
-      }else{
-       // print(response['message']);
-      }
-      EasyLoading.dismiss();
-      notifyListeners();
-    }
   }
 
 
@@ -219,17 +195,11 @@ class HomeScreenProvider extends BaseProvider{
     //notifyListeners();
   }
 
-  // pullRefresh(BuildContext context){
-  //   selectedPage=0;
-  //   truckLoadTypeList.clear();
-  //   notifyListeners();
-  //   callDashboradApi(context, 0);
-  //
-  // }
+
 
 
   deletePost(int index,int id,BuildContext context)async{
-    String myUrl = ApiConstant.BASE_URL+'fullTruckLoad?id=${id}';
+    String myUrl = '${ApiConstant.BASE_URL}fullTruckLoad?id=$id';
 
     ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
     if(apiResponse.status==200){
@@ -246,7 +216,7 @@ class HomeScreenProvider extends BaseProvider{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(
+          return const FractionallySizedBox(
               heightFactor: 0.9, child: SelectOneCityScreen());
         });
     fromCity=routeRequest.startLocation;
@@ -262,7 +232,7 @@ class HomeScreenProvider extends BaseProvider{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(
+          return const FractionallySizedBox(
               heightFactor: 0.9, child: SelectOneCityScreen());
         });
     toCity=routeRequest.startLocation;
@@ -276,7 +246,7 @@ class HomeScreenProvider extends BaseProvider{
   callToken()async {
    // user=await LocalSharePreferences.localSharePreferences.getLoginData();
      String? token=await FirebaseMessaging.instance.getToken();
-    ApiResponse result=await ApiHelper().apiPost(ApiConstant.UPDATE_DEVICE_ID+"?userId=${user.content!.first.id}"+"&deviceId=${token}");
+    ApiResponse result=await ApiHelper().apiPost("${ApiConstant.UPDATE_DEVICE_ID}?userId=${user.content!.first.id}&deviceId=$token");
     if(result.status==200){
       return "Success";
     }
@@ -286,7 +256,7 @@ class HomeScreenProvider extends BaseProvider{
 
 
   reSendPost(BuildContext context,TruckLoad load)async {
-    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${load.id}&interchange=${false}");
+    ApiResponse apiResponse=await ApiHelper().apiPost("${ApiConstant.BASE_URL}repost?id=${load.id}&interchange=${false}");
     if(apiResponse.status==200){
       PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
       if(postUpload.statusCode==401){
@@ -302,7 +272,7 @@ class HomeScreenProvider extends BaseProvider{
   }
 
   interChnageSendPost(BuildContext context,TruckLoad load) async{
-    ApiResponse apiResponse=await ApiHelper().apiPost(ApiConstant.BASE_URL+"repost?id=${load.id}&interchange=${true}");
+    ApiResponse apiResponse=await ApiHelper().apiPost("${ApiConstant.BASE_URL}repost?id=${load.id}&interchange=${true}");
     if(apiResponse.status==200){
       PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
       if(postUpload.statusCode==401){
@@ -325,15 +295,15 @@ class HomeScreenProvider extends BaseProvider{
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad=PostLoad();
-    postLoad.contactNumber= user.content!.first!.mobileNumber! ;
+    postLoad.contactNumber= user.content!.first.mobileNumber! ;
 
     postLoad.dnd =load.dnd;
-    postLoad.emailId=user.content!.first!.emailId!;
+    postLoad.emailId=user.content!.first.emailId!;
     postLoad.fullLoadChoice= load.mainTag =="Full load required"?"I Have Vehicle":"I Want Vehicle";
 
     postLoad.instructions= load.content;
     postLoad.loadWeight= load.loadWeight.toString();
-    postLoad.loggedUserName= user.content!.first!.userName;
+    postLoad.loggedUserName= user.content!.first.userName;
     postLoad.mainTag= load.mainTag;
     postLoad.os= 'App';
     if(isInterchange){
@@ -361,7 +331,7 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.listOfUserIds=userIdList;
 
  postLoad.id=0;
-    ApiResponse response=await ApiHelper().postParameter(ApiConstant.BASE_URL+"fullTruckLoad", postLoad.toJson());
+    ApiResponse response=await ApiHelper().postParameter("${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
     if(response.status==200){
       ToastMessage.show(context, "Re-post submitted successfully!");
       callDashboradApi(context,0);
@@ -379,14 +349,12 @@ class HomeScreenProvider extends BaseProvider{
       showDialog(
           context: context,
           builder: (context) {
-            Future.delayed(Duration(seconds: 5), () {
+            Future.delayed(const Duration(seconds: 5), () {
               Navigator.of(context).pop(true);
             });
             return  AllCards().imageDialogOneAdd(
-                advertisement.data!.companyName,  context, advertisement.data!.images!.first!);
+                advertisement.data!.companyName,  context, advertisement.data!.images!.first);
           });
-
-    }else{
 
     }
 

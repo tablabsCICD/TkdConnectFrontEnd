@@ -9,19 +9,19 @@ class VerficationSendOTP {
 
   VerficationSendOTP.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     timestamp = json['timestamp'];
     transactionId = json['transaction_id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['timestamp'] = this.timestamp;
-    data['transaction_id'] = this.transactionId;
+    data['timestamp'] = timestamp;
+    data['transaction_id'] = transactionId;
     return data;
   }
 }
@@ -38,9 +38,9 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ref_id'] = this.refId;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ref_id'] = refId;
+    data['message'] = message;
     return data;
   }
 }

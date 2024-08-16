@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
-import 'package:tkd_connect/screen/my_route/select_city.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 import 'package:tkd_connect/widgets/textview.dart';
@@ -14,12 +12,13 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
 import '../../provider/registration_provider/company_details_provider.dart';
-import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
 import '../../widgets/sign_in_widget.dart';
 
 class CompanyDetailsScreen extends StatefulWidget {
+  const CompanyDetailsScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -64,7 +63,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                         Navigator.pop(context);
                       },child: SvgPicture.asset(Images.arrow_back)),
                       Textview(
-                        title: '${S().businessDetails}',
+                        title: S().businessDetails,
                         TextStyle(
                           color: Colors.black,
                           fontSize: 14.sp,
@@ -74,7 +73,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox()
+                      const SizedBox()
                     ],
                   ),
 
@@ -83,7 +82,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                   SizedBox(height: 24.h,),
                   labelText(S().companyName),
                   SizedBox(height: 4.h,),
-                  editView("${S().egFristName}",provider.companyNameController,provider),
+                  editView(S().egFristName,provider.companyNameController,provider),
                   SizedBox(height: 12.h,),
 
                   labelText(S().location),
@@ -164,7 +163,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                     },
                   ),
                   SizedBox(height: 40.h,),
-                  AlredayAccountWidget(),
+                  const AlredayAccountWidget(),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -183,7 +182,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
 
@@ -208,7 +207,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
   }
 
   progressBar() {
-    return Container(
+    return SizedBox(
       width: 335.w,
       height: 6.h,
       child: Stack(
@@ -220,7 +219,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               width: 335.w,
               height: 6.h,
               decoration: ShapeDecoration(
-                color: Color(0x4CB7B7B7),
+                color: const Color(0x4CB7B7B7),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100.r),
                 ),
@@ -234,7 +233,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               width: 234.50.w,
               height: 6.h,
               decoration: ShapeDecoration(
-                color: Color(0xFF1DD19E),
+                color: const Color(0xFF1DD19E),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100.r),
                 ),
@@ -261,7 +260,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
   }
 
   routeItem(RouteRequest routeRequest, int index) {
-    return Container(
+    return SizedBox(
       width: 335.w,
       height: 40.65.h,
 
@@ -278,7 +277,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -293,7 +292,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                         routeRequest.startLocation,
                         textAlign: TextAlign.right,
                         style: TextStyle(
-                          color: Color(0xCC001E49),
+                          color: const Color(0xCC001E49),
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts
                               .poppins()
@@ -312,7 +311,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                       child: Text(
                         routeRequest.endLocation,
                         style: TextStyle(
-                          color: Color(0xCC001E49),
+                          color: const Color(0xCC001E49),
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts
                               .poppins()
@@ -327,7 +326,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
             ),
           ),
           SizedBox(width: 20.w,),
-          Container(
+          SizedBox(
             width: 24.w,
             height: 24.h,
             child: Row(
@@ -335,7 +334,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
@@ -349,7 +348,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
             ),
           ),
           SizedBox(width: 20.w,),
-          Container(
+          SizedBox(
             width: 24.w,
             height: 24.h,
             child: Row(
@@ -357,7 +356,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
@@ -416,10 +415,10 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
           constraints:
           BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.w, color: Color(0x332C363F)),
+            side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8.r),
           ),
-          child: Container(
+          child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: dropList(context)),
           onSelected: (dynamic val) {
@@ -453,12 +452,12 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
             // ),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().transporter}",1);
+                  provider.changeDropDown(S().transporter,1);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().transporter}',
+                      S().transporter,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -490,12 +489,12 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
 
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().manufacturerDistributorTrade}",3);
+                  provider.changeDropDown(S().manufacturerDistributorTrade,3);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().manufacturerDistributorTrade}',
+                      S().manufacturerDistributorTrade,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -508,12 +507,12 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().truckDriver}",6);
+                  provider.changeDropDown(S().truckDriver,6);
                 },
                 child: Row(
                   children: [
                     Text(
-                      '${S().truckDriver}',
+                      S().truckDriver,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -535,7 +534,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
   dropList(BuildContext context) {
     return Consumer<CompanyDetailsProvider>(
       builder: (context, provider, child) {
-        return Container(
+        return SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 52.h,
           child: Column(
@@ -550,7 +549,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0x332C363F)),
+                    side: const BorderSide(width: 1, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -559,7 +558,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -581,7 +580,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          Container(
+                          SizedBox(
                             width: 24,
                             height: 24,
                             child: Stack(children: [
@@ -606,7 +605,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
   supportNumber() {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -630,7 +629,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                       Utils().callFunction("8123006888");
                     },child: subTitle('(+91)  8123006888 '),
                   ),
-                  Text(" / "),
+                  const Text(" / "),
                   InkWell(
 
                     onTap: (){
@@ -652,7 +651,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     return Text(
       subtitle,
       style: TextStyle(
-        color: Color(0xFFC3262C),
+        color: const Color(0xFFC3262C),
         fontSize: 10.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w600,

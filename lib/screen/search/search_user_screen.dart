@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,7 +46,7 @@ class _SearchUserState extends State<SearchUserScreen> {
         return Container(
           child: Expanded(
             child:
-            provider.user.length==0 && provider.isLoadingUser ? Text("No User Found"):
+            provider.user.isEmpty && provider.isLoadingUser ? const Text("No User Found"):
             ListView.builder(
                 itemCount: widget.searchProvider.user.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -64,7 +63,7 @@ class _SearchUserState extends State<SearchUserScreen> {
       width: 375.w,
       height: 67.h,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(color: Color(0x192C363F)),
@@ -102,7 +101,7 @@ class _SearchUserState extends State<SearchUserScreen> {
                           Row(
                             children: [
                               Text(
-                                user.firstName! + " " + user.lastName!,
+                                "${user.firstName!} ${user.lastName!}",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12.sp,
@@ -122,7 +121,7 @@ class _SearchUserState extends State<SearchUserScreen> {
                             child: Text(
                               user.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w400,

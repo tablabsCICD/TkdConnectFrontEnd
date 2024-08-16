@@ -10,19 +10,19 @@ class OwnGenralPostList {
     if (json['data'] != null) {
       data = <GernralPostOwnData>[];
       json['data'].forEach((v) {
-        data!.add(new GernralPostOwnData.fromJson(v));
+        data!.add(GernralPostOwnData.fromJson(v));
       });
     }
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -68,17 +68,17 @@ class GernralPostOwnData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['typeName'] = this.typeName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['typeName'] = typeName;
     // if (this.images != null) {
     //   data['images'] = this.images!.map((v) => v.toJson()).toList();
     // }
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['likes'] = this.likes;
-    data['comment'] = this.comment;
-    data['userId'] = this.userId;
+    data['description'] = description;
+    data['title'] = title;
+    data['likes'] = likes;
+    data['comment'] = comment;
+    data['userId'] = userId;
    // data['loggedTime'] = this.loggedTime;
     return data;
   }

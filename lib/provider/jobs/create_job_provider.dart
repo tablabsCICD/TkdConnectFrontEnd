@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -34,13 +31,13 @@ class CreateJobProvider extends BaseProvider{
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return FractionallySizedBox(
+          return const FractionallySizedBox(
               heightFactor: 0.9,
               child: ExperienceScreen());
         });
     if(cityName!=null){
-      expFrom=cityName!.split(",").first;
-      expTo=cityName!.split(",").last;
+      expFrom=cityName.split(",").first;
+      expTo=cityName.split(",").last;
       expUpdate=true;
       buttonEnble();
       notifyListeners();
@@ -70,7 +67,7 @@ class CreateJobProvider extends BaseProvider{
       "companyName": user.content!.first.companyName,
       "contactNumber":user.content!.first.mobileNumber,
       "emailId": user.content!.first.emailId,
-      "experience": expTo+"-"+expFrom,
+      "experience": "$expTo-$expFrom",
 
       "isSalaryNegotiable":  1 ,
       "isSelected": 0,

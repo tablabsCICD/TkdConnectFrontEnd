@@ -10,19 +10,19 @@ class ChatListDate {
     if (json['data'] != null) {
       data = <ChatData>[];
       json['data'].forEach((v) {
-        data!.add(new ChatData.fromJson(v));
+        data!.add(ChatData.fromJson(v));
       });
     }
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['success'] = this.success;
+    data['success'] = success;
     return data;
   }
 }
@@ -86,24 +86,24 @@ class ChatData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['userId2'] = this.userId2;
-    data['mobileNumber1'] = this.mobileNumber1;
-    data['mobileNumber2'] = this.mobileNumber2;
-    data['connectionKey'] = this.connectionKey;
-    data['dateAndTime'] = this.dateAndTime;
-    data['chat'] = this.chat;
-    data['os'] = this.os;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedUserName2'] = this.loggedUserName2;
-    data['loggedTime'] = this.loggedTime;
-    data['rating'] = this.rating;
-    data['name1'] = this.name1;
-    data['name2'] = this.name2;
-    data['userProfile1'] = this.userProfile1;
-    data['userProfile2'] = this.userProfile2;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['userId2'] = userId2;
+    data['mobileNumber1'] = mobileNumber1;
+    data['mobileNumber2'] = mobileNumber2;
+    data['connectionKey'] = connectionKey;
+    data['dateAndTime'] = dateAndTime;
+    data['chat'] = chat;
+    data['os'] = os;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedUserName2'] = loggedUserName2;
+    data['loggedTime'] = loggedTime;
+    data['rating'] = rating;
+    data['name1'] = name1;
+    data['name2'] = name2;
+    data['userProfile1'] = userProfile1;
+    data['userProfile2'] = userProfile2;
     return data;
   }
 }

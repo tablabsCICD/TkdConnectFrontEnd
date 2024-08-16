@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +11,7 @@ class OtpTextView extends StatelessWidget{
  final hint;
 
 
-   OtpTextView({super.key, required this.otpController, required this.onChnage, this.hint});
+   const OtpTextView({super.key, required this.otpController, required this.onChnage, this.hint});
   @override
   Widget build(BuildContext context) {
    return Container(
@@ -50,7 +49,7 @@ class OtpTextView extends StatelessWidget{
        decoration: InputDecoration(
          border: InputBorder.none,
          hintText: hint,
-         counter: Offstage(),
+         counter: const Offstage(),
            contentPadding:  EdgeInsets.only(bottom: 8.h),
          hintStyle: TextStyle(
            color: Colors.black,
@@ -63,7 +62,7 @@ class OtpTextView extends StatelessWidget{
     ),
 
        onChanged: (value){
-         if(value.length>=1){
+         if(value.isNotEmpty){
            FocusScope.of(context).nextFocus();
          }else{
            FocusScope.of(context).previousFocus();

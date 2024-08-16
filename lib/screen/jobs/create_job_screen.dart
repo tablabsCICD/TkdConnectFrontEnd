@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,9 +12,10 @@ import '../../generated/l10n.dart';
 import '../../widgets/bottomsheet.dart';
 import '../../widgets/drop_down.dart';
 import '../../widgets/editText.dart';
-import 'experience_screen.dart';
 
 class CreateJobScreen extends StatelessWidget {
+  const CreateJobScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -38,7 +38,7 @@ class CreateJobScreen extends StatelessWidget {
                 height: 20.h,
                 color: ThemeColor.baground,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Consumer<CreateJobProvider>(
@@ -48,27 +48,27 @@ class CreateJobScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         labelText(S().position),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         editView(S().egSeniorManager,
                             provider.positionController),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
                         labelText(S().jobTitle),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         editView(
                             S().egManageInquiries, provider.JobTitileController),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
 
 
                         labelText(S().salary),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         // editView(
@@ -83,24 +83,24 @@ class CreateJobScreen extends StatelessWidget {
                           hint: provider.selectSal,
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
 
 
 
                         labelText(S().jobDes),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         editViewDiscription(S().egJobDes, context,
                             provider.descriptionController),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
 
                         labelText(S().specifyRequiredExperience),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         jobExp(context),
@@ -137,7 +137,7 @@ class CreateJobScreen extends StatelessWidget {
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -178,7 +178,7 @@ class CreateJobScreen extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 124.h,
-      margin: EdgeInsets.only(left: 20, right: 20),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -191,7 +191,7 @@ class CreateJobScreen extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 1, color: Color(0x332C363F)),
+                  side: const BorderSide(width: 1, color: Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -200,7 +200,7 @@ class CreateJobScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -219,11 +219,11 @@ class CreateJobScreen extends StatelessWidget {
                               obscureText: false,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
-                                  counter: Offstage(),
+                                  counter: const Offstage(),
                                   hintText: hint,
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(
-                                    color: Color(0x662C363F),
+                                    color: const Color(0x662C363F),
                                     fontSize: 14.sp,
                                     fontFamily:
                                         GoogleFonts.poppins().fontFamily,
@@ -262,9 +262,9 @@ class CreateJobScreen extends StatelessWidget {
             height: 37.65,
             padding: const EdgeInsets.symmetric(vertical: 8),
             decoration: ShapeDecoration(
-              color: provider.expUpdate ? Colors.white : Color(0x0A2C363F),
+              color: provider.expUpdate ? Colors.white : const Color(0x0A2C363F),
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1, color: Color(0x332C363F)),
+                side: const BorderSide(width: 1, color: Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -279,7 +279,7 @@ class CreateJobScreen extends StatelessWidget {
                       provider.expFrom,
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: AppConstant.FONTFAMILY,
                         fontWeight: FontWeight.w400,
@@ -293,7 +293,7 @@ class CreateJobScreen extends StatelessWidget {
                   '-',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xCC001E49),
+                    color: const Color(0xCC001E49),
                     fontSize: 12.sp,
                     fontFamily: AppConstant.FONTFAMILY,
                     fontWeight: FontWeight.w800,
@@ -306,7 +306,7 @@ class CreateJobScreen extends StatelessWidget {
                     child: Text(
                       provider.expTo,
                       style: TextStyle(
-                        color: Color(0xCC001E49),
+                        color: const Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: AppConstant.FONTFAMILY,
                         fontWeight: FontWeight.w400,

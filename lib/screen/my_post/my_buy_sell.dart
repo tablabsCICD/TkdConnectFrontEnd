@@ -1,17 +1,15 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/own_buy_sell.dart';
 import 'package:tkd_connect/network/api_helper.dart';
+
 import '../../constant/api_constant.dart';
 import '../../constant/app_constant.dart';
 import '../../generated/l10n.dart';
-import '../../model/response/AllCard.dart';
-import '../../model/response/own_genral_post.dart';
 import '../../model/response/userdata.dart';
 import '../../utils/colors.dart';
 import '../../utils/sharepreferences.dart';
@@ -20,6 +18,8 @@ import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class MyBuySellPostScreen extends StatefulWidget {
+  const MyBuySellPostScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return MyBuySellPost();
@@ -47,7 +47,7 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
 
 
   _buildPage(BuildContext context) {
-    return !isLoad || listOwnPost.length==0?Center(
+    return !isLoad || listOwnPost.isEmpty?const Center(
       child:Text("No Post Found ") ,
     ):Column(
       children: [
@@ -79,9 +79,9 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -96,7 +96,7 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -257,7 +257,7 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
 
   callRePost(int id )async{
 
-    String myUrl = ApiConstant.POST_BUY_SELL+'/repost?id=$id';
+    String myUrl = '${ApiConstant.POST_BUY_SELL}/repost?id=$id';
     ApiResponse apiResponse= await ApiHelper().apiPost(myUrl);
     if(apiResponse.status==200){
      callApi();
@@ -273,7 +273,7 @@ class MyBuySellPost extends State<MyBuySellPostScreen> {
 
 
   deletePost(int index,BuildContext context)async{
-    String myUrl = ApiConstant.POST_BUY_SELL+'?id=${listOwnPost[index].id}';
+    String myUrl = '${ApiConstant.POST_BUY_SELL}?id=${listOwnPost[index].id}';
     ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
       if(apiResponse.status==200){
       listOwnPost.removeAt(index);

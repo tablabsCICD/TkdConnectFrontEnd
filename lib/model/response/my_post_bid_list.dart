@@ -1,4 +1,4 @@
-import 'package:tkd_connect/generated/l10n.dart';
+
 
 class MyPostBids {
   List<PostBidData>? content;
@@ -26,7 +26,7 @@ class MyPostBids {
     if (json['content'] != null) {
       content = <PostBidData>[];
       json['content'].forEach((v) {
-        content!.add(new PostBidData.fromJson(v));
+        content!.add(PostBidData.fromJson(v));
       });
     }
     last = json['last'];
@@ -40,18 +40,18 @@ class MyPostBids {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['last'] = this.last;
-    data['totalPages'] = this.totalPages;
-    data['totalElements'] = this.totalElements;
-    data['sort'] = this.sort;
-    data['first'] = this.first;
-    data['numberOfElements'] = this.numberOfElements;
-    data['size'] = this.size;
-    data['number'] = this.number;
+    data['last'] = last;
+    data['totalPages'] = totalPages;
+    data['totalElements'] = totalElements;
+    data['sort'] = sort;
+    data['first'] = first;
+    data['numberOfElements'] = numberOfElements;
+    data['size'] = size;
+    data['number'] = number;
     return data;
   }
 }
@@ -64,23 +64,23 @@ class PostBidData {
 
   PostBidData.fromJson(Map<String, dynamic> json) {
     genericCardsDto = json['genericCardsDto'] != null
-        ? new GenericCardsDto.fromJson(json['genericCardsDto'])
+        ? GenericCardsDto.fromJson(json['genericCardsDto'])
         : null;
     if (json['bidings'] != null) {
       bidings = <Bidings>[];
       json['bidings'].forEach((v) {
-        bidings!.add(new Bidings.fromJson(v));
+        bidings!.add(Bidings.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.genericCardsDto != null) {
-      data['genericCardsDto'] = this.genericCardsDto!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (genericCardsDto != null) {
+      data['genericCardsDto'] = genericCardsDto!.toJson();
     }
-    if (this.bidings != null) {
-      data['bidings'] = this.bidings!.map((v) => v.toJson()).toList();
+    if (bidings != null) {
+      data['bidings'] = bidings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -221,50 +221,50 @@ class GenericCardsDto {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['userId'] = this.userId;
-    data['type'] = this.type;
-    data['postingTime'] = this.postingTime;
-    data['companyName'] = this.companyName;
-    data['nameOfPerson'] = this.nameOfPerson;
-    data['companyRating'] = this.companyRating;
-    data['content'] = this.content;
-    data['topicName'] = this.topicName;
-    data['tableName'] = this.tableName;
-    data['companyLogo'] = this.companyLogo;
-    data['partLoadOrNot'] = this.partLoadOrNot;
-    data['reminderUserName'] = this.reminderUserName;
-    data['sharableLink'] = this.sharableLink;
-    data['deviceId'] = this.deviceId;
-    data['ratings'] = this.ratings;
-    data['mobileNumber'] = this.mobileNumber;
-    data['source'] = this.source;
-    data['destination'] = this.destination;
-    data['mainTag'] = this.mainTag;
-    data['privatePost'] = this.privatePost;
-    data['makerName'] = this.makerName;
-    data['modelName'] = this.modelName;
-    data['mfgYear'] = this.mfgYear;
-    data['estPrice'] = this.estPrice;
-    data['dnd'] = this.dnd;
-    data['vehicleSize'] = this.vehicleSize;
-    data['association'] = this.association;
-    data['isPaid'] = this.isPaid;
-    data['website'] = this.website;
-    data['alterativeNumber'] = this.alterativeNumber;
-    data['companyDetailsName'] = this.companyDetailsName;
-    data['isVerifiedByCompany'] = this.isVerifiedByCompany;
-    data['typeOfPayment'] = this.typeOfPayment;
-    data['typeName'] = this.typeName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['type'] = type;
+    data['postingTime'] = postingTime;
+    data['companyName'] = companyName;
+    data['nameOfPerson'] = nameOfPerson;
+    data['companyRating'] = companyRating;
+    data['content'] = content;
+    data['topicName'] = topicName;
+    data['tableName'] = tableName;
+    data['companyLogo'] = companyLogo;
+    data['partLoadOrNot'] = partLoadOrNot;
+    data['reminderUserName'] = reminderUserName;
+    data['sharableLink'] = sharableLink;
+    data['deviceId'] = deviceId;
+    data['ratings'] = ratings;
+    data['mobileNumber'] = mobileNumber;
+    data['source'] = source;
+    data['destination'] = destination;
+    data['mainTag'] = mainTag;
+    data['privatePost'] = privatePost;
+    data['makerName'] = makerName;
+    data['modelName'] = modelName;
+    data['mfgYear'] = mfgYear;
+    data['estPrice'] = estPrice;
+    data['dnd'] = dnd;
+    data['vehicleSize'] = vehicleSize;
+    data['association'] = association;
+    data['isPaid'] = isPaid;
+    data['website'] = website;
+    data['alterativeNumber'] = alterativeNumber;
+    data['companyDetailsName'] = companyDetailsName;
+    data['isVerifiedByCompany'] = isVerifiedByCompany;
+    data['typeOfPayment'] = typeOfPayment;
+    data['typeName'] = typeName;
 
-    data['description'] = this.description;
-    data['title'] = this.title;
-    data['likes'] = this.likes;
-    data['comment'] = this.comment;
-    data['cargoType'] = this.cargoType;
-    data['vehicleWeight'] = this.vehicleWeight;
-    data['userList'] = this.userList;
+    data['description'] = description;
+    data['title'] = title;
+    data['likes'] = likes;
+    data['comment'] = comment;
+    data['cargoType'] = cargoType;
+    data['vehicleWeight'] = vehicleWeight;
+    data['userList'] = userList;
     return data;
   }
 }
@@ -287,7 +287,7 @@ class Bidings {
 
   Bidings.fromJson(Map<String, dynamic> json) {
     bidings =
-    json['bidings'] != null ? new BidingsDetails.fromJson(json['bidings']) : null;
+    json['bidings'] != null ? BidingsDetails.fromJson(json['bidings']) : null;
     firstName = json['firstName'];
     lastName = json['lastName'];
     profileImage = json['profileImage'];
@@ -298,16 +298,16 @@ class Bidings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.bidings != null) {
-      data['bidings'] = this.bidings!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (bidings != null) {
+      data['bidings'] = bidings!.toJson();
     }
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['profileImage'] = this.profileImage;
-    data['companyName'] = this.companyName;
-    data['isVerified'] = this.isVerified;
-    data['isPaid'] = this.isPaid;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['profileImage'] = profileImage;
+    data['companyName'] = companyName;
+    data['isVerified'] = isVerified;
+    data['isPaid'] = isPaid;
 
     return data;
   }
@@ -354,18 +354,18 @@ class BidingsDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['emailId'] = this.emailId;
-    data['userName'] = this.userName;
-    data['type'] = this.type;
-    data['idOfPost'] = this.idOfPost;
-    data['amount'] = this.amount;
-    data['description'] = this.description;
-    data['bidderUserName'] = this.bidderUserName;
-    data['mobileNumber'] = this.mobileNumber;
-    data['loggedUserName'] = this.loggedUserName;
-    data['loggedTime'] = this.loggedTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['emailId'] = emailId;
+    data['userName'] = userName;
+    data['type'] = type;
+    data['idOfPost'] = idOfPost;
+    data['amount'] = amount;
+    data['description'] = description;
+    data['bidderUserName'] = bidderUserName;
+    data['mobileNumber'] = mobileNumber;
+    data['loggedUserName'] = loggedUserName;
+    data['loggedTime'] = loggedTime;
     return data;
   }
 }

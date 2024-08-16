@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/model/api_response.dart';
-import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
@@ -12,7 +10,6 @@ import 'package:tkd_connect/utils/toast.dart';
 
 import '../../constant/api_constant.dart';
 import '../../model/response/deep_link_load.dart';
-import '../dashboard/home/place_bid_screen.dart';
 
 class DeepLink extends StatefulWidget{
  final String id;
@@ -38,7 +35,7 @@ class _DeppLink extends State<DeepLink>{
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
+  return const Scaffold(
     body: Center(
       child: CircularProgressIndicator(),
     ),

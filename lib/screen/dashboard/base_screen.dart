@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +15,8 @@ import '../my_bids/my_bids_base_screen.dart';
 import 'home/home_page.dart';
 
 class BaseDashboard extends StatefulWidget{
+  const BaseDashboard({super.key});
+
   @override
   State<StatefulWidget> createState() {
 
@@ -54,10 +55,10 @@ class _BaseDashboard extends State<BaseDashboard>{
          children: <Widget>[
           // HomeScreen(),
            homeScreen,
-           MyBidsBaseScreen(),
-           DirectoryScreen(),
-           MessageScreen(),
-           MoreScreen()
+           const MyBidsBaseScreen(),
+           const DirectoryScreen(),
+           const MessageScreen(),
+           const MoreScreen()
          ],
        ),
      ),
@@ -89,7 +90,7 @@ class _BaseDashboard extends State<BaseDashboard>{
              crossAxisAlignment: CrossAxisAlignment.center,
              children: [
                Text(
-                 '${S().createPost}',
+                 S().createPost,
                  style: TextStyle(
                    color: ThemeColor.progress_color,
                    fontSize: 12.sp,
@@ -100,7 +101,7 @@ class _BaseDashboard extends State<BaseDashboard>{
                SizedBox(
                  width: 2.w,
                ),
-               Container(
+               SizedBox(
                  width: 16.w,
                  height: 16.w,
                  child: Row(
@@ -108,7 +109,7 @@ class _BaseDashboard extends State<BaseDashboard>{
                    mainAxisAlignment: MainAxisAlignment.center,
                    crossAxisAlignment: CrossAxisAlignment.center,
                    children: [
-                     Container(
+                     SizedBox(
                        width: 16.w,
                        height: 16.w,
                        child: Stack(children: [
@@ -133,7 +134,7 @@ class _BaseDashboard extends State<BaseDashboard>{
     return Container(
       width: 375.w,
       height: 80.h,
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -143,31 +144,31 @@ class _BaseDashboard extends State<BaseDashboard>{
             onTap: (){
               onPageChanges(0);
             },
-            child: selectedTab(isHome,"${S().home}",Images.home),
+            child: selectedTab(isHome,S().home,Images.home),
           ),
           InkWell(
             onTap: (){
               onPageChanges(1);
             },
-            child: selectedTab(isMyBid,"${S().myQuotes}",Images.bid),
+            child: selectedTab(isMyBid,S().myQuotes,Images.bid),
           ),
           InkWell(
             onTap: (){
               onPageChanges(2);
             },
-            child: selectedTab(isDrectory,"${S().directory}",Images.directory),
+            child: selectedTab(isDrectory,S().directory,Images.directory),
           ),
           Expanded(child: InkWell(
             onTap: (){
               onPageChanges(3);
             },
-            child: selectedTab(isMessage,"${S().message}",Images.message),
+            child: selectedTab(isMessage,S().message,Images.message),
           )),
           InkWell(
             onTap: (){
               onPageChanges(4);
             },
-            child: selectedTab(isMore,"${S().more}",Images.more),
+            child: selectedTab(isMore,S().more,Images.more),
           )
         ],
       ),

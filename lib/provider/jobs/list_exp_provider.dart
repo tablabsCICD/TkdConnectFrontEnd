@@ -65,7 +65,7 @@ class ListExpProvider extends BaseProvider{
   }
 
   onclick(BuildContext context){
-    Navigator.pop(context,nameFrom+","+nameTo);
+    Navigator.pop(context,"$nameFrom,$nameTo");
   }
 
 

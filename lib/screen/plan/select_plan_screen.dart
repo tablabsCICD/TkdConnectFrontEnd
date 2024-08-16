@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/plan/select_plan.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/toast.dart';
+
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/userdata.dart';
@@ -18,6 +18,8 @@ import '../../widgets/plan_widget.dart';
 import '../../widgets/textview.dart';
 
 class SelectPlanScreen extends StatefulWidget {
+  const SelectPlanScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SelectPlanScreen();
@@ -74,7 +76,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox()
+                      const SizedBox()
                     ],
                   ),
                   SizedBox(
@@ -115,7 +117,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                           Utils().callFunction("8123006888");
                         },child: subTitle('(+91)  8123006888 '),
                       ),
-                      Text(" / "),
+                      const Text(" / "),
                       InkWell(
 
                         onTap: (){
@@ -151,7 +153,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox()
+                    const SizedBox()
                   ],
                 ),
                 SizedBox(
@@ -413,7 +415,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
     return Text(
       subtitle,
       style: TextStyle(
-        color: Color(0xFFC3262C),
+        color: const Color(0xFFC3262C),
         fontSize: 12.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w600,
@@ -425,7 +427,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
   drwaLine() {
     return Container(
       width: 89.w,
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         shape: RoundedRectangleBorder(
           side: BorderSide(
             width: 1,

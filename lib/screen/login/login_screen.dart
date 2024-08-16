@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,11 +8,14 @@ import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/textview.dart';
+
 import '../../generated/l10n.dart';
 import '../../provider/login_provider.dart';
 import '../../utils/utils.dart';
 import '../../widgets/editText_mobile.dart';
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _LoginScreen();
@@ -55,7 +57,7 @@ class _LoginScreen extends State<LoginScreen> {
                   SizedBox(
                     height: 72.h,
                   ),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Textview(
                         TextStyle(
@@ -70,6 +72,7 @@ class _LoginScreen extends State<LoginScreen> {
                     height: 4.h,
                   ),
                   EditTextMobile(
+                    key:  Key('mobileNumber'),
                     onChange: (val){
                       provider.isMobileValide(val);
                     },
@@ -83,6 +86,7 @@ class _LoginScreen extends State<LoginScreen> {
                     height: 36.h,
                   ),
                   Button(
+                      key:  Key('LoginButton'),
                       isEnbale: provider.isMobileNumberValid
                       ,width: MediaQuery.of(context).size.width,
                       height: 49.h,
@@ -188,7 +192,7 @@ class _LoginScreen extends State<LoginScreen> {
   supportNumber() {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -212,7 +216,7 @@ class _LoginScreen extends State<LoginScreen> {
                       Utils().callFunction("8123006888");
                     },child: subTitle('(+91)  8123006888 '),
                   ),
-                  Text(" / "),
+                  const Text(" / "),
                   InkWell(
 
                     onTap: (){
@@ -234,7 +238,7 @@ class _LoginScreen extends State<LoginScreen> {
     return Text(
       subtitle,
       style: TextStyle(
-        color: Color(0xFFC3262C),
+        color: const Color(0xFFC3262C),
         fontSize: 10.sp,
         fontFamily: GoogleFonts.poppins().fontFamily,
         fontWeight: FontWeight.w600,

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,11 +16,12 @@ import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/transport_directory_search.dart';
 import '../../provider/directory/directory_provider.dart';
-import '../../provider/mybids/my_bids_provider.dart';
 import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class DirectoryScreen extends StatefulWidget {
+  const DirectoryScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _DirectoryScreenState();
@@ -49,13 +49,13 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           children: [
             top_bar(context,provider),
             //serachBar(),
-            provider.filterisVisible ? SizedBox(): searchBoxFilter(),
-            provider.filterisVisible ? routeSelect() : SizedBox(),
+            provider.filterisVisible ? const SizedBox(): searchBoxFilter(),
+            provider.filterisVisible ? routeSelect() : const SizedBox(),
             allUserTag(),
-            provider.user.length==0 && provider.isLoadDone?Center(child: Padding(
+            provider.user.isEmpty && provider.isLoadDone?Center(child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(S().noRecordFound),
-            )):SizedBox(),
+            )):const SizedBox(),
             allUserData()
 
           ],
@@ -89,7 +89,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
   verifyUserData() {
     return Consumer<DirectoryProvider>(
       builder: (context, provider, child) {
-        return Container(
+        return SizedBox(
           height: 185.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -109,7 +109,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
      // height: 87.h,
       height: provider.filterisVisible ? 170.h : 87.h,
       //padding: const EdgeInsets.only(bottom: 16),
-      decoration: ShapeDecoration(
+      decoration: const ShapeDecoration(
         color: Color(0xFFC3262C),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -118,7 +118,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           ),
         ),
       ),
-      child: provider.filterisVisible ? searchBoxFilter(): SizedBox(),
+      child: provider.filterisVisible ? searchBoxFilter(): const SizedBox(),
     );
   }
 
@@ -167,7 +167,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -176,7 +176,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -192,7 +192,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 24.w,
                               height: 24.h,
                               child: Stack(children: [
@@ -214,7 +214,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                                 hintText: S().searchUsersCompanies,
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(
-                                  color: Color(0x662C363F),
+                                  color: const Color(0x662C363F),
                                   fontSize: 14.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
@@ -261,7 +261,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                  side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
@@ -270,7 +270,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -286,7 +286,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: 24.w,
                                 height: 24.h,
                                 child: Stack(children: [
@@ -308,7 +308,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                                   hintText: S().searchUsersCompanies,
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(
-                                    color: Color(0x662C363F),
+                                    color: const Color(0x662C363F),
                                     fontSize: 14.sp,
                                     fontFamily: GoogleFonts.poppins().fontFamily,
                                     fontWeight: FontWeight.w400,
@@ -342,9 +342,9 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
       margin: EdgeInsets.symmetric(horizontal: 20.w),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
-        color: Color(0x332C363F),
+        color: const Color(0x332C363F),
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: Color(0x332C363F)),
+          side: const BorderSide(width: 1, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -357,7 +357,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             child: Container(
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Color(0x19001E49),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: Color(0x332C363F)),
@@ -370,7 +370,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                 children: [
                   Text(
                     S().myRoutes,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xCC001E49),
                       fontSize: 12,
                       fontFamily: 'Poppins',
@@ -386,7 +386,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             child: Container(
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: Color(0x332C363F)),
@@ -399,7 +399,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                 children: [
                   Text(
                     S().allRoutes,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xCC001E49),
                       fontSize: 12,
                       fontFamily: 'Poppins',
@@ -447,7 +447,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
       transform: Matrix4.translationValues(0.0, -20.0.h, 00),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: ShapeDecoration(
-        color: Color(0xFFF4F6F6),
+        color: const Color(0xFFF4F6F6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Row(
@@ -459,7 +459,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             tag,
             textAlign: TextAlign.right,
             style: TextStyle(
-              color: Color(0xCC001E49),
+              color: const Color(0xCC001E49),
               fontSize: 12.sp,
               fontFamily: AppConstant.FONTFAMILY,
               fontWeight: FontWeight.w400,
@@ -485,9 +485,9 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -498,7 +498,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: Container(
+            child: SizedBox(
               width: 38.w,
               height: 38.h,
               child: InkWell(
@@ -515,7 +515,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           ),
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
-              child: BaseWidget().profileDirectory(data.profilePicture!, data.firstName!+" "+data.lastName!, data.companyName!,verify: data.isPaid!)),
+              child: BaseWidget().profileDirectory(data.profilePicture!, "${data.firstName!} ${data.lastName!}", data.companyName!,verify: data.isPaid!)),
 
 
           //cityTag("Tag"),
@@ -559,7 +559,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1, color: Color(0x33001E49)),
+            side: const BorderSide(width: 1, color: Color(0x33001E49)),
             borderRadius: BorderRadius.circular(8),
           ),
         ),
@@ -570,7 +570,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           children: [
             Text(
               S().viewProfile,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFF001E49),
                 fontSize: 12,
                 fontFamily: 'Poppins',
@@ -607,7 +607,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
       width: 375.w,
       //height: 67.h,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(color: Color(0x192C363F)),
@@ -645,7 +645,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                           Row(
                             children: [
                               Text(
-                                user.firstName! + " " + user.lastName!,
+                                "${user.firstName!} ${user.lastName!}",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12.sp,
@@ -665,7 +665,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                             child: Text(
                               user.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w400,
@@ -689,7 +689,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                 InkWell(
                     onTap: () {
                       
-                      provider.getDetailsOfUserDirectory(user!.id!,context);
+                      provider.getDetailsOfUserDirectory(user.id!,context);
                       //Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,arguments: user);
 
                     },
@@ -739,7 +739,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                 Align(
                     alignment: Alignment.center,
                     child: Container(
-                        margin: EdgeInsets.only(top: 5),
+                        margin: const EdgeInsets.only(top: 5),
                         child: SvgPicture.asset(Images.route_return_home))),
               ],
             ),
@@ -758,7 +758,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+          side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -767,7 +767,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -776,7 +776,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               children: [
                 Opacity(
                   opacity: 0.40,
-                  child: Container(
+                  child: SizedBox(
                     width: 24.w,
                     height: 24.h,
                     child: Row(
@@ -784,7 +784,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 24.w,
                           height: 24.h,
                           child: Stack(
@@ -801,7 +801,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: '$cityName',
+                            text: cityName,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12.sp,
@@ -847,7 +847,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -887,9 +887,9 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             ),
             shadows: [
               BoxShadow(
-                color: Color(0x114A5568),
+                color: const Color(0x114A5568),
                 blurRadius: 8.r,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
                 spreadRadius: 0,
               )
             ],
@@ -905,7 +905,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                   height: 18.h,
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9462A),
+                    color: const Color(0xFFD9462A),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.r)),
                   ),
@@ -943,7 +943,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
 
 
   imageLoad(TransportSearchData load) {
-    if (load.images!.length == 0) {
+    if (load.images!.isEmpty) {
       return Column(
         children: [
           SizedBox(
@@ -966,7 +966,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget()
-                  .carouseImage(new List<String>.from(load.images!))),
+                  .carouseImage(List<String>.from(load.images!))),
           SizedBox(
             height: 9.h,
           ),
@@ -991,13 +991,13 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               children: [
                 Text(
                   '$text',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.close_rounded),
+                  icon: const Icon(Icons.close_rounded),
                   color: Colors.red,
                 ),
               ],
@@ -1010,8 +1010,8 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
   }
 
   imageLoadAddA(TransportSearchData load, BuildContext context) {
-    if (load.images!.length == 0) {
-      return Column(
+    if (load.images!.isEmpty) {
+      return const Column(
         children: [
           SizedBox(
             height: 0,
@@ -1026,7 +1026,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
             child: CachedNetworkImage(
               imageUrl: load.images!.first,
               placeholder: (context, url) =>
-                  SvgPicture.asset("assets/svg/logo.svg"),
+                  SvgPicture.asset("logo.svg"),
               errorWidget: (context, url, error) => ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
@@ -1040,7 +1040,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
               height: 500.h,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 9,
           ),
         ],
@@ -1061,12 +1061,12 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                         .map((item) => Container(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Center(child: AllCards().imageLink(item!)),
+                        child: Center(child: AllCards().imageLink(item)),
                       ),
                     ))
                         .toList(),
                   ))),
-          SizedBox(
+          const SizedBox(
             height: 9,
           ),
         ],

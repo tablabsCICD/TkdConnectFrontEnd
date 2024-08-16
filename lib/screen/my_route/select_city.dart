@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +19,7 @@ class SelectCityScreen extends StatefulWidget {
   String? desCity = "no";
 
   SelectCityScreen(
-      {this.isEdit = false, this.desCity = "no", this.sorceCity = "no"});
+      {super.key, this.isEdit = false, this.desCity = "no", this.sorceCity = "no"});
 
   @override
   State<StatefulWidget> createState() {
@@ -109,7 +108,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                 },
                 child: SvgPicture.asset(Images.additional_label),
               )
-            : SizedBox.shrink();
+            : const SizedBox.shrink();
       },
     );
   }
@@ -130,7 +129,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
           content: placesAutoCompleteTextField(),
           actions: <Widget>[
             TextButton(
@@ -217,7 +216,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -226,7 +225,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -242,7 +241,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 24.w,
                               height: 24.h,
                               child: Stack(children: [
@@ -264,16 +263,16 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                               hintText: "Search place",
                               border: InputBorder.none,
                               hintStyle: TextStyle(
-                                color: Color(0x662C363F),
+                                color: const Color(0x662C363F),
                                 fontSize: 14.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w400,
                               )),
                           debounceTime: 400,
-                          countries: ["in", "fr"],
+                          countries: const ["in", "fr"],
                           isLatLngRequired: true,
                           getPlaceDetailWithLatLng: (Prediction prediction) {
-                            print("placeDetails" + prediction.lat.toString());
+                            print("placeDetails${prediction.lat}");
                           },
                           itemClick: (Prediction prediction) {
                             cityController.text =
@@ -293,22 +292,22 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                                     prediction.description?.length ??
                                         0));
                           },
-                          seperatedBuilder: Divider(),
+                          seperatedBuilder: const Divider(),
                           containerHorizontalPadding: 10,
 
                           // OPTIONAL// If you want to customize list view item builder
                           itemBuilder: (context, index, Prediction prediction) {
                             return Container(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [
-                                  Icon(Icons.location_on),
-                                  SizedBox(
+                                  const Icon(Icons.location_on),
+                                  const SizedBox(
                                     width: 7,
                                   ),
                                   Expanded(
                                       child: Text(
-                                          "${prediction.description ?? ""}"))
+                                          prediction.description ?? ""))
                                 ],
                               ),
                             );
@@ -348,7 +347,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 0.50, color: Color(0x332C363F)),
+                    side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -357,7 +356,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -373,7 +372,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 24.w,
                                   height: 24.h,
                                   child: Stack(children: [
@@ -400,7 +399,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                                     hintText: "Search place",
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(
-                                      color: Color(0x662C363F),
+                                      color: const Color(0x662C363F),
                                       fontSize: 14.sp,
                                       fontFamily:
                                       GoogleFonts.poppins().fontFamily,
@@ -445,7 +444,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
           color: provider.listCity[index].isSelect
               ? ThemeColor.select_green
               : ThemeColor.white,
-          border: Border(
+          border: const Border(
             bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
           ),
         ),
@@ -474,7 +473,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                     height: 24.h,
                     width: 24.w,
                   )
-                : SizedBox()
+                : const SizedBox()
           ],
         ),
       ),
@@ -489,9 +488,9 @@ class _SelectCityScreen extends State<SelectCityScreen> {
           height: 32.h,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Color(0x332C363F),
+            color: const Color(0x332C363F),
             shape: RoundedRectangleBorder(
-              side: BorderSide(width: 0.50.w, color: Color(0x332C363F)),
+              side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
               borderRadius: BorderRadius.circular(8.r),
             ),
           ),
@@ -511,8 +510,8 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                     decoration: ShapeDecoration(
                       color: provider.isSelectStartLocation
                           ? Colors.white
-                          : Color(0x19001E49),
-                      shape: RoundedRectangleBorder(
+                          : const Color(0x19001E49),
+                      shape: const RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
                       ),
                     ),
@@ -524,7 +523,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                         Text(
                           'Start location',
                           style: TextStyle(
-                            color: Color(0xCC001E49),
+                            color: const Color(0xCC001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -546,8 +545,8 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                     decoration: ShapeDecoration(
                       color: provider.isSelectDestination
                           ? Colors.white
-                          : Color(0x19001E49),
-                      shape: RoundedRectangleBorder(
+                          : const Color(0x19001E49),
+                      shape: const RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
                       ),
                     ),
@@ -559,7 +558,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                         Text(
                           'Destination',
                           style: TextStyle(
-                            color: Color(0xCC001E49),
+                            color: const Color(0xCC001E49),
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,

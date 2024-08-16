@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
-import 'package:tkd_connect/constant/app_constant.dart';
 
 import '../model/api_response.dart';
 
@@ -226,7 +224,7 @@ class ApiHelper{
       "profilePicture":
       await MultipartFile.fromFile(file.path, filename:fileName),
     });
-    var response = await dio.post(ApiConstant.BASE_URL+"saveImage", data: formData);
+    var response = await dio.post("${ApiConstant.BASE_URL}saveImage", data: formData);
     EasyLoading.dismiss();
     return response.data;
   }

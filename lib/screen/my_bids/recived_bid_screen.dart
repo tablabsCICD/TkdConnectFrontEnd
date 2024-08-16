@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/model/response/bid_placed.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/my_bids/show_bids_screen.dart';
@@ -49,7 +48,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           return
 
 
-           widget.provider.isLoadMyPlacedBid && widget.provider.listOwnBid.length==0? Container(
+           widget.provider.isLoadMyPlacedBid && widget.provider.listOwnBid.isEmpty? Container(
               child: Center(
                 child: Text(S().noRecordFound),
               ),
@@ -80,9 +79,9 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
         ),
         shadows: [
           BoxShadow(
-            color: Color(0x114A5568),
+            color: const Color(0x114A5568),
             blurRadius: 8.r,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             spreadRadius: 0,
           )
         ],
@@ -96,7 +95,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
               height: 18.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: ShapeDecoration(
-                color: Color(0xFF2C8FEA),
+                color: const Color(0xFF2C8FEA),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.r)),
               ),
@@ -125,7 +124,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           SizedBox(height: 8.h,),
           BaseWidget().showBidButton((val) async{
             if (val == 0) {
-              if (postBidData.bidings!.length > 0) {
+              if (postBidData.bidings!.isNotEmpty) {
                 showBootomSheet(context,postBidData.bidings);
               } else {
                 ToastMessage.show(context, "There are no bids to show ");
@@ -160,7 +159,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
   }
 
   iteams(PostBidData postBidData, int index) {
-    if (postBidData.bidings!.length == 0) {
+    if (postBidData.bidings!.isEmpty) {
       return Container();
     } else {
       if (postBidData.bidings!.length == 1) {
@@ -188,12 +187,12 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     return Container(
       width: 311.w,
       //  height: 69.h,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: isLast ? Colors.white : Color(0x332C363F),
+            color: isLast ? Colors.white : const Color(0x332C363F),
           ),
         ),
       ),
@@ -227,7 +226,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  bidings.firstName! + " " + bidings.lastName!,
+                                  "${bidings.firstName!} ${bidings.lastName!}",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 10.sp,
@@ -249,7 +248,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                             child: Text(
                               bidings.companyName!,
                               style: TextStyle(
-                                color: Color(0x99001E49),
+                                color: const Color(0x99001E49),
                                 fontSize: 10.sp,
                                 fontFamily: AppConstant.FONTFAMILY,
                                 fontWeight: FontWeight.w400,
@@ -316,7 +315,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
 
 
                   }
-                  , child: Container(
+                  , child: SizedBox(
                   width: 22.w,
                   height: 22.h,
                   child: Row(
@@ -324,7 +323,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 22.w,
                         height: 22.h,
                         child: Stack(children: [

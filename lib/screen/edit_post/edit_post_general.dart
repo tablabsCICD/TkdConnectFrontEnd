@@ -9,7 +9,6 @@ import 'package:tkd_connect/utils/colors.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
-import '../../provider/dashboard/post_provider.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/editText.dart';
@@ -18,7 +17,7 @@ import '../../widgets/editText.dart';
 class EditPostGenralScreen extends StatefulWidget{
 
   TruckLoad truckLoad;
-  EditPostGenralScreen(this.truckLoad);
+  EditPostGenralScreen(this.truckLoad, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -68,7 +67,7 @@ class _EditPostGenralScreen extends State<EditPostGenralScreen>{
                   height: 12.h,
                 ),
 
-                provider.images.length>0? BaseWidget().carouseImage(provider.images):SizedBox(),
+                provider.images.isNotEmpty? BaseWidget().carouseImage(provider.images):const SizedBox(),
                 InkWell(
                     onTap: () {
                       provider.uploadImage(context);
@@ -78,7 +77,7 @@ class _EditPostGenralScreen extends State<EditPostGenralScreen>{
                   S().addImagesAt,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF001E49),
+                    color: const Color(0xFF001E49),
                     fontSize: 12.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
@@ -148,7 +147,7 @@ class _EditPostGenralScreen extends State<EditPostGenralScreen>{
   }
 
   labelText(String label) {
-    return Container(
+    return SizedBox(
       width: 332.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
