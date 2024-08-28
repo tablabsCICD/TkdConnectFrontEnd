@@ -77,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "మీరు ఈ పోస్ట్‌ని తొలగించాలనుకుంటున్నారా."),
         "directory": MessageLookupByLibrary.simpleMessage("డైరెక్టరీ"),
         "done": MessageLookupByLibrary.simpleMessage("పూర్తయింది"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "ఎక్సెల్ అప్‌లోడ్ చేయడానికి ముందు, ఫార్మాట్ డౌన్‌లోడ్ చేయడానికి ఇక్కడ క్లిక్ చేయండి"),
         "editPost": MessageLookupByLibrary.simpleMessage("పోస్ట్‌ని సవరించండి"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("ప్రోఫైల్ సంపాదిత కరో"),
@@ -174,6 +176,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "అప్లికేషన్ షేర్ చేయండి మరియు ఆశ్చర్యకరమైన బహుమతిని సంపాదించండి"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("అన్ని కోట్‌లను చూపించు"),
+        "showPostto": MessageLookupByLibrary.simpleMessage("పోస్ట్ చూపించు"),
         "specialInstruction":
             MessageLookupByLibrary.simpleMessage("ప్రత్యేక సూచన"),
         "specifyRequiredExperience": MessageLookupByLibrary.simpleMessage(
@@ -187,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toCity": MessageLookupByLibrary.simpleMessage("నగరానికి"),
         "traffic": MessageLookupByLibrary.simpleMessage("ట్రాఫిక్"),
         "type_of_company": MessageLookupByLibrary.simpleMessage("కంపెనీ రకం"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("అప్‌లోడ్ లోడ్"),
         "users": MessageLookupByLibrary.simpleMessage("వినియోగదారులు"),
         "vehicle": MessageLookupByLibrary.simpleMessage("వాహనం"),
         "verifiedUsers":

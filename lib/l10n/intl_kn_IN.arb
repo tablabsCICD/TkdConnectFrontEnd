@@ -197,5 +197,9 @@
   "privacyAndPolicy": "ಗೌಪ್ಯತಾ ನೀತಿ",
   "creategroup": "ಗುಂಪು ರಚಿಸಿ",
   "editPost": "ಪೋಸ್ಟ್ ಸಂಪಾದಿಸಿ",
-  "cityInterchange": "ಸಿಟಿ ಇಂಟರ್\u200Cಚೇಂಜ್"
+  "cityInterchange": "ಸಿಟಿ ಇಂಟರ್\u200Cಚೇಂಜ್",
+  "bulkLoadUpload ": "ಬಲ್ಕ್ ಲೋಡ್ ಅಪ್\u200Cಲೋಡ್",
+  "showPostto": "ಪೋಸ್ಟ್ ಅನ್ನು ತೋರಿಸಿ",
+  "downloadExl": "ಎಕ್ಸೆಲ್ ಅನ್ನು ಅಪ್\u200Cಲೋಡ್ ಮಾಡುವ ಮೊದಲು, ಫಾರ್ಮ್ಯಾಟ್ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ",
+  "uploadLoad": "ಅಪ್ಲೋಡ್ ಲೋಡ್"
 }

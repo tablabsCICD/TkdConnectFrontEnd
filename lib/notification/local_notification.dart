@@ -73,4 +73,29 @@ class LocalNotificationService{
 
 
 
+  static void localNotification() async {
+    try {
+      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      const NotificationDetails notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+          "TKD Connect",
+          "TKD Connect",
+          icon: "tkd_logo",
+          largeIcon:DrawableResourceAndroidBitmap('@mipmap/ic_launcher') ,
+          importance: Importance.max,
+          priority: Priority.high,
+
+        ),
+      );
+
+      await _notificationsPlugin.show(1, "Download File ", "File is downloaded ", notificationDetails);
+
+    } on Exception catch (e) {
+      print(e);
+    }
+
+  }
+
+
+
 }

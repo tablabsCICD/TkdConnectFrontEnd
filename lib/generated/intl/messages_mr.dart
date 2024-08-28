@@ -87,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "तुम्हाला ही पोस्ट हटवायची आहे का."),
         "directory": MessageLookupByLibrary.simpleMessage("निर्देशिका"),
         "done": MessageLookupByLibrary.simpleMessage("पूर्ण"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "एक्सेल अपलोड करण्यापूर्वी, फॉरमॅट डाउनलोड करण्यासाठी येथे क्लिक करा"),
         "editPost": MessageLookupByLibrary.simpleMessage("पोस्ट संपादित करा"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("प्रोफाइल संपादित करा"),
@@ -204,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("शेअर करा"),
         "shareapp": MessageLookupByLibrary.simpleMessage("अॅप शेअर करा"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage("सर्व कोट दाखवा"),
+        "showPostto": MessageLookupByLibrary.simpleMessage("यांना पोस्ट दाखवा"),
         "signIn": MessageLookupByLibrary.simpleMessage("साइन इन"),
         "specialInstruction":
             MessageLookupByLibrary.simpleMessage("विशेष सूचना"),
@@ -222,6 +225,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "truckDriver": MessageLookupByLibrary.simpleMessage("ट्रक ड्रायव्हर"),
         "type_of_company":
             MessageLookupByLibrary.simpleMessage("कंपनी चा प्रकार"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("अपलोड लोड"),
         "users": MessageLookupByLibrary.simpleMessage("वापरकर्ते"),
         "vehicle": MessageLookupByLibrary.simpleMessage("वाहन"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहनाचा आकार"),

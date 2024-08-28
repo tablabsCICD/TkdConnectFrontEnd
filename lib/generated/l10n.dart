@@ -1769,6 +1769,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Bulk Load Upload `
+  String get bulkLoadUpload {
+    return Intl.message(
+      'Bulk Load Upload ',
+      name: 'bulkLoadUpload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Post to`
+  String get showPostto {
+    return Intl.message(
+      'Show Post to',
+      name: 'showPostto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Before Upload Excel,Click Here to Download Format`
+  String get downloadExl {
+    return Intl.message(
+      'Before Upload Excel,Click Here to Download Format',
+      name: 'downloadExl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload Load`
+  String get uploadLoad {
+    return Intl.message(
+      'Upload Load',
+      name: 'uploadLoad',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

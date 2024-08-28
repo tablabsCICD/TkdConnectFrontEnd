@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "ನೀವು ಈ ಪೋಸ್ಟ್ ಅನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ."),
         "directory": MessageLookupByLibrary.simpleMessage("ಡೈರೆಕ್ಟರಿ"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "ಎಕ್ಸೆಲ್ ಅನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡುವ ಮೊದಲು, ಫಾರ್ಮ್ಯಾಟ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ"),
         "editPost": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಸಂಪಾದಿಸಿ"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸು"),
@@ -182,6 +184,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ಅಪ್ಲಿಕೇಶನ್ ಹಂಚಿಕೊಳ್ಳಿ"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("ಎಲ್ಲಾ ಉಲ್ಲೇಖಗಳನ್ನು ತೋರಿಸು"),
+        "showPostto":
+            MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್ ಅನ್ನು ತೋರಿಸಿ"),
         "signIn": MessageLookupByLibrary.simpleMessage("ಸೈನ್ ಇನ್"),
         "specifyRequiredExperience": MessageLookupByLibrary.simpleMessage(
             "ಅಗತ್ಯವಿರುವ ಅನುಭವವನ್ನು ಸೂಚಿಸಿ"),
@@ -196,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "traffic": MessageLookupByLibrary.simpleMessage("ಸಂಚಾರ"),
         "type_of_company":
             MessageLookupByLibrary.simpleMessage("ಕಂಪನಿಯ ಪ್ರಕಾರ"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("ಅಪ್ಲೋಡ್ ಲೋಡ್"),
         "users": MessageLookupByLibrary.simpleMessage("ಬಳಕೆದಾರರು"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("ಪರಿಶೀಲಿಸಿದ ಬಳಕೆದಾರರು"),

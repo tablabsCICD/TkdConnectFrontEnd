@@ -83,6 +83,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "இந்த இடுகையை நீக்க விரும்புகிறீர்களா."),
         "directory": MessageLookupByLibrary.simpleMessage("அடைவு"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "எக்செல் பதிவேற்றுவதற்கு முன், வடிவமைப்பைப் பதிவிறக்க இங்கே கிளிக் செய்யவும்"),
         "editPost": MessageLookupByLibrary.simpleMessage("இடுகையைத் திருத்து"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("சுயவிவரத்தைத் திருத்து"),
@@ -181,6 +183,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "விண்ணப்பத்தைப் பகிர்ந்து, ஆச்சரியமான பரிசைப் பெறுங்கள்"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage(
             "அனைத்து மேற்கோள்களையும் காட்டு"),
+        "showPostto": MessageLookupByLibrary.simpleMessage("இடுகையைக் காட்டு"),
         "specifyRequiredExperience": MessageLookupByLibrary.simpleMessage(
             "தேவையான அனுபவத்தைக் குறிப்பிடவும்"),
         "subtitle": MessageLookupByLibrary.simpleMessage("வசனம்"),
@@ -191,6 +194,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toCity": MessageLookupByLibrary.simpleMessage("நகரத்திற்கு"),
         "type_of_company":
             MessageLookupByLibrary.simpleMessage("நிறுவனத்தின் வகை"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("பதிவேற்றம்"),
         "users": MessageLookupByLibrary.simpleMessage("பயனர்கள்"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்பட்ட பயனர்கள்"),

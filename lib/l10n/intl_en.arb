@@ -193,8 +193,11 @@
   "privacyAndPolicy": "Privacy Policy",
   "creategroup": "Create Group",
   "editPost": "Edit Post",
-  "cityInterchange": "City Interchange"
-
+  "cityInterchange": "City Interchange",
+  "bulkLoadUpload": "Bulk Load Upload ",
+  "showPostto": "Show Post to",
+  "downloadExl": "Before Upload Excel,Click Here to Download Format",
+  "uploadLoad": "Upload Load"
 
 
 

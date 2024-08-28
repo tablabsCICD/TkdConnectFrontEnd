@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "appCrash": MessageLookupByLibrary.simpleMessage("App crash"),
         "appSetting": MessageLookupByLibrary.simpleMessage("App setting"),
         "applyNow": MessageLookupByLibrary.simpleMessage("Apply now"),
+        "bulkLoadUpload":
+            MessageLookupByLibrary.simpleMessage("Bulk Load Upload "),
         "businessDetails":
             MessageLookupByLibrary.simpleMessage("Business details"),
         "businessInfo": MessageLookupByLibrary.simpleMessage("Business info"),
@@ -88,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Do you want to delete this post."),
         "directory": MessageLookupByLibrary.simpleMessage("Directory"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "Before Upload Excel,Click Here to Download Format"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editPost": MessageLookupByLibrary.simpleMessage("Edit Post"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
@@ -211,6 +215,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shareapp": MessageLookupByLibrary.simpleMessage(
             "Share application and Earn Surprise Gift"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage("Show all quote"),
+        "showPostto": MessageLookupByLibrary.simpleMessage("Show Post to"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "specialInstruction":
             MessageLookupByLibrary.simpleMessage("Special Instruction"),
@@ -230,6 +235,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "truckDriver": MessageLookupByLibrary.simpleMessage("Truck Driver"),
         "type_of_company":
             MessageLookupByLibrary.simpleMessage("Type of Company"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("Upload Load"),
         "users": MessageLookupByLibrary.simpleMessage("Users"),
         "vehicle": MessageLookupByLibrary.simpleMessage("Vehicle"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("Vehicle size"),

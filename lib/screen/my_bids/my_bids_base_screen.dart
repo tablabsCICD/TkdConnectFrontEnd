@@ -33,38 +33,37 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
     return Scaffold(
       body: Consumer<MyBidsProvider>(
         builder: (context, provider, child) {
-          return SafeArea(
-              child: Column(
+          return Column(
             children: [
-              top_bar(context),
-              //dropDwon(),
+          top_bar(context),
+          //dropDwon(),
              Container(
-                 transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
-                 child: popUpmenu((p0) => (){
+             transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
+             child: popUpmenu((p0) => (){
 
-              }, context)),
-              Visibility(
-               visible: provider.isMyPlacedBids,
-                child: Flexible(
-                  child: PlacedBidScreen(
-                    provider: provider,
-                  ),
-                ),
+          }, context)),
+          Visibility(
+           visible: provider.isMyPlacedBids,
+            child: Flexible(
+              child: PlacedBidScreen(
+                provider: provider,
               ),
+            ),
+          ),
 
-              Visibility(
-                visible: !provider.isMyPlacedBids,
-                child: Flexible(
-                  child: RecivedBidScreen(
-                    provider: provider,
-                  ),
-                ),
+          Visibility(
+            visible: !provider.isMyPlacedBids,
+            child: Flexible(
+              child: RecivedBidScreen(
+                provider: provider,
               ),
+            ),
+          ),
 
 
 
             ],
-          ));
+          );
         },
       ),
     );

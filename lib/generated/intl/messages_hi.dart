@@ -89,6 +89,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "क्या आप इस पोस्ट को डिलीट करना चाहते हैं।"),
         "directory": MessageLookupByLibrary.simpleMessage("निर्देशिका"),
         "done": MessageLookupByLibrary.simpleMessage("हो गया"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "एक्सेल अपलोड करने से पहले, प्रारूप डाउनलोड करने के लिए यहां क्लिक करें"),
         "editPost": MessageLookupByLibrary.simpleMessage("संपादित पोस्ट"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("प्रोफ़ाइल संपादित करें"),
@@ -209,6 +211,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shareapp": MessageLookupByLibrary.simpleMessage("ऐप शेयर करें"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("सभी उद्धरण दिखाएँ"),
+        "showPostto": MessageLookupByLibrary.simpleMessage("को पोस्ट दिखाएँ"),
         "signIn": MessageLookupByLibrary.simpleMessage("दाखिल करना"),
         "specialInstruction":
             MessageLookupByLibrary.simpleMessage("विशेष निर्देश"),
@@ -227,6 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "truckDriver": MessageLookupByLibrary.simpleMessage("ट्रक चालक"),
         "type_of_company":
             MessageLookupByLibrary.simpleMessage("कंपनी के प्रकार"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("अपलोड लोड"),
         "users": MessageLookupByLibrary.simpleMessage("उपयोगकर्ताओं"),
         "vehicle": MessageLookupByLibrary.simpleMessage("वाहन"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहन का आकार"),

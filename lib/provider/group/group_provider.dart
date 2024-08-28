@@ -14,6 +14,7 @@ import 'package:tkd_connect/utils/toast.dart';
 
 import '../../model/api_response.dart';
 import '../../network/api_helper.dart';
+import 'package:http/http.dart' as http;
 
 class GroupProvider extends  BaseProvider{
   int groupId;
@@ -85,24 +86,24 @@ class GroupProvider extends  BaseProvider{
   }
 
   removeMemberFromGroup(int memberId,int index)async{
-    // ApiHelper apiHelper=ApiHelper();
-    // var res=await http.delete(Uri.parse(ApiConstant.REMOVE_GROUP_MEMBERmemberId.toString()));
-    // if(res.statusCode==200){
-    //   memberList.removeAt(index);
-    //   notifyListeners();
-    // }
+    ApiHelper apiHelper=ApiHelper();
+    var res=await http.delete(Uri.parse(ApiConstant.REMOVE_GROUP_MEMBER.toString()+"$memberId"));
+    if(res.statusCode==200){
+      memberList.removeAt(index);
+      notifyListeners();
+    }
   }
 
   deleteGroup(int groupId,int index)async{
-    // ApiHelper apiHelper=ApiHelper();
-    // String myUrl = ApiConstant.DELETE_GROUPgroupId.toString();
-    // print(myUrl);
-    // var res=await http.delete(Uri.parse(myUrl));
-    // print(res.body);
-    // if(res.statusCode==200){
-    //   groupListByUserId.removeAt(index);
-    //   notifyListeners();
-    // }
+    ApiHelper apiHelper=ApiHelper();
+    String myUrl = ApiConstant.DELETE_GROUP.toString()+"$groupId";
+    print(myUrl);
+    var res=await http.delete(Uri.parse(myUrl));
+    print(res.body);
+    if(res.statusCode==200){
+      groupListByUserId.removeAt(index);
+      notifyListeners();
+    }
   }
 
   List<GroupMember> memberList = [];

@@ -183,5 +183,10 @@
   "privacyAndPolicy": "गोपनीयता धोरण",
   "creategroup": "गट तयार करा",
   "editPost": "पोस्ट संपादित करा",
-  "cityInterchange": "सिटी इंटरचेंज"
+  "cityInterchange": "सिटी इंटरचेंज",
+  "bulkLoadUpload ": "मोठ्या प्रमाणात लोड अपलोड",
+  "showPostto":"यांना पोस्ट दाखवा",
+  "downloadExl": "एक्सेल अपलोड करण्यापूर्वी, फॉरमॅट डाउनलोड करण्यासाठी येथे क्लिक करा",
+  "uploadLoad": "अपलोड लोड"
+
 }

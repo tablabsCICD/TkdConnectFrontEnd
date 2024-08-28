@@ -83,6 +83,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
             "શું તમે આ પોસ્ટ કાઢી નાખવા માંગો છો."),
         "directory": MessageLookupByLibrary.simpleMessage("ડિરેક્ટરી"),
+        "downloadExl": MessageLookupByLibrary.simpleMessage(
+            "એક્સેલ અપલોડ કરતા પહેલા, ફોર્મેટ ડાઉનલોડ કરવા માટે અહીં ક્લિક કરો"),
         "editPost": MessageLookupByLibrary.simpleMessage("પોસ્ટ સંપાદિત કરો"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("પ્રોફાઇલ સંપાદિત કરો"),
@@ -201,6 +203,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "એપ્લિકેશન શેર કરો અને આશ્ચર્યજનક ભેટ મેળવો"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("બધા ક્વોટ બતાવો"),
+        "showPostto": MessageLookupByLibrary.simpleMessage("ને પોસ્ટ બતાવો"),
         "signIn": MessageLookupByLibrary.simpleMessage("સાઇન ઇન"),
         "specialInstruction": MessageLookupByLibrary.simpleMessage("ખાસ સૂચના"),
         "specifyRequiredExperience":
@@ -217,6 +220,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "truckDriver": MessageLookupByLibrary.simpleMessage("ટ્રક ડ્રાઈવર"),
         "type_of_company":
             MessageLookupByLibrary.simpleMessage("કંપનીનો પ્રકાર"),
+        "uploadLoad": MessageLookupByLibrary.simpleMessage("અપલોડ લોડ"),
         "users": MessageLookupByLibrary.simpleMessage("વપરાશકર્તાઓ"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("વાહનનું કદ"),
         "verifiedUsers":

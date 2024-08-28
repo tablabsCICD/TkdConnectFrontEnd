@@ -154,7 +154,7 @@ class ChatPageState extends State<ChatPage> {
                   //   ),
                   // );
                 },
-                style: ButtonStyle(padding: WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(0))),
+              //  style: ButtonStyle(padding:  EdgeInsets.all(0)),
                 child: Material(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   clipBehavior: Clip.hardEdge,
@@ -285,7 +285,7 @@ class ChatPageState extends State<ChatPage> {
                         //   ),
                         // );
                       },
-                      style: ButtonStyle(padding: WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(0))),
+                     // style: ButtonStyle(padding: WidgetStateProperty.all<EdgeInsets>(const EdgeInsets.all(0))),
                       child: Material(
                         borderRadius: const BorderRadius.all(Radius.circular(8)),
                         clipBehavior: Clip.hardEdge,

@@ -23,7 +23,6 @@ import 'notification/local_notification.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print("Notification Received ::::::${message.data}");
-  //print(message.notification!.title);
   LocalNotificationService.createanddisplaynotification(message);
 }
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -33,6 +32,8 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+
   WidgetsFlutterBinding.ensureInitialized();
   if(Platform.isAndroid==true){
     await Firebase.initializeApp(options: const FirebaseOptions(

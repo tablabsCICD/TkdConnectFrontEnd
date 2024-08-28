@@ -190,16 +190,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                // DropDown(
-                //   onClick: () async {
-                //     await provider.getGroupListByUserId();
-                //     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                //     int a = await itemBottomSheet.showIteam(
-                //         context,provider.groupListName, "Select Group");
-                //     provider.selecteGroup(a);
-                //   },
-                //   hint: provider.selectedGroup,
-                // ),
 
                 DropDown(
                   onClick: () async {

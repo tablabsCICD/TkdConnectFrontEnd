@@ -185,5 +185,9 @@
   "privacyAndPolicy": "गोपनीयता नीति",
   "creategroup": "समूह बनाना",
   "editPost": "संपादित पोस्ट",
-  "cityInterchange": "सिटी इंटरचेंज"
+  "cityInterchange": "सिटी इंटरचेंज",
+  "bulkLoadUpload ": "थोक लोड अपलोड",
+  "showPostto": "को पोस्ट दिखाएँ",
+  "downloadExl": "एक्सेल अपलोड करने से पहले, प्रारूप डाउनलोड करने के लिए यहां क्लिक करें",
+  "uploadLoad": "अपलोड लोड"
 }

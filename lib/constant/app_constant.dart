@@ -1,10 +1,9 @@
 import 'package:google_fonts/google_fonts.dart';
-
 import '../model/request/register_company.dart';
 
 class AppConstant{
 
-  static const String APP_VERSION = "3.0.11"; // 58
+  static const String APP_VERSION = "3.0.12"; // 59
   static const String GOOGLE_KEY ="AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30";
   static const String LOGIN_KEY="login";
   static const String CURRENT_GROUP="group";
@@ -24,8 +23,6 @@ class AppConstant{
   static int MOVERSANDPACKeR=2;
   static int MANUFACTURE=3;
   static int TRUCKDRIVER=6;
-
-
 
 
 }

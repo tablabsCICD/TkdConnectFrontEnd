@@ -15,6 +15,7 @@ import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/screen/bulkupload/load_upload.dart';
 import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
 import 'package:tkd_connect/screen/deeplink/show_bidds.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -87,7 +88,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
       }
 
     }
-  }
+
+     }
 
   versionControllApi() async{
     print('the version ${ApiConstant.GET_CURRENT_VERSION}');
@@ -117,7 +119,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('TKDost Update'),
+        title: const Text('TKD Connect Update'),
         content: const Text('New application update is available on play store please update the app.',),
         actions: <Widget>[
           TextButton(

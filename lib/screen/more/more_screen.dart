@@ -22,6 +22,7 @@ import '../../model/response/user_verified.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
 import '../../utils/colors.dart';
+import '../bulkupload/load_upload.dart';
 import '../kyc/kyc_screen_one.dart';
 
 class MoreScreen extends StatefulWidget {
@@ -67,6 +68,11 @@ class _MoreScreen extends State<MoreScreen> {
               topBar(context),
               item(S().myPost,(){
                 Navigator.pushNamed(context, AppRoutes.mypost);
+
+              },FontWeight.w600),
+              item(S().bulkLoadUpload,(){
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>BulkUploadLoad()));
+
 
               },FontWeight.w600),
               item(S().jobs,(){
