@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "માર્ગો ઉમેરવા માટે નીચેના બટન પર ક્લિક કરો"),
         "comment": MessageLookupByLibrary.simpleMessage("ટિપ્પણી"),
         "companyName": MessageLookupByLibrary.simpleMessage("કંપનીનું નામ"),
+        "complete": MessageLookupByLibrary.simpleMessage("થઈ ગયું"),
         "contact": MessageLookupByLibrary.simpleMessage("સંપર્ક"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("જોબ પોસ્ટ બનાવો"),

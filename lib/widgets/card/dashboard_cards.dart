@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -952,9 +952,9 @@ class AllCards {
         children: [
           Container(
               transform: Matrix4.translationValues(0.0, -25.0, 00),
-              child: Container(
-                  child: CarouselSlider(
-                options: CarouselOptions(
+              child: /*Container(
+                  child: carousel.CarouselSlider(
+                options: carousel.CarouselOptions(
                   padEnds: false,
                   pageSnapping: false,
                   enableInfiniteScroll: false,
@@ -967,7 +967,12 @@ class AllCards {
                           ),
                         ))
                     .toList(),
-              ))),
+              ))*/Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: imageLink(load.postImages![0]!)),
+                ),
+              )),
           const SizedBox(
             height: 9,
           ),

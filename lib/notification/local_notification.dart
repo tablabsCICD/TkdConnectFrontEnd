@@ -23,7 +23,7 @@ class LocalNotificationService{
 
     _notificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (String? id) async {
+     /* onSelectNotification: (String? id) async {
         if (id!.isNotEmpty) {
           LocalSharePreferences localSharePreferences=LocalSharePreferences();
           bool isLogin=await localSharePreferences.getBool(AppConstant.LOGIN_BOOl);
@@ -35,7 +35,7 @@ class LocalNotificationService{
           }
 
        }
-      },
+      },*/
     );
   }
 

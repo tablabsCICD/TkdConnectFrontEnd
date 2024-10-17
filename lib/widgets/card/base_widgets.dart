@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -1025,7 +1024,7 @@ class BaseWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    S().delete,
+                    S().complete,
                     style: TextStyle(
                       color: ThemeColor.red,
                       fontSize: 12.sp,
@@ -1075,7 +1074,7 @@ class BaseWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    S().delete,
+                    S().complete,
                     style: TextStyle(
                       color: ThemeColor.red,
                       fontSize: 12.sp,
@@ -1083,7 +1082,7 @@ class BaseWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SvgPicture.asset(Images.delete)
+                 // SvgPicture.asset(Images.delete)
                 ],
               ),
             ),
@@ -1127,7 +1126,7 @@ class BaseWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      S().delete,
+                      S().complete,
                       style: TextStyle(
                         color: ThemeColor.red,
                         fontSize: 12.sp,
@@ -1135,7 +1134,7 @@ class BaseWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SvgPicture.asset(Images.delete)
+                  //  SvgPicture.asset(Images.delete)
                   ],
                 ),
               ),
@@ -1179,7 +1178,7 @@ class BaseWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      S().delete,
+                      S().complete,
                       style: TextStyle(
                         color: ThemeColor.red,
                         fontSize: 12.sp,
@@ -1187,7 +1186,7 @@ class BaseWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SvgPicture.asset(Images.delete)
+                   // SvgPicture.asset(Images.delete)
                   ],
                 ),
               ),
@@ -1280,7 +1279,7 @@ class BaseWidget {
                 width: 12.w,
               ),
               Text(
-                S().delete,
+                S().complete,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14.sp,
@@ -1433,7 +1432,7 @@ class BaseWidget {
                 width: 12.w,
               ),
               Text(
-                S().delete,
+                S().complete,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14.sp,
@@ -2019,9 +2018,9 @@ class BaseWidget {
   }
 
   Widget carouseImage(List<String?> imgList) {
-    return Container(
-        child: CarouselSlider(
-      options: CarouselOptions(
+    return /*Container(
+        child: carousel.CarouselSlider(
+      options: carousel.CarouselOptions(
         padEnds: false,
         pageSnapping: false,
         enableInfiniteScroll: false,
@@ -2034,13 +2033,19 @@ class BaseWidget {
                 ),
               ))
           .toList(),
-    ));
+    ));*/
+      Container(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(child: imageLink(imgList[0]!)),
+        ),
+      );
   }
 
   Widget carouseImageDelete(List<String?> imgList, Function(String) onDelete) {
-    return Container(
-        child: CarouselSlider(
-      options: CarouselOptions(
+    return /*Container(
+        child: carousel.CarouselSlider(
+      options: carousel.CarouselOptions(
         padEnds: false,
         pageSnapping: false,
         enableInfiniteScroll: false,
@@ -2072,7 +2077,31 @@ class BaseWidget {
                 ),
               ))
           .toList(),
-    ));
+    ));*/Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Center(child: imageLinkDelete(imgList[0]!)),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: InkWell(
+                onTap: () {
+                  onDelete(imgList[0]!);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    Images.delete,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget imageLinkDelete(String link) {

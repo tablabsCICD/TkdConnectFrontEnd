@@ -38,7 +38,7 @@ class Utils {
       rateMyApp.init().then((value) {
         if(rateMyApp.shouldOpenDialog){
           for (var element in rateMyApp.conditions) { if(element is DebuggableCondition){
-            print(element.valuesAsString);
+            print(element.toString());
           }
           }
           rateMyApp.showRateDialog(

@@ -78,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Click the below button to add routes"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "companyName": MessageLookupByLibrary.simpleMessage("Company Name"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "contact": MessageLookupByLibrary.simpleMessage("Contact"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("Create job post"),

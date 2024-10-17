@@ -803,7 +803,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          title:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
           content:  SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -814,7 +814,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
           ),
           actions: <Widget>[
             TextButton(
-              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              child:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
               onPressed: () {
                 myPostProvider.deletePost(index,id,context);
                 Navigator.of(context).pop();

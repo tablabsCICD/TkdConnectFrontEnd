@@ -466,7 +466,7 @@ class _BuySellScreen extends State<BuySellScreen>{
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          title:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
           content:  SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -477,7 +477,7 @@ class _BuySellScreen extends State<BuySellScreen>{
           ),
           actions: <Widget>[
             TextButton(
-              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              child:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
               onPressed: () {
                 callDeleteApi(id,index);
                 Navigator.of(context).pop();

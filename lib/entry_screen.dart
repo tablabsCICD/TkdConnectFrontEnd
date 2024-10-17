@@ -96,7 +96,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
     ApiResponse apiResponse=await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
      print('the version is ${apiResponse.response}');
     Version version=Version.fromJson(apiResponse.response);
-
+    print(version.version.toString()+"...............");
     if(version.version == AppConstant.APP_VERSION){
       callNextScreen();
       //callScreen();Api

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -1051,7 +1050,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0, 00),
               child: Container(
-                  child: CarouselSlider(
+                  child:/* CarouselSlider(
                     options: CarouselOptions(
                       padEnds: false,
                       pageSnapping: false,
@@ -1064,7 +1063,11 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                         child: Center(child: AllCards().imageLink(item)),
                       ),
                     ))
-                        .toList(),
+                        .toList(),*/Container(
+              child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Center(child: AllCards().imageLink(load.images![0])),
+    ),
                   ))),
           const SizedBox(
             height: 9,

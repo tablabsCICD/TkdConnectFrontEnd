@@ -197,7 +197,10 @@
   "bulkLoadUpload": "Bulk Load Upload ",
   "showPostto": "Show Post to",
   "downloadExl": "Before Upload Excel,Click Here to Download Format",
-  "uploadLoad": "Upload Load"
+  "uploadLoad": "Upload Load",
+
+  "complete": "Complete"
+
 
 
 
