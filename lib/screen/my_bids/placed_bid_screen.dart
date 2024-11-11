@@ -128,6 +128,18 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
               ],
             ),
           ),
+          Text(
+            bids.description??"",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 10.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w400,
+            ),
+            // overflow: TextOverflow.ellipsis,
+          ), SizedBox(
+            height: 12.h,
+          ),
           BaseWidget().routes(bids.source!, bids.destination!),
           SizedBox(
             height: 12.h,

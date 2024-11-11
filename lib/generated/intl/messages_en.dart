@@ -116,6 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("Enter quote amount"),
         "experies": MessageLookupByLibrary.simpleMessage("Experience"),
+        "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("Explain your concern"),
         "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
@@ -185,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("Posts"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("Quote price"),
         "quotesYouPlaced":

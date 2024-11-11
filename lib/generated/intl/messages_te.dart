@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "మార్గాలను జోడించడానికి దిగువ బటన్‌ను క్లిక్ చేయండి"),
         "comment": MessageLookupByLibrary.simpleMessage("వ్యాఖ్య"),
         "companyName": MessageLookupByLibrary.simpleMessage("కంపెనీ పేరు"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("ఉద్యోగ పోస్ట్ సృష్టించు"),
         "createPost":
@@ -101,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_id": MessageLookupByLibrary.simpleMessage("ఇమెయిల్ - అదే"),
         "enterQuoteAmount": MessageLookupByLibrary.simpleMessage(
             "కోట్ మొత్తాన్ని నమోదు చేయండి"),
+        "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "from": MessageLookupByLibrary.simpleMessage("నుండి"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ధృవీకరించబడండి"),
         "group": MessageLookupByLibrary.simpleMessage("సమూహం"),
@@ -149,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("పోస్ట్‌లు"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("గోప్యతా విధానం"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("ఇప్పుడే కోట్ చేయి"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("క్వాట్ కింమత్"),
         "quotesYouPlaced": MessageLookupByLibrary.simpleMessage("మీ మూలాధారం"),

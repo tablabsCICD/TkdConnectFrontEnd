@@ -190,5 +190,9 @@
   "bulkLoadUpload ": "மொத்த சுமை பதிவேற்றம்",
   "showPostto":"இடுகையைக் காட்டு",
   "downloadExl": "எக்செல் பதிவேற்றுவதற்கு முன், வடிவமைப்பைப் பதிவிறக்க இங்கே கிளிக் செய்யவும்",
-  "uploadLoad": "பதிவேற்றம்"
+  "uploadLoad": "பதிவேற்றம்",
+
+                                "complete": "Complete",
+                              "expiryDate": "Expiry Date",
+                              "quoteReason": "Quote Reason"
 }

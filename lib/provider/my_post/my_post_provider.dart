@@ -169,6 +169,7 @@ class MyPostProvider extends BaseProvider{
     postLoad.topicName= "Full Load Truck";
     postLoad.image= [];
     postLoad.partLoad=postBidData.genericCardsDto!.partLoadOrNot!;
+    postLoad.expireDate=postBidData.genericCardsDto!.expireDate;
     postLoad.listOfUserIds=addedMemberIdList;
 
     postLoad.id=0;

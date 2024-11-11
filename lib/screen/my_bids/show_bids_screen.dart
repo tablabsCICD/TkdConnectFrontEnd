@@ -163,6 +163,18 @@ class ShowBidsScreen extends StatelessWidget{
                               ],
                             ),
                           ),
+                          SizedBox(height: 10,),
+                          Text(
+                            "${bidings.bidings!.description??"Quote Reason"}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 10.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            // overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 10,),
                         ],
                       ),
                     ),

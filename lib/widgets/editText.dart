@@ -10,9 +10,10 @@ class EditText extends StatelessWidget {
   final TextEditingController controller;
   TextInputType? keybordType=TextInputType.text;
   Function(String val)? onChange =(val){};
+  Function()? onTap =(){};
   bool? readOnly=false;
 
-   EditText({this.readOnly=false,this.onChange,super.key,this.keybordType ,required this.width, required this.height, required this.hint, required this.controller} );
+   EditText({this.readOnly=false,this.onChange,this.onTap,super.key,this.keybordType ,required this.width, required this.height, required this.hint, required this.controller} );
 
 
 
@@ -44,6 +45,10 @@ class EditText extends StatelessWidget {
                 child: SizedBox(
                   child: TextField(
                     controller: controller,
+                    onTap: (){
+                      onTap==null?null:
+                      onTap!();
+                    },
                     onChanged: (value){
                       onChange==null?null:
                       onChange!(value);

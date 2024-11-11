@@ -29,6 +29,7 @@ class PostLoad {
   String? typeOfPayment;
   String? vehicleSize;
   String? userList;
+  String? expireDate;
 
   PostLoad(
       {this.contactNumber,
@@ -60,7 +61,7 @@ class PostLoad {
         this.typeOfPayment,
         this.userList,
         this.images,
-        this.vehicleSize});
+        this.vehicleSize,this.expireDate});
 
   PostLoad.fromJson(Map<String, dynamic> json) {
     contactNumber = json['contactNumber'];
@@ -92,6 +93,7 @@ class PostLoad {
     typeOfPayment = json['typeOfPayment'];
     vehicleSize = json['vehicleSize'];
     userList = json['userList'];
+    expireDate = json['expireDate'];
     images="";
   }
 
@@ -127,6 +129,7 @@ class PostLoad {
     data['typeOfPayment'] = typeOfPayment;
     data['vehicleSize'] = vehicleSize;
     data['userList'] = userList;
+    data['expireDate'] = expireDate;
     return data;
   }
 }

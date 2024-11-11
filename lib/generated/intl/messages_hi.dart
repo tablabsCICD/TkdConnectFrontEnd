@@ -77,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "मार्ग जोड़ने के लिए नीचे दिए गए बटन पर क्लिक करें"),
         "comment": MessageLookupByLibrary.simpleMessage("टिप्पणी"),
         "companyName": MessageLookupByLibrary.simpleMessage("कंपनी का नाम"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "contact": MessageLookupByLibrary.simpleMessage("संपर्क"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("जॉब पोस्ट बनाएं"),
@@ -113,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("कोटेशन राशि दर्ज करें"),
         "experies": MessageLookupByLibrary.simpleMessage("अनुभव"),
+        "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("अपनी चिंता स्पष्ट करें"),
         "firstName": MessageLookupByLibrary.simpleMessage("पहला नाम"),
@@ -181,6 +183,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("पदों"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("गोपनीयता नीति"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("अब उद्धरण"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("उद्धरण मूल्य"),
         "quotesYouPlaced":

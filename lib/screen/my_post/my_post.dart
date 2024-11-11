@@ -92,6 +92,36 @@ class _MyPostState extends State<MyPostScreen> {
       child: Column(
         children: [
           Align(
+            alignment: Alignment.topLeft,
+            child: Visibility(
+              visible:postBidData.genericCardsDto!.expireDate==''?false:true,
+              child: Container(
+                width: 120.w,
+                height: 20.h,
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(2)
+                  ),
+                  border: Border.all(
+                    width: 0.5,
+                    color: ThemeColor.red,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: Center(
+                  child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
+                    style: TextStyle(
+                      color: ThemeColor.black,
+                      fontSize: 8.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Align(
             alignment: Alignment.topRight,
             child: Container(
               width: 100.w,

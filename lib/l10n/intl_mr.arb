@@ -187,6 +187,10 @@
   "bulkLoadUpload ": "मोठ्या प्रमाणात लोड अपलोड",
   "showPostto":"यांना पोस्ट दाखवा",
   "downloadExl": "एक्सेल अपलोड करण्यापूर्वी, फॉरमॅट डाउनलोड करण्यासाठी येथे क्लिक करा",
-  "uploadLoad": "अपलोड लोड"
+  "uploadLoad": "अपलोड लोड",
+
+                               "complete": "कंप्लीट",
+                             "expiryDate": "Expiry Date",
+                             "quoteReason": "Quote Reason"
 
 }

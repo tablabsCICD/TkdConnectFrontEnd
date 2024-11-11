@@ -93,6 +93,7 @@ class TruckLoad {
     this.transporterOrAgent,
     this.userList,
     this.mobileOrLandline,
+    this.expireDate,
     this.isSharedInGroup
   });
   late final int? id;
@@ -139,6 +140,7 @@ class TruckLoad {
   late final int?transporterOrAgent;
   late final String? userList;
   late final String? mobileOrLandline;
+  late final String? expireDate;
 
   late final int? isverified;
   late final bool? isSharedInGroup;
@@ -195,6 +197,8 @@ class TruckLoad {
     comment=json['comment']??'';
     postImages=json['images']??'';
     userList=json['userList']??'';
+    expireDate=json['expireDate']??'';
+
     mobileOrLandline=json['mobileOrLandline']??'';
     isSharedInGroup=json['isSharedInGroup']??false;
 
@@ -247,6 +251,7 @@ class TruckLoad {
     data['userList'] = userList;
     data['isverified'] = isverified;
     data['mobileOrLandline'] = mobileOrLandline;
+    data['expireDate'] = expireDate;
     data['isSharedInGroup'] = isSharedInGroup;
 
 

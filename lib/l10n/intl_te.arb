@@ -187,5 +187,9 @@
   "bulkLoadUpload ": "బల్క్ లోడ్ అప్\u200Cలోడ్",
   "showPostto":"పోస్ట్ చూపించు",
   "downloadExl": "ఎక్సెల్ అప్\u200Cలోడ్ చేయడానికి ముందు, ఫార్మాట్ డౌన్\u200Cలోడ్ చేయడానికి ఇక్కడ క్లిక్ చేయండి",
-  "uploadLoad": "అప్\u200Cలోడ్ లోడ్"
+  "uploadLoad": "అప్\u200Cలోడ్ లోడ్",
+
+                                        "complete": "Complete",
+                                      "expiryDate": "Expiry Date",
+                                      "quoteReason": "Quote Reason"
 }

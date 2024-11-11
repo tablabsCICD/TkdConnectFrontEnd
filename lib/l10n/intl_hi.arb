@@ -189,5 +189,9 @@
   "bulkLoadUpload ": "थोक लोड अपलोड",
   "showPostto": "को पोस्ट दिखाएँ",
   "downloadExl": "एक्सेल अपलोड करने से पहले, प्रारूप डाउनलोड करने के लिए यहां क्लिक करें",
-  "uploadLoad": "अपलोड लोड"
+  "uploadLoad": "अपलोड लोड",
+
+                               "complete": "Complete",
+                             "expiryDate": "Expiry Date",
+                             "quoteReason": "Quote Reason"
 }

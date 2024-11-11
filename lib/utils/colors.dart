@@ -9,7 +9,7 @@ static Color theme_blue=const Color(0xFF001E49);
 static Color border_grey=const Color(0x332C363F);
 static Color progress_color=const Color(0xFFFFC200);
 static Color red=const Color(0xFFC3262C);
-
+ static Color black=const Color(0xFF000000);
 static Color subColor=const Color(0xCC001E49);
 
 

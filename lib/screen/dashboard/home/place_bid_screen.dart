@@ -37,6 +37,7 @@ class PlaceBidScreen extends StatefulWidget{
 class _PlaceBidScreen extends State<PlaceBidScreen> {
 
   TextEditingController controller=TextEditingController();
+  TextEditingController reasonController=TextEditingController();
   bool buttonEnable=false;
   String bidState="";
   String avgBid="";
@@ -138,6 +139,31 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
 
               },)),
+              SizedBox(height: 16.h,),
+              Text(
+                S().quoteReason,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12.sp,
+                  fontFamily: AppConstant.FONTFAMILY,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+
+              ),
+              SizedBox(height: 8.h,),
+              SizedBox(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "Quote reason", controller: reasonController,keybordType: TextInputType.text,
+                onChange: (val){
+                 /* if(val==0){
+                    buttonEnable=false;
+                  }else{
+                    buttonEnable=true;
+                  }
+
+                  callSetState();*/
+
+
+                },)),
               const SizedBox(height: 8,),
               Text(
                 bidState,
@@ -211,7 +237,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
   }
 
 
-  callApi(String amount)async{
+  callApi(String amount, String reason)async{
     User user=await LocalSharePreferences().getLoginData();
     BidPlace bidPlace=BidPlace();
     bidPlace.amount=amount;
@@ -221,7 +247,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
     bidPlace.userName=user.content!.first.userName;
     bidPlace.bidderUserName=user.content!.first.userName;
     bidPlace.emailId=user.content!.first.emailId;
-    bidPlace.description="No ANY";
+    bidPlace.description=reason;
     bidPlace.loggedUserName=user.content!.first.userName;
     bidPlace.type=widget.truckLoad.type;
     
@@ -266,7 +292,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
   void callYes() {
     Navigator.pop(context);
-    callApi(controller.text.toString());
+    callApi(controller.text.toString(),reasonController.text);
 
   }
 

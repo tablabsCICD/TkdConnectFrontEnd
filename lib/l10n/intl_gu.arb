@@ -185,6 +185,9 @@
   "bulkLoadUpload ": "બલ્ક લોડ અપલોડ",
   "showPostto": "ને પોસ્ટ બતાવો",
   "downloadExl": "એક્સેલ અપલોડ કરતા પહેલા, ફોર્મેટ ડાઉનલોડ કરવા માટે અહીં ક્લિક કરો",
-  "uploadLoad": "અપલોડ લોડ"
+  "uploadLoad": "અપલોડ લોડ",
 
+    "complete": "Complete",
+  "expiryDate": "Expiry Date",
+  "quoteReason": "Quote Reason"
 }

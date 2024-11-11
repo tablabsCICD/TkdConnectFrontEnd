@@ -11,6 +11,7 @@ import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
+import 'package:tkd_connect/widgets/datepicker.dart';
 
 import '../../model/request/post_load.dart';
 import '../../model/response/post_upload.dart';
@@ -53,6 +54,7 @@ class PostLoadProvider extends BaseProvider {
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
+  TextEditingController expiryDateController = TextEditingController();
   bool enbleButton = false;
   bool vehicaleSize = true;
   bool loadWieght = true;
@@ -148,6 +150,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.typeOfCargo = selectedCargo;
     postLoad.typeOfPayment = selectedPayment;
     postLoad.vehicleSize = vehicleSizeController.text;
+    postLoad.expireDate = expiryDateController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
    if(images.isNotEmpty){
@@ -159,8 +162,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.id = 0;
     ApiResponse response = await ApiHelper().postParameter(
         "${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
-    print('the resopnse is ${json.encode(postLoad.toJson())}');
-    print('the resopnse is ${response.status}');
+    print('the resopnse status code ${response.status}');
     if (response.status == 200) {
       PostUpload postUpload=PostUpload.fromJson(response.response);
       if(postUpload.statusCode==401){
@@ -203,6 +205,7 @@ class PostLoadProvider extends BaseProvider {
     postLoad.typeOfCargo = selectedCargo;
     postLoad.typeOfPayment = selectedPayment;
     postLoad.vehicleSize = vehicleSizeController.text;
+    postLoad.expireDate = expiryDateController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
     if(images.isNotEmpty){
@@ -264,6 +267,10 @@ class PostLoadProvider extends BaseProvider {
     }
   }
 
+  setDate(String date) async {
+    expiryDateController.text = date;
+    notifyListeners();
+  }
   selectedRequrimentType(int index) {
     selectedRequriment = reqirement[index];
     enble();

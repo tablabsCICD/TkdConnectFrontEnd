@@ -88,30 +88,66 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
       ),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              width: 100.w,
-              height: 18.h,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-              decoration: ShapeDecoration(
-                color: const Color(0xFF2C8FEA),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.r)),
-              ),
-              child: Center(
-                child: Text(
-                  Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 9.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Visibility(
+                  visible:postBidData.genericCardsDto!.expireDate==''?false:true,
+                  child: Container(
+                    width: 120.w,
+                    height: 20.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(2)
+                      ),
+                      border: Border.all(
+                        width: 0.5,
+                        color: ThemeColor.red,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
+                        style: TextStyle(
+                          color: ThemeColor.black,
+                          fontSize: 8.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 100.w,
+                  height: 18.h,
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF2C8FEA),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.r)),
+                  ),
+                  child: Center(
+                    child: Text(
+                      Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 9.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
+
           SizedBox(height: 8.h,),
           BaseWidget().headingWithoutDate(
               postBidData.genericCardsDto!.topicName!,

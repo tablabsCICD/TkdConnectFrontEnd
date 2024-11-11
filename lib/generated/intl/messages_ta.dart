@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "வழிகளைச் சேர்க்க கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்"),
         "companyName":
             MessageLookupByLibrary.simpleMessage("நிறுவனத்தின் பெயர்"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("வேலை இடுகையை உருவாக்கு"),
         "createPost":
@@ -110,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_id": MessageLookupByLibrary.simpleMessage("மின்னஞ்சல் முகவரி"),
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("மேற்கோள் தொகையை உள்ளிடவும்"),
+        "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "firstName": MessageLookupByLibrary.simpleMessage("முதல் பெயர்"),
         "from": MessageLookupByLibrary.simpleMessage("இருந்து"),
         "getVerified": MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்படு"),
@@ -156,6 +158,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("இடுகைகள்"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("தனியுரிமைக் கொள்கை"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("இப்போது மேற்கோள்"),
         "quotesYouPlaced":
             MessageLookupByLibrary.simpleMessage("நீங்கள் வைத்த மேற்கோள்"),

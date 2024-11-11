@@ -201,5 +201,9 @@
   "bulkLoadUpload ": "ಬಲ್ಕ್ ಲೋಡ್ ಅಪ್\u200Cಲೋಡ್",
   "showPostto": "ಪೋಸ್ಟ್ ಅನ್ನು ತೋರಿಸಿ",
   "downloadExl": "ಎಕ್ಸೆಲ್ ಅನ್ನು ಅಪ್\u200Cಲೋಡ್ ಮಾಡುವ ಮೊದಲು, ಫಾರ್ಮ್ಯಾಟ್ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ",
-  "uploadLoad": "ಅಪ್ಲೋಡ್ ಲೋಡ್"
+  "uploadLoad": "ಅಪ್ಲೋಡ್ ಲೋಡ್",
+
+                                  "complete": "Complete",
+                                "expiryDate": "Expiry Date",
+                                "quoteReason": "Quote Reason"
 }

@@ -49,6 +49,7 @@ class EditPostLoadProvider extends BaseProvider {
   TextEditingController specialInstructionController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
+  TextEditingController expiryDateController = TextEditingController();
   bool enbleButton = false;
   bool vehicaleSize = true;
   bool loadWieght = true;
@@ -75,6 +76,11 @@ class EditPostLoadProvider extends BaseProvider {
     String image = await postImage(context);
     images.add(image);
     print('the images is ${images.length}');
+    notifyListeners();
+  }
+
+  setDate(String date) async {
+    expiryDateController.text = date;
     notifyListeners();
   }
 
@@ -207,6 +213,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.topicName = "Full Load Truck";
     postLoad.image = images;
     postLoad.listOfUserIds = addedMemberIdList;
+    postLoad.expireDate = expiryDateController.text;
     postLoad.id = postBidData.genericCardsDto!.id;
     ApiResponse response = await ApiHelper()
         .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());
@@ -249,6 +256,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
     postLoad.image = images;
+    postLoad.expireDate = expiryDateController.text;
     postLoad.listOfUserIds = addedMemberIdList;
 
     ApiResponse response = await ApiHelper()

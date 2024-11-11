@@ -199,7 +199,9 @@
   "downloadExl": "Before Upload Excel,Click Here to Download Format",
   "uploadLoad": "Upload Load",
 
-  "complete": "Complete"
+  "complete": "Complete",
+  "expiryDate": "Expiry Date",
+  "quoteReason": "Quote Reason"
 
 
 

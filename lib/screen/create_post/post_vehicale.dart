@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/widgets/button.dart';
+import 'package:tkd_connect/widgets/datepicker.dart';
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -157,6 +158,14 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                   height: 4.h,
                 ),
                 editView("eg.",provider.specialInstructionController,provider,false),
+                SizedBox(
+                  height: 12.h,
+                ),
+                labelText(S().expiryDate),
+                SizedBox(
+                  height: 4.h,
+                ),
+                _buildText(context,"dd/mm/yyyy",provider.expiryDateController, provider,true),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -503,6 +512,20 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
     );
   }
 
+  Widget _buildText(context,String hint,TextEditingController controller,PostLoadProvider provider,bool redOnly) {
+    return EditText(
+      readOnly: true,
+      width: 335.w,
+      height: 52.h,
+      hint: "dd/mm/yyyy",
+      controller: controller,
+      onTap: () async {
+        String Date =
+        await DateTimePickerDialog().pickDateDialog(
+            context);
+        provider.setDate(Date);
+      },
+    );}
 
 
 

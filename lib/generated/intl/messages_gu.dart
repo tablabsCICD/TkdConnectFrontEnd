@@ -72,7 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "માર્ગો ઉમેરવા માટે નીચેના બટન પર ક્લિક કરો"),
         "comment": MessageLookupByLibrary.simpleMessage("ટિપ્પણી"),
         "companyName": MessageLookupByLibrary.simpleMessage("કંપનીનું નામ"),
-        "complete": MessageLookupByLibrary.simpleMessage("થઈ ગયું"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "contact": MessageLookupByLibrary.simpleMessage("સંપર્ક"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("જોબ પોસ્ટ બનાવો"),
@@ -109,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("ક્વોટ રકમ દાખલ કરો"),
         "experies": MessageLookupByLibrary.simpleMessage("અનુભવ"),
+        "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("તમારી ચિંતા સમજાવો"),
         "firstName": MessageLookupByLibrary.simpleMessage("પ્રથમ નામ"),
@@ -174,6 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("પોસ્ટ્સ"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("ગોપનીયતા નીતિ"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("હવે અવતરણ કરો"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("ક્વોટ કિંમત"),
         "quotesYouPlaced":

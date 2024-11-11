@@ -161,7 +161,7 @@ class ApiHelper{
     try{
       var body = json.encode(data);
       final request = await dio.post(url,data: body);
-      //print("Post Parameter:"+request.data);
+      print("Post response :"+request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       EasyLoading.dismiss();
       return apiResponseHelper;

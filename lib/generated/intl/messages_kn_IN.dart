@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "clickAddRoutes": MessageLookupByLibrary.simpleMessage(
             "ಮಾರ್ಗಗಳನ್ನು ಸೇರಿಸಲು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ"),
         "companyName": MessageLookupByLibrary.simpleMessage("ಕಂಪನಿ ಹೆಸರು"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "contact": MessageLookupByLibrary.simpleMessage("ಸಂಪರ್ಕ"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("ಉದ್ಯೋಗ ಪೋಸ್ಟ್ ರಚಿಸಿ"),
@@ -105,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_id": MessageLookupByLibrary.simpleMessage("ಇಮೇಲ್-ಐಡಿ"),
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("ಉಲ್ಲೇಖದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ"),
+        "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "from": MessageLookupByLibrary.simpleMessage("ಇಂದ"),
         "general": MessageLookupByLibrary.simpleMessage("ಸಾಮಾನ್ಯ"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ಪರಿಶೀಲಿಸಿ"),
@@ -154,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("ಪೋಸ್ಟ್‌ಗಳು"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("ಗೌಪ್ಯತಾ ನೀತಿ"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("ಈಗ ಉಲ್ಲೇಖಿಸಿ"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("quote price"),
         "quotesYouPlaced":
