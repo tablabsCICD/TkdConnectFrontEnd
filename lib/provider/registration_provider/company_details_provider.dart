@@ -20,12 +20,18 @@ class CompanyDetailsProvider extends BaseRegistartionProvider{
   bool isEnbale=false;
   String valName=S().business_type;
   int selectType=-1;
+  bool agree = false;
 
   addRoute(RouteRequest routeRequest){
     listRoute.add(routeRequest);
     notifyListeners();
   }
 
+  setAgreeOrNot(bool value){
+      agree = value ?? false;
+      checkValidation();
+    notifyListeners();
+  }
 
   void showBootomSheet(BuildContext context) async {
     RouteRequest routeRequest = await showModalBottomSheet(
@@ -46,7 +52,7 @@ class CompanyDetailsProvider extends BaseRegistartionProvider{
 
   checkValidation() {
     if (companyNameController.text.isNotEmpty &&
-        locationController.text.isNotEmpty ) {
+        locationController.text.isNotEmpty && agree==true) {
 
       if(selectType==-1){
         isEnbale = false;

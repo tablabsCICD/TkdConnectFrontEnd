@@ -1,9 +1,9 @@
 
 
 class ApiConstant {
-  static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
+ // static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
 
- //static const String BASE_URL = "http://ec2-13-127-217-17.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+ static const String BASE_URL = "http://ec2-3-108-41-246.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
   static String FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
@@ -75,6 +75,9 @@ class ApiConstant {
 
   static String MYPOSTBID(id, page) =>
       "${BASE_URL}getOwnPostAndBid?userName=$id&page=$page";
+
+  static String GET_BID_TREND(id) =>
+      "${BASE_URL}trend/$id";
 
   static String GETCOMMENTS(id) =>
       "$BASE_URL/getGerenalPostComments?generalPostId=$id";

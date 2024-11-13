@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,6 +18,7 @@ import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
 import '../../utils/utils.dart';
 import '../my_bids/show_bids_screen.dart';
+
 
 class MyPostScreen extends StatefulWidget {
   const MyPostScreen({super.key});
@@ -91,59 +93,64 @@ class _MyPostState extends State<MyPostScreen> {
       ),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Visibility(
-              visible:postBidData.genericCardsDto!.expireDate==''?false:true,
-              child: Container(
-                width: 120.w,
-                height: 20.h,
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(2)
-                  ),
-                  border: Border.all(
-                    width: 0.5,
-                    color: ThemeColor.red,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-                child: Center(
-                  child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
-                    style: TextStyle(
-                      color: ThemeColor.black,
-                      fontSize: 8.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Visibility(
+                  visible:postBidData.genericCardsDto!.expireDate==''?false:true,
+                  child: Container(
+                    width: 120.w,
+                    height: 20.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(2)
+                      ),
+                      border: Border.all(
+                        width: 0.5,
+                        color: ThemeColor.red,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
+                        style: TextStyle(
+                          color: ThemeColor.green,
+                          fontSize: 8.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              width: 100.w,
-              height: 18.h,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-              decoration: ShapeDecoration(
-                color: const Color(0xFF2C8FEA),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.r)),
-              ),
-              child: Center(
-                child: Text(
-                  Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 9.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 100.w,
+                  height: 18.h,
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF2C8FEA),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.r)),
+                  ),
+                  child: Center(
+                    child: Text(
+                      Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 9.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
           SizedBox(height: 8.h,),
           BaseWidget().heading(
@@ -177,7 +184,7 @@ class _MyPostState extends State<MyPostScreen> {
               String description= "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://api.tkdost.com/bids/?id=${postBidData.genericCardsDto!.id}'";
               await Utils().callShareFunction(description);
             }
-          },false)
+          },false),
 
 
         ],
@@ -367,6 +374,26 @@ class _MyPostState extends State<MyPostScreen> {
                               ],
                             ),
                           ),
+                          Container(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Quote Justification : ${bidings.bidings!.description??'-'}',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12.sp,
+                                    fontFamily: AppConstant.FONTFAMILY,
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -433,5 +460,6 @@ class _MyPostState extends State<MyPostScreen> {
   }
 
 
-
 }
+
+

@@ -1,9 +1,11 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/provider/my_post/my_post_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/my_bids/show_bids_screen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -156,7 +158,37 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           BaseWidget().routes(postBidData.genericCardsDto!.source!,
               postBidData.genericCardsDto!.destination!),
           SizedBox(height: 8.h,),
-          iteams(postBidData, index),
+          postBidData.bidings!.isEmpty
+              ? SizedBox.shrink()
+              : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.bar_chart,
+                  color: postBidData.genericCardsDto!.showCharts
+                      ? ThemeColor.red
+                      : Colors.grey),
+              Switch(
+                value: postBidData.genericCardsDto!.showCharts,
+                onChanged: (value) async {
+                  if (value == true) {
+                    await widget.provider.getGraphDataForBids(
+                        context, postBidData.genericCardsDto!.id!);
+                  }
+                  setState(() {
+                    postBidData.genericCardsDto!.showCharts = value;
+                  });
+                },
+                activeColor: ThemeColor.theme_blue,
+              ),
+              Icon(Icons.list,
+                  color: !postBidData.genericCardsDto!.showCharts
+                      ? ThemeColor.red
+                      : Colors.grey),
+            ],
+          ),
+          postBidData.genericCardsDto!.showCharts!
+              ? drawGraph()
+              : iteams(postBidData, index),
           SizedBox(height: 8.h,),
           BaseWidget().showBidButton((val) async{
             if (val == 0) {
@@ -312,6 +344,19 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                               ],
                             ),
                           ),
+                          Text(
+                            'Quote Justification : ${bidings.bidings!.description??'-'}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -378,5 +423,120 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
       ),
     );
   }
+
+  drawGraph() {
+    return Consumer<MyBidsProvider>(builder: (context, provider, child) {
+      return Padding(
+        padding: const EdgeInsets.all(9.0), // Outer padding for the card
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Y-axis label
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                'Quote Graph',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Rotated Y-axis label
+                RotatedBox(
+                  quarterTurns: -1,
+                  child: const Text(
+                    'Quote Count',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+                // Chart container with inner padding
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    // Space between label and chart
+                    child: SizedBox(
+                      height: 300,
+                      child: BarChart(
+                        BarChartData(
+                          barGroups: _createBarGroups(provider),
+                          titlesData: FlTitlesData(
+                            topTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
+                            ),
+                            rightTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
+                            ),
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) => Text(provider
+                                    .data.keys
+                                    .elementAt(value.toInt())),
+                              ),
+                            ),
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) {
+                                  if (value % 1 == 0) {
+                                    return Text(value.toString());
+                                  }
+                                  return const SizedBox.shrink();
+                                },
+                              ),
+                            ),
+                          ),
+                          borderData: FlBorderData(show: false),
+                          barTouchData: BarTouchData(
+                            touchTooltipData: BarTouchTooltipData(),
+                          ),
+                          gridData: FlGridData(show: false),
+                          alignment: BarChartAlignment.spaceAround,
+                          maxY: provider.data.values == 0
+                              ? 0.0
+                              : provider.data.values
+                              .reduce((a, b) => a > b ? a : b) +
+                              1.0,
+                        ),
+                        swapAnimationDuration: Duration(milliseconds: 500),
+                        swapAnimationCurve: Curves.easeInOut,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // X-axis label
+            const Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: Text(
+                'Quote Amount',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  List<BarChartGroupData> _createBarGroups(MyBidsProvider provider) {
+    return provider.data.entries.map((entry) {
+      final index = provider.data.keys.toList().indexOf(entry.key);
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: double.parse(entry.value.toString()),
+            color: Colors.blue,
+            width: 20,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+      );
+    }).toList();
+  }
+
 
 }

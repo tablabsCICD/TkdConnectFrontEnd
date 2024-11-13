@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,10 +27,11 @@ class MyPostScreenTwo extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _MyPostStateTwo();
   }
-
 }
 
 class _MyPostStateTwo extends State<MyPostScreenTwo> {
+  bool _showChart = true;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -41,32 +43,32 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
   _buildPage(BuildContext context) {
     return Column(
       children: [
-
         Expanded(
           child: Consumer<MyPostProvider>(
             builder: (context, provider, child) {
-              return
-                provider.listOwnBid.isEmpty?Center(
-                  child: Text(S().noRecordFound),
-                ):
-                ListView.builder(
-                controller: provider.scrollController,
-                itemCount: provider.listOwnBid.length,
-                itemBuilder: (context, i) {
-                  return Padding(padding: EdgeInsets.only(bottom: 12.h,left: 0.w,right: 0.w),child: iteamMyPost(provider.listOwnBid[i],i),);
-                },
-              );
+              return provider.listOwnBid.isEmpty
+                  ? Center(
+                      child: Text(S().noRecordFound),
+                    )
+                  : ListView.builder(
+                      controller: provider.scrollController,
+                      itemCount: provider.listOwnBid.length,
+                      itemBuilder: (context, i) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 12.h, left: 0.w, right: 0.w),
+                          child: iteamMyPost(provider.listOwnBid[i], i),
+                        );
+                      },
+                    );
             },
           ),
         )
-
       ],
     );
   }
 
-
   iteamMyPost(PostBidData postBidData, int index) {
-
     return Consumer<MyPostProvider>(
       builder: (context, provider, child) {
         return Container(
@@ -114,60 +116,90 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   ),
                 ),
               ),
-              SizedBox(height: 8.h,),
+              SizedBox(
+                height: 8.h,
+              ),
               BaseWidget().heading(
                   postBidData.genericCardsDto!.topicName!,
-                  postBidData.genericCardsDto!.postingTime!=null?postBidData.genericCardsDto!.postingTime!.split(" ").first:"",
+                  postBidData.genericCardsDto!.postingTime != null
+                      ? postBidData.genericCardsDto!.postingTime!
+                          .split(" ")
+                          .first
+                      : "",
                   postBidData.genericCardsDto!.content!),
-              SizedBox(height: 8.h,),
+              SizedBox(
+                height: 8.h,
+              ),
               BaseWidget().routes(postBidData.genericCardsDto!.source!,
                   postBidData.genericCardsDto!.destination!),
-              SizedBox(height: 8.h,),
-              iteams(postBidData, index),
-              SizedBox(height: 8.h,),
-              BaseWidget().showBidRepostButton((val) async{
+              SizedBox(
+                height: 8.h,
+              ),
+              postBidData.bidings!.isEmpty
+                  ? SizedBox.shrink()
+                  : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.bar_chart,
+                      color: postBidData.genericCardsDto!.showCharts
+                          ? ThemeColor.red
+                          : Colors.grey),
+                  Switch(
+                    value: postBidData.genericCardsDto!.showCharts,
+                    onChanged: (value) async {
+                      if (value == true) {
+                        await provider.getGraphDataForBids(
+                            context, postBidData.genericCardsDto!.id!);
+                      }
+                      setState(() {
+                        postBidData.genericCardsDto!.showCharts = value;
+                      });
+                    },
+                    activeColor: ThemeColor.theme_blue,
+                  ),
+                  Icon(Icons.list,
+                      color: !postBidData.genericCardsDto!.showCharts
+                          ? ThemeColor.red
+                          : Colors.grey),
+                ],
+              ),
+               postBidData.genericCardsDto!.showCharts!
+                      ? drawGraph()
+                      : iteams(postBidData, index),
+              SizedBox(
+                height: 8.h,
+              ),
+              BaseWidget().showBidRepostButton((val) async {
                 if (val == 0) {
                   if (postBidData.bidings!.isNotEmpty) {
-                    showBootomSheet(context,postBidData.bidings);
+                    showBootomSheet(context, postBidData.bidings);
                   } else {
                     ToastMessage.show(context, "No any Bids to show");
                   }
                 }
-                if(val==1){
-
+                if (val == 1) {
                   Future.delayed(
-                      Duration.zero,
-                          () => _showMyDialog(index,provider)
-                  );
-
-
+                      Duration.zero, () => _showMyDialog(index, provider));
                 }
-                if(val==3){
-                  String description= "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://api.tkdost.com/bids/?id=${postBidData.genericCardsDto!.id}'";
+                if (val == 3) {
+                  String description =
+                      "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://api.tkdost.com/bids/?id=${postBidData.genericCardsDto!.id}'";
                   await Utils().callShareFunction(description);
                 }
-                if(val==4){
-                 provider.reSendPost(context,postBidData);
+                if (val == 4) {
+                  provider.reSendPost(context, postBidData);
                 }
-                if(val==6){
+                if (val == 6) {
                   Future.delayed(const Duration(seconds: 1), () async {
-
-                       //  int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
-                    Navigator.pushNamed(context, AppRoutes.editpost,arguments: postBidData);
-
+                    //  int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
+                    Navigator.pushNamed(context, AppRoutes.editpost,
+                        arguments: postBidData);
                   });
-
-
-
-
                 }
-                if(val==7){
+                if (val == 7) {
                   provider.interChnageSendPost(context, postBidData);
                 }
-
-              },false)
-
-
+              }, false)
             ],
           ),
         );
@@ -175,31 +207,44 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     );
   }
 
-  Future<void> _showMyDialog(int index,MyPostProvider myPostProvider) async {
+  Future<void> _showMyDialog(int index, MyPostProvider myPostProvider) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
-          content:  SingleChildScrollView(
+          title: Text(S().complete,
+              style: TextStyle(
+                  fontFamily: AppConstant.FONTFAMILY,
+                  color: ThemeColor.theme_blue)),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(S().deleteMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
-
+                Text(
+                  S().deleteMsg,
+                  style: TextStyle(
+                      fontFamily: AppConstant.FONTFAMILY,
+                      color: ThemeColor.theme_blue),
+                ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              child: Text(S().complete,
+                  style: TextStyle(
+                      fontFamily: AppConstant.FONTFAMILY,
+                      color: ThemeColor.red)),
               onPressed: () {
                 myPostProvider.deletePost(index, context);
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              child: Text(S().no,
+                  style: TextStyle(
+                      fontFamily: AppConstant.FONTFAMILY,
+                      color: ThemeColor.green)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -210,22 +255,22 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     );
   }
 
-  void showBootomSheet(BuildContext context,List<Bidings>? bidings)async {
-
-    User use=await LocalSharePreferences().getLoginData();
-    if(use.content!.first.isPaid==0){
-
+  void showBootomSheet(BuildContext context, List<Bidings>? bidings) async {
+    User use = await LocalSharePreferences().getLoginData();
+    if (use.content!.first.isPaid == 0) {
       Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-
-    }else{
+    } else {
       showModalBottomSheet<void>(
           isScrollControlled: true,
           context: context,
           builder: (BuildContext context) {
-            return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
+            return FractionallySizedBox(
+                heightFactor: 0.7,
+                child: ShowBidsScreen(
+                  listBidings: bidings,
+                ));
           });
     }
-
   }
 
   iteams(PostBidData postBidData, int index) {
@@ -235,17 +280,19 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
       if (postBidData.bidings!.length == 1) {
         return iteamBid(postBidData.bidings![0], true, index);
       } else if (postBidData.bidings!.length == 2) {
-        List<Widget>list = [
+        List<Widget> list = [
           iteamBid(postBidData.bidings![0], false, index),
-          iteamBid(postBidData.bidings![1], true, index)];
+          iteamBid(postBidData.bidings![1], true, index)
+        ];
         return Column(
           children: list,
         );
       } else {
-        List<Widget>list = [
+        List<Widget> list = [
           iteamBid(postBidData.bidings![0], false, index),
           iteamBid(postBidData.bidings![1], false, index),
-          iteamBid(postBidData.bidings![2], true, index)];
+          iteamBid(postBidData.bidings![2], true, index)
+        ];
         return Column(
           children: list,
         );
@@ -278,9 +325,10 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  BaseWidget().getImage(bidings.profileImage!=null?bidings.profileImage!:"", height: 28.h, width: 28.w)
-                  ,
+                  BaseWidget().getImage(
+                      bidings.profileImage != null ? bidings.profileImage! : "",
+                      height: 28.h,
+                      width: 28.w),
                   SizedBox(width: 10.w),
                   Expanded(
                     child: Container(
@@ -307,7 +355,8 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                                 ),
                                 SizedBox(width: 4.w),
                                 Visibility(
-                                  visible: bidings.isVerified!=0?true:false,
+                                  visible:
+                                      bidings.isVerified != 0 ? true : false,
                                   child: VerifiedTag().onVeriedTag(),
                                 ),
                               ],
@@ -340,10 +389,21 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                                     fontFamily: AppConstant.FONTFAMILY,
                                     fontWeight: FontWeight.w600,
                                     height: 0,
-
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                          Text(
+                            'Quote Justification : ${bidings.bidings!.description ?? '-'}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w400,
+                              height: 0,
                             ),
                           ),
                         ],
@@ -370,36 +430,39 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: () async{
+                  onTap: () async {
                     // widget.provider.deleteBid(index, bidings);
-                    User use=await LocalSharePreferences().getLoginData();
-                    if(use.content!.first.isPaid==0){
-
-                      Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-
-                    }else{
+                    User use = await LocalSharePreferences().getLoginData();
+                    if (use.content!.first.isPaid == 0) {
+                      Navigator.pushNamed(
+                          context, AppRoutes.registration_plan_details);
+                    } else {
                       Utils().callFunction("${bidings.bidings!.mobileNumber}");
                     }
-                  }
-                  , child: SizedBox(
-                  width: 22.w,
-                  height: 22.h,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 22.w,
-                        height: 22.h,
-                        child: Stack(children: [
-                          SvgPicture.asset(Images.call_white,color: ThemeColor.theme_blue,height: 25.h,width: 25.w,)
-
-                        ]),
-                      ),
-                    ],
+                  },
+                  child: SizedBox(
+                    width: 22.w,
+                    height: 22.h,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 22.w,
+                          height: 22.h,
+                          child: Stack(children: [
+                            SvgPicture.asset(
+                              Images.call_white,
+                              color: ThemeColor.theme_blue,
+                              height: 25.h,
+                              width: 25.w,
+                            )
+                          ]),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 ),
               ],
             ),
@@ -409,6 +472,117 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     );
   }
 
+  drawGraph() {
+    return Consumer<MyPostProvider>(builder: (context, provider, child) {
+      return Padding(
+        padding: const EdgeInsets.all(9.0), // Outer padding for the card
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Y-axis label
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                'Quote Graph',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Rotated Y-axis label
+                RotatedBox(
+                  quarterTurns: -1,
+                  child: const Text(
+                    'Quote Count',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+                // Chart container with inner padding
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    // Space between label and chart
+                    child: SizedBox(
+                      height: 300,
+                      child: BarChart(
+                        BarChartData(
+                          barGroups: _createBarGroups(provider),
+                          titlesData: FlTitlesData(
+                            topTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
+                            ),
+                            rightTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
+                            ),
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) => Text(provider
+                                    .data.keys
+                                    .elementAt(value.toInt())),
+                              ),
+                            ),
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget: (value, meta) {
+                                  if (value % 1 == 0) {
+                                    return Text(value.toString());
+                                  }
+                                  return const SizedBox.shrink();
+                                },
+                              ),
+                            ),
+                          ),
+                          borderData: FlBorderData(show: false),
+                          barTouchData: BarTouchData(
+                            touchTooltipData: BarTouchTooltipData(),
+                          ),
+                          gridData: FlGridData(show: false),
+                          alignment: BarChartAlignment.spaceAround,
+                          maxY: provider.data.values == 0
+                              ? 0.0
+                              : provider.data.values
+                                      .reduce((a, b) => a > b ? a : b) +
+                                  1.0,
+                        ),
+                        swapAnimationDuration: Duration(milliseconds: 500),
+                        swapAnimationCurve: Curves.easeInOut,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // X-axis label
+            const Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: Text(
+                'Quote Amount',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
 
-
+  List<BarChartGroupData> _createBarGroups(MyPostProvider provider) {
+    return provider.data.entries.map((entry) {
+      final index = provider.data.keys.toList().indexOf(entry.key);
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: double.parse(entry.value.toString()),
+            color: Colors.blue,
+            width: 20,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+      );
+    }).toList();
+  }
 }

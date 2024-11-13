@@ -8,6 +8,7 @@ import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 import 'package:tkd_connect/widgets/textview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
@@ -24,7 +25,6 @@ class CompanyDetailsScreen extends StatefulWidget {
     // TODO: implement createState
     return _CompanyDetailsScreen();
   }
-
 }
 
 class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
@@ -43,33 +43,31 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
         child: Consumer<CompanyDetailsProvider>(
           builder: (context, provider, child) {
             return Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               color: ThemeColor.baground,
               margin: EdgeInsets.only(left: 20.w, right: 20.w),
               child: ListView(
                 // mainAxisAlignment: MainAxisAlignment.start,
 
                 children: [
-
-                  SizedBox(height: 21.5.h,),
+                  SizedBox(
+                    height: 21.5.h,
+                  ),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InkWell(onTap: (){
-                        Navigator.pop(context);
-                      },child: SvgPicture.asset(Images.arrow_back)),
+                      InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: SvgPicture.asset(Images.arrow_back)),
                       Textview(
                         title: S().businessDetails,
                         TextStyle(
                           color: Colors.black,
                           fontSize: 14.sp,
-                          fontFamily: GoogleFonts
-                              .poppins()
-                              .fontFamily,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -77,27 +75,42 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                     ],
                   ),
 
-                  SizedBox(height: 21.h,),
+                  SizedBox(
+                    height: 21.h,
+                  ),
                   progressBar(),
-                  SizedBox(height: 24.h,),
+                  SizedBox(
+                    height: 24.h,
+                  ),
                   labelText(S().companyName),
-                  SizedBox(height: 4.h,),
-                  editView(S().egFristName,provider.companyNameController,provider),
-                  SizedBox(height: 12.h,),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  editView(S().egFristName, provider.companyNameController,
+                      provider),
+                  SizedBox(
+                    height: 12.h,
+                  ),
 
                   labelText(S().location),
-                  SizedBox(height: 4.h,),
-                  editView(S().egPune,provider.locationController,provider),
-                  SizedBox(height: 12.h,),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  editView(S().egPune, provider.locationController, provider),
+                  SizedBox(
+                    height: 12.h,
+                  ),
 
                   //labelText("Type of Company"),
 
-                  SizedBox(height: 4.h,),
+                  SizedBox(
+                    height: 4.h,
+                  ),
                   //editView("eg.Software",provider.companyTypeController,provider),
-                  popUpmenu((val){
-
-                  },context),
-                  SizedBox(height: 28.h,),
+                  popUpmenu((val) {}, context),
+                  SizedBox(
+                    height: 28.h,
+                  ),
 
                   SizedBox(
                     width: 335.w,
@@ -106,14 +119,14 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                       TextStyle(
                         color: Colors.black,
                         fontSize: 16.sp,
-                        fontFamily: GoogleFonts
-                            .poppins()
-                            .fontFamily,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  SizedBox(height: 4.h,),
+                  SizedBox(
+                    height: 4.h,
+                  ),
                   SizedBox(
                     width: 335.w,
                     child: Textview(
@@ -127,53 +140,57 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                     ),
                   ),
 
-                  SizedBox(height: 16.h,),
-
+                  SizedBox(
+                    height: 16.h,
+                  ),
 
                   ConstrainedBox(
-                      constraints: BoxConstraints(
-                          maxHeight: 195.h, minHeight: 0.0),
+                      constraints:
+                          BoxConstraints(maxHeight: 195.h, minHeight: 0.0),
                       child: listviewCity()),
 
-                  SizedBox(height: 24.h,),
+                  SizedBox(
+                    height: 24.h,
+                  ),
                   addRoute(),
 
-                  SizedBox(height: 31.h,),
-
+                  SizedBox(
+                    height: 31.h,
+                  ),
+                  acceptTermsAndCondition(provider),
+                  SizedBox(
+                    height: 24.h,
+                  ),
                   Consumer<CompanyDetailsProvider>(
                     builder: (context, provider, child) {
                       return Button(
                           isEnbale: provider.isEnbale,
-                          width: 335.w, height: 49.h,
+                          width: 335.w,
+                          height: 49.h,
                           title: S().Next,
                           textStyle: TextStyle(
                             color: Colors.white,
                             fontSize: 14.sp,
-                            fontFamily: GoogleFonts
-                                .poppins()
-                                .fontFamily,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,
                           ),
-
                           onClick: () {
-                        provider.saveData(context);
+                            provider.saveData(context);
                             // Navigator.pushReplacementNamed(
                             //     context, AppRoutes.registration_plan_details);
                           });
                     },
                   ),
-                  SizedBox(height: 40.h,),
+                  SizedBox(
+                    height: 40.h,
+                  ),
                   const AlredayAccountWidget(),
                   SizedBox(
                     height: 10.h,
                   ),
                   supportNumber()
-
                 ],
-
               ),
-
-
             );
           },
         ),
@@ -185,7 +202,6 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     return SizedBox(
       width: 332.w,
       child: Column(
-
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -194,13 +210,10 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 12.sp,
-              fontFamily: GoogleFonts
-                  .poppins()
-                  .fontFamily,
+              fontFamily: GoogleFonts.poppins().fontFamily,
               fontWeight: FontWeight.w400,
             ),
           ),
-
         ],
       ),
     );
@@ -245,7 +258,6 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     );
   }
 
-
   editView(String hint, TextEditingController controller,
       CompanyDetailsProvider provider) {
     return EditText(
@@ -263,7 +275,6 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     return SizedBox(
       width: 335.w,
       height: 40.65.h,
-
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -277,7 +288,8 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
+                  side:
+                      BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -294,9 +306,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                         style: TextStyle(
                           color: const Color(0xCC001E49),
                           fontSize: 12.sp,
-                          fontFamily: GoogleFonts
-                              .poppins()
-                              .fontFamily,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -305,7 +315,6 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                   SizedBox(width: 16.w),
                   SvgPicture.asset(Images.return_route),
                   SizedBox(width: 16.w),
-
                   Expanded(
                     child: SizedBox(
                       child: Text(
@@ -313,9 +322,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                         style: TextStyle(
                           color: const Color(0xCC001E49),
                           fontSize: 12.sp,
-                          fontFamily: GoogleFonts
-                              .poppins()
-                              .fontFamily,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -325,7 +332,9 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
               ),
             ),
           ),
-          SizedBox(width: 20.w,),
+          SizedBox(
+            width: 20.w,
+          ),
           SizedBox(
             width: 24.w,
             height: 24.h,
@@ -338,16 +347,15 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
-                    InkWell(onTap: () {
-
-                    }, child: SvgPicture.asset(Images.edit))
-
+                    InkWell(onTap: () {}, child: SvgPicture.asset(Images.edit))
                   ]),
                 ),
               ],
             ),
           ),
-          SizedBox(width: 20.w,),
+          SizedBox(
+            width: 20.w,
+          ),
           SizedBox(
             width: 24.w,
             height: 24.h,
@@ -360,12 +368,8 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                   width: 24.w,
                   height: 24.h,
                   child: Stack(children: [
-
-                    InkWell(onTap: () {
-
-
-                    }, child: SvgPicture.asset(Images.delete))
-
+                    InkWell(
+                        onTap: () {}, child: SvgPicture.asset(Images.delete))
                   ]),
                 ),
               ],
@@ -376,12 +380,10 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     );
   }
 
-
   listviewCity() {
     return Consumer<CompanyDetailsProvider>(
       builder: (context, provider, child) {
         return ListView.builder(
-
           itemCount: provider.listRoute.length,
           shrinkWrap: true,
           itemBuilder: (context, i) {
@@ -406,14 +408,13 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     );
   }
 
-
   popUpmenu(Function(String) onMenuTap, BuildContext context) {
     return Consumer<CompanyDetailsProvider>(
       builder: (context, provider, child) {
         return PopupMenuButton(
           position: PopupMenuPosition.values[1],
           constraints:
-          BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
+              BoxConstraints.tightFor(width: MediaQuery.of(context).size.width),
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
             borderRadius: BorderRadius.circular(8.r),
@@ -452,7 +453,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
             // ),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown(S().transporter,1);
+                  provider.changeDropDown(S().transporter, 1);
                 },
                 child: Row(
                   children: [
@@ -470,7 +471,8 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown("${S().agentBroker}/${S().packersAndMovers}",0);
+                  provider.changeDropDown(
+                      "${S().agentBroker}/${S().packersAndMovers}", 0);
                 },
                 child: Row(
                   children: [
@@ -489,7 +491,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
 
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown(S().manufacturerDistributorTrade,3);
+                  provider.changeDropDown(S().manufacturerDistributorTrade, 3);
                 },
                 child: Row(
                   children: [
@@ -507,7 +509,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.changeDropDown(S().truckDriver,6);
+                  provider.changeDropDown(S().truckDriver, 6);
                 },
                 child: Row(
                   children: [
@@ -528,8 +530,6 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
       },
     );
   }
-
-
 
   dropList(BuildContext context) {
     return Consumer<CompanyDetailsProvider>(
@@ -568,7 +568,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                           Expanded(
                             child: SizedBox(
                               child: Text(
-                               provider.valName,
+                                provider.valName,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.sp,
@@ -600,8 +600,6 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     );
   }
 
-
-
   supportNumber() {
     return Container(
       child: Padding(
@@ -616,36 +614,30 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
                     color: Colors.black),
                 title: S().helpSupport),
             InkWell(
-              onTap: (){
-
-              },
-              child:
-
-              Row(
+              onTap: () {},
+              child: Row(
                 children: [
                   InkWell(
-
-                    onTap: (){
+                    onTap: () {
                       Utils().callFunction("8123006888");
-                    },child: subTitle('(+91)  8123006888 '),
+                    },
+                    child: subTitle('(+91)  8123006888 '),
                   ),
                   const Text(" / "),
                   InkWell(
-
-                    onTap: (){
+                    onTap: () {
                       Utils().callFunction("8123004666");
-                    },child:   subTitle('(+91)  8123004666 '),
+                    },
+                    child: subTitle('(+91)  8123004666 '),
                   ),
                 ],
-              )
-              ,
+              ),
             )
           ],
         ),
       ),
     );
   }
-
 
   subTitle(String subtitle) {
     return Text(
@@ -660,4 +652,45 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
     );
   }
 
+  acceptTermsAndCondition(CompanyDetailsProvider provider) {
+    return Row(
+      children: [
+        Material(
+          child: Checkbox(
+            activeColor: ThemeColor.red,
+            checkColor: ThemeColor.white,
+            value: provider.agree,
+            onChanged: (value) {
+              provider.setAgreeOrNot(value!);
+            },
+          ),
+        ),
+        Expanded(
+          child: InkWell(
+              onTap: () async {
+                const url = 'https://tkdtermsandconditions.s3.ap-south-1.amazonaws.com/termsconditions.html';
+                final uri = Uri.parse(url);
+
+                if (await canLaunchUrl(uri)) {
+                await launchUrl(uri, mode: LaunchMode.externalApplication); // opens in external browser
+                } else {
+                throw 'Could not launch $url';
+                }
+              },
+              child: Text(
+                'I have read and accept terms and conditions',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                  fontSize: 12.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),
+              )),
+        )
+      ],
+    );
+  }
 }

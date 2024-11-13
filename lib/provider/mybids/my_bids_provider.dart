@@ -95,6 +95,21 @@ class MyBidsProvider extends BaseProvider{
 
 
   }
+
+
+  Map<String, dynamic> data = {};
+  getGraphDataForBids(BuildContext context,int postId)async{
+    User user=await LocalSharePreferences().getLoginData();
+    print('the link is ${ApiConstant.GET_BID_TREND(postId)}');
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_TREND(postId));
+    if(apiResponse.status==200){
+      data = apiResponse.response;
+      notifyListeners();
+    }else{
+      ToastMessage.show(context, "Please Try Again");
+    }
+  }
+
   pagenation(BuildContext context){
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
