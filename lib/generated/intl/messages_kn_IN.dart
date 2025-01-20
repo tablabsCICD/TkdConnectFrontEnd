@@ -71,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "ಮಾರ್ಗಗಳನ್ನು ಸೇರಿಸಲು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ"),
         "companyName": MessageLookupByLibrary.simpleMessage("ಕಂಪನಿ ಹೆಸರು"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("ಸಂಪರ್ಕ"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("ಉದ್ಯೋಗ ಪೋಸ್ಟ್ ರಚಿಸಿ"),
@@ -115,6 +116,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("ಮುಖಪುಟ"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
             "ನಮ್ಮ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ನೀವು ಹೇಗೆ ರೇಟ್ ಮಾಡುತ್ತೀರಿ?"),
+        "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
+        "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "ಹಲೋ! ನಿಮ್ಮ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಅನುಭವವನ್ನು ಉನ್ನತೀಕರಿಸಲು ನಾವು ಇಲ್ಲಿದ್ದೇವೆ. ನಿಮ್ಮ ಲಾಜಿಸ್ಟಿಕ್ಸ್ ಸಹಾಯ ನಮಗೆ ಇರಲಿ ಮತ್ತು ನಿಮ್ಮ ವ್ಯಾಪಾರದ ಅಗತ್ಯಗಳನ್ನು ಮನಬಂದಂತೆ ಪೂರೈಸಲಾಗುವುದು."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(

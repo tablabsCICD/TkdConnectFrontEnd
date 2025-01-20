@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "companyName":
             MessageLookupByLibrary.simpleMessage("நிறுவனத்தின் பெயர்"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("வேலை இடுகையை உருவாக்கு"),
         "createPost":
@@ -120,6 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("வீடு"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
             "எங்கள் பயன்பாட்டை எப்படி மதிப்பிடுகிறீர்கள்?"),
+        "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
+        "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "வணக்கம்! உங்கள் தளவாட அனுபவத்தை மேம்படுத்த நாங்கள் இங்கு வந்துள்ளோம். உங்களின் தளவாட உதவியாக இருக்கட்டும், உங்கள் வணிகத் தேவைகள் தடையின்றி நிறைவேற்றப்படும்."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(

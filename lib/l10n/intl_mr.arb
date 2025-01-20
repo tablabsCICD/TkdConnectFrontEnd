@@ -190,7 +190,13 @@
   "uploadLoad": "अपलोड लोड",
 
                                "complete": "कंप्लीट",
+                               "completed": "Completed",
                              "expiryDate": "Expiry Date",
-                             "quoteReason": "Quote Reason"
+                             "quoteReason": "Quote Reason",
+                               "iWantVehicle": "I Want Vehicle",
+                               "iHaveVehicle": "I Have Vehicle"
+
+
+
 
 }

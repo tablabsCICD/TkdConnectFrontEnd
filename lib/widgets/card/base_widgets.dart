@@ -1032,7 +1032,7 @@ class BaseWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SvgPicture.asset(Images.delete)
+                 // SvgPicture.asset(Images.delete)
                 ],
               ),
             ),
@@ -1041,6 +1041,43 @@ class BaseWidget {
           InkWell(onTap: () {}, child: isOwnPost?popUpmenuForOwnPost(onMenuTap):popUpmenu(onMenuTap))
         ],
       ),
+    );
+  }
+
+  Widget expiryButton(Function(int) onMenuTap,bool isOwnPost) {
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(right: 8.w),
+      alignment: Alignment.center,
+      child: Container(
+      height: 38.h,
+      width: 300.w,
+      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            S().completed,
+            style: TextStyle(
+              color: ThemeColor.red,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    ),
     );
   }
 

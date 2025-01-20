@@ -63,6 +63,16 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver{
            //  decoration: BoxDecoration(color: Color(0xFF001E49)),
              child: SvgPicture.asset(Images.logo,height: 93.h,width: 160.w,),
            ),
+           SizedBox(height: 16,),
+           Text(
+             "Tkd Connect",
+             style: TextStyle(
+               color: Colors.black,
+               fontSize: 16.sp,
+               fontFamily: AppConstant.FONTFAMILY,
+               fontWeight: FontWeight.w600,
+             ),
+           ),
          ],
        ),
      ),

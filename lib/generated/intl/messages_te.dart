@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("వ్యాఖ్య"),
         "companyName": MessageLookupByLibrary.simpleMessage("కంపెనీ పేరు"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("ఉద్యోగ పోస్ట్ సృష్టించు"),
         "createPost":
@@ -110,6 +111,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("హోమ్"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
             "మీరు మా యాప్‌ను ఎలా రేట్ చేస్తారు?"),
+        "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
+        "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "హలో! మేము మీ లాజిస్టిక్స్ అనుభవాన్ని మెరుగుపరచడానికి ఇక్కడ ఉన్నాము. మేము మీ లాజిస్టిక్స్ సహాయాన్ని అందిస్తాము మరియు మీ వ్యాపార అవసరాలు సజావుగా నెరవేరుతాయి."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(

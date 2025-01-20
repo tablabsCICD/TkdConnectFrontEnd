@@ -215,6 +215,17 @@ class Utils {
     }
   }
 
+  bool isExpired(String expiryDateString) {
+    if(expiryDateString==''){
+      return false;
+    }else{
+    // Parse the string into a DateTime object
+    DateTime expiryDate = DateTime.parse(expiryDateString);
+
+    // Compare with the current date
+    return DateTime.now().isAfter(expiryDate);}
+  }
+
   getSelectedPackageImage(int val){
     switch(val){
       case 0:

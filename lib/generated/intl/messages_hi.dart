@@ -78,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("टिप्पणी"),
         "companyName": MessageLookupByLibrary.simpleMessage("कंपनी का नाम"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("संपर्क"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("जॉब पोस्ट बनाएं"),
@@ -127,6 +128,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("मुखपृष्ठ"),
         "how_do_you_rate_app": MessageLookupByLibrary.simpleMessage(
             "आप हमारे ऐप को कैसे रेट करते हैं?"),
+        "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
+        "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "नमस्ते! हम यहां आपके लॉजिस्टिक्स अनुभव को बेहतर बनाने के लिए हैं। आइए हम आपकी लॉजिस्टिक सहायता बनें और आपकी व्यावसायिक ज़रूरतें निर्बाध रूप से पूरी होंगी।"),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(

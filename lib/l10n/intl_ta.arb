@@ -194,5 +194,10 @@
 
                                 "complete": "Complete",
                               "expiryDate": "Expiry Date",
-                              "quoteReason": "Quote Reason"
+                              "completed": "Completed",
+                              "quoteReason": "Quote Reason",
+                                "iWantVehicle": "I Want Vehicle",
+                                "iHaveVehicle": "I Have Vehicle"
+
+
 }

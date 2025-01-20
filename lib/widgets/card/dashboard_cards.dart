@@ -194,86 +194,58 @@ class AllCards {
 
   cardLoadHome(int index, BuildContext context, TruckLoad load, int userId,
       DeletePostInf postDelete, HomeScreenProvider provider) {
-    return Container(
-      width: 335.w,
-      // height: 255.h,
-      padding: EdgeInsets.all(12.r),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
+    return Opacity(
+      opacity: Utils().isExpired(load.expireDate!) ? 0.5 : 1.0,
+      child: Container(
+        width: 335.w,
+        // height: 255.h,
+        padding: EdgeInsets.all(12.r),
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          shadows: [
+            BoxShadow(
+              color: const Color(0x114A5568),
+              blurRadius: 8.r,
+              offset: const Offset(0, 3),
+              spreadRadius: 0,
+            )
+          ],
         ),
-        shadows: [
-          BoxShadow(
-            color: const Color(0x114A5568),
-            blurRadius: 8.r,
-            offset: const Offset(0, 3),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Visibility(
-                      visible:load.expireDate==''?false:true,
-                      child: Container(
-                        width: 120.w,
-                        height: 20.h,
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(2)
-                          ),
-                          border: Border.all(
-                            width: 0.5,
-                            color: ThemeColor.red,
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text("valid till : ${load.expireDate==''?"-":load.expireDate!}",
-                            style: TextStyle(
-                              color: ThemeColor.black,
-                              fontSize: 8.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: load.isSharedInGroup!,
-                      child: Align(
-                        alignment: Alignment.topLeft,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Visibility(
+                        visible:load.expireDate==''?false:true,
                         child: Container(
                           width: 120.w,
                           height: 20.h,
                           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                           decoration: BoxDecoration(
-                            /* borderRadius: const BorderRadius.all(Radius.circular(2)
-                      ),
-                      border: Border.all(
-                        width: 0.5,
-                        color: ThemeColor.red,
-                        style: BorderStyle.solid,
-                      ),*/
+                            borderRadius: const BorderRadius.all(Radius.circular(2)
+                            ),
+                            border: Border.all(
+                              width: 0.5,
+                              color: ThemeColor.red,
+                              style: BorderStyle.solid,
+                            ),
                           ),
                           child: Center(
-                            child: Text(
-                              "Only For You",
+                            child: Text("valid till : ${load.expireDate==''?"-":load.expireDate!}",
                               style: TextStyle(
-                                color: Colors.green,
+                                color: ThemeColor.black,
                                 fontSize: 8.sp,
                                 fontFamily: GoogleFonts.poppins().fontFamily,
                                 fontWeight: FontWeight.w600,
@@ -282,108 +254,178 @@ class AllCards {
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 120.w,
-                  height: 20.h,
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF2C8FEA),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.r)),
+                      Visibility(
+                        visible: load.isSharedInGroup!,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            width: 120.w,
+                            height: 20.h,
+                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                            decoration: BoxDecoration(
+                              /* borderRadius: const BorderRadius.all(Radius.circular(2)
+                        ),
+                        border: Border.all(
+                          width: 0.5,
+                          color: ThemeColor.red,
+                          style: BorderStyle.solid,
+                        ),*/
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Only For You",
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 8.sp,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Center(
-                    child: Text(
-                      Utils().mainTag(load.mainTag!),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w600,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 120.w,
+                    height: 20.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF2C8FEA),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.r)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        Utils().mainTag(load.mainTag!),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
 
-          SizedBox(height: 10.w),
-          BaseWidget().profileWithUser(
-              load.companyLogo!, load.nameOfPerson!, load.companyName!,
-              verify: load.isverified!,
-              transporterOrAgent: load.transporterOrAgent!),
-          BaseWidget().routes(load.source!, load.destination!),
-          SizedBox(
-            height: 12.h,
-          ),
-          imageLoad(load),
-          BaseWidget().heading(
-              load.topicName!, getDateObject(load.postingTime), load.content!),
-          load.userId == userId
-              ? BaseWidget().deleteButton((val) {
-                  if (val == 10) {
-                    postDelete.deleteOwnPost(load.id!, index);
+            SizedBox(height: 10.w),
+            BaseWidget().profileWithUser(
+                load.companyLogo!, load.nameOfPerson!, load.companyName!,
+                verify: load.isverified!,
+                transporterOrAgent: load.transporterOrAgent!),
+            BaseWidget().routes(load.source!, load.destination!),
+            SizedBox(
+              height: 12.h,
+            ),
+            imageLoad(load),
+
+            BaseWidget().heading(
+                load.topicName!, getDateObject(load.postingTime), load.content!),
+
+            Utils().isExpired(load.expireDate!)?BaseWidget().expiryButton((val) {
+              if (val == 10) {
+                postDelete.deleteOwnPost(load.id!, index);
+              } else {
+                if (load.dnd == 1) {
+                  ToastMessage.show(context, "This is DND Post");
+                } else {
+                  if (val == 6) {
+                    Future.delayed(const Duration(seconds: 1), () async {
+                      PostBidData postBidData=PostBidData();
+                      postBidData.genericCardsDto=GenericCardsDto();
+                      postBidData.genericCardsDto!.id=load.id;
+                      postBidData.genericCardsDto!.mobileNumber=load.mobileNumber;
+                      postBidData.genericCardsDto!.companyName=load.companyName;
+                      postBidData.genericCardsDto!.cargoType=load.typeOfCargo;
+                      postBidData.genericCardsDto!.vehicleWeight=load.loadWeight;
+                      postBidData.genericCardsDto!.vehicleSize=load.vehicleSize;
+                      postBidData.genericCardsDto!.typeOfPayment=load.typeOfPayment;
+                      postBidData.genericCardsDto!.source=load.source;
+                      postBidData.genericCardsDto!.destination=load.destination;
+                      postBidData.genericCardsDto!.dnd=load.dnd;
+                      postBidData.genericCardsDto!.privatePost=load.privatePost;
+                      postBidData.genericCardsDto!.mainTag=load.mainTag;
+                      int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
+
+                      postDelete.refreshHomeScreen();
+
+
+                    });
+
                   } else {
-                    if (load.dnd == 1) {
-                      ToastMessage.show(context, "This is DND Post");
+                    Utils().openMenu(val, load, context,
+                        providerHome: provider);
+                  }
+                }
+              }
+            },  load.userId == userId
+                ?true:false):load.userId == userId
+                ? BaseWidget().deleteButton((val) {
+                    if (val == 10) {
+                      postDelete.deleteOwnPost(load.id!, index);
                     } else {
-                      if (val == 6) {
-                        //Navigator.pop(context);
-
-                        Future.delayed(const Duration(seconds: 1), () async {
-
-                          PostBidData postBidData=PostBidData();
-                          postBidData.genericCardsDto=GenericCardsDto();
-                          postBidData.genericCardsDto!.id=load.id;
-                          postBidData.genericCardsDto!.mobileNumber=load.mobileNumber;
-                          postBidData.genericCardsDto!.companyName=load.companyName;
-                          postBidData.genericCardsDto!.cargoType=load.typeOfCargo;
-                          postBidData.genericCardsDto!.vehicleWeight=load.loadWeight;
-                          postBidData.genericCardsDto!.vehicleSize=load.vehicleSize;
-                          postBidData.genericCardsDto!.typeOfPayment=load.typeOfPayment;
-                          postBidData.genericCardsDto!.source=load.source;
-                          postBidData.genericCardsDto!.destination=load.destination;
-                          postBidData.genericCardsDto!.dnd=load.dnd;
-                          postBidData.genericCardsDto!.privatePost=load.privatePost;
-                          postBidData.genericCardsDto!.mainTag=load.mainTag;
-                          int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
-
-                          postDelete.refreshHomeScreen();
-
-
-                        });
-
+                      if (load.dnd == 1) {
+                        ToastMessage.show(context, "This is DND Post");
                       } else {
-                        Utils().openMenu(val, load, context,
-                            providerHome: provider);
+                        if (val == 6) {
+                          //Navigator.pop(context);
+
+                          Future.delayed(const Duration(seconds: 1), () async {
+
+                            PostBidData postBidData=PostBidData();
+                            postBidData.genericCardsDto=GenericCardsDto();
+                            postBidData.genericCardsDto!.id=load.id;
+                            postBidData.genericCardsDto!.mobileNumber=load.mobileNumber;
+                            postBidData.genericCardsDto!.companyName=load.companyName;
+                            postBidData.genericCardsDto!.cargoType=load.typeOfCargo;
+                            postBidData.genericCardsDto!.vehicleWeight=load.loadWeight;
+                            postBidData.genericCardsDto!.vehicleSize=load.vehicleSize;
+                            postBidData.genericCardsDto!.typeOfPayment=load.typeOfPayment;
+                            postBidData.genericCardsDto!.source=load.source;
+                            postBidData.genericCardsDto!.destination=load.destination;
+                            postBidData.genericCardsDto!.dnd=load.dnd;
+                            postBidData.genericCardsDto!.privatePost=load.privatePost;
+                            postBidData.genericCardsDto!.mainTag=load.mainTag;
+                            int a= await Navigator.push(context, MaterialPageRoute(builder: (_)=> EditPostBase(postBidData)));
+
+                            postDelete.refreshHomeScreen();
+
+
+                          });
+
+                        } else {
+                          Utils().openMenu(val, load, context,
+                              providerHome: provider);
+                        }
                       }
                     }
-                  }
-                }, true)
-              : BaseWidget().bidButton((val) {
-                  if (load.dnd == 1) {
-                    if(val ==0){
+                  }, true)
+                : BaseWidget().bidButton((val) {
+                    if (load.dnd == 1) {
+                      if(val ==0){
+                        Utils()
+                            .openMenu(val, load, context, providerHome: provider);
+                      }else{
+                        ToastMessage.show(context, "This is DND Post");
+                      }
+
+                    } else {
+
+
                       Utils()
                           .openMenu(val, load, context, providerHome: provider);
-                    }else{
-                      ToastMessage.show(context, "This is DND Post");
                     }
-
-                  } else {
-
-
-                    Utils()
-                        .openMenu(val, load, context, providerHome: provider);
-                  }
-                })
-        ],
+                  })
+          ],
+        ),
       ),
     );
   }

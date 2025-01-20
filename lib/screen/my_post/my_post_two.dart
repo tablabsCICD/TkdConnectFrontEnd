@@ -92,6 +92,36 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
           ),
           child: Column(
             children: [
+              Visibility(
+                visible:postBidData.genericCardsDto!.expireDate==''?false:true,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    width: 120.w,
+                    height: 20.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(2)
+                      ),
+                      border: Border.all(
+                        width: 0.5,
+                        color: ThemeColor.red,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
+                        style: TextStyle(
+                          color: ThemeColor.black,
+                          fontSize: 8.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
@@ -135,7 +165,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               SizedBox(
                 height: 8.h,
               ),
-              postBidData.bidings!.isEmpty
+              /*  postBidData.bidings!.isEmpty
                   ? SizedBox.shrink()
                   : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -163,9 +193,9 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                           : Colors.grey),
                 ],
               ),
-               postBidData.genericCardsDto!.showCharts!
+             postBidData.genericCardsDto!.showCharts!
                       ? drawGraph()
-                      : iteams(postBidData, index),
+                      :*/ iteams(postBidData, index),
               SizedBox(
                 height: 8.h,
               ),
@@ -483,7 +513,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
             const Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Text(
-                'Quote Graph',
+                'Market Rate ',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ),

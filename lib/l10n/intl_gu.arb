@@ -188,6 +188,10 @@
   "uploadLoad": "અપલોડ લોડ",
 
     "complete": "Complete",
-  "expiryDate": "Expiry Date",
-  "quoteReason": "Quote Reason"
+"completed": "Completed",  "expiryDate": "Expiry Date",
+  "quoteReason": "Quote Reason",
+    "iWantVehicle": "I Want Vehicle",
+    "iHaveVehicle": "I Have Vehicle"
+
+
 }

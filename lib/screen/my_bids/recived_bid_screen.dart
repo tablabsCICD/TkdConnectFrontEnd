@@ -158,7 +158,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           BaseWidget().routes(postBidData.genericCardsDto!.source!,
               postBidData.genericCardsDto!.destination!),
           SizedBox(height: 8.h,),
-          postBidData.bidings!.isEmpty
+       /*   postBidData.bidings!.isEmpty
               ? SizedBox.shrink()
               : Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +188,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           ),
           postBidData.genericCardsDto!.showCharts!
               ? drawGraph()
-              : iteams(postBidData, index),
+              : */iteams(postBidData, index),
           SizedBox(height: 8.h,),
           BaseWidget().showBidButton((val) async{
             if (val == 0) {

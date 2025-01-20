@@ -79,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "companyName": MessageLookupByLibrary.simpleMessage("Company Name"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("Contact"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("Create job post"),
@@ -88,7 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "creategroup": MessageLookupByLibrary.simpleMessage("Create Group"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
-            "Do you want to delete this post."),
+            "Do you want to complete this post."),
         "directory": MessageLookupByLibrary.simpleMessage("Directory"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "downloadExl": MessageLookupByLibrary.simpleMessage(
@@ -131,6 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "how_do_you_rate_app":
             MessageLookupByLibrary.simpleMessage("How do you rate our app ?"),
+        "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
+        "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(

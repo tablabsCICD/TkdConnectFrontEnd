@@ -660,10 +660,10 @@ class S {
     );
   }
 
-  /// `Do you want to delete this post.`
+  /// `Do you want to complete this post.`
   String get deleteMsg {
     return Intl.message(
-      'Do you want to delete this post.',
+      'Do you want to complete this post.',
       name: 'deleteMsg',
       desc: '',
       args: [],
@@ -1820,6 +1820,16 @@ class S {
     );
   }
 
+  /// `Completed`
+  String get completed {
+    return Intl.message(
+      'Completed',
+      name: 'completed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Expiry Date`
   String get expiryDate {
     return Intl.message(
@@ -1835,6 +1845,26 @@ class S {
     return Intl.message(
       'Quote Reason',
       name: 'quoteReason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I Want Vehicle`
+  String get iWantVehicle {
+    return Intl.message(
+      'I Want Vehicle',
+      name: 'iWantVehicle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I Have Vehicle`
+  String get iHaveVehicle {
+    return Intl.message(
+      'I Have Vehicle',
+      name: 'iHaveVehicle',
       desc: '',
       args: [],
     );

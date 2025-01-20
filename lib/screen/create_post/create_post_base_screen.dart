@@ -25,8 +25,8 @@ class CreatePostBase extends StatefulWidget {
 }
 
 class _CreatePostBase extends State<CreatePostBase>{
-  bool isLoad=true;
-  bool isVehicle=false;
+  bool isLoad=false;
+  bool isVehicle=true;
   bool isGeneral=false;
   bool isSponsered=false;
   PageController controller = PageController();
@@ -64,8 +64,8 @@ class _CreatePostBase extends State<CreatePostBase>{
                ),
                SizedBox(height: 10.h,),
                tabs(),
+               Visibility(visible: isVehicle,child: const PostVehicleScreen()),
                Visibility(visible: isLoad,child: const PostLoadScreen()),
-               Visibility(visible: isVehicle,child: const PostVehicleScreen()) ,
                Visibility(visible: isGeneral,child: const PostGenralScreen()),
                Visibility(visible: isSponsered,child: const PostSponseredScreen())
 
@@ -115,18 +115,7 @@ class _CreatePostBase extends State<CreatePostBase>{
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          tabItem(isLoad,S().loads,(){
-             isLoad=true;
-             isVehicle=false;
-             isGeneral=false;
-             isSponsered=false;
-            // controller.jumpToPage(0);
-             currentPage=0;
-             setState(() {
-
-             });
-          }),
-          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==AppConstant.USERTYPE || AppConstant.MANUFACTURE==AppConstant.USERTYPE ?   tabItem(isVehicle,S().vehicle,(){
+          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==AppConstant.USERTYPE || AppConstant.MANUFACTURE==AppConstant.USERTYPE ?   tabItem(isVehicle,S().iWantVehicle,(){
             isLoad=false;
             isVehicle=true;
             isGeneral=false;
@@ -139,6 +128,15 @@ class _CreatePostBase extends State<CreatePostBase>{
 
 
           }):const SizedBox(),
+          tabItem(isLoad,S().iHaveVehicle,(){
+             isLoad=true;
+             isVehicle=false;
+             isGeneral=false;
+             isSponsered=false;
+             currentPage=0;
+             setState(() {
+             });
+          }),
           tabItem(isGeneral,S().general,(){
             isLoad=false;
             isVehicle=false;
@@ -147,9 +145,7 @@ class _CreatePostBase extends State<CreatePostBase>{
             currentPage=2;
             //controller.jumpToPage(2);
             setState(() {
-
             });
-
           }),
           // tabItem(isSponsered,S().sponsered,(){
           //   isLoad=false;
@@ -202,9 +198,4 @@ class _CreatePostBase extends State<CreatePostBase>{
       ),
     );
   }
-
-
-
-
-
 }

@@ -130,7 +130,7 @@ class _MyApp extends State<MyApp> {
             ],
             child: MaterialApp(
 
-
+              debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
                 S.delegate,
                 GlobalMaterialLocalizations.delegate,
