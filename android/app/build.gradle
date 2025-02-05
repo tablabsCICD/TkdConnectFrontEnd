@@ -10,14 +10,14 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = 59
+def flutterVersionCode = 61
 if (flutterVersionCode == null) {
-    flutterVersionCode = '59'
+    flutterVersionCode = '61'
 }
 
-def flutterVersionName = '3.0.12'
+def flutterVersionName = '3.0.14'
 if (flutterVersionName == null) {
-    flutterVersionName = '3.0.12'
+    flutterVersionName = '3.0.14'
 }
 
 apply plugin: 'com.android.application'

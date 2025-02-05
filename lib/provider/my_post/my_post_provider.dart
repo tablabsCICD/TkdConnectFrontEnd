@@ -79,6 +79,19 @@ class MyPostProvider extends BaseProvider{
   }
 
 
+  completePost(int id,BuildContext context)async{
+    String myUrl = '${ApiConstant.COMPLETE_POST}$id';
+
+    ApiResponse apiResponse= await ApiHelper().apiPutDat(myUrl);
+    if(apiResponse.status==200){
+      // truckLoadTypeList .removeAt(index);
+      ToastMessage.show(context, "Your Post Completed Successfully");
+      notifyListeners();
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
   // reSendPost(BuildContext context,PostBidData postBidData) async {
   //   addedMemberIdList = await getTruckLoadById(postBidData.genericCardsDto!.id!);
   //   createPost(context,postBidData);

@@ -71,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ಮಾರ್ಗಗಳನ್ನು ಸೇರಿಸಲು ಕೆಳಗಿನ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ"),
         "companyName": MessageLookupByLibrary.simpleMessage("ಕಂಪನಿ ಹೆಸರು"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to complete this post."),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("ಸಂಪರ್ಕ"),
         "createJobPost":
@@ -107,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_id": MessageLookupByLibrary.simpleMessage("ಇಮೇಲ್-ಐಡಿ"),
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("ಉಲ್ಲೇಖದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "from": MessageLookupByLibrary.simpleMessage("ಇಂದ"),
         "general": MessageLookupByLibrary.simpleMessage("ಸಾಮಾನ್ಯ"),

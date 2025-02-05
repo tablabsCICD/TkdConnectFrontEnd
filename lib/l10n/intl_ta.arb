@@ -192,12 +192,14 @@
   "downloadExl": "எக்செல் பதிவேற்றுவதற்கு முன், வடிவமைப்பைப் பதிவிறக்க இங்கே கிளிக் செய்யவும்",
   "uploadLoad": "பதிவேற்றம்",
 
-                                "complete": "Complete",
-                              "expiryDate": "Expiry Date",
-                              "completed": "Completed",
-                              "quoteReason": "Quote Reason",
-                                "iWantVehicle": "I Want Vehicle",
-                                "iHaveVehicle": "I Have Vehicle"
+  "complete": "Complete",
+    "completed": "Completed",
+    "expiryDate": "Expiry Date",
+    "quoteReason": "Quote Reason",
+    "completeMsg": "Do you want to complete this post.",
+    "expired": "Expired",
 
+    "iWantVehicle": "I Want Vehicle",
+    "iHaveVehicle": "I Have Vehicle"
 
 }

@@ -195,7 +195,7 @@ class AllCards {
   cardLoadHome(int index, BuildContext context, TruckLoad load, int userId,
       DeletePostInf postDelete, HomeScreenProvider provider) {
     return Opacity(
-      opacity: Utils().isExpired(load.expireDate!) ? 0.5 : 1.0,
+      opacity: Utils().isExpired(load.expireDate!) || (load.isOpenForBid==0) ? 0.5 : 1.0,
       child: Container(
         width: 335.w,
         // height: 255.h,
@@ -330,7 +330,7 @@ class AllCards {
             BaseWidget().heading(
                 load.topicName!, getDateObject(load.postingTime), load.content!),
 
-            Utils().isExpired(load.expireDate!)?BaseWidget().expiryButton((val) {
+            Utils().isExpired(load.expireDate!) || (load.isOpenForBid==0)?BaseWidget().expiryButton((val) {
               if (val == 10) {
                 postDelete.deleteOwnPost(load.id!, index);
               } else {

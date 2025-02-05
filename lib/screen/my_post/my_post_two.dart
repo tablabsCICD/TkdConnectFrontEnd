@@ -92,10 +92,11 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
           ),
           child: Column(
             children: [
+
               Visibility(
-                visible:postBidData.genericCardsDto!.expireDate==''?false:true,
+                visible:postBidData.genericCardsDto!.isOpenForBid==1?false:true,
                 child: Align(
-                  alignment: Alignment.topLeft,
+                  alignment: Alignment.topCenter,
                   child: Container(
                     width: 120.w,
                     height: 20.h,
@@ -108,11 +109,12 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                         color: ThemeColor.red,
                         style: BorderStyle.solid,
                       ),
+                      color: ThemeColor.red
                     ),
                     child: Center(
-                      child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
+                      child: Text("Post Completed",
                         style: TextStyle(
-                          color: ThemeColor.black,
+                          color: ThemeColor.white,
                           fontSize: 8.sp,
                           fontFamily: GoogleFonts.poppins().fontFamily,
                           fontWeight: FontWeight.w600,
@@ -122,29 +124,65 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 100.w,
-                  height: 18.h,
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF2C8FEA),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.r)),
-                  ),
-                  child: Center(
-                    child: Text(
-                      Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 9.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w600,
+              postBidData.genericCardsDto!.isOpenForBid==1?SizedBox.shrink():SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Visibility(
+                    visible:postBidData.genericCardsDto!.expireDate==''?false:true,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        width: 120.w,
+                        height: 20.h,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(2)
+                          ),
+                          border: Border.all(
+                            width: 0.5,
+                            color: ThemeColor.red,
+                            style: BorderStyle.solid,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text("valid till : ${postBidData.genericCardsDto!.expireDate==''?"-":postBidData.genericCardsDto!.expireDate!}",
+                            style: TextStyle(
+                              color: ThemeColor.black,
+                              fontSize: 8.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 100.w,
+                      height: 18.h,
+                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2C8FEA),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.r)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 9.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 8.h,
@@ -211,6 +249,10 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   Future.delayed(
                       Duration.zero, () => _showMyDialog(index, provider));
                 }
+                if (val == 8) {
+                  Future.delayed(
+                      Duration.zero, () => _showCompleteDialog(context,postBidData.genericCardsDto!.id!, provider));
+                }
                 if (val == 3) {
                   String description =
                       "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://api.tkdost.com/bids/?id=${postBidData.genericCardsDto!.id}'";
@@ -229,7 +271,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                 if (val == 7) {
                   provider.interChnageSendPost(context, postBidData);
                 }
-              }, false)
+              }, false,postBidData)
             ],
           ),
         );
@@ -243,7 +285,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(S().complete,
+          title: Text(S().delete,
               style: TextStyle(
                   fontFamily: AppConstant.FONTFAMILY,
                   color: ThemeColor.theme_blue)),
@@ -261,7 +303,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(S().complete,
+              child: Text(S().delete,
                   style: TextStyle(
                       fontFamily: AppConstant.FONTFAMILY,
                       color: ThemeColor.red)),
@@ -614,5 +656,40 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
         ],
       );
     }).toList();
+  }
+
+  Future<void> _showCompleteDialog(BuildContext context,int id,MyPostProvider myPostProvider) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          content:  SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(S().completeMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              onPressed: () {
+                myPostProvider.completePost(id,context);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 }

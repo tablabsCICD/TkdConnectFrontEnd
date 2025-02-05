@@ -203,12 +203,13 @@
   "downloadExl": "ಎಕ್ಸೆಲ್ ಅನ್ನು ಅಪ್\u200Cಲೋಡ್ ಮಾಡುವ ಮೊದಲು, ಫಾರ್ಮ್ಯಾಟ್ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ",
   "uploadLoad": "ಅಪ್ಲೋಡ್ ಲೋಡ್",
 
-                                  "complete": "Complete",
-                                  "completed": "Completed",
-                                "expiryDate": "Expiry Date",
-                                "quoteReason": "Quote Reason",
-                                  "iWantVehicle": "I Want Vehicle",
-                                  "iHaveVehicle": "I Have Vehicle"
+  "complete": "Complete",
+    "completed": "Completed",
+    "expiryDate": "Expiry Date",
+    "quoteReason": "Quote Reason",
+    "completeMsg": "Do you want to complete this post.",
+    "expired": "Expired",
 
-
+    "iWantVehicle": "I Want Vehicle",
+    "iHaveVehicle": "I Have Vehicle"
 }

@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "companyName": MessageLookupByLibrary.simpleMessage("Company Name"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to complete this post."),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("Contact"),
         "createJobPost":
@@ -89,7 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "creategroup": MessageLookupByLibrary.simpleMessage("Create Group"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteMsg": MessageLookupByLibrary.simpleMessage(
-            "Do you want to complete this post."),
+            "Do you want to delete this post."),
         "directory": MessageLookupByLibrary.simpleMessage("Directory"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "downloadExl": MessageLookupByLibrary.simpleMessage(
@@ -117,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("Enter quote amount"),
         "experies": MessageLookupByLibrary.simpleMessage("Experience"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("Explain your concern"),

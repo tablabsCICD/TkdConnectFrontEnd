@@ -132,6 +132,7 @@ class GenericCardsDto {
   var vehicleWeight;
   String? expireDate;
   bool showCharts = false;
+  int? isOpenForBid;
 
   GenericCardsDto(
       {this.id,
@@ -175,7 +176,7 @@ class GenericCardsDto {
         this.likes,
         this.cargoType,
         this.userList,
-        this.comment,this.expireDate,this.showCharts = false});
+        this.comment,this.expireDate,this.showCharts = false,this.isOpenForBid});
 
   GenericCardsDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -219,9 +220,10 @@ class GenericCardsDto {
     likes = json['likes'];
     comment = json['comment'];
     vehicleWeight = json['vehicleWeight'];
-    userList = json['userList'];
+    userList = json['userList']??'';
     expireDate = json['expireDate']??'';
     showCharts = json['showCharts'] ?? false;
+    isOpenForBid = json['isOpenForBid'] ?? 1;
   }
 
   Map<String, dynamic> toJson() {
@@ -271,6 +273,7 @@ class GenericCardsDto {
     data['userList'] = userList;
     data['expireDate'] = expireDate;
     data['showCharts'] = showCharts;
+    data['isOpenForBid'] = isOpenForBid;
     return data;
   }
 }

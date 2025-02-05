@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("వ్యాఖ్య"),
         "companyName": MessageLookupByLibrary.simpleMessage("కంపెనీ పేరు"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to complete this post."),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("ఉద్యోగ పోస్ట్ సృష్టించు"),
@@ -103,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_id": MessageLookupByLibrary.simpleMessage("ఇమెయిల్ - అదే"),
         "enterQuoteAmount": MessageLookupByLibrary.simpleMessage(
             "కోట్ మొత్తాన్ని నమోదు చేయండి"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "from": MessageLookupByLibrary.simpleMessage("నుండి"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ధృవీకరించబడండి"),

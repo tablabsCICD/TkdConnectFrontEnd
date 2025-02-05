@@ -7,11 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:share/share.dart';
+import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/dashboard/home_screen_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/group/select_user_for_group_screen.dart';
+import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/widgets/rating_dailog.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -211,8 +213,48 @@ class Utils {
           print('the click is ');
           providerHome!.interChnageSendPost(context, load);
           return;
+
+        case 8:
+          print('the click is ');
+          _showCompleteDialog(context,load.id!,providerHome!);
+          return;
       }
     }
+  }
+
+  Future<void> _showCompleteDialog(BuildContext context,int id,HomeScreenProvider myPostProvider) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          content:  SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(S().completeMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              onPressed: () {
+                myPostProvider.completePost(id,context);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   bool isExpired(String expiryDateString) {

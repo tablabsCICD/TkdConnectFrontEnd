@@ -75,7 +75,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "मार्ग जोडण्यासाठी खालील बटणावर क्लिक करा"),
         "comment": MessageLookupByLibrary.simpleMessage("टिप्पणी"),
         "companyName": MessageLookupByLibrary.simpleMessage("कंपनीचे नाव"),
-        "complete": MessageLookupByLibrary.simpleMessage("कंप्लीट"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to complete this post."),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("संपर्क"),
         "createJobPost":
@@ -114,6 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("कोट रक्कम प्रविष्ट करा"),
         "experies": MessageLookupByLibrary.simpleMessage("अनुभव"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("तुमची चिंता स्पष्ट करा"),

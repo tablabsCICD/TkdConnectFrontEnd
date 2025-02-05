@@ -660,10 +660,10 @@ class S {
     );
   }
 
-  /// `Do you want to complete this post.`
+  /// `Do you want to delete this post.`
   String get deleteMsg {
     return Intl.message(
-      'Do you want to complete this post.',
+      'Do you want to delete this post.',
       name: 'deleteMsg',
       desc: '',
       args: [],
@@ -1845,6 +1845,26 @@ class S {
     return Intl.message(
       'Quote Reason',
       name: 'quoteReason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to complete this post.`
+  String get completeMsg {
+    return Intl.message(
+      'Do you want to complete this post.',
+      name: 'completeMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expired`
+  String get expired {
+    return Intl.message(
+      'Expired',
+      name: 'expired',
       desc: '',
       args: [],
     );

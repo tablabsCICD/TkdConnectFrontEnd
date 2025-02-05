@@ -73,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "comment": MessageLookupByLibrary.simpleMessage("ટિપ્પણી"),
         "companyName": MessageLookupByLibrary.simpleMessage("કંપનીનું નામ"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to complete this post."),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "contact": MessageLookupByLibrary.simpleMessage("સંપર્ક"),
         "createJobPost":
@@ -110,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("ક્વોટ રકમ દાખલ કરો"),
         "experies": MessageLookupByLibrary.simpleMessage("અનુભવ"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("તમારી ચિંતા સમજાવો"),

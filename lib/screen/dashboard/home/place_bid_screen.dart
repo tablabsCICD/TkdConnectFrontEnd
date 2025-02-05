@@ -247,7 +247,7 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
     bidPlace.userName=user.content!.first.userName;
     bidPlace.bidderUserName=user.content!.first.userName;
     bidPlace.emailId=user.content!.first.emailId;
-    bidPlace.description=reason;
+    bidPlace.description=reason??'';
     bidPlace.loggedUserName=user.content!.first.userName;
     bidPlace.type=widget.truckLoad.type;
     
@@ -261,7 +261,6 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
           ToastMessage.show(context, "Quote submitted successfully");
           Navigator.pop(context);
         }
-
     }else{
       ToastMessage.show(context, "Please try again");
     }

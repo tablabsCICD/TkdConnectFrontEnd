@@ -187,11 +187,14 @@
   "downloadExl": "એક્સેલ અપલોડ કરતા પહેલા, ફોર્મેટ ડાઉનલોડ કરવા માટે અહીં ક્લિક કરો",
   "uploadLoad": "અપલોડ લોડ",
 
-    "complete": "Complete",
-"completed": "Completed",  "expiryDate": "Expiry Date",
+"complete": "Complete",
+  "completed": "Completed",
+  "expiryDate": "Expiry Date",
   "quoteReason": "Quote Reason",
-    "iWantVehicle": "I Want Vehicle",
-    "iHaveVehicle": "I Have Vehicle"
+  "completeMsg": "Do you want to complete this post.",
+  "expired": "Expired",
 
+  "iWantVehicle": "I Want Vehicle",
+  "iHaveVehicle": "I Have Vehicle"
 
 }

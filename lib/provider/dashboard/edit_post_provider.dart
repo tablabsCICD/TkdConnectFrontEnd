@@ -215,6 +215,8 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.listOfUserIds = addedMemberIdList;
     postLoad.expireDate = expiryDateController.text;
     postLoad.id = postBidData.genericCardsDto!.id;
+    postLoad.isOpenForBid = postBidData.genericCardsDto!.isOpenForBid;
+
     ApiResponse response = await ApiHelper()
         .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());
     print('the request is ${json.encode(postLoad.toJson())}');
@@ -258,6 +260,7 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.image = images;
     postLoad.expireDate = expiryDateController.text;
     postLoad.listOfUserIds = addedMemberIdList;
+    postLoad.isOpenForBid = postBidData.genericCardsDto!.isOpenForBid;
 
     ApiResponse response = await ApiHelper()
         .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());

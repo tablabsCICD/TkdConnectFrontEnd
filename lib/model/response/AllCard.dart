@@ -94,7 +94,8 @@ class TruckLoad {
     this.userList,
     this.mobileOrLandline,
     this.expireDate,
-    this.isSharedInGroup
+    this.isSharedInGroup,
+    this.isOpenForBid
   });
   late final int? id;
   late final int? userId;
@@ -144,6 +145,7 @@ class TruckLoad {
 
   late final int? isverified;
   late final bool? isSharedInGroup;
+  late final int? isOpenForBid;
 
 
 
@@ -201,6 +203,7 @@ class TruckLoad {
 
     mobileOrLandline=json['mobileOrLandline']??'';
     isSharedInGroup=json['isSharedInGroup']??false;
+    isOpenForBid=json['isOpenForBid']??1;
 
   }
 
@@ -253,7 +256,7 @@ class TruckLoad {
     data['mobileOrLandline'] = mobileOrLandline;
     data['expireDate'] = expireDate;
     data['isSharedInGroup'] = isSharedInGroup;
-
+    data['isOpenForBid'] = isOpenForBid;
 
 
     return data;

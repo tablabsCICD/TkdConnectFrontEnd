@@ -13,6 +13,8 @@ class ApiConstant {
   static String USER_FIND_BY_MOBILE(mobile) =>
       "${BASE_URL}DeleteUser/getByMobileNumber?mobileNumber=$mobile";
 
+  static String COMPLETE_POST = '${BASE_URL}MarkAsComplete?postId=';
+
   static String DIRECTORY(search) => "${BASE_URL}directory?search=$search";
 
   static String DIRECTORYALL(page) => "${BASE_URL}directory?page=$page";

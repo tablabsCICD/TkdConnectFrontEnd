@@ -73,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "companyName":
             MessageLookupByLibrary.simpleMessage("நிறுவனத்தின் பெயர்"),
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do you want to complete this post."),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "createJobPost":
             MessageLookupByLibrary.simpleMessage("வேலை இடுகையை உருவாக்கு"),
@@ -112,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_id": MessageLookupByLibrary.simpleMessage("மின்னஞ்சல் முகவரி"),
         "enterQuoteAmount":
             MessageLookupByLibrary.simpleMessage("மேற்கோள் தொகையை உள்ளிடவும்"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "firstName": MessageLookupByLibrary.simpleMessage("முதல் பெயர்"),
         "from": MessageLookupByLibrary.simpleMessage("இருந்து"),

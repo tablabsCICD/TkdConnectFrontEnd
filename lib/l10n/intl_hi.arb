@@ -191,12 +191,13 @@
   "downloadExl": "एक्सेल अपलोड करने से पहले, प्रारूप डाउनलोड करने के लिए यहां क्लिक करें",
   "uploadLoad": "अपलोड लोड",
 
-                               "complete": "Complete",
-                               "completed": "Completed",
-                             "expiryDate": "Expiry Date",
-                             "quoteReason": "Quote Reason",
-                               "iWantVehicle": "I Want Vehicle",
-                               "iHaveVehicle": "I Have Vehicle"
+  "complete": "Complete",
+    "completed": "Completed",
+    "expiryDate": "Expiry Date",
+    "quoteReason": "Quote Reason",
+    "completeMsg": "Do you want to complete this post.",
+    "expired": "Expired",
 
-
+    "iWantVehicle": "I Want Vehicle",
+    "iHaveVehicle": "I Have Vehicle"
 }

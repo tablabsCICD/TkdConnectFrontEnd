@@ -30,6 +30,7 @@ class PostLoad {
   String? vehicleSize;
   String? userList;
   String? expireDate;
+ int? isOpenForBid;
 
   PostLoad(
       {this.contactNumber,
@@ -61,7 +62,7 @@ class PostLoad {
         this.typeOfPayment,
         this.userList,
         this.images,
-        this.vehicleSize,this.expireDate});
+        this.vehicleSize,this.expireDate,this.isOpenForBid});
 
   PostLoad.fromJson(Map<String, dynamic> json) {
     contactNumber = json['contactNumber'];
@@ -95,6 +96,7 @@ class PostLoad {
     userList = json['userList'];
     expireDate = json['expireDate'];
     images="";
+    isOpenForBid = json['isOpenForBid']??1;
   }
 
   Map<String, dynamic> toJson() {
@@ -130,6 +132,7 @@ class PostLoad {
     data['vehicleSize'] = vehicleSize;
     data['userList'] = userList;
     data['expireDate'] = expireDate;
+    data['isOpenForBid'] = isOpenForBid;
     return data;
   }
 }

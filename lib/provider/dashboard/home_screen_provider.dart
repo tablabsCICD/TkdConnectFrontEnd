@@ -210,6 +210,21 @@ class HomeScreenProvider extends BaseProvider{
     }
   }
 
+  completePost(int id,BuildContext context)async{
+    String myUrl = '${ApiConstant.COMPLETE_POST}$id';
+
+    ApiResponse apiResponse= await ApiHelper().apiPutDat(myUrl);
+    if(apiResponse.status==200){
+     // truckLoadTypeList .removeAt(index);
+      ToastMessage.show(context, "Your Post Completed Successfully");
+      callDashboradApi(context,0);
+
+      notifyListeners();
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
 
   selectCityFromFilter(BuildContext context)async{
     RouteRequest routeRequest = await showModalBottomSheet(

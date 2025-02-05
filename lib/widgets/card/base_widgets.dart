@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
+import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/verified_tag.dart';
@@ -12,6 +13,7 @@ import 'package:tkd_connect/widgets/verified_tag.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../route/app_routes.dart';
+import '../../utils/toast.dart';
 import '../textview.dart';
 
 class BaseWidget {
@@ -1024,7 +1026,7 @@ class BaseWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    S().complete,
+                    S().delete,
                     style: TextStyle(
                       color: ThemeColor.red,
                       fontSize: 12.sp,
@@ -1032,7 +1034,7 @@ class BaseWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                 // SvgPicture.asset(Images.delete)
+                  SvgPicture.asset(Images.delete)
                 ],
               ),
             ),
@@ -1389,7 +1391,7 @@ class BaseWidget {
     );
   }
 
-  Widget showBidRepostButton(Function(int) onMenuTap, bool isBid) {
+  Widget showBidRepostButton(Function(int) onMenuTap, bool isBid, PostBidData postBidData) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(right: 8.w),
@@ -1436,13 +1438,13 @@ class BaseWidget {
               onTap: () {},
               child: isBid
                   ? popUpmenuOwnBid(onMenuTap)
-                  : popUpmenuOwnRepostPost(onMenuTap))
+                  : popUpmenuOwnRepostPost(onMenuTap,postBidData))
         ],
       ),
     );
   }
 
-  popUpmenuOwnRepostPost(Function(int) onMenuTap) {
+  popUpmenuOwnRepostPost(Function(int) onMenuTap, PostBidData postBidData) {
     return PopupMenuButton(
       shape: RoundedRectangleBorder(
         side: BorderSide(width: 1.w, color: const Color(0x332C363F)),
@@ -1469,9 +1471,41 @@ class BaseWidget {
                 width: 12.w,
               ),
               Text(
-                S().complete,
+                S().delete,
                 style: TextStyle(
                   color: Colors.black,
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              SizedBox(
+                width: 13.w,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          onTap: () {
+            postBidData.genericCardsDto!.isOpenForBid==1? onMenuTap(8):ToastMessage.show(context, "Your Post already Completed Successfully");;
+          },
+          child: Row(
+            children: [
+             /* SvgPicture.asset(
+                Images.delete,
+                color: Colors.black,
+                width: 20.w,
+                height: 20.h,
+              ),*/
+              Icon(Icons.done,color: postBidData.genericCardsDto!.isOpenForBid==1?Colors.black:Colors.green,),
+              SizedBox(
+                width: 12.w,
+              ),
+              Text(
+                postBidData.genericCardsDto!.isOpenForBid==1?S().complete:S().completed,
+                style: TextStyle(
+                  color: postBidData.genericCardsDto!.isOpenForBid==1?Colors.black:Colors.green,
                   fontSize: 14.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w400,
@@ -1707,6 +1741,28 @@ class BaseWidget {
         //         )
         //       ],
         //     )),
+        PopupMenuItem(
+            onTap: () {
+              onMenuTap(8);
+            },
+            child: Row(
+              children: [
+                Icon(Icons.done,color: Colors.black,),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+                  S().complete,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                )
+              ],
+            )),
         PopupMenuItem(
             onTap: () {
               onMenuTap(3);
