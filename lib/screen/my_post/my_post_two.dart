@@ -203,7 +203,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               SizedBox(
                 height: 8.h,
               ),
-              /*  postBidData.bidings!.isEmpty
+               postBidData.bidings!.isEmpty
                   ? SizedBox.shrink()
                   : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -233,14 +233,14 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               ),
              postBidData.genericCardsDto!.showCharts!
                       ? drawGraph()
-                      :*/ iteams(postBidData, index),
+                      :iteams(postBidData, index),
               SizedBox(
                 height: 8.h,
               ),
               BaseWidget().showBidRepostButton((val) async {
                 if (val == 0) {
                   if (postBidData.bidings!.isNotEmpty) {
-                    showBootomSheet(context, postBidData.bidings);
+                    showBootomSheet(context, postBidData.bidings,postBidData);
                   } else {
                     ToastMessage.show(context, "No any Bids to show");
                   }
@@ -327,7 +327,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     );
   }
 
-  void showBootomSheet(BuildContext context, List<Bidings>? bidings) async {
+  void showBootomSheet(BuildContext context, List<Bidings>? bidings, PostBidData postBidData) async {
     User use = await LocalSharePreferences().getLoginData();
     if (use.content!.first.isPaid == 0) {
       Navigator.pushNamed(context, AppRoutes.registration_plan_details);
@@ -340,6 +340,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                 heightFactor: 0.7,
                 child: ShowBidsScreen(
                   listBidings: bidings,
+                  postBidData: postBidData,
                 ));
           });
     }

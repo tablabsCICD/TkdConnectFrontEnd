@@ -140,7 +140,7 @@ class _ShowAllBids extends State<ShowAllBids>{
           BaseWidget().showBidButton((val) async{
             if (val == 0) {
               if (postBidData.bidings!.isNotEmpty) {
-                showBootomSheet(context,postBidData.bidings);
+                showBootomSheet(context,postBidData.bidings,postBidData);
               } else {
                 ToastMessage.show(context, "There are no bids to show ");
               }
@@ -359,7 +359,7 @@ class _ShowAllBids extends State<ShowAllBids>{
     
   }
 
-  void showBootomSheet(BuildContext context,List<Bidings>? bidings) async{
+  void showBootomSheet(BuildContext context,List<Bidings>? bidings, PostBidData postBidData) async{
     User use=await LocalSharePreferences().getLoginData();
     if(use.content!.first.isPaid==0){
 
@@ -370,7 +370,7 @@ class _ShowAllBids extends State<ShowAllBids>{
           isScrollControlled: true,
           context: context,
           builder: (BuildContext context) {
-            return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,));
+            return FractionallySizedBox(heightFactor:0.7,child:ShowBidsScreen(listBidings: bidings,postBidData: postBidData,));
           });
     }
   }

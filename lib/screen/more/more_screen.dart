@@ -14,6 +14,7 @@ import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 import 'package:tkd_connect/widgets/verified_tag.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/api_constant.dart';
 import '../../constant/images.dart';
@@ -22,8 +23,12 @@ import '../../model/response/user_verified.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
 import '../../utils/colors.dart';
+import '../../widgets/button.dart';
+import '../../widgets/editText.dart';
 import '../bulkupload/load_upload.dart';
 import '../kyc/kyc_screen_one.dart';
+import 'package:http/http.dart' as http;
+
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
@@ -36,18 +41,15 @@ class MoreScreen extends StatefulWidget {
 }
 class _MoreScreen extends State<MoreScreen> {
 
-  late User user;
-  bool isLoad=true;
-
-
-
-
   @override
   void initState() {
     super.initState();
     getLogin();
-
   }
+
+
+  late User user;
+  bool isLoad=true;
 
   getLogin()async{
     user=await LocalSharePreferences().getLoginData();
@@ -56,6 +58,90 @@ class _MoreScreen extends State<MoreScreen> {
 
     });
   }
+
+  callInsuranceApi(String enquiry) async {
+    String url = ApiConstant.INSURANCE_API;
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    Map<String,dynamic> data = {
+      "date": "",
+      "id": 0,
+      "requirement": enquiry,
+      "userId": user.content![0].id
+    };
+    ApiResponse response=await ApiHelper().postParameter(url, data);
+    print('the resopnse is ${response.status}');
+    if(response.status==200){
+      ToastMessage.show(context, "Insurance Enquiry submitted successfully!");
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+
+  callFinanceApi(String enquiry) async {
+    String url = ApiConstant.FINANCE_API;
+    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
+    Map<String,dynamic> data = {
+      "date": "",
+      "id": 0,
+      "requirement": enquiry,
+      "userId": user.content![0].id
+    };
+    ApiResponse response=await ApiHelper().postParameter(url, data);
+    print('the resopnse is ${response.status}');
+    if(response.status==200){
+      ToastMessage.show(context, "Finance Enquiry submitted successfully!");
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+  callMParivahan() async {
+    String url = ApiConstant.MPARIVAHAN;
+    print(url);
+    final response = await http.get(Uri.parse(url));
+
+    print('The response status is ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if(jsonResponse['message']=="success"){
+        ToastMessage.show(context, jsonResponse['url']);
+        debugPrint(jsonResponse['url']);
+        Utils().callDynamicUrl(context,jsonResponse['url']);
+      }else{
+        ToastMessage.show(context, jsonResponse['message']+"Something went wrong!!");
+      }
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
+  callTollCalculation() async {
+    String url = ApiConstant.TOLL_CALCULATION;
+    print(url);
+    final response = await http.get(Uri.parse(url));
+
+    print('The response status is ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      if(jsonResponse['message']=="success"){
+        ToastMessage.show(context, jsonResponse['url']);
+        debugPrint(jsonResponse['url']);
+        Utils().callDynamicUrl(context,jsonResponse['url']);
+      }else{
+        ToastMessage.show(context, jsonResponse['message']+"Something went wrong!!");
+      }
+      Navigator.pop(context,1);
+    }else{
+      ToastMessage.show(context, "Please try again");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +188,20 @@ class _MoreScreen extends State<MoreScreen> {
 
                 openVerifiedTag();
               },FontWeight.w600),
-              // item(S().change_plan,(){
-              //   Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-              // },FontWeight.w400),
+               item(S().financeInquiry,(){
+                 showInsuranceDialog(context,"Finance enquiry");
+              },FontWeight.w600),
+              item(S().insurance,(){
+                showInsuranceDialog(context,"Insurance enquiry");
+              },FontWeight.w600),
+              item(S().tollCalculation,(){
+                callTollCalculation();
+
+              },FontWeight.w600),
+              item(S().mParivahan,(){
+                callMParivahan();
+
+              },FontWeight.w600),
               item(S().appSetting,(){
                 Navigator.pushNamed(context, AppRoutes.appsetting);
               },FontWeight.w400),
@@ -148,6 +245,7 @@ class _MoreScreen extends State<MoreScreen> {
           ),
         ),
       ),
+
     );
   }
 
@@ -476,6 +574,7 @@ class _MoreScreen extends State<MoreScreen> {
                 Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (route) => false);
               },
             ),
+
             TextButton(
               child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
               onPressed: () {
@@ -486,11 +585,74 @@ class _MoreScreen extends State<MoreScreen> {
         );
       },
     );
-
 }
 
 
+  Future<void> showInsuranceDialog(BuildContext context, String enquiry) async {
+    final TextEditingController _reasonController = TextEditingController();
+    bool enable = false;
 
-
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              title: Text(
+                enquiry,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              content: EditTextError(
+                validate: true,
+                width: 335.w,
+                height: 52.h,
+                hint: enquiry,
+                controller: _reasonController,
+                onChange: (val) {
+                  setState(() {
+                    enable = val.isNotEmpty; // Enable button if text is entered
+                  });
+                },
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('Cancel',style: TextStyle(color: ThemeColor.red),),
+                ),
+                Button(
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: 40.h,
+                  title: S().submit,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  onClick: () {
+                    if (enable) {
+                      if ("Insurance enquiry" == enquiry) {
+                        callInsuranceApi(_reasonController.text);
+                      } else {
+                        callFinanceApi(_reasonController.text);
+                      }
+                      Navigator.of(context).pop(); // Close the dialog after action
+                    }
+                  },
+                  isEnbale: enable,
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
 
 }

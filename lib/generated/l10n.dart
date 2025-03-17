@@ -1840,10 +1840,10 @@ class S {
     );
   }
 
-  /// `Quote Reason`
+  /// `quote justification with cost (optional)`
   String get quoteReason {
     return Intl.message(
-      'Quote Reason',
+      'quote justification with cost (optional)',
       name: 'quoteReason',
       desc: '',
       args: [],
@@ -1885,6 +1885,46 @@ class S {
     return Intl.message(
       'I Have Vehicle',
       name: 'iHaveVehicle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insurance`
+  String get insurance {
+    return Intl.message(
+      'Insurance',
+      name: 'insurance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Toll Calculation`
+  String get tollCalculation {
+    return Intl.message(
+      'Toll Calculation',
+      name: 'tollCalculation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MParivahan`
+  String get mParivahan {
+    return Intl.message(
+      'MParivahan',
+      name: 'mParivahan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance Enquiry`
+  String get financeInquiry {
+    return Intl.message(
+      'Finance Enquiry',
+      name: 'financeInquiry',
       desc: '',
       args: [],
     );

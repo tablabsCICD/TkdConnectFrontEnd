@@ -110,7 +110,7 @@ class AllCards {
               ],
             ),
           ),
-          Align(
+    /*      Align(
             alignment: Alignment.topLeft,
             child: Container(
               width: 120.w,
@@ -137,7 +137,7 @@ class AllCards {
                 ),
               ),
             ),
-          ),
+          ),*/
           Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -290,25 +290,42 @@ class AllCards {
                 ),
                 Align(
                   alignment: Alignment.topRight,
-                  child: Container(
-                    width: 120.w,
-                    height: 20.h,
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFF2C8FEA),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.r)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        Utils().mainTag(load.mainTag!),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 8.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
+                  child: SizedBox(
+                    height: 50.h,
+                    width: 140.w,
+                    child: Column(
+                      children: [
+                        Text(
+                          "TKD${load.id}",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 10.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
+                        Container(
+                          width: 120.w,
+                          height: 20.h,
+                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFF2C8FEA),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              Utils().mainTag(load.mainTag!),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 8.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -1113,7 +1113,7 @@ class BaseWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    S().complete,
+                    S().delete,
                     style: TextStyle(
                       color: ThemeColor.red,
                       fontSize: 12.sp,
@@ -1165,7 +1165,7 @@ class BaseWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      S().complete,
+                      S().delete,
                       style: TextStyle(
                         color: ThemeColor.red,
                         fontSize: 12.sp,
@@ -1217,7 +1217,7 @@ class BaseWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      S().complete,
+                      S().delete,
                       style: TextStyle(
                         color: ThemeColor.red,
                         fontSize: 12.sp,
@@ -1318,7 +1318,7 @@ class BaseWidget {
                 width: 12.w,
               ),
               Text(
-                S().complete,
+                S().delete,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14.sp,
@@ -1333,6 +1333,7 @@ class BaseWidget {
             ],
           ),
         ),
+
         PopupMenuItem(
             onTap: () {
               onMenuTap(3);

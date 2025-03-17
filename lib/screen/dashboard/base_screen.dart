@@ -32,7 +32,7 @@ class _BaseDashboard extends State<BaseDashboard>{
    bool isHome=true;
    bool isMyBid=false;
    bool isDrectory=false;
-   bool isMessage=false;
+  // bool isMessage=false;
    bool isMore=false;
    bool isButtonVisible=true;
    HomeScreen homeScreen=HomeScreen();
@@ -57,7 +57,7 @@ class _BaseDashboard extends State<BaseDashboard>{
            homeScreen,
            const MyBidsBaseScreen(),
            const DirectoryScreen(),
-           const MessageScreen(),
+      //     const MessageScreen(),
            const MoreScreen()
          ],
        ),
@@ -158,12 +158,12 @@ class _BaseDashboard extends State<BaseDashboard>{
             },
             child: selectedTab(isDrectory,S().directory,Images.directory),
           ),
-          Expanded(child: InkWell(
+        /*  Expanded(child: InkWell(
             onTap: (){
               onPageChanges(3);
             },
             child: selectedTab(isMessage,S().message,Images.message),
-          )),
+          )),*/
           InkWell(
             onTap: (){
               onPageChanges(4);
@@ -182,7 +182,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 0:
         isHome=true;
         isMyBid=false;
-        isMessage=false;
+       // isMessage=false;
         isDrectory=false;
         isMore=false;
         isButtonVisible=true;
@@ -191,7 +191,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 1:
         isHome=false;
         isMyBid=true;
-        isMessage=false;
+        //isMessage=false;
         isDrectory=false;
         isMore=false;
         isButtonVisible=false;
@@ -201,7 +201,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 2:
         isHome=false;
         isMyBid=false;
-        isMessage=false;
+       // isMessage=false;
         isDrectory=true;
         isMore=false;
         isButtonVisible=false;
@@ -211,7 +211,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 3:
         isHome=false;
         isMyBid=false;
-        isMessage=true;
+        //isMessage=true;
         isDrectory=false;
         isMore=false;
         isButtonVisible=false;
@@ -228,7 +228,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 4:
         isHome=false;
         isMyBid=false;
-        isMessage=false;
+        //isMessage=false;
         isDrectory=false;
         isMore=true;
         isButtonVisible=false;

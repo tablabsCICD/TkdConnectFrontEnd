@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/provider/my_route_provider/select_city_provider.dart';
+import 'package:tkd_connect/screen/my_route/pick_address_from_map.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/textview.dart';
 
@@ -19,7 +20,10 @@ class SelectCityScreen extends StatefulWidget {
   String? desCity = "no";
 
   SelectCityScreen(
-      {super.key, this.isEdit = false, this.desCity = "no", this.sorceCity = "no"});
+      {super.key,
+      this.isEdit = false,
+      this.desCity = "no",
+      this.sorceCity = "no"});
 
   @override
   State<StatefulWidget> createState() {
@@ -86,7 +90,11 @@ class _SelectCityScreen extends State<SelectCityScreen> {
               SizedBox(
                 height: 16.h,
               ),
-              addRoute(context)
+              addRoute(context),
+              SizedBox(
+                height: 16.h,
+              ),
+              addGoogleMap(context),
             ],
           ),
         ),
@@ -98,16 +106,34 @@ class _SelectCityScreen extends State<SelectCityScreen> {
     );
   }
 
+  addGoogleMap(BuildContext context) {
+    return Consumer<SelectCityProvider>(
+      builder: (context, provider, child) {
+        return provider.listCity.isEmpty
+            ? InkWell(
+              onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (builder)=>GoogleMapAddressPicker()));
+                  },
+              child: Icon(Icons.location_on_outlined,size: 50,),
+            )
+            : const SizedBox.shrink();
+      },
+    );
+  }
+
   addRoute(BuildContext context) {
     return Consumer<SelectCityProvider>(
       builder: (context, provider, child) {
         return provider.listCity.isEmpty
             ? InkWell(
-                onTap: () {
-                  _showCityDialog(context, provider);
-                },
-                child: SvgPicture.asset(Images.additional_label),
-              )
+              onTap: () {
+                _showCityDialog(context, provider);
+              },
+              child: SvgPicture.asset(
+                Images.additional_label,
+                height: 100,
+              ),
+            )
             : const SizedBox.shrink();
       },
     );
@@ -129,7 +155,8 @@ class _SelectCityScreen extends State<SelectCityScreen> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
           content: placesAutoCompleteTextField(),
           actions: <Widget>[
             TextButton(
@@ -255,7 +282,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                       Expanded(
                         child: GooglePlaceAutoCompleteTextField(
                           textEditingController: cityController,
-                          googleAPIKey:AppConstant.GOOGLE_KEY,
+                          googleAPIKey: AppConstant.GOOGLE_KEY,
                           boxDecoration: BoxDecoration(
                             border: Border.all(color: Colors.transparent),
                           ),
@@ -275,22 +302,23 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                             print("placeDetails${prediction.lat}");
                           },
                           itemClick: (Prediction prediction) {
-                            cityController.text =
-                                prediction.description ?? "";
+                            cityController.text = prediction.description ?? "";
                             int firstIndex = cityController.text.indexOf(",");
-                            List<String> parts = cityController.text.split(", ");
+                            List<String> parts =
+                                cityController.text.split(", ");
 
-                            selectedCity = cityController.text.substring(0, firstIndex);
-                            selectedState = parts[parts.length-2];
+                            selectedCity =
+                                cityController.text.substring(0, firstIndex);
+                            selectedState = parts[parts.length - 2];
                             print(selectedState);
                             print("Selected City: $selectedCity");
-                            print("Selected State: ${parts[parts.length-2]}");
-                            print("Selected Country: ${parts[parts.length-1]}");
+                            print("Selected State: ${parts[parts.length - 2]}");
+                            print(
+                                "Selected Country: ${parts[parts.length - 1]}");
                             cityController.selection =
                                 TextSelection.fromPosition(TextPosition(
                                     offset:
-                                    prediction.description?.length ??
-                                        0));
+                                        prediction.description?.length ?? 0));
                           },
                           seperatedBuilder: const Divider(),
                           containerHorizontalPadding: 10,
@@ -306,8 +334,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                                     width: 7,
                                   ),
                                   Expanded(
-                                      child: Text(
-                                          prediction.description ?? ""))
+                                      child: Text(prediction.description ?? ""))
                                 ],
                               ),
                             );
@@ -347,7 +374,8 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
+                    side:
+                        const BorderSide(width: 0.50, color: Color(0x332C363F)),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -389,7 +417,6 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                                 controller: provider.searchController,
                                 onChanged: (value) {
                                   provider.searchCity(value);
-
                                 },
                                 onSubmitted: (val) async {
                                   provider.searchCity(val);
@@ -402,7 +429,7 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                                       color: const Color(0x662C363F),
                                       fontSize: 14.sp,
                                       fontFamily:
-                                      GoogleFonts.poppins().fontFamily,
+                                          GoogleFonts.poppins().fontFamily,
                                       fontWeight: FontWeight.w400,
                                     )),
                                 style: TextStyle(

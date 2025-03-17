@@ -3,7 +3,7 @@
 class ApiConstant {
   static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
 
-// static const String BASE_URL = "http://ec2-3-108-41-246.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+ //static const String BASE_URL = "http://ec2-13-234-232-40.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
   static String FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
@@ -52,7 +52,7 @@ class ApiConstant {
       "${BASE_URL}VerifyOtp?mobileNumber=$mobile&otp=$otp";
 
   //static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
-  static String MY_BIDS_PLACED(userName, page) =>
+  static String   MY_BIDS_PLACED(userName, page) =>
       "${BASE_URL}GetPostsAndBidsForUserWithFilter?userName=$userName&privatePost=0&page=$page";
 
   static String AVG_BID(bidId) => "${BASE_URL}GetAvgOfBid?id=$bidId";
@@ -147,5 +147,12 @@ class ApiConstant {
 
   static String PAYMENT_SIGNATURE="${BASE_URL}transaction/finalPaymentStatus";
  static String LOAD_PAYMENT_SIGNATURE="${BASE_URL}transaction/finalPaymentStatusWithPost";
+
+  static String FINANCE_API="${BASE_URL}finance/FinanceInquiryTicket";
+  static String INSURANCE_API="${BASE_URL}insurance/InsuranceInquiryTicket";
+  static String TOLL_CALCULATION="${BASE_URL}hardCodedURL/GetTollCalculation";
+  static String MPARIVAHAN="${BASE_URL}hardCodedURL/getMParivahan";
+ static String ACCEPTBID="${BASE_URL}acceptedBid/save";
+ static String UPDATE_ACCEPTED_BID="${BASE_URL}acceptedBid/%7Bid%7D";
 
 }

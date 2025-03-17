@@ -1,0 +1,3 @@
+
+-keep class com.razorpay.** { *; }
+-dontwarn com.razorpay.**

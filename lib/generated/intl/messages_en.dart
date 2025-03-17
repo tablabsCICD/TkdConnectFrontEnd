@@ -123,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "expiryDate": MessageLookupByLibrary.simpleMessage("Expiry Date"),
         "explainYourConcern":
             MessageLookupByLibrary.simpleMessage("Explain your concern"),
+        "financeInquiry":
+            MessageLookupByLibrary.simpleMessage("Finance Enquiry"),
         "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "fromCity": MessageLookupByLibrary.simpleMessage("From City"),
@@ -137,6 +139,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("How do you rate our app ?"),
         "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
         "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
+        "insurance": MessageLookupByLibrary.simpleMessage("Insurance"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly."),
         "introThreeDescription": MessageLookupByLibrary.simpleMessage(
@@ -158,6 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "logoutMsg":
             MessageLookupByLibrary.simpleMessage("Do you want to Log Out."),
+        "mParivahan": MessageLookupByLibrary.simpleMessage("MParivahan"),
         "manufacturerDistributorTrade": MessageLookupByLibrary.simpleMessage(
             "Manufacturer/Distributor/Trade"),
         "may_be_letter": MessageLookupByLibrary.simpleMessage("MAYBE LATER"),
@@ -192,7 +196,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "posts": MessageLookupByLibrary.simpleMessage("Posts"),
         "privacyAndPolicy":
             MessageLookupByLibrary.simpleMessage("Privacy Policy"),
-        "quoteReason": MessageLookupByLibrary.simpleMessage("Quote Reason"),
+        "quoteReason": MessageLookupByLibrary.simpleMessage(
+            "quote justification with cost (optional)"),
         "quotesNow": MessageLookupByLibrary.simpleMessage("Quote now"),
         "quotesPrice": MessageLookupByLibrary.simpleMessage("Quote price"),
         "quotesYouPlaced":
@@ -239,6 +244,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toCity": MessageLookupByLibrary.simpleMessage("To City"),
+        "tollCalculation":
+            MessageLookupByLibrary.simpleMessage("Toll Calculation"),
         "traffic": MessageLookupByLibrary.simpleMessage("Traffic"),
         "transporter": MessageLookupByLibrary.simpleMessage("Transporter"),
         "truckDriver": MessageLookupByLibrary.simpleMessage("Truck Driver"),

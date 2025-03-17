@@ -95,6 +95,15 @@ class Utils {
     }
   }
 
+
+
+  callDynamicUrl(BuildContext context,String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+
   callTermsAndCondition(BuildContext context) async {
     
     const url = 'https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1713253757588-1711368168541-termsadnCondition_(1).pdf';
@@ -265,7 +274,8 @@ class Utils {
     DateTime expiryDate = DateTime.parse(expiryDateString);
 
     // Compare with the current date
-    return DateTime.now().isAfter(expiryDate);}
+    return DateTime.now().isAfter(expiryDate.add(const Duration(days: 1)));
+    }
   }
 
   getSelectedPackageImage(int val){
@@ -337,10 +347,7 @@ class Utils {
       case 'Part load required':
         return 'Part load required';
       case '':
-
     }
-
-
     return "";
   }
 

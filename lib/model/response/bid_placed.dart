@@ -81,6 +81,8 @@ class Bids {
   String? amount;
   String? description;
   int? bidingId;
+  int? isAccepted;
+  int? acceptBidId;
 
   Bids(
       {this.id,
@@ -106,7 +108,7 @@ class Bids {
         this.privatePost,
         this.amount,
         this.description,
-        this.bidingId});
+        this.bidingId,this.isAccepted,this.acceptBidId});
 
   Bids.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -133,6 +135,8 @@ class Bids {
     amount = json['amount'];
     description = json['description'];
     bidingId = json['bidingId'];
+    isAccepted = json['isAccepted'];
+    acceptBidId = json['acceptBidId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -161,6 +165,8 @@ class Bids {
     data['amount'] = amount;
     data['description'] = description;
     data['bidingId'] = bidingId;
+    data['isAccepted'] = isAccepted;
+    data['acceptBidId'] = acceptBidId;
     return data;
   }
 }

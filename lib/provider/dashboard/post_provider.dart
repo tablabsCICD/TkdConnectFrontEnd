@@ -126,14 +126,13 @@ class PostLoadProvider extends BaseProvider {
   }
 
   createPost(BuildContext context) async {
-    User user =
-        await LocalSharePreferences.localSharePreferences.getLoginData();
+    User user = await LocalSharePreferences.localSharePreferences.getLoginData();
     PostLoad postLoad = PostLoad();
     postLoad.contactNumber = user.content!.first.mobileNumber!;
     postLoad.destination = destinationCity;
     postLoad.dnd = dnd ? 1 : 0;
     postLoad.emailId = user.content!.first.emailId!;
-    postLoad.fullLoadChoice = "I Have Vehicle"; //I Have Vehicle (Vheicle Load Pahejay) (Vehicle Load ahe vehicle )
+    postLoad.fullLoadChoice = "I Have Vehicle"; // I Have Vehicle
 
     postLoad.instructions = specialInstructionController.text;
     postLoad.loadWeight = loadWeightController.text;
@@ -145,7 +144,6 @@ class PostLoadProvider extends BaseProvider {
     postLoad.partLoad = selectedRequriment == 'Part Load' ? 1 : 0;
     postLoad.privatePost = hideMyID ? 1 : 0;
     postLoad.rating = 5;
-    //  postLoad.customerName= '${authProvider.userDetailList[0].firstName} ${authProvider.userDetailList[0].lastName}';
     postLoad.type = selectedRequriment;
     postLoad.typeOfCargo = selectedCargo;
     postLoad.typeOfPayment = selectedPayment;
@@ -153,32 +151,40 @@ class PostLoadProvider extends BaseProvider {
     postLoad.expireDate = expiryDateController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-   if(images.isNotEmpty){
-     postLoad.images = images.join(",");
-   }
+    if (images.isNotEmpty) {
+      postLoad.images = images.join(",");
+    }
     postLoad.listOfUserIds = addedMemberIdList;
-    //postLoad.userList = null;
-
     postLoad.id = 0;
+
     ApiResponse response = await ApiHelper().postParameter(
         "${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
-    print('the resopnse status code ${response.status}');
+    print('The response status code: ${response.status}');
+
     if (response.status == 200) {
-      PostUpload postUpload=PostUpload.fromJson(response.response);
-      if(postUpload.statusCode==401){
+      PostUpload postUpload = PostUpload.fromJson(response.response);
+
+      // First dialog logic
+      Navigator.pop(context); // Close the first dialog
+
+      // Delay showing the second dialog
+      Future.microtask(() {
+        _showConfirmationDialog(context);
+      });
+
+      if (postUpload.statusCode == 401) {
         ToastMessage.show(context, "Please update your package");
-        callSubDailog(context,postLoad);
-      }else{
+        callSubDailog(context, postLoad);
+      } else {
         ToastMessage.show(context, "Post submitted successfully!");
-        Navigator.pop(context);
-        Navigator.pop(context, 1);
+       /* Navigator.pop(context);
+        Navigator.pop(context, 1);*/
       }
-
-
     } else {
       ToastMessage.show(context, "Please try again");
     }
   }
+
 
   createVehiclePost(BuildContext context) async {
     User user =
@@ -224,16 +230,22 @@ class PostLoadProvider extends BaseProvider {
       // ToastMessage.show(context, "Post submitted successfully!");
       // Navigator.pop(context);
       // Navigator.pop(context, 1);
-
       PostUpload postUpload=PostUpload.fromJson(response.response);
+      Navigator.pop(context); // Close the first dialog
+
+      // Delay showing the second dialog
+      Future.microtask(() {
+        _showConfirmationDialog(context);
+      });
+
       if(postUpload.statusCode==401){
         ToastMessage.show(context, "Please update your package");
         callSubDailog(context,postLoad);
         // Navigator.pushNamed(context, AppRoutes.registration_plan_details);
       }else{
         ToastMessage.show(context, "Post submitted successfully!");
-        Navigator.pop(context);
-        Navigator.pop(context, 1);
+        /*Navigator.pop(context);
+        Navigator.pop(context, 1);*/
       }
 
     } else {
@@ -573,5 +585,41 @@ class PostLoadProvider extends BaseProvider {
 
   }
 
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Important Notice',
+            style: TextStyle(  fontSize: 16.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.bold,),
+          ),
+          content: Text(
+            'Do not Pay any Advance before Loading of Truck and verifying RTO documents on mParivahan website.',
+            style: TextStyle(  fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600, color: Colors.red),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();// Close the dialog
+              },
+              child: Text(
+                'Ok',
+                style: TextStyle(  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.bold,),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 }

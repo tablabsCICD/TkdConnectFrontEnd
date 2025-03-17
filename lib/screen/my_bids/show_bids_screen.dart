@@ -2,21 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
+import 'package:tkd_connect/widgets/editText.dart';
 
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/response/my_post_bid_list.dart';
+import '../../provider/mybids/my_bids_provider.dart';
+import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/textview.dart';
 import '../../widgets/verified_tag.dart';
 
 class ShowBidsScreen extends StatelessWidget{
   final List<Bidings>? listBidings;
+  PostBidData postBidData;
 
-   const ShowBidsScreen({super.key, required this.listBidings});
+
+  ShowBidsScreen({super.key, required this.listBidings,required this.postBidData});
   @override
   @override
   Widget build(BuildContext context) {
@@ -56,7 +62,7 @@ class ShowBidsScreen extends StatelessWidget{
                 child: ListView.builder(
                     itemCount: listBidings!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return iteamBid(listBidings![index], false, index);
+                      return iteamBid(listBidings![index], false, index,context);
                     }),
               )
 
@@ -70,7 +76,7 @@ class ShowBidsScreen extends StatelessWidget{
   }
 
 
-  iteamBid(Bidings bidings, bool isLast, int index) {
+  iteamBid(Bidings bidings, bool isLast, int index, BuildContext context) {
     return Container(
       width: 311.w,
       //  height: 69.h,
@@ -175,6 +181,31 @@ class ShowBidsScreen extends StatelessWidget{
                             // overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(height: 10,),
+                          bidings.isAccepted==1?
+                          Text(
+                            "Quote Accepted",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 12.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ): postBidData.genericCardsDto!.isOpenForBid==1?Button(
+                            width: 100,
+                            height: 35,
+                            title: 'Accept quote',
+                            onClick: () {
+                              postBidData.genericCardsDto!.mainTag=="Full load required" || postBidData.genericCardsDto!.mainTag=="Part load required"
+                                  ?showAcceptQuoteDialog(context,postBidData,bidings)
+                                  :Provider.of<MyBidsProvider>(context, listen: false).acceptBidSaveForm(context, postBidData,bidings,'','');
+                            },
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ):SizedBox()
                         ],
                       ),
                     ),
@@ -232,7 +263,114 @@ class ShowBidsScreen extends StatelessWidget{
     );
   }
 
+  Future<void> showAcceptQuoteDialog(BuildContext context, PostBidData postBidData, Bidings bidings) async {
+    final _formKey = GlobalKey<FormState>();
+    final TextEditingController _driverNumberController = TextEditingController();
+    final TextEditingController _vehicleNumberController = TextEditingController();
 
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog( // Use Dialog for custom sizing
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // Optional: Add rounded corners
+          ),
+          child: Container(
+            height: 350, // Adjust height here
+            padding: EdgeInsets.all(16), // Optional: Add padding inside the dialog
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Accept Quote",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Form(
+                  key: _formKey,
+                  child: Expanded( // Use Expanded to handle overflow
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          labelText("Vehicle Number"),
+                          SizedBox(height: 8),
+                          EditTextError(
+                            validate: true,
+                            width: 335.w,
+                            height: 52.h,
+                            hint: "Vehicle Number",
+                            controller: _vehicleNumberController,
+                            onChange: (val) {},
+                          ),
+                          SizedBox(height: 12),
+                          labelText("Driver Number"),
+                          SizedBox(height: 8),
+                          EditTextError(
+                            validate: true,
+                            width: 335.w,
+                            height: 52.h,
+                            hint: "Driver Contact Number",
+                            controller: _driverNumberController,
+                            onChange: (val) {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: Text('Cancel',style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.sp,
+                        fontFamily: AppConstant.FONTFAMILY,
+                        fontWeight: FontWeight.w400,),),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Provider.of<MyBidsProvider>(context, listen: false).acceptBidSaveForm(context, postBidData,bidings,_driverNumberController.text,_vehicleNumberController.text);
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
-
+  labelText(String label) {
+    return SizedBox(
+      width: 332.w,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
