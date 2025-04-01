@@ -3,7 +3,7 @@
 class ApiConstant {
   static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
 
- //static const String BASE_URL = "http://ec2-13-234-232-40.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+// static const String BASE_URL = "http://ec2-15-206-116-111.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
   static String FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';

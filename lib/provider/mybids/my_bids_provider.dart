@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/main.dart';
@@ -159,18 +161,27 @@ class MyBidsProvider extends BaseProvider {
     }
   }
 
-  Map<String, dynamic> data = {};
+  late Map<String, dynamic> data = {};
 
-  getGraphDataForBids(BuildContext context, int postId) async {
-    User user = await LocalSharePreferences().getLoginData();
-    print('the link is ${ApiConstant.GET_BID_TREND(postId)}');
-    ApiResponse apiResponse =
-        await ApiHelper().apiGet(ApiConstant.GET_BID_TREND(postId));
-    if (apiResponse.status == 200) {
-      data = apiResponse.response;
-      notifyListeners();
-    } else {
-      ToastMessage.show(context, "Please Try Again");
+  getGraphDataForBids(BuildContext context, int postId,int index) async {
+    try {
+      debugPrint('Fetching bid data from ${ApiConstant.GET_BID_TREND(postId)}');
+      ApiResponse apiResponse = await ApiHelper()
+          .apiWithoutDecodeGet(ApiConstant.GET_BID_TREND(postId));
+
+      if (apiResponse.status == 200) {
+        debugPrint('${apiResponse.status}');
+        listOwnBid[index].genericCardsDto!.graphList = {};
+        data = jsonDecode(apiResponse.response) as Map<String, dynamic>;
+        listOwnBid[index].genericCardsDto!.graphList = data;
+        notifyListeners();
+      } else {
+        ToastMessage.show(context, "Please Try Again");
+        // Default data in case of failure
+      }
+    } catch (e) {
+      debugPrint("Error fetching bid data: $e");
+      ToastMessage.show(context, "An error occurred. Please try again.");
     }
   }
 

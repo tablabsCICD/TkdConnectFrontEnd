@@ -133,6 +133,7 @@ class GenericCardsDto {
   String? expireDate;
   bool showCharts = false;
   int? isOpenForBid;
+  Map<String,dynamic>? graphList={};
 
   GenericCardsDto(
       {this.id,
@@ -176,7 +177,7 @@ class GenericCardsDto {
         this.likes,
         this.cargoType,
         this.userList,
-        this.comment,this.expireDate,this.showCharts = false,this.isOpenForBid});
+        this.comment,this.expireDate,this.showCharts = false,this.isOpenForBid,this.graphList});
 
   GenericCardsDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -224,6 +225,7 @@ class GenericCardsDto {
     expireDate = json['expireDate']??'';
     showCharts = json['showCharts'] ?? false;
     isOpenForBid = json['isOpenForBid'] ?? 1;
+    graphList = json['graphList'];
   }
 
   Map<String, dynamic> toJson() {
@@ -274,6 +276,7 @@ class GenericCardsDto {
     data['expireDate'] = expireDate;
     data['showCharts'] = showCharts;
     data['isOpenForBid'] = isOpenForBid;
+    data['graphList'] = graphList;
     return data;
   }
 }

@@ -44,124 +44,120 @@ class AllCards {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Visibility(
-                  visible:load.expireDate==''?false:true,
-                  child: Container(
-                    width: 120.w,
-                    height: 20.h,
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(2)
-                      ),
-                      border: Border.all(
-                        width: 0.5,
-                        color: ThemeColor.red,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text("valid till: ${load.expireDate==''?"-":load.expireDate!}",
-                        style: TextStyle(
-                          color: ThemeColor.black,
-                          fontSize: 8.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Visibility(
+                      visible:load.expireDate==''?false:true,
+                      child: Container(
+                        width: 120.w,
+                        height: 20.h,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(2)
+                          ),
+                          border: Border.all(
+                            width: 0.5,
+                            color: ThemeColor.red,
+                            style: BorderStyle.solid,
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: load.isSharedInGroup!,
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      width: 120.w,
-                      height: 20.h,
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                      decoration: BoxDecoration(
-                        /* borderRadius: const BorderRadius.all(Radius.circular(2)
-                      ),
-                      border: Border.all(
-                        width: 0.5,
-                        color: ThemeColor.red,
-                        style: BorderStyle.solid,
-                      ),*/
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Only For You",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 8.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w600,
+                        child: Center(
+                          child: Text("valid till: ${load.expireDate==''?"-":load.expireDate!}",
+                            style: TextStyle(
+                              color: ThemeColor.black,
+                              fontSize: 8.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
                     ),
+                    Visibility(
+                      visible: load.isSharedInGroup!,
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          width: 120.w,
+                          height: 20.h,
+                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                          decoration: BoxDecoration(
+                            /* borderRadius: const BorderRadius.all(Radius.circular(2)
+                          ),
+                          border: Border.all(
+                            width: 0.5,
+                            color: ThemeColor.red,
+                            style: BorderStyle.solid,
+                          ),*/
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Only For You",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 8.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: SizedBox(
+                  height: 50.h,
+                  width: 140.w,
+                  child: Column(
+                    children: [
+                      Text(
+                        "TKD${load.id}",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 10.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Container(
+                        width: 120.w,
+                        height: 20.h,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF2C8FEA),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.r)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            Utils().mainTag(load.mainTag!),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 8.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-    /*      Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              width: 120.w,
-              height: 20.h,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(2)
-                ),
-                border: Border.all(
-                  width: 0.5,
-                  color: ThemeColor.red,
-                  style: BorderStyle.solid,
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  load.expireDate??"date",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 8.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),*/
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              width: 100.w,
-              height: 18.h,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-              decoration: ShapeDecoration(
-                color: const Color(0xFF2C8FEA),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.r)),
-              ),
-              child: Center(
-                child: Text(
-                  load.mainTag!,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 8.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
+
+
           SizedBox(width: 8.w),
           BaseWidget().profile(
               load.companyLogo!, load.nameOfPerson!, load.companyName!,

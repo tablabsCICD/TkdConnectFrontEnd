@@ -183,7 +183,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                       onChanged: (value) async {
                         if (value == true) {
                           await widget.provider.getGraphDataForBids(
-                              context, postBidData.genericCardsDto!.id!);
+                              context, postBidData.genericCardsDto!.id!,index);
                         }
                         setState(() {
                           postBidData.genericCardsDto!.showCharts = value;
@@ -583,10 +583,10 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
   }
 
 
-  List<BarChartGroupData> _createBarGroups(MyBidsProvider provider) {
-    return provider.data.entries.map((entry) {
+  List<BarChartGroupData> _createBarGroups(MyBidsProvider provider, PostBidData postBidData) {
+    return postBidData.genericCardsDto!.graphList!.entries.map((entry) {
       double parsedValue = 0.0;
-      final index = provider.data.keys.toList().indexOf(entry.key);
+      final index = postBidData.genericCardsDto!.graphList!.keys.toList().indexOf(entry.key);
       if (entry.value == null || entry.value.toString().isEmpty) {
         parsedValue = 0.0; // Handle null/empty case
       } else {
@@ -651,7 +651,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                         // Dynamic width based on data
                         child: BarChart(
                           BarChartData(
-                            barGroups: _createBarGroups(provider),
+                            barGroups: _createBarGroups(provider,postBidData),
                             titlesData: FlTitlesData(
                               topTitles: AxisTitles(
                                 sideTitles: SideTitles(showTitles: false),

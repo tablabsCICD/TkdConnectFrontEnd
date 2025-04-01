@@ -18,14 +18,14 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = 61
+def flutterVersionCode = 65
 if (flutterVersionCode == null) {
-    flutterVersionCode = '61'
+    flutterVersionCode = '65'
 }
 
-def flutterVersionName = '3.0.14'
+def flutterVersionName = '3.0.16'
 if (flutterVersionName == null) {
-    flutterVersionName = '3.0.14'
+    flutterVersionName = '3.0.16'
 }
 
 android {
@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.pk.tkd"
+        applicationId = "com.pdk.tkd"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

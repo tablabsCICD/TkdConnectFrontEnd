@@ -65,14 +65,14 @@ class _MoreScreen extends State<MoreScreen> {
     Map<String,dynamic> data = {
       "date": "",
       "id": 0,
-      "requirement": enquiry,
+      "requirement": "I AM INTERESTED IN GETTING A GOOD DEAL FOR Insurance Inquiry.",
       "userId": user.content![0].id
     };
     ApiResponse response=await ApiHelper().postParameter(url, data);
     print('the resopnse is ${response.status}');
     if(response.status==200){
       ToastMessage.show(context, "Insurance Enquiry submitted successfully!");
-      Navigator.pop(context,1);
+      Navigator.pop(context);
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -85,14 +85,14 @@ class _MoreScreen extends State<MoreScreen> {
     Map<String,dynamic> data = {
       "date": "",
       "id": 0,
-      "requirement": enquiry,
+      "requirement": "I AM INTERESTED IN GETTING A GOOD DEAL FOR Finance Inquiry.",
       "userId": user.content![0].id
     };
     ApiResponse response=await ApiHelper().postParameter(url, data);
     print('the resopnse is ${response.status}');
     if(response.status==200){
       ToastMessage.show(context, "Finance Enquiry submitted successfully!");
-      Navigator.pop(context,1);
+      Navigator.pop(context);
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -108,13 +108,13 @@ class _MoreScreen extends State<MoreScreen> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       if(jsonResponse['message']=="success"){
-        ToastMessage.show(context, jsonResponse['url']);
+       // ToastMessage.show(context, jsonResponse['url']);
         debugPrint(jsonResponse['url']);
         Utils().callDynamicUrl(context,jsonResponse['url']);
       }else{
         ToastMessage.show(context, jsonResponse['message']+"Something went wrong!!");
       }
-      Navigator.pop(context,1);
+    //  Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -130,13 +130,13 @@ class _MoreScreen extends State<MoreScreen> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       if(jsonResponse['message']=="success"){
-        ToastMessage.show(context, jsonResponse['url']);
+      //  ToastMessage.show(context, jsonResponse['url']);
         debugPrint(jsonResponse['url']);
         Utils().callDynamicUrl(context,jsonResponse['url']);
       }else{
         ToastMessage.show(context, jsonResponse['message']+"Something went wrong!!");
       }
-      Navigator.pop(context,1);
+      //Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -145,7 +145,6 @@ class _MoreScreen extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         child: isLoad?Container():SingleChildScrollView(
@@ -599,25 +598,42 @@ class _MoreScreen extends State<MoreScreen> {
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
               title: Text(
-                enquiry,
+                "I AM INTERESTED IN GETTING A GOOD DEAL FOR ${enquiry.toUpperCase()}",
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              content: EditTextError(
-                validate: true,
-                width: 335.w,
-                height: 52.h,
-                hint: enquiry,
-                controller: _reasonController,
-                onChange: (val) {
-                  setState(() {
-                    enable = val.isNotEmpty; // Enable button if text is entered
-                  });
-                },
-              ),
+             /* content: SizedBox(
+                height: 130.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10.h,),
+                    Text(
+                      enquiry+"(optional)",
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                   *//* SizedBox(height: 16.h,),
+                    EditText(
+                      width: 335.w,
+                      height: 52.h,
+                      hint: enquiry,
+                      controller: _reasonController,
+                      onChange: (val) {
+                        setState(() {
+                          enable = val.isNotEmpty; // Enable button if text is entered
+                        });
+                      },
+                    ),*//*
+                  ],
+                ),
+              ),*/
               actions: [
                 TextButton(
                   onPressed: () {
@@ -636,16 +652,13 @@ class _MoreScreen extends State<MoreScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                   onClick: () {
-                    if (enable) {
                       if ("Insurance enquiry" == enquiry) {
                         callInsuranceApi(_reasonController.text);
                       } else {
                         callFinanceApi(_reasonController.text);
                       }
-                      Navigator.of(context).pop(); // Close the dialog after action
-                    }
                   },
-                  isEnbale: enable,
+                  isEnbale: true,
                 ),
               ],
             );

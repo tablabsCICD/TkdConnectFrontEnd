@@ -577,7 +577,7 @@ class PostLoadProvider extends BaseProvider {
               child: PayPostSheet());
         });
     if(plan){
-        payment(context,postLoad);
+        payment(context,postLoad,);
 
     }else{
       ToastMessage.show(context, "Please Try Again");
