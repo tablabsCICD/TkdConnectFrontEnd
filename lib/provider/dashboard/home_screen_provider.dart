@@ -52,7 +52,6 @@ class HomeScreenProvider extends BaseProvider{
 
 
 
-  //this method for the set the filters to home page
   onCliclFilter(BuildContext context){
     if(filterisVisible){
       filterisVisible=false;
