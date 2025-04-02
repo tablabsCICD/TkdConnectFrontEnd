@@ -1570,10 +1570,10 @@ class S {
     );
   }
 
-  /// `Search here`
+  /// `Search by name,company name and post id`
   String get search_here {
     return Intl.message(
-      'Search here',
+      'Search by name,company name and post id',
       name: 'search_here',
       desc: '',
       args: [],

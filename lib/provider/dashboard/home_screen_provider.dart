@@ -67,6 +67,19 @@ class HomeScreenProvider extends BaseProvider{
     notifyListeners();
   }
 
+  onCloseFilter(BuildContext context){
+    if(filterisVisible){
+      filterisVisible=false;
+      truckLoadTypeList.clear();
+      notifyListeners();
+      selectedPage=0;
+      fromCity="All";
+      toCity="All";
+      notifyListeners();
+      callDashboradApi(context,0);
+    }
+  }
+
   callDashboradApi(BuildContext context,currentPage)async{
 
     User user=await LocalSharePreferences.localSharePreferences.getLoginData();

@@ -222,7 +222,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchPlace": MessageLookupByLibrary.simpleMessage("Search place"),
         "searchUsersCompanies":
             MessageLookupByLibrary.simpleMessage("Search users & companies"),
-        "search_here": MessageLookupByLibrary.simpleMessage("Search here"),
+        "search_here": MessageLookupByLibrary.simpleMessage(
+            "Search by name,company name and post id"),
         "selectOne": MessageLookupByLibrary.simpleMessage("Select one"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),

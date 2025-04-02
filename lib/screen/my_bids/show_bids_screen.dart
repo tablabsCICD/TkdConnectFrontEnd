@@ -313,6 +313,7 @@ class ShowBidsScreen extends StatelessWidget{
                             validate: true,
                             width: 335.w,
                             height: 52.h,
+                            keybordType: TextInputType.number,
                             hint: "Driver Contact Number",
                             controller: _driverNumberController,
                             onChange: (val) {},

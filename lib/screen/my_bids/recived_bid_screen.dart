@@ -174,8 +174,8 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.bar_chart,
-                        color: postBidData.genericCardsDto!.showCharts
+                    Icon(Icons.list,
+                        color: !postBidData.genericCardsDto!.showCharts
                             ? ThemeColor.red
                             : Colors.grey),
                     Switch(
@@ -191,8 +191,8 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                       },
                       activeColor: ThemeColor.theme_blue,
                     ),
-                    Icon(Icons.list,
-                        color: !postBidData.genericCardsDto!.showCharts
+                    Icon(Icons.bar_chart,
+                        color: postBidData.genericCardsDto!.showCharts
                             ? ThemeColor.red
                             : Colors.grey),
                   ],
@@ -213,7 +213,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
             }
             if (val == 3) {
               String description =
-                  "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://api.tkdost.com/bids/?id=${postBidData.genericCardsDto!.id}'";
+                  "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://tkdost.com/tkd/?id=${postBidData.genericCardsDto!.id}";
               await Utils().callShareFunction(description);
             }
           }, true)
@@ -519,6 +519,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                             validate: true,
                             width: 335.w,
                             height: 52.h,
+                            keybordType: TextInputType.number,
                             hint: "Driver Contact Number",
                             controller: _driverNumberController,
                             onChange: (val) {},

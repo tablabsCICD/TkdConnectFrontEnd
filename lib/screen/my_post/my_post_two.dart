@@ -18,6 +18,8 @@ import '../../model/response/userdata.dart';
 import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
 import '../../utils/utils.dart';
+import '../../widgets/button.dart';
+import '../../widgets/editText.dart';
 import '../my_bids/show_bids_screen.dart';
 
 class MyPostScreenTwo extends StatefulWidget {
@@ -161,7 +163,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   Align(
                     alignment: Alignment.topRight,
                     child: Container(
-                      width: 100.w,
+                      width: 120.w,
                       height: 18.h,
                       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                       decoration: ShapeDecoration(
@@ -208,8 +210,8 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.bar_chart,
-                      color: postBidData.genericCardsDto!.showCharts
+                  Icon(Icons.list,
+                      color: !postBidData.genericCardsDto!.showCharts
                           ? ThemeColor.red
                           : Colors.grey),
                   Switch(
@@ -217,7 +219,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                     onChanged: (value) async {
                       if (value == true) {
                         await provider.getGraphDataForBids(
-                            context, postBidData.genericCardsDto!.id!);
+                            context, postBidData.genericCardsDto!.id!,index);
                       }
                       setState(() {
                         postBidData.genericCardsDto!.showCharts = value;
@@ -225,15 +227,15 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                     },
                     activeColor: ThemeColor.theme_blue,
                   ),
-                  Icon(Icons.list,
-                      color: !postBidData.genericCardsDto!.showCharts
+                  Icon(Icons.bar_chart,
+                      color: postBidData.genericCardsDto!.showCharts
                           ? ThemeColor.red
                           : Colors.grey),
                 ],
               ),
              postBidData.genericCardsDto!.showCharts!
-                      ? drawGraph()
-                      :iteams(postBidData, index),
+                      ? drawGraph(postBidData)
+                      :iteams(postBidData, index,provider),
               SizedBox(
                 height: 8.h,
               ),
@@ -255,7 +257,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                 }
                 if (val == 3) {
                   String description =
-                      "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://api.tkdost.com/bids/?id=${postBidData.genericCardsDto!.id}'";
+                      "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://tkdost.com/tkd/?id=${postBidData.genericCardsDto!.id}'";
                   await Utils().callShareFunction(description);
                 }
                 if (val == 4) {
@@ -346,25 +348,25 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     }
   }
 
-  iteams(PostBidData postBidData, int index) {
+  iteams(PostBidData postBidData, int index, MyPostProvider provider) {
     if (postBidData.bidings!.isEmpty) {
       return Container();
     } else {
       if (postBidData.bidings!.length == 1) {
-        return iteamBid(postBidData.bidings![0], true, index);
+        return iteamBid(postBidData.bidings![0], true, index,postBidData,provider);
       } else if (postBidData.bidings!.length == 2) {
         List<Widget> list = [
-          iteamBid(postBidData.bidings![0], false, index),
-          iteamBid(postBidData.bidings![1], true, index)
+          iteamBid(postBidData.bidings![0], false, index,postBidData,provider),
+          iteamBid(postBidData.bidings![1], true, index,postBidData,provider)
         ];
         return Column(
           children: list,
         );
       } else {
         List<Widget> list = [
-          iteamBid(postBidData.bidings![0], false, index),
-          iteamBid(postBidData.bidings![1], false, index),
-          iteamBid(postBidData.bidings![2], true, index)
+          iteamBid(postBidData.bidings![0], false, index,postBidData,provider),
+          iteamBid(postBidData.bidings![1], false, index,postBidData,provider),
+          iteamBid(postBidData.bidings![2], true, index,postBidData,provider)
         ];
         return Column(
           children: list,
@@ -373,7 +375,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     }
   }
 
-  iteamBid(Bidings bidings, bool isLast, int index) {
+  iteamBid(Bidings bidings, bool isLast, int index, PostBidData postBidData,MyPostProvider provider) {
     return Container(
       width: 311.w,
       //  height: 69.h,
@@ -479,6 +481,31 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                               height: 0,
                             ),
                           ),
+                          bidings.isAccepted==1?
+                          Text(
+                            "Quote Accepted",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 12.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ): postBidData.genericCardsDto!.isOpenForBid==1?Button(
+                            width: 100,
+                            height: 35,
+                            title: 'Accept quote',
+                            onClick: () {
+                              postBidData.genericCardsDto!.mainTag=="Full load required" || postBidData.genericCardsDto!.mainTag=="Part load required"
+                                  ?showAcceptQuoteDialog(context,postBidData,bidings,provider)
+                                  :provider.acceptBidSaveForm(context, postBidData,bidings,'','');
+                            },
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ):SizedBox()
                         ],
                       ),
                     ),
@@ -544,20 +571,164 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
       ),
     );
   }
+  Future<void> showAcceptQuoteDialog(BuildContext context, PostBidData postBidData, Bidings bidings,MyPostProvider provider) async {
+    final _formKey = GlobalKey<FormState>();
+    final TextEditingController _driverNumberController = TextEditingController();
+    final TextEditingController _vehicleNumberController = TextEditingController();
 
-  drawGraph() {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog( // Use Dialog for custom sizing
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // Optional: Add rounded corners
+          ),
+          child: Container(
+            height: 350, // Adjust height here
+            padding: EdgeInsets.all(16), // Optional: Add padding inside the dialog
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Accept Quote",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Form(
+                  key: _formKey,
+                  child: Expanded( // Use Expanded to handle overflow
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          labelText("Vehicle Number"),
+                          SizedBox(height: 8),
+                          EditTextError(
+                            validate: true,
+                            width: 335.w,
+                            height: 52.h,
+                            hint: "Vehicle Number",
+                            controller: _vehicleNumberController,
+                            onChange: (val) {},
+                          ),
+                          SizedBox(height: 12),
+                          labelText("Driver Number"),
+                          SizedBox(height: 8),
+                          EditTextError(
+                            validate: true,
+                            width: 335.w,
+                            height: 52.h,
+                            keybordType: TextInputType.number,
+                            hint: "Driver Contact Number",
+                            controller: _driverNumberController,
+                            onChange: (val) {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: Text('Cancel',style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 12.sp,
+                        fontFamily: AppConstant.FONTFAMILY,
+                        fontWeight: FontWeight.w400,),),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          provider.acceptBidSaveForm(context, postBidData,bidings,_driverNumberController.text,_vehicleNumberController.text);
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
+
+  labelText(String label) {
+    return SizedBox(
+      width: 332.w,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  List<BarChartGroupData> _createBarGroups(MyPostProvider provider, PostBidData postBidData) {
+    return postBidData.genericCardsDto!.graphList!.entries.map((entry) {
+      double parsedValue = 0.0;
+      final index = postBidData.genericCardsDto!.graphList!.keys.toList().indexOf(entry.key);
+      if (entry.value == null || entry.value.toString().isEmpty) {
+        parsedValue = 0.0; // Handle null/empty case
+      } else {
+        parsedValue = double.parse(entry.value.toString());
+      }
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            toY: parsedValue,
+            color: Colors.blue,
+            width: 20,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+      );
+    }).toList();
+  }
+
+  drawGraph(PostBidData postBidData) {
     return Consumer<MyPostProvider>(builder: (context, provider, child) {
+      String source = postBidData.genericCardsDto!.source!;
+      String destination = postBidData.genericCardsDto!.destination!;
+
       return Padding(
-        padding: const EdgeInsets.all(9.0), // Outer padding for the card
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Y-axis label
+            // Title
             const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
+              padding: EdgeInsets.only(bottom: 12.0),
               child: Text(
-                'Market Rate ',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                "Recent Quote Analysis Overview",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ),
             Row(
@@ -568,60 +739,100 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   quarterTurns: -1,
                   child: const Text(
                     'Quote Count',
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                 ),
-                // Chart container with inner padding
+                // Horizontal scrollable chart container
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    // Space between label and chart
-                    child: SizedBox(
-                      height: 300,
-                      child: BarChart(
-                        BarChartData(
-                          barGroups: _createBarGroups(provider),
-                          titlesData: FlTitlesData(
-                            topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) => Text(provider
-                                    .data.keys
-                                    .elementAt(value.toInt())),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: SizedBox(
+                        height: 300,
+                        width: provider.data.length * 50.0,
+                        // Dynamic width based on data
+                        child: BarChart(
+                          BarChartData(
+                            barGroups: _createBarGroups(provider,postBidData),
+                            titlesData: FlTitlesData(
+                              topTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  reservedSize: 24,
+                                  getTitlesWidget: (value, meta) {
+                                    final label = provider.data.keys
+                                        .elementAt(value.toInt());
+                                    return Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Text(
+                                        label,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  interval: 1,
+                                  getTitlesWidget: (value, meta) {
+                                    if (value % 1 == 0) {
+                                      return Text(
+                                        value.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black54,
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
                               ),
                             ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: (value, meta) {
-                                  if (value % 1 == 0) {
-                                    return Text(value.toString());
-                                  }
-                                  return const SizedBox.shrink();
+                            borderData: FlBorderData(
+                              show: true,
+                              border: Border.all(color: Colors.black12),
+                            ),
+                            barTouchData: BarTouchData(
+                              touchTooltipData: BarTouchTooltipData(
+                                getTooltipItem:
+                                    (group, groupIndex, rod, rodIndex) {
+                                  return BarTooltipItem(
+                                    'Quote Count: ${rod.toY.toInt()}',
+                                    const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  );
                                 },
                               ),
                             ),
+                            // gridData: FlGridData(show: true),
+                            alignment: BarChartAlignment.spaceAround,
+                            maxY: provider.data.values.isEmpty
+                                ? 0.0
+                                : provider.data.values
+                                .reduce((a, b) => a > b ? a : b)
+                                .toDouble() +
+                                1.0,
                           ),
-                          borderData: FlBorderData(show: false),
-                          barTouchData: BarTouchData(
-                            touchTooltipData: BarTouchTooltipData(),
-                          ),
-                          gridData: FlGridData(show: false),
-                          alignment: BarChartAlignment.spaceAround,
-                          maxY: provider.data.values == 0
-                              ? 0.0
-                              : provider.data.values
-                                      .reduce((a, b) => a > b ? a : b) +
-                                  1.0,
+                          duration:
+                          const Duration(milliseconds: 800),
+                          curve: Curves.easeInOut,
                         ),
-                        swapAnimationDuration: Duration(milliseconds: 500),
-                        swapAnimationCurve: Curves.easeInOut,
                       ),
                     ),
                   ),
@@ -630,33 +841,20 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
             ),
             // X-axis label
             const Padding(
-              padding: EdgeInsets.only(top: 16.0),
+              padding: EdgeInsets.only(top: 20.0),
               child: Text(
                 'Quote Amount',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ),
           ],
         ),
       );
     });
-  }
-
-  List<BarChartGroupData> _createBarGroups(MyPostProvider provider) {
-    return provider.data.entries.map((entry) {
-      final index = provider.data.keys.toList().indexOf(entry.key);
-      return BarChartGroupData(
-        x: index,
-        barRods: [
-          BarChartRodData(
-            toY: double.parse(entry.value.toString()),
-            color: Colors.blue,
-            width: 20,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ],
-      );
-    }).toList();
   }
 
   Future<void> _showCompleteDialog(BuildContext context,int id,MyPostProvider myPostProvider) async {

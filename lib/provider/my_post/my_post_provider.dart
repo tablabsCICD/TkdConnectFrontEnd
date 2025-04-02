@@ -8,6 +8,8 @@ import 'package:tkd_connect/provider/base_provider.dart';
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/request/post_load.dart';
+import '../../model/response/acceptBidResponse.dart';
+import '../../model/response/bid_placed.dart';
 import '../../model/response/my_post_bid_list.dart';
 import '../../model/response/post_upload.dart';
 import '../../model/response/userdata.dart';
@@ -43,16 +45,27 @@ class MyPostProvider extends BaseProvider{
   }
 
 
-  Map<String, dynamic> data = {};
-  getGraphDataForBids(BuildContext context,int postId)async{
-    User user=await LocalSharePreferences().getLoginData();
-    print('the link is ${ApiConstant.GET_BID_TREND(postId)}');
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.GET_BID_TREND(postId));
-    if(apiResponse.status==200){
-      data = apiResponse.response;
-      notifyListeners();
-    }else{
-      ToastMessage.show(context, "Please Try Again");
+  late Map<String, dynamic> data = {};
+
+  getGraphDataForBids(BuildContext context, int postId,int index) async {
+    try {
+      debugPrint('Fetching bid data from ${ApiConstant.GET_BID_TREND(postId)}');
+      ApiResponse apiResponse = await ApiHelper()
+          .apiWithoutDecodeGet(ApiConstant.GET_BID_TREND(postId));
+
+      if (apiResponse.status == 200) {
+        debugPrint('${apiResponse.status}');
+        listOwnBid[index].genericCardsDto!.graphList = {};
+        data = jsonDecode(apiResponse.response) as Map<String, dynamic>;
+        listOwnBid[index].genericCardsDto!.graphList = data;
+        notifyListeners();
+      } else {
+        ToastMessage.show(context, "Please Try Again");
+        // Default data in case of failure
+      }
+    } catch (e) {
+      debugPrint("Error fetching bid data: $e");
+      ToastMessage.show(context, "An error occurred. Please try again.");
     }
   }
 
@@ -251,6 +264,66 @@ class MyPostProvider extends BaseProvider{
 
 
 
+  acceptBidSaveForm(BuildContext context, PostBidData data, Bidings bidings,
+      String driverNumber, String vehicleNumber) async {
+    User user = await LocalSharePreferences().getLoginData();
+    Map<String, dynamic> mapData = {
+      "amount": bidings.bidings!.amount,
+      "bidId": bidings.bidings!.id,
+      "bidderUserId": 0,
+      "bidderUserName": bidings.bidings!.bidderUserName,
+      "destinationLocation": data.genericCardsDto!.destination,
+      "driverContact": driverNumber,
+      "id": 0,
+      "isUpdatedDriverDetails": 0,
+      "loggedTime": "",
+      "postId": data.genericCardsDto!.id,
+      "sourceLocation":data.genericCardsDto!.source ,
+      "userId": user.content![0].id,
+      "vehicleNumber": vehicleNumber
+    };
+    print(ApiConstant.ACCEPTBID);
+    ApiResponse apiResponse = await ApiHelper().postParameterDecode(ApiConstant.ACCEPTBID,mapData);
+    if (apiResponse.status == 200) {
+      AcceptBidResponse acceptBidResponse = AcceptBidResponse.fromJson(apiResponse.response);
 
+      if(acceptBidResponse.success == true){
+        ToastMessage.show(context, acceptBidResponse.message.toString());
+      }else{
+        ToastMessage.show(context, acceptBidResponse.message.toString());
+      }
+      notifyListeners();
+      getReceviedBids(context);
+      Navigator.of(context).pop();
+    } else {
+      ToastMessage.show(context, "Please Try Again");
+    }
+  }
+
+  updateAcceptBid(BuildContext context, Bids data,
+      String driverNumber, String vehicleNumber) async {
+    User user = await LocalSharePreferences().getLoginData();
+    Map<String, dynamic> mapData = {
+      "driverContact": driverNumber,
+      "id": data.acceptBidId,
+      "userId": user.content![0].id,
+      "vehicleNumber": vehicleNumber
+    };
+    print(ApiConstant.UPDATE_ACCEPTED_BID);
+    ApiResponse apiResponse = await ApiHelper().apiPut(ApiConstant.UPDATE_ACCEPTED_BID,mapData);
+    if (apiResponse.status == 200) {
+      AcceptBidResponse acceptBidResponse = AcceptBidResponse.fromJson(apiResponse.response);
+
+      if(acceptBidResponse.success == true){
+        ToastMessage.show(context, acceptBidResponse.message.toString());
+      }else{
+        ToastMessage.show(context, acceptBidResponse.message.toString());
+      }
+      notifyListeners();
+      Navigator.of(context).pop();
+    } else {
+      ToastMessage.show(context, "Please Try Again");
+    }
+  }
 
 }

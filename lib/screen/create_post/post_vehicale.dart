@@ -218,7 +218,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                   hint: provider.selectedGroup,
                 ),
 
-                SizedBox(
+             /*   SizedBox(
                   height: 30.h,
                 ),
                 provider.images.isNotEmpty? BaseWidget().carouseImageDelete(provider.images,(item){
@@ -243,7 +243,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
                   ),
-                ),
+                ),*/
                 SizedBox(
                   height: 30.h,
                 ),

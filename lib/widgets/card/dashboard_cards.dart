@@ -842,10 +842,7 @@ class AllCards {
 
             InkWell(
               onTap: () async {
-                final url = Uri.parse(
-                    // 'http://${load.website}',
-                    '${load.website}');
-                await launchUrl(url);
+                Utils().callDynamicUrl(context, load.website??"");
               },
               child: BaseWidget().headingMobile(load.companyName!, load.mobileOrLandline.toString(), load.website!),
             ),
@@ -1197,6 +1194,12 @@ class AllCards {
           ),
           const SizedBox(
             height: 9,
+          ),
+          InkWell(
+            onTap: () async {
+              Utils().callDynamicUrl(context, load.website??"");
+            },
+            child: BaseWidget().headingMobile(load.companyName!, load.mobileOrLandline.toString(), load.website!),
           ),
         ],
       );

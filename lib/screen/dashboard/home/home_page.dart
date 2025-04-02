@@ -154,7 +154,11 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
               SizedBox(
                 width: 8.w,
               ),
-              filterIcon()
+              filterIcon(),
+             /* provider.filterisVisible ? SizedBox(
+                width: 8.w,
+              ):SizedBox.shrink(),
+              provider.filterisVisible ?clearIcon():SizedBox.shrink()*/
             ],
           ),
         );
@@ -437,28 +441,44 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             transform: Matrix4.translationValues(0.0, -25.0.h, 00),
             width: 330.w,
             child: Stack(
-              //  mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Align(
-                    alignment: Alignment.bottomLeft,
-                    child: InkWell(
-                      onTap: () {
-                       // provider.selectCityFilter(context);
-                        provider.selectCityFromFilter(context);
+                  alignment: Alignment.topRight,
+                  child: Visibility(
+                    visible: provider.filterisVisible, // Ensure this flag exists in your provider
+                    child: IconButton(
+                      icon: Icon(Icons.close, color: Colors.black),
+                      onPressed: () {
+                        provider.onCloseFilter(context); // Ensure this method exists in your provider
                       },
-                      child: fromRoute(provider.fromCity=="All"?"From": provider.fromCity),
-                    )),
-                Align(alignment: Alignment.bottomRight, child: InkWell(
-                  onTap: (){
-                    provider.selectToCityFilter(context);
-                  },
-                  child: fromRoute(provider.toCity=="All"?"To":provider.toCity),
-                )),
+                    ),
+                  ),
+                ),
                 Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        child: SvgPicture.asset(Images.route_return_home))),
+                  alignment: Alignment.bottomLeft,
+                  child: InkWell(
+                    onTap: () {
+                      provider.selectCityFromFilter(context);
+                    },
+                    child: fromRoute(provider.fromCity == "All" ? "From" : provider.fromCity),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: InkWell(
+                    onTap: () {
+                      provider.selectToCityFilter(context);
+                    },
+                    child: fromRoute(provider.toCity == "All" ? "To" : provider.toCity),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    child: SvgPicture.asset(Images.route_return_home),
+                  ),
+                ),
               ],
             ),
           ),
@@ -466,6 +486,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
       },
     );
   }
+
 
   fromRoute(String cityName) {
     return Container(
@@ -573,7 +594,37 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
               ),
               child: Center(
                 child: SvgPicture.asset(
-                  Images.filter,
+                  provider.filterisVisible?Images.close_circle:Images.filter,
+                  height: 24.h,
+                  width: 24.w,
+                ),
+              )),
+        );
+      },
+    );
+  }
+
+  clearIcon() {
+    return Consumer<HomeScreenProvider>(
+      builder: (context, provider, child) {
+        return InkWell(
+          onTap: () {
+           provider.onCloseFilter(context);
+          },
+          child: Container(
+              width: 40.w,
+              height: 52.h,
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.50.w, color: const Color(0x332C363F)),
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  Images.close_circle,
                   height: 24.h,
                   width: 24.w,
                 ),
