@@ -187,14 +187,20 @@
   "downloadExl": "એક્સેલ અપલોડ કરતા પહેલા, ફોર્મેટ ડાઉનલોડ કરવા માટે અહીં ક્લિક કરો",
   "uploadLoad": "અપલોડ લોડ",
 
-"complete": "Complete",
+  "complete": "Complete",
   "completed": "Completed",
   "expiryDate": "Expiry Date",
-  "quoteReason": "Quote Reason",
+  "quoteReason": "quote justification with cost (optional)",
   "completeMsg": "Do you want to complete this post.",
   "expired": "Expired",
 
   "iWantVehicle": "I Want Vehicle",
-  "iHaveVehicle": "I Have Vehicle"
+  "iHaveVehicle": "I Have Vehicle",
+  "insurance": "Insurance",
+  "tollCalculation": "Toll Calculation",
+  "mParivahan": "MParivahan",
+  "financeInquiry": "Finance Enquiry",
+  "addNews" : "Add News"
+
 
 }

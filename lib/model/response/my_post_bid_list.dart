@@ -1,5 +1,7 @@
 
 
+import 'package:tkd_connect/model/response/quoteResponse.dart';
+
 class MyPostBids {
   List<PostBidData>? content;
   bool? last;
@@ -133,7 +135,7 @@ class GenericCardsDto {
   String? expireDate;
   bool showCharts = false;
   int? isOpenForBid;
-  Map<String,dynamic>? graphList={};
+  List<MonthData>? graphList=[];
 
   GenericCardsDto(
       {this.id,
@@ -225,7 +227,12 @@ class GenericCardsDto {
     expireDate = json['expireDate']??'';
     showCharts = json['showCharts'] ?? false;
     isOpenForBid = json['isOpenForBid'] ?? 1;
-    graphList = json['graphList'];
+    if (json['graphList'] != null) {
+      graphList = <MonthData>[];
+      json['graphList'].forEach((v) {
+        graphList!.add(MonthData.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -276,7 +283,9 @@ class GenericCardsDto {
     data['expireDate'] = expireDate;
     data['showCharts'] = showCharts;
     data['isOpenForBid'] = isOpenForBid;
-    data['graphList'] = graphList;
+    if (graphList != null) {
+      data['graphList'] = graphList!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

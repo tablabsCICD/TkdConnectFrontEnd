@@ -193,13 +193,19 @@
   "uploadLoad": "பதிவேற்றம்",
 
   "complete": "Complete",
-    "completed": "Completed",
-    "expiryDate": "Expiry Date",
-    "quoteReason": "Quote Reason",
-    "completeMsg": "Do you want to complete this post.",
-    "expired": "Expired",
+  "completed": "Completed",
+  "expiryDate": "Expiry Date",
+  "quoteReason": "quote justification with cost (optional)",
+  "completeMsg": "Do you want to complete this post.",
+  "expired": "Expired",
 
-    "iWantVehicle": "I Want Vehicle",
-    "iHaveVehicle": "I Have Vehicle"
+  "iWantVehicle": "I Want Vehicle",
+  "iHaveVehicle": "I Have Vehicle",
+  "insurance": "Insurance",
+  "tollCalculation": "Toll Calculation",
+  "mParivahan": "MParivahan",
+  "financeInquiry": "Finance Enquiry",
+  "addNews" : "Add News"
+
 
 }

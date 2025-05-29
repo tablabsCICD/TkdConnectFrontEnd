@@ -165,7 +165,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                _buildText(context,"dd/mm/yyyy",provider.expiryDateController, provider,true),
+                _buildText(context,"yyyy-mm-dd",provider.expiryDateController, provider,true),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -193,6 +193,26 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 12.h,
                 ),
+                repeatPost(context),
+                SizedBox(
+                  height: 10.h,
+                ),
+               /* provider.isRepeat==true?labelText("Start Date of Repeat Post"):SizedBox.shrink(),
+                provider.isRepeat==true? SizedBox(
+                  height: 4.h,
+                ):SizedBox.shrink(),
+                provider.isRepeat==true? _buildStartDateText(context,"yyyy-mm-dd",provider.startDateController, provider,true):SizedBox.shrink(),
+                provider.isRepeat==true? SizedBox(
+                  height: 12.h,
+                ):SizedBox.shrink(),*/
+                provider.isRepeat==true?labelText("End Date of Repeat Post"):SizedBox.shrink(),
+                provider.isRepeat==true? SizedBox(
+                  height: 4.h,
+                ):SizedBox.shrink(),
+                provider.isRepeat==true?_buildEndDateText(context,"yyyy-mm-dd",provider.endDateController, provider,true):SizedBox.shrink(),
+                provider.isRepeat==true?SizedBox(
+                  height: 12.h,
+                ):SizedBox.shrink(),
                 labelText(S().groupType),
                 SizedBox(
                   height: 4.h,
@@ -266,6 +286,103 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 )
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
+
+
+  repeatPost(context){
+    return Consumer<PostLoadProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 52.h,
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(width: 1, color: Color(0x332C363F)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 33.h,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Repeat Post",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontFamily: AppConstant.FONTFAMILY,
+                                        fontWeight: FontWeight.w600,
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  '',
+                                  style: TextStyle(
+                                    color: Color(0x99001E49),
+                                    fontSize: 10,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                width: 100.w,
+                height: 40.sp,
+                child:Switch.adaptive(
+                  // This bool value toggles the switch.
+                  value: provider.isRepeat,
+                  splashRadius: 10,
+                  activeColor: ThemeColor.theme_blue,
+                  onChanged: (bool value) {
+                    provider.repeatPostSwitch(value);
+                  },
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -527,6 +644,36 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
       },
     );}
 
+  Widget _buildStartDateText(context,String hint,TextEditingController controller,PostLoadProvider provider,bool redOnly) {
+    return EditText(
+      readOnly: true,
+      width: 335.w,
+      height: 52.h,
+      hint: "dd/mm/yyyy",
+      controller: controller,
+      onTap: () async {
+        String Date =
+        await DateTimePickerDialog().pickDateDialog(
+            context);
+        provider.setStartDate(Date);
+      },
+    );}
+
+
+  Widget _buildEndDateText(context,String hint,TextEditingController controller,PostLoadProvider provider,bool redOnly) {
+    return EditText(
+      readOnly: true,
+      width: 335.w,
+      height: 52.h,
+      hint: "dd/mm/yyyy",
+      controller: controller,
+      onTap: () async {
+        String Date =
+        await DateTimePickerDialog().pickDateDialog(
+            context);
+        provider.setEndDate(Date);
+      },
+    );}
 
 
 }

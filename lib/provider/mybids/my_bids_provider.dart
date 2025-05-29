@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/main.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -12,6 +14,7 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
 import '../../model/response/my_post_bid_list.dart';
+import '../../model/response/quoteResponse.dart';
 import '../../model/response/userdata.dart';
 
 class MyBidsProvider extends BaseProvider {
@@ -161,7 +164,11 @@ class MyBidsProvider extends BaseProvider {
     }
   }
 
-  late Map<String, dynamic> data = {};
+   Map<String, dynamic>? data = {};
+
+
+
+
 
   getGraphDataForBids(BuildContext context, int postId,int index) async {
     try {
@@ -171,9 +178,20 @@ class MyBidsProvider extends BaseProvider {
 
       if (apiResponse.status == 200) {
         debugPrint('${apiResponse.status}');
-        listOwnBid[index].genericCardsDto!.graphList = {};
         data = jsonDecode(apiResponse.response) as Map<String, dynamic>;
-        listOwnBid[index].genericCardsDto!.graphList = data;
+        print("Response data $data");
+        if(data != null) {
+          listOwnBid[index].genericCardsDto!.graphList = [];
+
+          QuoteResponse response = QuoteResponse.fromJson(data!);
+          if(response.data != null){
+          listOwnBid[index].genericCardsDto!.graphList = response.data;
+         }
+          else{
+            ToastMessage.show(context,response.message!);
+          }
+        }
+
         notifyListeners();
       } else {
         ToastMessage.show(context, "Please Try Again");

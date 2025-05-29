@@ -158,8 +158,10 @@ class ApiHelper{
 
   Future<ApiResponse> postParameter(String url,Map<String,dynamic>data) async{
     EasyLoading.show(status: "Loading");
+    print(data);
     try{
       var body = json.encode(data);
+      print(body);
       final request = await dio.post(url,data: body);
       print("Post response :"+request.data);
       ApiResponse apiResponseHelper = returnResponse(request);

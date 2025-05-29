@@ -1,12 +1,12 @@
 
 
 class ApiConstant {
-  //static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
+  static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
 
- static const String BASE_URL = "http://ec2-13-233-62-103.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+ //static const String BASE_URL = "http://ec2-15-206-168-153.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
 
-  static String FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
+  static String  FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
 
   static String SEND_OTP(mobile) => "${BASE_URL}sendOtp?mobileNos=$mobile";
 
@@ -79,7 +79,7 @@ class ApiConstant {
       "${BASE_URL}getOwnPostAndBid?userName=$id&page=$page";
 
   static String GET_BID_TREND(id) =>
-      "${BASE_URL}trend/$id";
+      "${BASE_URL}trend/new/$id";
 
   static String GETCOMMENTS(id) =>
       "$BASE_URL/getGerenalPostComments?generalPostId=$id";
@@ -153,5 +153,8 @@ class ApiConstant {
   static String MPARIVAHAN="${BASE_URL}hardCodedURL/getMParivahan";
  static String ACCEPTBID="${BASE_URL}acceptedBid/save";
  static String UPDATE_ACCEPTED_BID="${BASE_URL}acceptedBid/%7Bid%7D";
+
+  static String GET_NEWS_LIST(page)=> "${BASE_URL}Gallery?page=$page&size=30";
+  static String ADD_NEWS(topic,des,userId)=> "${BASE_URL}Gallery?topicName=2&description=2&userId=2";
 
 }

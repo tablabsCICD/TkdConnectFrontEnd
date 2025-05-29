@@ -14,6 +14,7 @@ import 'package:tkd_connect/widgets/verified_tag.dart';
 
 import '../../generated/l10n.dart';
 import '../../model/response/my_post_bid_list.dart';
+import '../../model/response/quoteResponse.dart';
 import '../../model/response/userdata.dart';
 import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
@@ -686,33 +687,56 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
   }
 
 
-  List<BarChartGroupData> _createBarGroups(MyPostProvider provider, PostBidData postBidData) {
-    return postBidData.genericCardsDto!.graphList!.entries.map((entry) {
-      double parsedValue = 0.0;
-      final index = postBidData.genericCardsDto!.graphList!.keys.toList().indexOf(entry.key);
-      if (entry.value == null || entry.value.toString().isEmpty) {
-        parsedValue = 0.0; // Handle null/empty case
-      } else {
-        parsedValue = double.parse(entry.value.toString());
+  Map<String, Map<String, int>> prepareChartData(List<MonthData> response) {
+    Map<String, Map<String, int>> chartData = {};
+
+    for (var monthData in response) {
+      Map<String, int> labelValues = {};
+      for (var item in monthData.list!) {
+        labelValues[item.label!] = int.parse(item.value.toString());
       }
+      chartData[monthData.month!] = labelValues;
+    }
+
+    return chartData;
+  }
+
+  List<BarChartGroupData> _createBarGroups(
+      Map<String, Map<String, int>> parsedData,
+      List<String> xAxisLabels,
+      ) {
+    return xAxisLabels.asMap().entries.map((entry) {
+      final index = entry.key;
+      final date = entry.value;
+      final nestedValues = parsedData[date] ?? {};
+
+      final barRods = nestedValues.entries.map((e) {
+        return BarChartRodData(
+          toY: e.value.toDouble(),
+          width: 12,
+          borderRadius: BorderRadius.circular(4),
+          color: Colors.blueAccent,
+        );
+      }).toList();
+
       return BarChartGroupData(
         x: index,
-        barRods: [
-          BarChartRodData(
-            toY: parsedValue,
-            color: Colors.blue,
-            width: 20,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ],
+        barRods: barRods,
+        barsSpace: 4,
+        showingTooltipIndicators: List.generate(barRods.length, (i) => i),
       );
     }).toList();
   }
 
-  drawGraph(PostBidData postBidData) {
+
+
+  Widget drawGraph(PostBidData postBidData) {
     return Consumer<MyPostProvider>(builder: (context, provider, child) {
-      String source = postBidData.genericCardsDto!.source!;
-      String destination = postBidData.genericCardsDto!.destination!;
+      // Parse data
+      final graphList = postBidData.genericCardsDto?.graphList ?? [];
+      final parsedData = prepareChartData(graphList);
+      final xAxisLabels = parsedData.keys.toList();
+      final chartData = _createBarGroups(parsedData, xAxisLabels);
 
       return Padding(
         padding: const EdgeInsets.all(12.0),
@@ -735,9 +759,9 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Rotated Y-axis label
-                RotatedBox(
+                const RotatedBox(
                   quarterTurns: -1,
-                  child: const Text(
+                  child: Text(
                     'Quote Count',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
@@ -747,53 +771,46 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
+                      padding: const EdgeInsets.only(left: 12.0,top: 30),
                       child: SizedBox(
                         height: 300,
-                        width: provider.data.length * 50.0,
-                        // Dynamic width based on data
+                        width: xAxisLabels.length * 60.0, // Adjust dynamic width
                         child: BarChart(
                           BarChartData(
-                            barGroups: _createBarGroups(provider,postBidData),
+                            barGroups: chartData,
+                            groupsSpace: 16, // Space between bar groups
                             titlesData: FlTitlesData(
-                              topTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false),
-                              ),
-                              rightTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false),
-                              ),
-                              bottomTitles: AxisTitles(
-                                sideTitles: SideTitles(
-                                  showTitles: true,
-                                  reservedSize: 24,
-                                  getTitlesWidget: (value, meta) {
-                                    final label = provider.data.keys
-                                        .elementAt(value.toInt());
-                                    return Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: Text(
-                                        label,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
                               leftTitles: AxisTitles(
                                 sideTitles: SideTitles(
                                   showTitles: true,
-                                  interval: 1,
+                                  reservedSize: 40,
                                   getTitlesWidget: (value, meta) {
+                                    // Display meaningful Y-axis titles at intervals
                                     if (value % 1 == 0) {
-                                      return Text(
-                                        value.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black54,
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: 8),
+                                        child: Text(
+                                          value.toInt().toString(),
+                                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ),
+                              rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: (value, meta) {
+                                    if (value.toInt() < xAxisLabels.length) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Text(
+                                          xAxisLabels[value.toInt()],
+                                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                                         ),
                                       );
                                     }
@@ -802,36 +819,30 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                                 ),
                               ),
                             ),
-                            borderData: FlBorderData(
-                              show: true,
-                              border: Border.all(color: Colors.black12),
-                            ),
+
+                            borderData: FlBorderData(show: false),
+                            gridData: FlGridData(show: false), // Optionally show grid lines
                             barTouchData: BarTouchData(
                               touchTooltipData: BarTouchTooltipData(
-                                getTooltipItem:
-                                    (group, groupIndex, rod, rodIndex) {
-                                  return BarTooltipItem(
-                                    'Quote Count: ${rod.toY.toInt()}',
-                                    const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
-                                  );
+                                //tooltipBgColor: Colors.black87,
+                                getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                                  if (groupIndex < xAxisLabels.length) {
+                                    final date = xAxisLabels[groupIndex];
+                                    final nestedData = parsedData[date]?.entries.toList();
+                                    if (nestedData != null && rodIndex < nestedData.length) {
+                                      final entry = nestedData[rodIndex];
+                                      return BarTooltipItem(
+                                        '${entry.key}: ${entry.value}', // Display key and amount
+                                        const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                      );
+                                    }
+                                  }
+                                  return null; // Return null for invalid data
                                 },
                               ),
                             ),
-                            // gridData: FlGridData(show: true),
-                            alignment: BarChartAlignment.spaceAround,
-                            maxY: provider.data.values.isEmpty
-                                ? 0.0
-                                : provider.data.values
-                                .reduce((a, b) => a > b ? a : b)
-                                .toDouble() +
-                                1.0,
                           ),
-                          duration:
-                          const Duration(milliseconds: 800),
-                          curve: Curves.easeInOut,
+
                         ),
                       ),
                     ),
@@ -857,7 +868,9 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
     });
   }
 
-  Future<void> _showCompleteDialog(BuildContext context,int id,MyPostProvider myPostProvider) async {
+
+
+Future<void> _showCompleteDialog(BuildContext context,int id,MyPostProvider myPostProvider) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

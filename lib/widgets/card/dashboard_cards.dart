@@ -166,7 +166,7 @@ class AllCards {
           SizedBox(
             height: 12.h,
           ),
-          imageLoad(load),
+        //  imageLoad(load),
           BaseWidget().heading(
               load.topicName!, getDateObject(load.postingTime), load.content!),
           load.userId == userId
@@ -338,7 +338,7 @@ class AllCards {
             SizedBox(
               height: 12.h,
             ),
-            imageLoad(load),
+            //imageLoad(load),
 
             BaseWidget().heading(
                 load.topicName!, getDateObject(load.postingTime), load.content!),
@@ -586,7 +586,7 @@ class AllCards {
           SizedBox(
             height: 12.h,
           ),
-          imageLoad(load),
+        //  imageLoad(load),
           BaseWidget().heading(
               load.topicName!, getDateObject(load.postingTime), load.content!),
 
@@ -1162,7 +1162,7 @@ class AllCards {
 
 
   imageLoadAddA(TruckLoad load, BuildContext context) {
-    if (load.postImages!.isEmpty) {
+    if (load.postImages!.isEmpty||load.postImages == '') {
       return const Column(
         children: [
           SizedBox(

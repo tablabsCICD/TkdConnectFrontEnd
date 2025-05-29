@@ -60,7 +60,7 @@ dependencies:
   firebase_messaging:
   firebase_core:
   flutter_local_notifications: any
-  notification_permissions: ^0.6.1
+  notification_permissions:
  # flutter_google_places: ^0.3.0
   firebase_auth: ^4.15.3
   cloud_firestore: ^4.13.6

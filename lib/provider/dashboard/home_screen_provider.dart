@@ -127,7 +127,7 @@ class HomeScreenProvider extends BaseProvider{
       }
 
     }
-   // print('the url $url');
+    print('the url $url');
     var req = await http.get(Uri.parse(url));
     isFirstLoading= false;
     isLoading = false;
@@ -353,7 +353,10 @@ class HomeScreenProvider extends BaseProvider{
     postLoad.vehicleSize= load.vehicleSize;
     postLoad.tableName=load.tableName;
     postLoad.topicName= load.tableName;
-    postLoad.image= [];
+    postLoad.image = '';
+    postLoad.isRepeat = 0;
+    postLoad.repeatStartDate = '';
+    postLoad.repeatEndDate = '';
     postLoad.partLoad=load.partLoadOrNot!;
     postLoad.listOfUserIds=userIdList;
 

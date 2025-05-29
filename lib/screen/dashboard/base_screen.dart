@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/more/more_screen.dart';
+import 'package:tkd_connect/screen/news/allNews.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
 import '../../generated/l10n.dart';
@@ -32,7 +33,7 @@ class _BaseDashboard extends State<BaseDashboard>{
    bool isHome=true;
    bool isMyBid=false;
    bool isDrectory=false;
-  // bool isMessage=false;
+   bool isNews=false;
    bool isMore=false;
    bool isButtonVisible=true;
    HomeScreen homeScreen=HomeScreen();
@@ -57,7 +58,7 @@ class _BaseDashboard extends State<BaseDashboard>{
            homeScreen,
            const MyBidsBaseScreen(),
            const DirectoryScreen(),
-      //     const MessageScreen(),
+          const AllNewsScreen(),
            const MoreScreen()
          ],
        ),
@@ -158,12 +159,13 @@ class _BaseDashboard extends State<BaseDashboard>{
             },
             child: selectedTab(isDrectory,S().directory,Images.directory),
           ),
-        /*  Expanded(child: InkWell(
+          InkWell(
             onTap: (){
               onPageChanges(3);
             },
-            child: selectedTab(isMessage,S().message,Images.message),
-          )),*/
+            child: selectedTab(isNews,S().allNews,Images.message),
+          ),
+
           InkWell(
             onTap: (){
               onPageChanges(4);
@@ -182,7 +184,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 0:
         isHome=true;
         isMyBid=false;
-       // isMessage=false;
+        isNews=false;
         isDrectory=false;
         isMore=false;
         isButtonVisible=true;
@@ -191,7 +193,7 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 1:
         isHome=false;
         isMyBid=true;
-        //isMessage=false;
+        isNews=false;
         isDrectory=false;
         isMore=false;
         isButtonVisible=false;
@@ -201,49 +203,35 @@ class _BaseDashboard extends State<BaseDashboard>{
       case 2:
         isHome=false;
         isMyBid=false;
-       // isMessage=false;
+        isNews=false;
         isDrectory=true;
         isMore=false;
         isButtonVisible=false;
         break;
 
-
       case 3:
         isHome=false;
         isMyBid=false;
-        //isMessage=true;
+        isNews=true;
         isDrectory=false;
         isMore=false;
         isButtonVisible=false;
-
-        // isHome=false;
-        // isMyBid=false;
-        // isMessage=false;
-        // isDrectory=false;
-        // isMore=true;
-        // isButtonVisible=false;
-        // break;
-
+        break;
 
       case 4:
         isHome=false;
         isMyBid=false;
-        //isMessage=false;
+        isNews=false;
         isDrectory=false;
         isMore=true;
         isButtonVisible=false;
         break;
-
-
     }
 
     setState(() {
 
     });
     controller.jumpToPage(page);
-
-
-
   }
 
 
@@ -282,8 +270,8 @@ class _BaseDashboard extends State<BaseDashboard>{
         ],
       ),
     );
-
   }
+
    Future<bool> onWillPop() {
      double? page =controller.page;
      if(maintain==0){
@@ -291,7 +279,6 @@ class _BaseDashboard extends State<BaseDashboard>{
      }else{
        onPageChanges(maintain-1);
      }
-
      return Future.value(false);
    }
 

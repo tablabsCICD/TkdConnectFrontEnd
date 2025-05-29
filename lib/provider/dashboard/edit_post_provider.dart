@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
+import 'package:tkd_connect/model/request/post_load.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
 import 'package:tkd_connect/model/response/group_response.dart';
@@ -15,7 +17,7 @@ import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 import 'package:tkd_connect/widgets/bottomsheet.dart';
 
-import '../../model/request/post_load.dart';
+import '../../model/request/edit_post_load.dart';
 import '../../model/response/userdata.dart';
 
 class EditPostLoadProvider extends BaseProvider {
@@ -50,6 +52,10 @@ class EditPostLoadProvider extends BaseProvider {
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
+  bool isRepeat = false;
+
   bool enbleButton = false;
   bool vehicaleSize = true;
   bool loadWieght = true;
@@ -64,11 +70,12 @@ class EditPostLoadProvider extends BaseProvider {
   initData() async {
     User user =
         await LocalSharePreferences.localSharePreferences.getLoginData();
+    await getTruckLoadById(postBidData.genericCardsDto!.id!);
     emailIdController.text = user.content!.first.emailId!;
     mobileNumberController.text = user.content!.first.mobileNumber!.toString();
     selectedCargo = postBidData.genericCardsDto!.cargoType!;
     loadWeightController.text = postBidData.genericCardsDto!.vehicleWeight!;
-    await getTruckLoadById(postBidData.genericCardsDto!.id!);
+
     notifyListeners();
   }
 
@@ -180,8 +187,24 @@ class EditPostLoadProvider extends BaseProvider {
     destinationCity = truckLoad.destination!;
     dnd = truckLoad.dnd == 0 ? false : true;
     hideMyID = truckLoad.privatePost == 0 ? false : true;
+    isRepeat = truckLoad.isRepeat == 0 ? false : true;
+    expiryDateController.text = truckLoad.expireDate!;
     var userList = getUserListFromString(truckLoad.userList!);
     addedMemberIdList = addedUserListInPost;
+    if(truckLoad.repeatStartDate == null){
+      startDateController.text = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    }else{
+      final dateTime = DateTime.fromMillisecondsSinceEpoch(truckLoad.repeatStartDate!);
+      startDateController.text = DateFormat('yyyy-MM-dd').format(dateTime);
+
+    }
+    if(truckLoad.repeatEndDate == null){
+      endDateController.text = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    }else{
+      final dateTime = DateTime.fromMillisecondsSinceEpoch(truckLoad.repeatEndDate!);
+      endDateController.text = DateFormat('yyyy-MM-dd').format(dateTime);
+
+    }
     notifyListeners();
   }
 
@@ -211,15 +234,17 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.vehicleSize = vehicleSizeController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    postLoad.image = images;
+    postLoad.image = null;
+   postLoad.isRepeat = isRepeat==true?1:0;
+    postLoad.repeatStartDate = startDateController.text.isEmpty?DateFormat("yyyy-MM-dd").format(DateTime.now()):startDateController.text;
+    postLoad.repeatEndDate = endDateController.text;
     postLoad.listOfUserIds = addedMemberIdList;
     postLoad.expireDate = expiryDateController.text;
     postLoad.id = postBidData.genericCardsDto!.id;
     postLoad.isOpenForBid = postBidData.genericCardsDto!.isOpenForBid;
-
+    print('the request is ${json.encode(postLoad.toJson())}');
     ApiResponse response = await ApiHelper()
         .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());
-    print('the request is ${json.encode(postLoad.toJson())}');
     print('the resopnse is ${response.response}');
     if (response.status == 200) {
       ToastMessage.show(context, "Post edited successfully!");
@@ -257,11 +282,14 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.vehicleSize = vehicleSizeController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    postLoad.image = images;
+    postLoad.image = null;
+    postLoad.isRepeat = isRepeat==true?1:0;
+    postLoad.repeatStartDate = startDateController.text;
+    postLoad.repeatEndDate = endDateController.text;
     postLoad.expireDate = expiryDateController.text;
     postLoad.listOfUserIds = addedMemberIdList;
     postLoad.isOpenForBid = postBidData.genericCardsDto!.isOpenForBid;
-
+    print('the request is ${json.encode(postLoad.toJson())}');
     ApiResponse response = await ApiHelper()
         .apiPut("${ApiConstant.BASE_URL}UpdatePost", postLoad.toJson());
     if (response.status == 200) {
@@ -470,6 +498,16 @@ class EditPostLoadProvider extends BaseProvider {
 
   hideMyId(bool val) {
     hideMyID = val;
+    notifyListeners();
+  }
+
+  repeatPostSwitch(bool val) {
+    isRepeat = val;
+    notifyListeners();
+  }
+
+  setEndDate(String date) async {
+    endDateController.text = date;
     notifyListeners();
   }
 }

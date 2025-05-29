@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/group_member_list.dart';
@@ -55,11 +56,14 @@ class PostLoadProvider extends BaseProvider {
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
   bool enbleButton = false;
   bool vehicaleSize = true;
   bool loadWieght = true;
   bool dnd = false;
   bool hideMyID = false;
+  bool isRepeat = false;
 
   String selectOption = "Select Option";
 
@@ -151,14 +155,15 @@ class PostLoadProvider extends BaseProvider {
     postLoad.expireDate = expiryDateController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    if (images.isNotEmpty) {
-      postLoad.images = images.join(",");
-    }
+    postLoad.image = '';//images[0];
+    postLoad.isRepeat = isRepeat==true?1:0;
+    postLoad.repeatStartDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    postLoad.repeatEndDate = endDateController.text;
     postLoad.listOfUserIds = addedMemberIdList;
     postLoad.id = 0;
 
     ApiResponse response = await ApiHelper().postParameter(
-        "${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
+        "${ApiConstant.BASE_URL}fullTruckLoad2", postLoad.toJson());
     print('The response status code: ${response.status}');
 
     if (response.status == 200) {
@@ -214,16 +219,17 @@ class PostLoadProvider extends BaseProvider {
     postLoad.expireDate = expiryDateController.text;
     postLoad.tableName = "Full Load";
     postLoad.topicName = "Full Load Truck";
-    if(images.isNotEmpty){
-      postLoad.images = images.join(",");
-    }
+    postLoad.image = '';
+    postLoad.isRepeat = isRepeat==true?1:0;
+    postLoad.repeatStartDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    postLoad.repeatEndDate = endDateController.text;
     postLoad.listOfUserIds = addedMemberIdList;
     //postLoad.userList = null;
 
 
 
     ApiResponse response = await ApiHelper().postParameter(
-        "${ApiConstant.BASE_URL}fullTruckLoad", postLoad.toJson());
+        "${ApiConstant.BASE_URL}fullTruckLoad2", postLoad.toJson());
     print('the constand ${ jsonEncode(postLoad.toJson())}');
 
     if (response.status == 200) {
@@ -281,6 +287,14 @@ class PostLoadProvider extends BaseProvider {
 
   setDate(String date) async {
     expiryDateController.text = date;
+    notifyListeners();
+  }
+  setStartDate(String date) async {
+    startDateController.text = date;
+    notifyListeners();
+  }
+  setEndDate(String date) async {
+    endDateController.text = date;
     notifyListeners();
   }
   selectedRequrimentType(int index) {
@@ -558,6 +572,10 @@ class PostLoadProvider extends BaseProvider {
     notifyListeners();
   }
 
+  repeatPostSwitch(bool val) {
+    isRepeat = val;
+    notifyListeners();
+  }
 
   payment(BuildContext  context,PostLoad postLoad)async{
 

@@ -211,8 +211,11 @@
   "insurance": "Insurance",
   "tollCalculation": "Toll Calculation",
   "mParivahan": "MParivahan",
-  "financeInquiry": "Finance Enquiry"
-
+  "financeInquiry": "Finance Enquiry",
+  "addNews" : "Add News",
+  "allNews" : "All News",
+  "newsDetail": "News Detail",
+  "searchNews": "Search News"
 
 
 }

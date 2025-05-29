@@ -1,4 +1,4 @@
-class PostLoad {
+class EditPostLoad {
   int? contactNumber;
   DateTime? date;
   String? destination;
@@ -11,7 +11,7 @@ class PostLoad {
   List<String>? images;
   String? instructions;
   int? isOpenForBid;
-  int? isRepeat;
+//  int? isRepeat;
   List<int>? listOfUserIds;
   String? loadWeight;
   DateTime? loggedTime;
@@ -24,8 +24,8 @@ class PostLoad {
   String? postingTime;
   int? privatePost;
   int? rating;
-  String? repeatEndDate;
-  String? repeatStartDate;
+ /* String? repeatEndDate;
+  String? repeatStartDate;*/
   String? source;
   String? tableName;
   String? topicName;
@@ -37,7 +37,7 @@ class PostLoad {
   String? userList;
   String? vehicleSize;
 
-  PostLoad({
+  EditPostLoad({
     this.contactNumber,
     this.date,
     this.destination,
@@ -50,7 +50,7 @@ class PostLoad {
     this.images,
     this.instructions,
     this.isOpenForBid,
-    this.isRepeat,
+   // this.isRepeat,
     this.listOfUserIds,
     this.loadWeight,
     this.loggedTime,
@@ -63,8 +63,8 @@ class PostLoad {
     this.postingTime,
     this.privatePost,
     this.rating,
-    this.repeatEndDate,
-    this.repeatStartDate,
+   /* this.repeatEndDate,
+    this.repeatStartDate,*/
     this.source,
     this.tableName,
     this.topicName,
@@ -77,7 +77,7 @@ class PostLoad {
     this.vehicleSize,
   });
 
-  factory PostLoad.fromJson(Map<String, dynamic> json) => PostLoad(
+  factory EditPostLoad.fromJson(Map<String, dynamic> json) => EditPostLoad(
     contactNumber: json["contactNumber"],
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     destination: json["destination"],
@@ -90,7 +90,7 @@ class PostLoad {
     images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
     instructions: json["instructions"],
     isOpenForBid: json["isOpenForBid"],
-    isRepeat: json["isRepeat"],
+  //  isRepeat: json["isRepeat"],
     listOfUserIds: json["listOfUserIds"] == null ? [] : List<int>.from(json["listOfUserIds"]!.map((x) => x)),
     loadWeight: json["loadWeight"],
     loggedTime: json["loggedTime"] == null ? null : DateTime.parse(json["loggedTime"]),
@@ -103,8 +103,8 @@ class PostLoad {
     postingTime: json["postingTime"],
     privatePost: json["privatePost"],
     rating: json["rating"],
-    repeatEndDate: json["repeatEndDate"] ,
-    repeatStartDate: json["repeatStartDate"] ,
+   /* repeatEndDate: json["repeatEndDate"] ,
+    repeatStartDate: json["repeatStartDate"] ,*/
     source: json["source"],
     tableName: json["tableName"],
     topicName: json["topicName"],
@@ -130,7 +130,7 @@ class PostLoad {
     "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
     "instructions": instructions,
     "isOpenForBid": isOpenForBid,
-    "isRepeat": isRepeat,
+   // "isRepeat": isRepeat,
     "listOfUserIds": listOfUserIds == null ? [] : List<dynamic>.from(listOfUserIds!.map((x) => x)),
     "loadWeight": loadWeight,
     "loggedTime": loggedTime?.toIso8601String(),
@@ -143,8 +143,8 @@ class PostLoad {
     "postingTime": postingTime,
     "privatePost": privatePost,
     "rating": rating,
-    "repeatEndDate": repeatEndDate,
-    "repeatStartDate": repeatStartDate,
+   /* "repeatEndDate": repeatEndDate,
+    "repeatStartDate": repeatStartDate,*/
     "source": source,
     "tableName": tableName,
     "topicName": topicName,

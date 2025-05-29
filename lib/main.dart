@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tkd_connect/model/response/quoteResponse.dart';
 import 'package:tkd_connect/provider/message/chat_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/route/routes.dart';
@@ -167,68 +170,6 @@ class _MyApp extends State<MyApp> {
 
 
 
-
-
-// class MyApp extends StatelessWidget {
-//
-//   final SharedPreferences prefs;
-//   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-//   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-//
-//    MyApp({super.key, required this.prefs});
-//
-//
-//   // This widget is the root of your application.
-//
-//
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return  ScreenUtilInit(
-//
-//      designSize: const Size(375, 812),
-//         minTextAdapt: true,
-//     splitScreenMode: true,
-//     builder: (context , child) {
-//       return MultiProvider(
-//         providers: [
-//
-//           Provider<ChatProvider>(
-//             create: (_) => ChatProvider(
-//               prefs: this.prefs,
-//               firebaseFirestore: this.firebaseFirestore,
-//               firebaseStorage: this.firebaseStorage,
-//             ),
-//           ),
-//         ],
-//         child: MaterialApp(
-//
-//           localizationsDelegates: [
-//             S.delegate,
-//             GlobalMaterialLocalizations.delegate,
-//             GlobalWidgetsLocalizations.delegate,
-//             GlobalCupertinoLocalizations.delegate,
-//           ],
-//
-//           supportedLocales: S.delegate.supportedLocales,
-//           title: 'TKD Connect',
-// //showPerformanceOverlay: true,
-//           theme:    ThemeData(
-//               primarySwatch: Colors.blue,
-//               fontFamily: GoogleFonts.poppins().fontFamily),
-//           initialRoute: AppRoutes.entryScreen,
-//           onGenerateRoute: RouteGenerator.generateRoute,
-//           builder: EasyLoading.init(),
-//           navigatorKey: navigatorKey,
-//
-//
-//         ),
-//       );
-//     }
-//     );
-//   }
-// }
 
 
 

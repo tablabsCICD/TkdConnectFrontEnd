@@ -353,24 +353,19 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                     onClick: () {
-                      //showBootomSheet();
                       if(provider.previousPlan==provider.selectedPlanCode){
+                        print("already in bottom sheet");
                         ToastMessage.show(context, "You have already this plan");
                       }else{
                         if (provider.planAmount == 0) {
-                          //provider.goHome(context);
                           provider.selectedPlan(context);
                         } else {
-                          //provider.selectedPlan(context);
-                         // print('verfiy data string ${PhonePayPayment().getSaltVerfy(100)}');
-
                           startTran(provider);
                         }
                       }
+                    }
+                    ),
 
-                    }),
-                // SizedBox(height: 60.h,),
-                // AlredayAccountWidget()
               ]),
             );
           },
@@ -380,6 +375,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
   }
   startTran(SelectPlanProvider provider) async {
     User user=await LocalSharePreferences().getLoginData();
+    print("in bottom sheet");
     RazorPayClass(context).initalPay(provider.planAmount,user.content!.first.mobileNumber!,user.content!.first.emailId!,provider.selectPlan,provider.selectedPlanCode);
   }
 

@@ -12,6 +12,7 @@ import '../../model/response/acceptBidResponse.dart';
 import '../../model/response/bid_placed.dart';
 import '../../model/response/my_post_bid_list.dart';
 import '../../model/response/post_upload.dart';
+import '../../model/response/quoteResponse.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
 import '../../route/app_routes.dart';
@@ -55,9 +56,20 @@ class MyPostProvider extends BaseProvider{
 
       if (apiResponse.status == 200) {
         debugPrint('${apiResponse.status}');
-        listOwnBid[index].genericCardsDto!.graphList = {};
         data = jsonDecode(apiResponse.response) as Map<String, dynamic>;
-        listOwnBid[index].genericCardsDto!.graphList = data;
+        print("Response data $data");
+        if(data != null) {
+          listOwnBid[index].genericCardsDto!.graphList = [];
+
+          QuoteResponse response = QuoteResponse.fromJson(data!);
+          if(response.data != null){
+            listOwnBid[index].genericCardsDto!.graphList = response.data;
+         }
+          else{
+            ToastMessage.show(context,response.message!);
+          }
+        }
+
         notifyListeners();
       } else {
         ToastMessage.show(context, "Please Try Again");
@@ -207,7 +219,10 @@ class MyPostProvider extends BaseProvider{
     postLoad.vehicleSize= postBidData.genericCardsDto!.vehicleSize;
     postLoad.tableName="Full Load";
     postLoad.topicName= "Full Load Truck";
-    postLoad.image= [];
+    postLoad.image = '';
+    postLoad.isRepeat = 0;
+    postLoad.repeatStartDate = '';
+    postLoad.repeatEndDate = '';
     postLoad.partLoad=postBidData.genericCardsDto!.partLoadOrNot!;
     postLoad.expireDate=postBidData.genericCardsDto!.expireDate;
     postLoad.listOfUserIds=addedMemberIdList;

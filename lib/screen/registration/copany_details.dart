@@ -668,7 +668,7 @@ class _CompanyDetailsScreen extends State<CompanyDetailsScreen> {
         Expanded(
           child: InkWell(
               onTap: () async {
-                const url = 'https://tkdtermsandconditions.s3.ap-south-1.amazonaws.com/termsconditions.html';
+                const url = 'https://tkdterms.s3.ap-south-1.amazonaws.com/termsconditions.html';
                 final uri = Uri.parse(url);
 
                 if (await canLaunchUrl(uri)) {

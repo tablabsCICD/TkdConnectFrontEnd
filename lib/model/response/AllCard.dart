@@ -94,8 +94,11 @@ class TruckLoad {
     this.userList,
     this.mobileOrLandline,
     this.expireDate,
+    this.repeatStartDate,
+    this.repeatEndDate,
     this.isSharedInGroup,
-    this.isOpenForBid
+    this.isOpenForBid,
+    this.isRepeat
   });
   late final int? id;
   late final int? userId;
@@ -142,11 +145,12 @@ class TruckLoad {
   late final String? userList;
   late final String? mobileOrLandline;
   late final String? expireDate;
-
+  late final int? repeatEndDate;
+  late final int? repeatStartDate;
   late final int? isverified;
   late final bool? isSharedInGroup;
   late final int? isOpenForBid;
-
+  late final int? isRepeat;
 
 
 
@@ -200,11 +204,12 @@ class TruckLoad {
     postImages=json['images']??'';
     userList=json['userList']??'';
     expireDate=json['expireDate']??'';
-
+    repeatEndDate=json['repeatEndDate']??0;
+    repeatStartDate=json['repeatStartDate']??0;
     mobileOrLandline=json['mobileOrLandline']??'';
     isSharedInGroup=json['isSharedInGroup']??false;
     isOpenForBid=json['isOpenForBid']??1;
-
+    isRepeat = json['isRepeat']??0;
   }
 
   Map<String, dynamic> toJson() {
@@ -255,9 +260,11 @@ class TruckLoad {
     data['isverified'] = isverified;
     data['mobileOrLandline'] = mobileOrLandline;
     data['expireDate'] = expireDate;
+    data['repeatEndDate'] = repeatEndDate;
+    data['repeatStartDate'] = repeatStartDate;
     data['isSharedInGroup'] = isSharedInGroup;
     data['isOpenForBid'] = isOpenForBid;
-
+    data['isRepeat']=isRepeat;
 
     return data;
   }
