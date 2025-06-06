@@ -200,7 +200,7 @@ class _MyPostState extends State<MyPostScreen> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
           content:  SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -211,7 +211,7 @@ class _MyPostState extends State<MyPostScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child:  Text(S().complete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
               onPressed: () {
                 myPostProvider.deletePost(index, context);
                 Navigator.of(context).pop();

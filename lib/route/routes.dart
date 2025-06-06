@@ -16,6 +16,10 @@ import 'package:tkd_connect/screen/intro/intro_screen_three.dart';
 import 'package:tkd_connect/screen/intro/intro_screen_two.dart';
 import 'package:tkd_connect/screen/jobs/create_job_screen.dart';
 import 'package:tkd_connect/screen/jobs/job_list_screen.dart';
+import 'package:tkd_connect/screen/news/addNews.dart';
+import 'package:tkd_connect/screen/news/allNews.dart';
+import 'package:tkd_connect/screen/report_incident/report_incident_form.dart';
+import 'package:tkd_connect/screen/report_incident/report_incident_list.dart';
 import 'package:tkd_connect/screen/search/search_edit_screen.dart';
 import 'package:tkd_connect/screen/search/search_result_screen.dart';
 
@@ -156,6 +160,20 @@ class RouteGenerator {
 
       case AppRoutes.createbuysell:
         return buildRoute(const CreateBuySell(), settings: settings);
+
+      case AppRoutes.addNews:
+        return buildRoute(AddNewsScreen(), settings: settings);
+
+
+      case AppRoutes.news:
+        return buildRoute(const AllNewsScreen(), settings: settings);
+
+
+      case AppRoutes.reportIncident:
+        return buildRoute(ReportIncidentFormScreen(), settings: settings);
+
+      case AppRoutes.reportIncidentList:
+        return buildRoute(ReportIncidentList(), settings: settings);
 
       case AppRoutes.commentscreen:
         TruckLoad commentParmeters=settings.arguments as TruckLoad;

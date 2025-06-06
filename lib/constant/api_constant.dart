@@ -3,7 +3,7 @@
 class ApiConstant {
   static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
 
- //static const String BASE_URL = "http://ec2-15-206-168-153.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
+ //static const String BASE_URL = "http://ec2-43-204-150-67.ap-south-1.compute.amazonaws.com:8080/tkd/api/";
 
 
   static String  FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
@@ -44,8 +44,6 @@ class ApiConstant {
   static String GROUP_MEMBER_LIST = '${BASE_URL}groupMembers/byGroupId/';
 
   static String CREATE_ORDER_ID(amount,userId) => '${BASE_URL}transaction/initiatePayment?amount=$amount&userId=$userId';
-
-
 
   // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
   static String OTP_VERIFICATION(mobile, otp) =>
@@ -154,7 +152,17 @@ class ApiConstant {
  static String ACCEPTBID="${BASE_URL}acceptedBid/save";
  static String UPDATE_ACCEPTED_BID="${BASE_URL}acceptedBid/%7Bid%7D";
 
-  static String GET_NEWS_LIST(page)=> "${BASE_URL}Gallery?page=$page&size=30";
-  static String ADD_NEWS(topic,des,userId)=> "${BASE_URL}Gallery?topicName=2&description=2&userId=2";
+  static String GET_NEWS_LIST(page)=> "${BASE_URL}Gallery?page=$page&size=1000";
+ static String MY_NEWS(id, page) => "${BASE_URL}Gallery/byUserId?userId=$id&page=$page&size=1000";
+  static String ADD_NEWS= "${BASE_URL}Gallery";
+  static String DELETE_NEWS(id) => "${BASE_URL}Gallery?id=$id";
+  static String SEARCH_NEWS(char) => "${BASE_URL}Gallery/searchByAnyKey?key=$char&page=0&size=100";
+
+
+ static String GET_REPORT_LIST(page)=> "${BASE_URL}ReportIncients?page=$page&size=1000";
+ static String MY_INCIDENT(id) => "${BASE_URL}user/$id";
+ static String ADD_REPORT = "${BASE_URL}ReportIncients";
+ static String DELETE_INCIDENT(id) => "${BASE_URL}ReportIncients?id=$id";
+ static String SEARCH_REPORT(char,id) => "${BASE_URL}getTicketsByUserIdAndSearch?userId=$id&keyword=$char";
 
 }

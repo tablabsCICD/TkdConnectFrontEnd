@@ -35,6 +35,10 @@ class AppRoutes {
   static const createjob = '/createjob';
   static const createbuysell="/createbuysell";
   static const commentscreen="/commentscreen";
+  static const addNews = "/addNews";
+  static const reportIncident="/reportIncident";
+  static const reportIncidentList="/reportIncidentList";
+  static const news = "/news";
 
 
 

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tkd_connect/model/response/userdata.dart';
 import 'package:tkd_connect/provider/news/news_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,6 +16,7 @@ import '../../model/response/allNewsResponse.dart';
 import '../../model/response/transport_directory_search.dart';
 import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
+import '../../utils/sharepreferences.dart';
 import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/card/dashboard_cards.dart';
@@ -38,23 +40,36 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
     );
   }
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+  User? user;
+
+  getUser() async {
+    user =
+        await LocalSharePreferences.localSharePreferences.getLoginData();
+  }
   _buildPage(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Visibility(
         visible: true,
         child: InkWell(
-          onTap: ()async{
-           await Navigator.pushNamed(context,AppRoutes.create_post);
-
+          onTap: () async {
+            await Navigator.pushNamed(context, AppRoutes.addNews);
           },
           child: Container(
             width: 155.w,
             height: 38.h,
-            padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
             decoration: ShapeDecoration(
               color: ThemeColor.theme_blue,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -85,8 +100,11 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                         width: 16.w,
                         height: 16.w,
                         child: Stack(children: [
-                          SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
-
+                          SvgPicture.asset(
+                            Images.add,
+                            height: 16.h,
+                            width: 16.w,
+                          )
                         ]),
                       ),
                     ],
@@ -97,7 +115,6 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
           ),
         ),
       ),
-
       body: Consumer<NewsProvider>(
         builder: (context, provider, child) {
           return Container(
@@ -106,15 +123,19 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                top_bar(context,provider),
-              SizedBox(height: 20.h,),
-                allNewsTag(),
-                provider.allNews.isEmpty && provider.isLoadDone?Center(child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(S().noRecordFound),
-                )):const SizedBox(),
+                top_bar(context, provider),
+                SizedBox(
+                  height: 16.h,
+                ),
+                allNewsTag(provider),
+                provider.allNews.isEmpty && provider.isLoadDone
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(S().noRecordFound),
+                      ))
+                    : const SizedBox(),
                 allNewsData()
-
               ],
             ),
           );
@@ -126,21 +147,17 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
   allNewsData() {
     return Consumer<NewsProvider>(
       builder: (context, provider, child) {
-        return Container(
-          child: Expanded(
-            child: ListView.builder(
-                controller: provider.scrollControllerVertical,
-                itemCount: provider.allNews.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return newsItem(provider.allNews[index]);
-                }),
-          ),
+        return Expanded(
+          child: ListView.builder(
+              controller: provider.scrollControllerVertical,
+              itemCount: provider.allNews.length,
+              itemBuilder: (BuildContext context, int index) {
+                return newsItem(provider.allNews[index]);
+              }),
         );
       },
     );
   }
-
-
 
   top_bar(BuildContext context, provider) {
     return Container(
@@ -163,112 +180,16 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
     return Consumer<NewsProvider>(
       builder: (context, provider, child) {
         return Transform.translate(
-          offset: Offset(0.0, 25.0.h), // Adjust as needed for vertical centering
-          child: Center( // This ensures the search bar is centered
+          offset: Offset(0.0, 25.0.h),
+          // Adjust as needed for vertical centering
+          child: Center(
+            // This ensures the search bar is centered
             child: serachBarFilter(),
           ),
         );
       },
     );
   }
-
-
-  serachBar() {
-    return Consumer<NewsProvider>(
-      builder: (context, provider, child) {
-        return Container(
-          transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
-          margin: EdgeInsets.only(right: 20.w, left: 20.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                height: 52.h,
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 24.w,
-                            height: 24.h,
-                            margin: EdgeInsets.only(left: 10.w),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 24.w,
-                                  height: 24.h,
-                                  child: Stack(children: [
-                                    SvgPicture.asset(Images.search_normal)
-                                  ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Expanded(
-                            child: SizedBox(
-                              child: TextField(
-                                controller: provider.searchController,
-                                onChanged: (value) {
-                                  provider.getBySearchData();
-                                },
-                                decoration: InputDecoration(
-                                    hintText: S().searchUsersCompanies,
-                                    border: InputBorder.none,
-                                    hintStyle: TextStyle(
-                                      color: const Color(0x662C363F),
-                                      fontSize: 14.sp,
-                                      fontFamily: GoogleFonts.poppins().fontFamily,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: 327,
-                padding: const EdgeInsets.only(top: 4),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
 
   serachBarFilter() {
     return Consumer<NewsProvider>(
@@ -334,7 +255,8 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                                   hintStyle: TextStyle(
                                     color: const Color(0x662C363F),
                                     fontSize: 14.sp,
-                                    fontFamily: GoogleFonts.poppins().fontFamily,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                     fontWeight: FontWeight.w400,
                                   )),
                               style: TextStyle(
@@ -352,7 +274,6 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                 ],
               ),
             ),
-
           ],
         );
       },
@@ -360,26 +281,67 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
   }
 
 
-
-  allNewsTag() {
+  Widget allNewsTag(NewsProvider provider) {
     return Container(
-      margin: EdgeInsets.only(left: 20.w,top: 0.h),
-      child: Text(
-        S().allNews,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 12.sp,
-          fontFamily: GoogleFonts.poppins().fontFamily,
-          fontWeight: FontWeight.w600,
-          height: 0,
-        ),
+      margin: EdgeInsets.only(left: 20.w, top: 0.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ChoiceChip(
+            backgroundColor: Colors.transparent,
+            selectedColor: ThemeColor.theme_blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: BorderSide(
+                color: ThemeColor.theme_blue,
+              ),
+            ),
+            label: Text(
+              S().allNews,
+              style: TextStyle(
+                color: !provider.myNews ? Colors.white : Colors.black,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            ),
+            selected: !provider.myNews,
+            onSelected: (_) => provider.toggleMyNews(false),
+          ),
+          ChoiceChip(
+            backgroundColor: Colors.transparent,
+            selectedColor: ThemeColor.theme_blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: BorderSide(
+                color: ThemeColor.theme_blue,
+              ),
+            ),
+            label: Text(
+              "My News",
+              style: TextStyle(
+                color: provider.myNews ? Colors.white : Colors.black,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            ),
+            selected: provider.myNews,
+            onSelected: (_) => provider.toggleMyNews(true),
+          ),
+        ],
       ),
     );
   }
 
-  newsItem(Content content) {
+
+  newsItem(Content content)  {
+
     return Consumer<NewsProvider>(
       builder: (context, provider, child) {
+
         return Container(
           width: 375.w,
           //height: 67.h,
@@ -398,8 +360,8 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "${content.topicName!}",
@@ -409,11 +371,29 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w600,
                       height: 0,
-
                     ),
-
                   ),
-
+                  Row(
+                    children: [
+                      Text(
+                        "${content.date!}",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                          height: 0,
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      user!.content!.first.id==content.userId?InkWell(
+                        onTap: (){
+                          showDeletePopup(content,provider);
+                        },
+                        child: SvgPicture.asset(Images.delete,),
+                      ):SizedBox.shrink()
+                    ],
+                  ),
 
                 ],
               ),
@@ -433,22 +413,28 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
               ),
               BaseWidget().image(image: content.image!),
               SizedBox(
-                height: 0.h,
+                height: 10.h,
               ),
-              Container(
-                child: Text(
-                  content.youtubeLink??"",
-                  style: TextStyle(
-                    color: const Color(0x99001E49),
-                    fontSize: 10.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w400,
+              GestureDetector(
+                onTap: () {
+                  if (content.youtubeLink != null &&
+                      content.youtubeLink!.isNotEmpty) {
+                    _launchURL(content.youtubeLink!);
+                  }
+                },
+                child: Container(
+                  child: Text(
+                    content.youtubeLink ?? "",
+                    style: TextStyle(
+                      color: const Color(0x99126CEE),
+                      fontSize: 12.0,
+                      // Replace `10.sp` if not using `flutter_screenutil`
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
+              )
             ],
           ),
         );
@@ -456,14 +442,52 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
     );
   }
 
+  Future<void> _launchURL(String url) async {
+    // Ensure the URL has a scheme
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://$url';
+    }
 
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
+  Future<void> showDeletePopup(Content content, NewsProvider provider) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
+          content:  SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(S().deleteMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
 
-
-
-
-
-
-
-
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
+              onPressed: () {
+                provider.deletePost(content, context);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
 }

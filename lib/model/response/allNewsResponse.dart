@@ -99,7 +99,7 @@ class Content {
     image5: json["image5"],
     isApproved: json["isApproved"],
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
-    imageType: imageTypeValues.map[json["imageType"]]!,
+    imageType: imageTypeValues.map[json["imageType"]],
     youtubeLink: json["youtubeLink"],
     firstName: json["firstName"],
     lastName: json["lastName"],

@@ -14,9 +14,11 @@ import 'package:tkd_connect/widgets/textview.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../model/response/AllCard.dart';
+import '../../../provider/incident/report_incident_provider.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/card/base_widgets.dart';
 import '../../../widgets/card/dashboard_cards.dart';
+import '../../report_incident/report_incident_form.dart';
 
 // class HomeScreen extends StatefulWidget {
 //   @override
@@ -84,8 +86,73 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
           );
         },
       ),
+    /*  floatingActionButton:IconButton(
+        icon: Icon(
+          Icons.report_problem,
+          color: Colors.red,
+          size: 50,
+        ),
+        onPressed: () {
+          _showPopup(context);
+        },
+      ),*/
     );
   }
+
+  void _showPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Report Incidents",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+              height: 0,
+            ),),
+          content: Text(
+              "Report only verified cheating incidents to protect others in the transport community.",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+              height: 0,
+            ),),
+          actions: [
+            TextButton(
+              child: Text("Cancel",
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text("Continue",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, AppRoutes.reportIncident);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   Future<void> _pullRefresh() async {
       refreshHome();
@@ -226,6 +293,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+
                                 SvgPicture.asset(
                                   Utils().getSelectedPackageImage(provider.ispaid),
                                   height: 8.h,
@@ -251,11 +319,24 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                       ),
                     ),
                     SizedBox(
-                      width: 55.5.w,
+                      width: 35.5.w,
                     ),
                     switchNewAppOldApp(),
                     SizedBox(
-                      width: 22.5.w,
+                      width: 10.5.w,
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.report_problem_outlined,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      onPressed: () {
+                        _showPopup(context);
+                      },
+                    ),
+                    SizedBox(
+                      width: 5.w,
                     ),
                     InkWell(
                       onTap: () {

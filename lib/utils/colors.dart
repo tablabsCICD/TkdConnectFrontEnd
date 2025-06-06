@@ -11,8 +11,7 @@ static Color progress_color=const Color(0xFFFFC200);
 static Color red=const Color(0xFFC3262C);
  static Color black=const Color(0xFF000000);
 static Color subColor=const Color(0xCC001E49);
-
-
+static Color secondary_color = Color(0xFFC3262C);
 static Color green=const Color(0xFF1DD19E);
 
  static Color select_green_plan=const Color(0xFFC2E7E0);

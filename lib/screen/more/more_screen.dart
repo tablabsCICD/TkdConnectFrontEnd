@@ -201,6 +201,9 @@ class _MoreScreen extends State<MoreScreen> {
                 callMParivahan();
 
               },FontWeight.w600),
+              item("Report Incident",(){
+                Navigator.pushNamed(context, AppRoutes.reportIncidentList);
+              },FontWeight.w600),
               item(S().appSetting,(){
                 Navigator.pushNamed(context, AppRoutes.appsetting);
               },FontWeight.w400),
