@@ -23,9 +23,9 @@ if (flutterVersionCode == null) {
     flutterVersionCode = '71'
 }
 
-def flutterVersionName = '3.0.18'
+def flutterVersionName = '3.0.19'
 if (flutterVersionName == null) {
-    flutterVersionName = '3.0.18'
+    flutterVersionName = '3.0.19'
 }
 
 android {

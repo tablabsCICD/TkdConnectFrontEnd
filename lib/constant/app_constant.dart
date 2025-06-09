@@ -3,7 +3,7 @@ import '../model/request/register_company.dart';
 
 class AppConstant{
 
-  static const String APP_VERSION = "3.0.18"; // 71
+  static const String APP_VERSION = "3.0.19"; // 71
   static const String GOOGLE_KEY ="AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30";
   //static const String GOOGLE_KEY ="AIzaSyAMkCk8cFaZZMbsaHh2M3vtXvwqAAfXklc";
   static const String LOGIN_KEY="login";
