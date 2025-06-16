@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:rate_my_app/rate_my_app.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
