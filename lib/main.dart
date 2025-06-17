@@ -65,17 +65,12 @@ void main() async{
         LocalNotificationService.createanddisplaynotification(message);
       }
     });
-
-
     getFCMToken();
-
   }
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
   runApp( MyApp(prefs: prefs,));
-
-
 }
 
 
@@ -89,7 +84,6 @@ class MyApp extends StatefulWidget {
     // TODO: implement createState
    return _MyApp(prefs: prefs);
   }
-
 }
 
 
@@ -101,14 +95,9 @@ class _MyApp extends State<MyApp> {
 
   _MyApp({required this.prefs});
 
-
-  // This widget is the root of your application.
-
-
     @override
   void initState() {
     // TODO: implement initState
-
       sendNotification();
       super.initState();
   }
@@ -116,14 +105,12 @@ class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return  ScreenUtilInit(
-
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context , child) {
           return MultiProvider(
             providers: [
-
               Provider<ChatProvider>(
                 create: (_) => ChatProvider(
                   prefs: prefs,
@@ -133,7 +120,6 @@ class _MyApp extends State<MyApp> {
               ),
             ],
             child: MaterialApp(
-
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
                 S.delegate,
@@ -141,10 +127,8 @@ class _MyApp extends State<MyApp> {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-
               supportedLocales: S.delegate.supportedLocales,
               title: 'TKD Connect',
-//showPerformanceOverlay: true,
               theme:    ThemeData(
                   useMaterial3: false,
                   primarySwatch: Colors.blue,
@@ -153,25 +137,16 @@ class _MyApp extends State<MyApp> {
               onGenerateRoute: RouteGenerator.generateRoute,
               builder: EasyLoading.init(),
               navigatorKey: navigatorKey,
-
-
             ),
           );
         }
     );
   }
 
-
   sendNotification()async{
-
     await FirebaseMessaging.instance.subscribeToTopic('all');
-
   }
 }
-
-
-
-
 
 
 late Stream<String> _tokenStream;
