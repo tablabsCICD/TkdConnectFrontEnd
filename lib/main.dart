@@ -30,12 +30,13 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 }
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
+ /* SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
+*/
 
   WidgetsFlutterBinding.ensureInitialized();
   if(Platform.isAndroid==true){

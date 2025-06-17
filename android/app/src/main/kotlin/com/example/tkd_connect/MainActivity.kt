@@ -1,4 +1,4 @@
-package com.example.tkd_connect
+package com.pdk.tkd
 
 import io.flutter.embedding.android.FlutterActivity
 

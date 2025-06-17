@@ -31,11 +31,16 @@ if (flutterVersionName == null) {
 android {
     namespace = "com.example.tkd_connect"
     compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "25.2.9519653"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
 
     kotlinOptions {
@@ -70,7 +75,6 @@ android {
             signingConfig = signingConfigs.release
             minifyEnabled = true // Enable code shrinking, obfuscation, and optimization
             shrinkResources = true
-
             // Use ProGuard rules
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -83,5 +87,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.0"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:multidex:2.0.1'
 }
