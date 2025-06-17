@@ -18,9 +18,9 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = 73
+def flutterVersionCode = 74
 if (flutterVersionCode == null) {
-    flutterVersionCode = '73'
+    flutterVersionCode = '74'
 }
 
 def flutterVersionName = '3.0.20'
@@ -37,11 +37,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    packagingOptions {
-        jniLibs {
-            useLegacyPackaging = false
-        }
-    }
+
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
