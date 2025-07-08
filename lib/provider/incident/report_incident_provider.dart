@@ -18,9 +18,7 @@ import '../base_provider.dart';
 
 class ReportIncidentProvider extends BaseProvider {
   ReportIncidentProvider() : super('Ideal') {
-  //  pagenationHorizantal();
-   // pagenationVerical();
-    getAllData();
+    toggleMyReport(myIncident);
   }
 
   int selectedPage = 0;
@@ -32,65 +30,48 @@ class ReportIncidentProvider extends BaseProvider {
   bool _myIncident = false;
   bool get myIncident => _myIncident;
 
-  void toggleMyNews(bool value) {
+  Future<void> toggleMyReport(bool value) async {
     _myIncident = value;
-    if(_myIncident==true){
-      getMyIncidentData();
-    }else{
-      getAllData();
+    if (_myIncident) {
+      await getMyIncidentData();
+    } else {
+      await getAllData(forceRefresh: true);
     }
     notifyListeners();
   }
-
 
   ScrollController scrollControllerVertical = ScrollController();
   ScrollController scrollControllerHorizantal = ScrollController();
   TextEditingController searchController = TextEditingController();
   List<String> _incidentTypes = [];
   List<String> _cheatedBy = [];
-  bool? _wasFirLaunched=false;
+  bool? _wasFirLaunched = false;
   bool _isAccepted = false;
 
-  // TextEditingControllers
   TextEditingController nameController = TextEditingController();
   TextEditingController companyNameController = TextEditingController();
   TextEditingController vehicleNumberController = TextEditingController();
   TextEditingController incidentLocationController = TextEditingController();
   TextEditingController shortDescriptionController = TextEditingController();
-  TextEditingController amountLostOrGoodsCheatedController =
-      TextEditingController();
+  TextEditingController amountLostOrGoodsCheatedController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController dateOfIncidentController = TextEditingController();
   List<String> _uploadedProofs = [];
   List<String> images = [];
 
-  // Getters
   List<String> get incidentTypes => _incidentTypes;
-
   List<String> get cheatedBy => _cheatedBy;
-
   bool? get wasFirLaunched => _wasFirLaunched;
-
   bool? get isAccepted => _isAccepted;
-
   List<String> get uploadedProofs => _uploadedProofs;
 
-  // Methods
   void toggleIncidentType(String type) {
-    if (_incidentTypes.contains(type)) {
-      _incidentTypes.remove(type);
-    } else {
-      _incidentTypes.add(type);
-    }
+    _incidentTypes.contains(type) ? _incidentTypes.remove(type) : _incidentTypes.add(type);
     notifyListeners();
   }
 
   void toggleCheatedBy(String value) {
-    if (_cheatedBy.contains(value)) {
-      _cheatedBy.remove(value);
-    } else {
-      _cheatedBy.add(value);
-    }
+    _cheatedBy.contains(value) ? _cheatedBy.remove(value) : _cheatedBy.add(value);
     notifyListeners();
   }
 
@@ -111,12 +92,7 @@ class ReportIncidentProvider extends BaseProvider {
 
   uploadImage(BuildContext context) async {
     String? image = await pickAndUploadImage(context);
-    if (image != null) {
-      images.add(image);
-      print("Image uploaded successfully: $image");
-    } else {
-      print("Image upload failed or was cancelled.");
-    }
+    if (image != null) images.add(image);
     notifyListeners();
   }
 
@@ -129,40 +105,33 @@ class ReportIncidentProvider extends BaseProvider {
     _incidentTypes.clear();
     _cheatedBy.clear();
     _wasFirLaunched = null;
-
-    // Clear TextEditingControllers
     nameController.clear();
     companyNameController.clear();
     vehicleNumberController.clear();
     incidentLocationController.clear();
     shortDescriptionController.clear();
     amountLostOrGoodsCheatedController.clear();
-
     phoneNumberController.clear();
     dateOfIncidentController.clear();
     _uploadedProofs.clear();
+    images.clear();
     notifyListeners();
   }
 
   bool enbleButton = false;
 
   enble() {
-    if (_isAccepted==true &&
+    enbleButton = _isAccepted == true &&
         vehicleNumberController.text.isNotEmpty &&
         incidentLocationController.text.isNotEmpty &&
         amountLostOrGoodsCheatedController.text.isNotEmpty &&
         dateOfIncidentController.text.isNotEmpty &&
         incidentTypes.isNotEmpty &&
-        cheatedBy.isNotEmpty) {
-      enbleButton = true;
-    } else {
-      enbleButton = false;
-    }
+        cheatedBy.isNotEmpty;
     notifyListeners();
   }
 
   void checkValidation(BuildContext context) {
-    // Consolidate error messages
     String? errorMessage;
 
     if (incidentTypes.isEmpty) {
@@ -171,72 +140,44 @@ class ReportIncidentProvider extends BaseProvider {
       errorMessage = "Please select at least one cheater";
     } else if (vehicleNumberController.text.isEmpty) {
       errorMessage = "Please enter vehicle number";
-    } else if (wasFirLaunched==true && images.isEmpty) {
+    } else if (wasFirLaunched == true && images.isEmpty) {
       errorMessage = "Please upload an image";
     } else if (dateOfIncidentController.text.isEmpty) {
       errorMessage = "Please select a date";
-    } else if (!isAccepted!) {
+    } else if (!_isAccepted) {
       errorMessage = "Please accept the agreement";
     }
 
-    // Show error message if validation fails
     if (errorMessage != null) {
       ToastMessage.show(context, errorMessage);
       return;
     }
 
-    // Validation passed, show confirmation dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            'Post Load',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16.sp,
-              fontFamily: GoogleFonts.poppins().fontFamily,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          content: Text(
-            'Are you sure you want to post this requirement?',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 12.sp,
-              fontFamily: GoogleFonts.poppins().fontFamily,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          actions: <Widget>[
+          title: Text('Post Load'),
+          content: Text('Are you sure you want to post this requirement?'),
+          actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text(
-                'No',
-                style: TextStyle(
-                  color: ThemeColor.theme_blue,
-                  fontSize: 12.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('No'),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                addReport(context);
+              onPressed: () async {
+                final isSuccess = await addReport();
+                if (!context.mounted) return;
+                if (isSuccess) {
+                  ToastMessage.show(context, "Your report is submitted successfully!");
+                  await toggleMyReport(_myIncident); // refresh immediately
+                  Navigator.pop(context); // close dialog
+                  Navigator.pop(context); // go back
+                } else {
+                  ToastMessage.show(context, "Something went wrong. Please try again.");
+                }
               },
-              child: Text(
-                'Yes',
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 12.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              child: Text('Yes', style: TextStyle(color: Colors.green)),
             ),
           ],
         );
@@ -244,62 +185,57 @@ class ReportIncidentProvider extends BaseProvider {
     );
   }
 
+  Future<bool> addReport() async {
+    try {
+      String cheatedByList = cheatedBy.join(", ");
+      String incidentTypeList = incidentTypes.join(", ");
+      User user = await LocalSharePreferences.localSharePreferences.getLoginData();
 
-  addReport(BuildContext context) async {
-    // Convert list to comma-separated string
-    String cheatedByList = cheatedBy.join(", ");
-    // Convert list to comma-separated string
-    String incidentTypeList = incidentTypes.join(", ");
-    User user =
-        await LocalSharePreferences.localSharePreferences.getLoginData();
-    ReportIncidentRequest reportIncidentRequest = ReportIncidentRequest();
-    reportIncidentRequest.cheatedBy = cheatedByList;
-    reportIncidentRequest.userId = user.content!.first.id!;
-    reportIncidentRequest.topic = incidentTypes[0];
-    reportIncidentRequest.image = wasFirLaunched==true?images[0]:null;
-    reportIncidentRequest.date = dateOfIncidentController.text;
-    reportIncidentRequest.description = shortDescriptionController.text;
-    reportIncidentRequest.isResolved = false;
-    reportIncidentRequest.amountLost = amountLostOrGoodsCheatedController.text;
-    reportIncidentRequest.vehicleNumber = vehicleNumberController.text;
-    reportIncidentRequest.incidentType = incidentTypeList;
-    reportIncidentRequest.isFirLounched = wasFirLaunched;
-    reportIncidentRequest.resolutionDetails = '';
+      ReportIncidentRequest reportIncidentRequest = ReportIncidentRequest()
+        ..cheatedBy = cheatedByList
+        ..userId = user.content!.first.id!
+        ..topic = incidentTypes[0]
+        ..image = wasFirLaunched == true ? images[0] : null
+        ..date = dateOfIncidentController.text
+        ..description = shortDescriptionController.text
+        ..isResolved = false
+        ..amountLost = amountLostOrGoodsCheatedController.text
+        ..vehicleNumber = vehicleNumberController.text
+        ..incidentType = incidentTypeList
+        ..isFirLounched = wasFirLaunched
+        ..resolutionDetails = '';
 
+      ApiResponse response = await ApiHelper()
+          .postParameter(ApiConstant.ADD_REPORT, reportIncidentRequest.toJson());
 
-    ApiResponse response = await ApiHelper()
-        .postParameter("${ApiConstant.ADD_REPORT}", reportIncidentRequest.toJson());
-    print('The response status code: ${response.status}');
-
-    if (response.status == 200) {
-      ToastMessage.show(context, "Your Report is submitted successfully!");
-      toggleMyNews(_myIncident);
-      // First dialog logic
-      Navigator.pop(context);
-    } else {
-      ToastMessage.show(context, "Please try again");
+      if (response.status == 200) {
+        clear();
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print("Error while adding report: $e");
+      return false;
     }
   }
 
-  getAllData() async {
+  Future<void> getAllData({bool forceRefresh = false}) async {
     String myUrl = ApiConstant.GET_REPORT_LIST(selectedPage);
-
-    print("Url $myUrl");
     ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
 
     if (apiResponse.status == 200) {
-      GetAllReportIncidentResponse newsResponse =
+      GetAllReportIncidentResponse response =
       GetAllReportIncidentResponse.fromJson(apiResponse.response);
 
-      if (selectedPage == 0) {
+      if (selectedPage == 0 || forceRefresh) {
         allReport.clear();
         allReportTemp.clear();
       }
-      allReport.addAll(newsResponse.content!);
-      allReportTemp.addAll(newsResponse.content!);
-     // selectedPage++;
+      allReport.addAll(response.content!);
+      allReportTemp.addAll(response.content!);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   pagenationVerical() {
@@ -323,19 +259,15 @@ class ReportIncidentProvider extends BaseProvider {
   getBySearchData() async {
     User user = await LocalSharePreferences.localSharePreferences.getLoginData();
     if (searchController.text.length > 2) {
-      String myUrl =
-      ApiConstant.SEARCH_REPORT(searchController.text, user.content!.first.id);
+      String myUrl = ApiConstant.SEARCH_REPORT(searchController.text, user.content!.first.id);
       ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
 
       if (apiResponse.status == 200) {
         try {
-          // Decode the JSON response
           final List<dynamic> responseList = jsonDecode(apiResponse.response);
           if (responseList.isNotEmpty) {
-            // Map each JSON object to an IncidentObject
             List<IncidentObject> newsResponse = responseList
-                .map((item) =>
-                IncidentObject.fromJson(item as Map<String, dynamic>))
+                .map((item) => IncidentObject.fromJson(item as Map<String, dynamic>))
                 .toList();
             allReport.clear();
             allReport.addAll(newsResponse);
@@ -344,58 +276,50 @@ class ReportIncidentProvider extends BaseProvider {
           }
         } catch (e) {
           print('Error decoding response: $e');
-          allReport.clear(); // Clear the list if decoding fails
+          allReport.clear();
         }
       }
     } else {
-      // Restore the original list if search text is less than 3 characters
       allReport.clear();
       allReport.addAll(allReportTemp);
     }
     notifyListeners();
   }
 
-  getMyIncidentData() async {
+  Future<void> getMyIncidentData() async {
     User user = await LocalSharePreferences.localSharePreferences.getLoginData();
     String myUrl = ApiConstant.MY_INCIDENT(user.content!.first.id);
-    print(myUrl);
     ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
 
     if (apiResponse.status == 200) {
       try {
-        // Decode the JSON response
         final List<dynamic> responseList = jsonDecode(apiResponse.response);
         if (responseList.isNotEmpty) {
-          // Map each JSON object to an IncidentObject
           List<IncidentObject> newsResponse = responseList
               .map((item) => IncidentObject.fromJson(item as Map<String, dynamic>))
               .toList();
           allReport.clear();
-          allReport.addAll(newsResponse);
+          allReport.addAll(newsResponse.reversed); // newest first
         } else {
           allReport.clear();
         }
       } catch (e) {
         print('Error decoding response: $e');
-        allReport.clear(); // Clear the list if decoding fails
+        allReport.clear();
       }
     }
     notifyListeners();
   }
 
-
-
-  deletePost(IncidentObject incidentObj,BuildContext context)async{
+  Future<void> deletePost(IncidentObject incidentObj, BuildContext context) async {
     String myUrl = '${ApiConstant.DELETE_INCIDENT(incidentObj.id)}';
-    print(myUrl);
-    ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
-    print(apiResponse.response);
-    if(apiResponse.status==200){
+    ApiResponse apiResponse = await ApiHelper().ApiDeleteData(myUrl);
+    if (apiResponse.status == 200) {
       ToastMessage.show(context, "Post deleted successfully");
-      toggleMyNews(true);
-      notifyListeners();
-    }else{
+      await toggleMyReport(_myIncident);
+    } else {
       ToastMessage.show(context, "Please try again");
     }
   }
 }
+

@@ -29,88 +29,81 @@ class ReportIncidentList extends StatefulWidget {
 }
 
 class _ReportIncidentListState extends State<ReportIncidentList> {
+  User? user;
+  late ReportIncidentProvider provider;
 
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+    Future.microtask(() {
+      provider = Provider.of<ReportIncidentProvider>(context, listen: false);
+      provider.toggleMyReport(false); // Load 'All Incidents' initially
+    });
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return ChangeNotifierProvider(
-        create: (BuildContext context) => ReportIncidentProvider(),
-        builder: (context, child) => _buildPage(context),
-      );
-    }
+  Future<void> getUser() async {
+    user = await LocalSharePreferences.localSharePreferences.getLoginData();
+    setState(() {}); // refresh UI when user is loaded
+  }
 
-    @override
-    void initState() {
-      // TODO: implement initState
-      super.initState();
-      getUser();
-    }
-    User? user;
-
-    getUser() async {
-      user =
-      await LocalSharePreferences.localSharePreferences.getLoginData();
-    }
-
-    _buildPage(BuildContext context) {
-      return Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Visibility(
-          visible: true,
-          child: InkWell(
-            onTap: () async {
-              await Navigator.pushNamed(context, AppRoutes.reportIncident);
-            },
-            child: Container(
-              width: 180.w,
-              height: 38.h,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-              decoration: ShapeDecoration(
-                color: ThemeColor.theme_blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r)),
-              ),
-              child: Text(
-                "Report Your Incident",
-                style: TextStyle(
-                  color: ThemeColor.progress_color,
-                  fontSize: 12.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w600,
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ReportIncidentProvider>(
+      create: (_) => ReportIncidentProvider(),
+      child: Consumer<ReportIncidentProvider>(
+        builder: (context, provider, child) {
+          return Scaffold(
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: InkWell(
+              onTap: () async {
+                await Navigator.pushNamed(context, AppRoutes.reportIncident);
+                await provider.toggleMyReport(provider.myIncident); // Refresh after returning
+              },
+              child: Container(
+                width: 180.w,
+                height: 38.h,
+                alignment: Alignment.center,
+                decoration: ShapeDecoration(
+                  color: ThemeColor.theme_blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+                child: Text(
+                  "Report Your Incident",
+                  style: TextStyle(
+                    color: ThemeColor.progress_color,
+                    fontSize: 12.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-        body: Consumer<ReportIncidentProvider>(
-          builder: (context, provider, child) {
-            return Container(
+            body: Container(
               color: ThemeColor.baground,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   top_bar(context, provider),
-                  SizedBox(
-                    height: 35.h,
-                  ),
+                  SizedBox(height: 35.h),
                   allReportTag(provider),
                   provider.allReport.isEmpty && provider.isLoadDone
-                      ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(S().noRecordFound),
-                      ))
-                      : const SizedBox.shrink(),
-                  getReportList()
+                      ? Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(S().noRecordFound),
+                  )
+                      : Expanded(child: getReportList()),
                 ],
               ),
-            );
-          },
-        ),
-      );
-    }
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+
 
     Widget allReportTag(ReportIncidentProvider provider) {
       return Container(
@@ -138,7 +131,7 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
                 ),
               ),
               selected: !provider.myIncident,
-              onSelected: (_) => provider.toggleMyNews(false),
+              onSelected: (_) => provider.toggleMyReport(false),
             ),
             ChoiceChip(
               backgroundColor: Colors.transparent,
@@ -160,7 +153,7 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
                 ),
               ),
               selected: provider.myIncident,
-              onSelected: (_) => provider.toggleMyNews(true),
+              onSelected: (_) => provider.toggleMyReport(true),
             ),
           ],
         ),
@@ -170,124 +163,155 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
     Widget getReportList() {
       return Consumer<ReportIncidentProvider>(
         builder: (context, provider, child) {
-          return Expanded(
-            child: ListView.builder(
-              itemCount: provider.allReport.length,
-              itemBuilder: (context, index) {
-                final query = provider.allReport[index];
-                DateTime date = DateTime.fromMillisecondsSinceEpoch(query.date??1747293525000);
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            itemCount: provider.allReport.length,
+            itemBuilder: (context, index) {
+              final report = provider.allReport[index];
+              final date = DateTime.fromMillisecondsSinceEpoch(report.date ?? 1747293525000);
+              final formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(date);
 
-                // Format the DateTime to a readable string
-                String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
-                return GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return _displayDetails(context,query,provider);
-                      },
-                    );
-                  },
-                  child: Card(
-                    elevation: 5,
-                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          query.image != null
-                              ? Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: BaseWidget().image(image: query.image!),
-                              )
-                              : Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.help_outline,
-                              color: Colors.grey,
-                              size: 32,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Text("Incident Type: ${ query.incidentType ?? "Unknown Incident"}"
-                           ,
-                            style: TextStyle(
-                              color: Colors.grey[900],
-                              fontSize: 13.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "Cheated By: ${ query.cheatedBy ?? "Cheater: N/A"}"
-                            ,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "Amount Lost: ${query.amountLost ?? "N/A"}",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "Date: ${formattedDate.toString() ?? "N/A"}",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+              return Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => _displayDetails(context, report, provider),
+                      );
+                    },
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Optional Image
+                            if (report.image != null) ...[
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 160,
+                                  child: BaseWidget().image(image: report.image!),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                            ],
 
-                          const SizedBox(height: 4),
-                          Text(
-                            "FIR Launched: ${query.isFirLounched == true ? "Yes" : "No"}",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w600,
+                            // Incident type
+                            Text(
+                              report.incidentType ?? "Unknown Incident",
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                color: Colors.black87,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            query.resolutionDetails ?? "Resolution Details: N/A",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
-                              fontFamily: GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
+                            const SizedBox(height: 12),
+
+                            // Info rows
+                            _buildInfoRow(Icons.person, "Cheated By", report.cheatedBy ?? "N/A"),
+                            _buildInfoRow(Icons.currency_rupee, "Amount Lost", report.amountLost ?? "N/A"),
+                            _buildInfoRow(Icons.calendar_month, "Date", formattedDate),
+                            _buildInfoRow(Icons.shield_moon, "FIR Launched", report.isFirLounched == true ? "Yes" : "No"),
+                            _buildInfoRow(Icons.description, "Resolution", report.resolutionDetails ?? "N/A"),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+
+                  // Delete button
+                 report.userId==user!.content!.first.id? Positioned(
+                    top: 6,
+                    right: 10,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text("Delete Report"),
+                            content: const Text("Are you sure you want to delete this report?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  provider.deletePost(report, context); // your custom delete method
+                                },
+                                child: const Text(
+                                  "Delete",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child:CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.red.shade50,
+                        child: SvgPicture.asset(
+                          Images.delete,
+                          width: 20.w,
+                          height: 20.w,
+                        ),
+                      ),
+                    ),
+                  ):SizedBox.shrink(),
+                ],
+              );
+            },
           );
         },
+      );
+    }
+
+
+    // Reusable helper widget for neat info rows
+    Widget _buildInfoRow(IconData icon, String label, String value) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, size: 16, color: Colors.blueGrey),
+            const SizedBox(width: 8),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  text: "$label: ",
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    color: Colors.grey[800],
+                  ),
+                  children: [
+                    TextSpan(
+                      text: value,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -341,15 +365,7 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
                 ),
 
                 const SizedBox(height: 4),
-                Text(
-                  "Cheated By: ${query.cheatedBy ?? "N/A"}",
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+
               ],
             ),
             content: Column(
@@ -375,63 +391,11 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
                     ),
                   ),
                 const SizedBox(height: 16),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    "Details",
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      Text(
-                        "Date: ${formattedDate.toString() ?? "N/A"}",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Amount Lost: ${query.amountLost ?? "N/A"}",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Resolution: ${query.resolutionDetails ?? "N/A"}",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "FIR Launched: ${query.isFirLounched == true ? "Yes" : "No"}",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildInfoRow(Icons.person, "Cheated By", query.cheatedBy ?? "N/A"),
+                _buildInfoRow(Icons.currency_rupee, "Amount Lost", query.amountLost ?? "N/A"),
+                _buildInfoRow(Icons.calendar_month, "Date", formattedDate),
+                _buildInfoRow(Icons.shield_moon, "FIR Launched", query.isFirLounched == true ? "Yes" : "No"),
+                _buildInfoRow(Icons.description, "Resolution", query.resolutionDetails ?? "N/A"),
               ],
             ),
             actions: [

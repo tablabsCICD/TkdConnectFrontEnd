@@ -23,37 +23,42 @@ import '../../widgets/card/dashboard_cards.dart';
 import '../../widgets/textview.dart';
 
 class AllNewsScreen extends StatefulWidget {
-  const AllNewsScreen({super.key});
+  const AllNewsScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return _AllNewsScreenState();
-  }
+  State<AllNewsScreen> createState() => _AllNewsScreenState();
 }
 
 class _AllNewsScreenState extends State<AllNewsScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => NewsProvider(),
-      builder: (context, child) => _buildPage(context),
-    );
-  }
-
+  late NewsProvider provider;
+  User? user;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    provider = NewsProvider();
     getUser();
+    Future.microtask(() => provider.loadNews()); // <-- Load news after build
   }
-  User? user;
 
   getUser() async {
-    user =
-        await LocalSharePreferences.localSharePreferences.getLoginData();
+    user = await LocalSharePreferences.localSharePreferences.getLoginData();
+    setState(() {}); // Update UI when user is ready
   }
-  _buildPage(BuildContext context) {
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
+      value: provider,
+      child: Consumer<NewsProvider>(
+        builder: (context, provider, child) {
+          return _buildPage(context, provider);
+        },
+      ),
+    );
+  }
+
+  Widget _buildPage(BuildContext context, NewsProvider provider) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Visibility(
@@ -61,6 +66,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
         child: InkWell(
           onTap: () async {
             await Navigator.pushNamed(context, AppRoutes.addNews);
+            provider.loadNews(); // <-- Refresh after coming back
           },
           child: Container(
             width: 155.w,
@@ -72,9 +78,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                   borderRadius: BorderRadius.circular(8.r)),
             ),
             child: Row(
-              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   S().addNews,
@@ -85,75 +89,47 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
-                  width: 2.w,
-                ),
-                SizedBox(
-                  width: 16.w,
-                  height: 16.w,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 16.w,
-                        height: 16.w,
-                        child: Stack(children: [
-                          SvgPicture.asset(
-                            Images.add,
-                            height: 16.h,
-                            width: 16.w,
-                          )
-                        ]),
-                      ),
-                    ],
-                  ),
-                ),
+                SizedBox(width: 8.w),
+                SvgPicture.asset(Images.add, width: 16.w, height: 16.h),
               ],
             ),
           ),
         ),
       ),
-      body: Consumer<NewsProvider>(
-        builder: (context, provider, child) {
-          return Container(
-            color: ThemeColor.baground,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                top_bar(context, provider),
-                SizedBox(
-                  height: 16.h,
+      body: Column(
+        children: [
+          top_bar(context, provider),
+          SizedBox(height: 16.h),
+          allNewsTag(provider),
+          SizedBox(height: 10.h),
+
+          if (provider.allNews.isEmpty && provider.isLoadDone)
+            Center(
+              child:  SizedBox(
+                height: MediaQuery.of(context).size.height - 250.h, // Adjust based on your header size
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(S().noRecordFound),
                 ),
-                allNewsTag(provider),
-                provider.allNews.isEmpty && provider.isLoadDone
-                    ? Center(
-                        child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(S().noRecordFound),
-                      ))
-                    : const SizedBox(),
-                allNewsData()
-              ],
-            ),
-          );
-        },
+              ),
+            )
+          else
+            SizedBox(
+                height: MediaQuery.of(context).size.height - 250.h,child: allNewsData())
+        ],
       ),
     );
   }
 
-  allNewsData() {
+  Widget allNewsData() {
     return Consumer<NewsProvider>(
       builder: (context, provider, child) {
-        return Expanded(
-          child: ListView.builder(
-              controller: provider.scrollControllerVertical,
-              itemCount: provider.allNews.length,
-              itemBuilder: (BuildContext context, int index) {
-                return newsItem(provider.allNews[index]);
-              }),
+        return ListView.builder(
+          controller: provider.scrollControllerVertical,
+          itemCount: provider.allNews.length,
+          itemBuilder: (BuildContext context, int index) {
+            return newsItem(provider.allNews[index]);
+          },
         );
       },
     );
@@ -362,41 +338,54 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "${content.topicName!}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
-                      height: 0,
+                  Expanded(
+                    child: Text(
+                      content.topicName ?? "",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "${content.date!}",
+                        content.date.toString() ?? "",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12.sp,
                           fontFamily: GoogleFonts.poppins().fontFamily,
                           fontWeight: FontWeight.w600,
-                          height: 0,
                         ),
                       ),
-                      SizedBox(width: 10,),
-                      user!.content!.first.id==content.userId?InkWell(
-                        onTap: (){
-                          showDeletePopup(content,provider);
-                        },
-                        child: SvgPicture.asset(Images.delete,),
-                      ):SizedBox.shrink()
+                      SizedBox(width: 10.w),
+                      if (user?.content?.first.id == content.userId)
+                        InkWell(
+                          onTap: () {
+                            showDeletePopup(content, provider);
+                          },
+                          child:  CircleAvatar(
+                            radius: 16,
+                            backgroundColor: Colors.red.shade50,
+                            child: SvgPicture.asset(
+                              Images.delete,
+                              width: 20.w,
+                              height: 20.w,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
-
                 ],
               ),
+
               Container(
                 child: Text(
                   content.description!,

@@ -286,4 +286,22 @@ class NewsProvider extends BaseProvider {
       ToastMessage.show(context, "Please try again");
     }
   }
+
+  Future<void> loadNews() async {
+    isLoadDone = false;
+    allNews.clear();
+    allNewsTemp.clear();
+    allSelectedPage = 0;
+    selectedPage = 0;
+
+    if (_myNews) {
+      await getMyNewsData();
+    } else {
+      await getAllData();
+    }
+
+    isLoadDone = true;
+    notifyListeners();
+  }
+
 }
