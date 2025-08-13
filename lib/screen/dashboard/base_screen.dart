@@ -5,15 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/screen/dashboard/home/new_home_screen.dart';
 import 'package:tkd_connect/screen/more/more_screen.dart';
 import 'package:tkd_connect/screen/news/allNews.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
 import '../../generated/l10n.dart';
 import '../directory/directory_screen.dart';
-import '../message/message_screen.dart';
 import '../my_bids/my_bids_base_screen.dart';
-import 'home/home_page.dart';
 
 class BaseDashboard extends StatefulWidget{
   const BaseDashboard({super.key});
@@ -29,109 +28,102 @@ class BaseDashboard extends StatefulWidget{
 
 class _BaseDashboard extends State<BaseDashboard>{
    PageController controller = PageController();
-
    bool isHome=true;
    bool isMyBid=false;
    bool isDrectory=false;
    bool isNews=false;
    bool isMore=false;
    bool isButtonVisible=true;
-   HomeScreen homeScreen=HomeScreen();
+   NewHomeScreen homeScreen=NewHomeScreen();
 
     int maintain=0;
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-
-     body:WillPopScope(
-
-       onWillPop: onWillPop,child: PageView(
-         /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-         /// Use [Axis.vertical] to scroll vertically.
-         controller: controller,
-         onPageChanged: (page){
-           onPageChanges(page);
-
-         },
-         children: <Widget>[
-          // HomeScreen(),
-           homeScreen,
-           const MyBidsBaseScreen(),
-           const DirectoryScreen(),
-          const AllNewsScreen(),
-           const MoreScreen()
-         ],
+   return SafeArea(
+     child: Scaffold(
+       body:WillPopScope(
+         onWillPop: onWillPop,child: PageView(
+           controller: controller,
+           onPageChanged: (page){
+             onPageChanges(page);
+           },
+           children: <Widget>[
+             homeScreen,
+             const MyBidsBaseScreen(),
+             DirectoryScreen(isBase:true),
+            AllNewsScreen(isBase:true),
+             const MoreScreen()
+           ],
+         ),
        ),
-     ),
+       
      
-
-     bottomNavigationBar: tabs(),
-     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-     floatingActionButton: Visibility(
-       visible: isButtonVisible,
-       child: InkWell(
-         onTap: ()async{
-           var ob= await Navigator.pushNamed(context,AppRoutes.create_post);
-           if(ob==1){
-
-              homeScreen.refreshHome();
-           }
-         },
-         child: Container(
-           width: 155.w,
-           height: 38.h,
-           padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-           decoration: ShapeDecoration(
-             color: ThemeColor.theme_blue,
-             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-           ),
-           child: Row(
-             mainAxisSize: MainAxisSize.min,
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             children: [
-               Text(
-                 S().createPost,
-                 style: TextStyle(
-                   color: ThemeColor.progress_color,
-                   fontSize: 12.sp,
-                   fontFamily: GoogleFonts.poppins().fontFamily,
-                   fontWeight: FontWeight.w600,
+       bottomNavigationBar: tabs(),
+       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+       floatingActionButton: Visibility(
+         visible: isButtonVisible,
+         child: InkWell(
+           onTap: ()async{
+             var ob= await Navigator.pushNamed(context,AppRoutes.create_post);
+             if(ob==1){
+                homeScreen.refreshHome();
+             }
+           },
+           child: Container(
+             width: 155.w,
+             height: 38.h,
+             padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+             decoration: ShapeDecoration(
+               color: ThemeColor.theme_blue,
+               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+             ),
+             child: Row(
+               mainAxisSize: MainAxisSize.min,
+               mainAxisAlignment: MainAxisAlignment.center,
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children: [
+                 Text(
+                   S().createPost,
+                   style: TextStyle(
+                     color: ThemeColor.progress_color,
+                     fontSize: 12.sp,
+                     fontFamily: GoogleFonts.poppins().fontFamily,
+                     fontWeight: FontWeight.w600,
+                   ),
                  ),
-               ),
-               SizedBox(
-                 width: 2.w,
-               ),
-               SizedBox(
-                 width: 16.w,
-                 height: 16.w,
-                 child: Row(
-                   mainAxisSize: MainAxisSize.min,
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   crossAxisAlignment: CrossAxisAlignment.center,
-                   children: [
-                     SizedBox(
-                       width: 16.w,
-                       height: 16.w,
-                       child: Stack(children: [
-                         SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
-
-                           ]),
-                     ),
-                   ],
+                 SizedBox(
+                   width: 2.w,
                  ),
-               ),
-             ],
+                 SizedBox(
+                   width: 16.w,
+                   height: 16.w,
+                   child: Row(
+                     mainAxisSize: MainAxisSize.min,
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     crossAxisAlignment: CrossAxisAlignment.center,
+                     children: [
+                       SizedBox(
+                         width: 16.w,
+                         height: 16.w,
+                         child: Stack(children: [
+                           SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
+     
+                         ]),
+                       ),
+                     ],
+                   ),
+                 ),
+               ],
+             ),
            ),
          ),
        ),
-     ),
-       );
+         ),
+   );
   }
 
 
   tabs(){
-
     return Container(
       width: 375.w,
       height: 80.h,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/model/request/reportIncidentRequest.dart';
+import 'package:tkd_connect/model/response/myIncidentResponse.dart';
 import '../../constant/api_constant.dart';
 import '../../model/api_response.dart';
 import '../../model/response/allNewsResponse.dart';
@@ -157,8 +158,8 @@ class ReportIncidentProvider extends BaseProvider {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Post Load'),
-          content: Text('Are you sure you want to post this requirement?'),
+          title: Text('Report Incident'),
+          content: Text('Are you sure you want to post this report?'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -261,16 +262,13 @@ class ReportIncidentProvider extends BaseProvider {
     if (searchController.text.length > 2) {
       String myUrl = ApiConstant.SEARCH_REPORT(searchController.text, user.content!.first.id);
       ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
-
       if (apiResponse.status == 200) {
         try {
-          final List<dynamic> responseList = jsonDecode(apiResponse.response);
-          if (responseList.isNotEmpty) {
-            List<IncidentObject> newsResponse = responseList
-                .map((item) => IncidentObject.fromJson(item as Map<String, dynamic>))
-                .toList();
+          MyReportIncidentResponse newsResponse =
+          MyReportIncidentResponse.fromJson(apiResponse.response);
+          if (newsResponse.content!.isNotEmpty) {
             allReport.clear();
-            allReport.addAll(newsResponse);
+            allReport.addAll(newsResponse.content!);
           } else {
             allReport.clear();
           }
@@ -287,29 +285,31 @@ class ReportIncidentProvider extends BaseProvider {
   }
 
   Future<void> getMyIncidentData() async {
-    User user = await LocalSharePreferences.localSharePreferences.getLoginData();
-    String myUrl = ApiConstant.MY_INCIDENT(user.content!.first.id);
-    ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
+    try {
+      final user = await LocalSharePreferences.localSharePreferences.getLoginData();
+      final String url = ApiConstant.MY_INCIDENT(user.content!.first.id);
+      final ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(url);
+      debugPrint(url);
+      debugPrint(apiResponse.response.toString());
+      allReport.clear(); // fresh start
 
-    if (apiResponse.status == 200) {
-      try {
-        final List<dynamic> responseList = jsonDecode(apiResponse.response);
-        if (responseList.isNotEmpty) {
-          List<IncidentObject> newsResponse = responseList
-              .map((item) => IncidentObject.fromJson(item as Map<String, dynamic>))
-              .toList();
-          allReport.clear();
-          allReport.addAll(newsResponse.reversed); // newest first
-        } else {
+      if (apiResponse.status == 200) {
+        try {
+          MyReportIncidentResponse newsResponse =
+          MyReportIncidentResponse.fromJson(apiResponse.response);
+          debugPrint(newsResponse.content!.length.toString());
+            allReport.addAll(newsResponse.content!);
+          } catch (e) {
+          print('Error decoding response: $e');
           allReport.clear();
         }
-      } catch (e) {
-        print('Error decoding response: $e');
-        allReport.clear();
       }
+    } catch (e, s) {
+      debugPrint('getMyIncidentData exception: $e\n$s');
     }
     notifyListeners();
   }
+
 
   Future<void> deletePost(IncidentObject incidentObj, BuildContext context) async {
     String myUrl = '${ApiConstant.DELETE_INCIDENT(incidentObj.id)}';
@@ -320,6 +320,21 @@ class ReportIncidentProvider extends BaseProvider {
     } else {
       ToastMessage.show(context, "Please try again");
     }
+  }
+  Future<void> LoadReports() async {
+    isLoadDone = false;
+    allReport.clear();
+    allReportTemp.clear();
+    selectedPage = 0;
+
+    if (_myIncident) {
+      await getMyIncidentData();
+    } else {
+      await getAllData();
+    }
+
+    isLoadDone = true;
+    notifyListeners();
   }
 }
 

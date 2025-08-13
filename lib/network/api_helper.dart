@@ -1,236 +1,225 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
-
 import '../model/api_response.dart';
 
-class ApiHelper{
-  Dio dio=Dio();
+class ApiHelper {
+  Dio dio = Dio();
 
-  Future<ApiResponse> apiGet(String URL) async{
-
+  Future<ApiResponse> apiGet(String URL) async {
+    print(URL);
     EasyLoading.show(status: "Loading");
-    var request = await dio.get(URL);
-    ApiResponse apiResponseHelper = returnResponse(request);
-    EasyLoading.dismiss();
-    return apiResponseHelper;
-
+    try {
+      var request = await dio.get(URL);
+      ApiResponse apiResponseHelper = returnResponse(request);
+      return apiResponseHelper;
+    } catch (e) {
+      print(e);
+      return ApiResponse(500, null);
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
-  Future<ApiResponse> apiWithoutDecodeGet(String URL) async{
-    try{
+  Future<ApiResponse> apiWithoutDecodeGet(String URL) async {
+    print(URL);
+    try {
       EasyLoading.show(status: "Loading");
       var request = await dio.get(URL);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch (e){
+    } catch (e) {
       print(e);
-      EasyLoading.dismiss();
       return ApiResponse(500, null);
+    } finally {
+      EasyLoading.dismiss();
     }
-
   }
 
-  Future<ApiResponse> apiWithoutDilogDecodeGet(String URL) async{
-    try{
-
+  Future<ApiResponse> apiWithoutDilogDecodeGet(String URL) async {
+    print(URL);
+    try {
       var request = await dio.get(URL);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch (e){
+    } catch (e) {
       print(e);
       return ApiResponse(500, null);
     }
-
   }
 
-  Future<ApiResponse>  apiPost(String URL) async{
-
-    try{
+  Future<ApiResponse> apiPost(String URL) async {
+    print(URL);
+    try {
       EasyLoading.show(status: "Loading");
       var request = await dio.post(URL);
       ApiResponse apiResponseHelper = returnResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch (e){
-      print('$e');
-      EasyLoading.dismiss();
+    } catch (e) {
+      print(e);
       return ApiResponse(500, null);
+    } finally {
+      EasyLoading.dismiss();
     }
-
-
-
-
   }
 
-  Future<ApiResponse>  apiPostWithoutDialog(String URL) async{
-
-    try{
-     // EasyLoading.show(status: "Loading");
+  Future<ApiResponse> apiPostWithoutDialog(String URL) async {
+    print(URL);
+    try {
       var request = await dio.post(URL);
       ApiResponse apiResponseHelper = returnResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch (e){
-      print('$e');
-     // EasyLoading.dismiss();
+    } catch (e) {
+      print(e);
       return ApiResponse(500, null);
     }
-
-
-
-
   }
 
-  Future<ApiResponse>  apiPutWithoutDialog(String URL) async{
-    try{
+  Future<ApiResponse> apiPutWithoutDialog(String URL) async {
+    print(URL);
+    try {
       var request = await dio.put(URL);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
-    }catch (e){
-      print('$e');
+    } catch (e) {
+      print(e);
       return ApiResponse(500, null);
     }
   }
 
-  Future<ApiResponse>  apiPutDat(String URL) async{
-
-    try{
+  Future<ApiResponse> apiPutDat(String URL) async {
+    print(URL);
+    try {
       EasyLoading.show(status: "Loading");
       var request = await dio.put(URL);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch (e){
-      print('$e');
-      EasyLoading.dismiss();
+    } catch (e) {
+      print(e);
       return ApiResponse(500, null);
+    } finally {
+      EasyLoading.dismiss();
     }
-
-
-
-
   }
 
-
-  Future<ApiResponse>  apiDecodePost(String URL) async{
-
-    try{
+  Future<ApiResponse> apiDecodePost(String URL) async {
+    print(URL);
+    try {
       EasyLoading.show(status: "Loading");
       var request = await dio.post(URL);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch (e){
-      print('$e');
+    } catch (e) {
+      print(e);
+      return ApiResponse(500, null);
+    } finally {
       EasyLoading.dismiss();
+    }
+  }
+
+  Future<ApiResponse> apiPut(String URL, Map<String, dynamic> data) async {
+    print(URL);
+    try {
+      var body = json.encode(data);
+      var request = await dio.put(URL, data: body);
+      ApiResponse apiResponseHelper = returnResponse(request);
+      return apiResponseHelper;
+    } catch (e) {
+      print(e);
       return ApiResponse(500, null);
     }
-   }
-
-  Future<ApiResponse>  apiPut(String URL,Map<String,dynamic>data) async{
-    var body = json.encode(data);
-   // print(body);
-    var request = await dio.put(URL,data: body);
-    ApiResponse apiResponseHelper = returnResponse(request);
-    return apiResponseHelper;
   }
 
-
-  Future<ApiResponse> ApiDeleteData(String URL) async{
-   try{
-     EasyLoading.show(status: "Loading");
-     var request = await dio.delete(URL);
-     ApiResponse apiResponseHelper = returnResponse(request);
-     EasyLoading.dismiss();
-     return apiResponseHelper;
-   }catch(e){
-     EasyLoading.dismiss();
-     return ApiResponse(500, null);
-   }
-
+  Future<ApiResponse> ApiDeleteData(String URL) async {
+    print(URL);
+    try {
+      EasyLoading.show(status: "Loading");
+      var request = await dio.delete(URL);
+      ApiResponse apiResponseHelper = returnResponse(request);
+      return apiResponseHelper;
+    } catch (e) {
+      print(e);
+      return ApiResponse(500, null);
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
-  Future<ApiResponse> postParameter(String url,Map<String,dynamic>data) async{
-    EasyLoading.show(status: "Loading");
+  Future<ApiResponse> postParameter(String url, Map<String, dynamic> data) async {
+    print(url);
     print(data);
-    try{
+    try {
+      EasyLoading.show(status: "Loading");
       var body = json.encode(data);
-      print(body);
-      final request = await dio.post(url,data: body);
-      print("Post response :"+request.data);
+      final request = await dio.post(url, data: body);
+      print("Post response: ${request.data}");
       ApiResponse apiResponseHelper = returnResponse(request);
-      EasyLoading.dismiss();
       return apiResponseHelper;
-    }catch(e){
+    } catch (e) {
+      print(e);
+      return ApiResponse(500, null);
+    } finally {
       EasyLoading.dismiss();
+    }
+  }
+
+  Future<ApiResponse> postParameterDecode(String url, Map<String, dynamic> data) async {
+    print(url);
+    try {
+      EasyLoading.show(status: "Loading");
+      var body = json.encode(data);
+      final request = await dio.post(url, data: body);
+      ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
+      return apiResponseHelper;
+    } catch (e) {
+      print(e);
+      return ApiResponse(800, null);
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+  ApiResponse returnResponse<T>(Response request) {
+    try {
+      if (request.statusCode == 200 || request.statusCode == 201) {
+        var data = request.data;
+        if (data is String) {
+          data = json.decode(data);
+        }
+        return ApiResponse(request.statusCode!, data);
+      } else {
+        return ApiResponse(request.statusCode!, null);
+      }
+    } catch (e) {
+      print(e);
       return ApiResponse(500, null);
     }
-   }
-
-
-  Future<ApiResponse> postParameterDecode(String url,Map<String,dynamic>data) async{
-    EasyLoading.show(status: "Loading");
-    try{
-      var body = json.encode(data);
-      final request = await dio.post(url,data: body);
-      ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
-      EasyLoading.dismiss();
-      return apiResponseHelper;
-    }catch(e){
-      print(e);
-      EasyLoading.dismiss();
-      return ApiResponse(800, null);
-    }
   }
 
-  ApiResponse returnResponse<T>(Response request){
-    try{
-      if(request.statusCode==200){
-        var response = json.decode(request.data);
-        ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, response);
-        return apiResponseHelper;
-      }else{
-        ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, null);
-        return apiResponseHelper;
-      }
-    }catch(e) {
-
-      print('$e');
-      ApiResponse apiResponseHelper = ApiResponse(500, null);
-      return apiResponseHelper;
-    }
-
-  }
-
-  ApiResponse returnNotDecodeResponse<T>(Response request){
-    if(request.statusCode==200){
-
-      ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, request.data);
-      return apiResponseHelper;
-    }else{
-      ApiResponse apiResponseHelper = ApiResponse(request.statusCode!, null);
-      return apiResponseHelper;
+  ApiResponse returnNotDecodeResponse<T>(Response request) {
+    if (request.statusCode == 200 || request.statusCode == 201) {
+      return ApiResponse(request.statusCode!, request.data);
+    } else {
+      return ApiResponse(request.statusCode!, null);
     }
   }
 
   Future<String> uploadImage(XFile file) async {
-    EasyLoading.show(status: "Uploading");
-    String fileName = file.path.split('/').last;
-    FormData formData = FormData.fromMap({
-      "profilePicture":
-      await MultipartFile.fromFile(file.path, filename:fileName),
-    });
-    var response = await dio.post("${ApiConstant.BASE_URL}saveImage", data: formData);
-    EasyLoading.dismiss();
-    return response.data;
+    try {
+      EasyLoading.show(status: "Uploading");
+      String fileName = file.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "profilePicture": await MultipartFile.fromFile(file.path, filename: fileName),
+      });
+      var response = await dio.post("${ApiConstant.BASE_URL}saveImage", data: formData);
+      return response.data;
+    } catch (e) {
+      print(e);
+      return "";
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
-
-
-
 }

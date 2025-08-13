@@ -53,20 +53,30 @@ class _ListLanguageChange extends State<ListLanguageChange>{
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SvgPicture.asset(Images.close_circle)
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                        child: SvgPicture.asset(Images.close_circle))
                   ],
                 ),
               ),
               SizedBox(height: 24.h,),
-              searchBox(),
               Expanded(
-                child: ListView.builder(
-                    itemCount: listLaugaes.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return laguagesList(index);
-                    }),
+                child: GridView.builder(
+                  padding: EdgeInsets.all(16),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: listLaugaes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _languageCircle(context, index);
+                  },
+                ),
               )
-
             ],
 
           ),
@@ -95,133 +105,84 @@ class _ListLanguageChange extends State<ListLanguageChange>{
     );
   }
 
-  searchBox(){
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 52.h,
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 24.w,
-                        height: 24.h,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.h,
-                              child: Stack(children: [
-                                SvgPicture.asset(Images.search_normal)
 
-                              ]),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Search a language',
-                            style: TextStyle(
-                              color: const Color(0x662C363F),
-                              fontSize: 14.sp,
-                              fontFamily:GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+
+  Widget _languageCircle(BuildContext context, int index) {
+    // Predefined unique border colors
+    final List<Color> borderColors = [
+      Colors.amber,
+      Colors.teal,
+      Colors.orange,
+      Colors.purple,
+      Colors.blue,
+      Colors.indigo,
+      Colors.red,
+      Colors.cyan,
+      Colors.green,
+      Colors.deepOrange,
+    ];
+
+    final language = listLaugaes[index];
+    final borderColor =  borderColors[index % borderColors.length];
+
+    return InkWell(
+      onTap: () {
+        for (int i = 0; i < listLaugaes.length; i++) {
+          listLaugaes[i].isSelect = false;
+        }
+        language.isSelect = true;
+        selectLanguage = language.langCode!;
+        selectLanguage=listLaugaes[index].langCode!;
+        isLangSelect = true;
+        setState(() {});
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: borderColor,
+                    width: 2,
+                  ),
+                  color: language.isSelect!
+                      ?borderColor:Colors.white,
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  (language.langName?.isNotEmpty ?? false)
+                      ? language.langName![0] // First letter of language name
+                      : '',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: language.isSelect!
+                        ?Colors.white:Colors.black,
                   ),
                 ),
-              ],
+              ),
+
+            ],
+          ),
+          SizedBox(height: 8),
+          Text(
+            language.langName ?? '',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            width: 327.w,
-            padding: EdgeInsets.only(top: 4.h),
-          ),
+
         ],
       ),
     );
   }
-
-  laguagesList(int index){
-    return InkWell(
-      onTap: (){
-        for(int i=0;i<listLaugaes.length;i++){
-          listLaugaes[i].isSelect=false;
-        }
-        listLaugaes[index].isSelect=true;
-        selectLanguage=listLaugaes[index].langCode!;
-        // S.load(Locale("hi"));
-        isLangSelect=true;
-        setState(() {
-        });
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 52.h,
-        padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
-        decoration: BoxDecoration(
-          color: listLaugaes[index].isSelect!?ThemeColor.select_green:ThemeColor.white,
-          border: const Border(
-
-            bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 52.h,
-                child: Text(
-                  listLaugaes[index].langName!,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily:GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-
-            ),
-            listLaugaes[index].isSelect!? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):const SizedBox()
-          ],
-        ),
-      ),
-    );
-  }
-
 }

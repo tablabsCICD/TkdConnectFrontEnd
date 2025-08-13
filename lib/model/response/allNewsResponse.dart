@@ -57,7 +57,7 @@ class Content {
   dynamic image4;
   dynamic image5;
   int? isApproved;
-  DateTime? date;
+  dynamic date;
   ImageType? imageType;
   dynamic youtubeLink;
   String? firstName;
@@ -98,7 +98,7 @@ class Content {
     image4: json["image4"],
     image5: json["image5"],
     isApproved: json["isApproved"],
-    date: json["date"] == null ? null : DateTime.parse(json["date"]),
+    date: json["date"]??"",
     imageType: imageTypeValues.map[json["imageType"]],
     youtubeLink: json["youtubeLink"],
     firstName: json["firstName"],

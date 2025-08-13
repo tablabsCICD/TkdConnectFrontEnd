@@ -165,8 +165,6 @@ class RouteGenerator {
         return buildRoute(AddNewsScreen(), settings: settings);
 
 
-      case AppRoutes.news:
-        return buildRoute(const AllNewsScreen(), settings: settings);
 
 
       case AppRoutes.reportIncident:

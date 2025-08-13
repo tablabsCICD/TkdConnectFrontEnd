@@ -96,7 +96,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     String langCode = await prefs.getLangCode();
 
     if (isLoggedIn) {
-      await updateToken();
+      // await updateToken();
       S.load(Locale(langCode));
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
@@ -268,4 +268,5 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       });
     }
   }
+
 }

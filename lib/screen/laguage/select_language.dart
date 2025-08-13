@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tkd_connect/screen/laguage/list_language.dart';
+import 'package:tkd_connect/screen/app_setting/lang_change.dart';
+import 'package:tkd_connect/screen/laguage/list_language.dart' hide ListLanguageChange;
 import 'package:tkd_connect/widgets/textview.dart';
 
 import '../../constant/images.dart';
+import 'change_language_screen.dart';
 
 class SelectLanguageScreen extends StatelessWidget{
   const SelectLanguageScreen({super.key});
@@ -28,14 +30,8 @@ class SelectLanguageScreen extends StatelessWidget{
             Center(
               child: InkWell(
                 onTap: (){
-                  showModalBottomSheet<void>(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const FractionallySizedBox(
-                            heightFactor: 0.9,
-                            child: ListLanguage());
-                      });
+                  showBootomSheet(context);
+                //  Navigator.push(context, MaterialPageRoute(builder: (builder)=>ChooseLanguagePage()));
                 },
                 child: Container(decoration: ShapeDecoration(
                   color: Colors.white,
@@ -65,9 +61,15 @@ class SelectLanguageScreen extends StatelessWidget{
           ],
         ),
       ),
-
     );
   }
 
-
+  void showBootomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return const FractionallySizedBox(heightFactor:0.7,child:LanguageChange());
+        });
+  }
 }

@@ -19,9 +19,7 @@ import '../../utils/colors.dart';
 
 class NewsProvider extends BaseProvider {
   NewsProvider() : super('Ideal') {
-   // pagenationHorizantal();
-   // pagenationVerical();
-    getAllData();
+    //getAllData();
   }
 
   int allSelectedPage = 0;
@@ -32,17 +30,18 @@ class NewsProvider extends BaseProvider {
 
   bool isLoadDone = false;
   bool _myNews = false;
+  bool _isDisposed = false;
 
   bool get myNews => _myNews;
 
   void toggleMyNews(bool value) {
     _myNews = value;
-    if(_myNews==true){
+    if (_myNews) {
       getMyNewsData();
-    }else{
+    } else {
       getAllData();
     }
-    notifyListeners();
+    notifySafely();
   }
 
   ScrollController scrollControllerVertical = ScrollController();
@@ -53,6 +52,24 @@ class NewsProvider extends BaseProvider {
   TextEditingController linkController = TextEditingController();
   List<String> images = [];
 
+  @override
+  void dispose() {
+    _isDisposed = true;
+    scrollControllerVertical.dispose();
+    scrollControllerHorizantal.dispose();
+    searchController.dispose();
+    topicController.dispose();
+    descriptionController.dispose();
+    linkController.dispose();
+    super.dispose();
+  }
+
+  void notifySafely() {
+    if (!_isDisposed) {
+      notifyListeners();
+    }
+  }
+
   uploadImage(BuildContext context) async {
     String? image = await pickAndUploadImage(context);
     if (image != null) {
@@ -61,18 +78,19 @@ class NewsProvider extends BaseProvider {
     } else {
       print("Image upload failed or was cancelled.");
     }
-    notifyListeners();
+    notifySafely();
   }
 
   getAllData() async {
     String myUrl = ApiConstant.GET_NEWS_LIST(allSelectedPage);
-
     print("Url $myUrl");
+
     ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
+    print(apiResponse.response);
 
     if (apiResponse.status == 200) {
       GetAllNewsResponse newsResponse =
-          GetAllNewsResponse.fromJson(apiResponse.response);
+      GetAllNewsResponse.fromJson(apiResponse.response);
 
       if (allSelectedPage == 0) {
         allNews.clear();
@@ -80,143 +98,77 @@ class NewsProvider extends BaseProvider {
       }
       allNews.addAll(newsResponse.content!);
       allNewsTemp.addAll(newsResponse.content!);
-     // allSelectedPage++;
     }
     isLoadDone = true;
-    notifyListeners();
+    notifySafely();
   }
 
+  String validationMessage = "";
 
-
- /* pagenationVerical() {
-    scrollControllerVertical.addListener(() {
-      if (scrollControllerVertical.position.pixels ==
-          scrollControllerVertical.position.maxScrollExtent) {
-        toggleMyNews(_myNews);
-      }
-    });
-  }
-
-  pagenationHorizantal() {
-    scrollControllerHorizantal.addListener(() {
-      if (scrollControllerHorizantal.position.pixels ==
-          scrollControllerHorizantal.position.maxScrollExtent) {
-        toggleMyNews(_myNews);
-      }
-    });
-  }
-*/
-  checkValidation(BuildContext context) {
+  Future<bool> checkValidation() async {
     if (topicController.text.isEmpty) {
-      ToastMessage.show(context, "Please add news title");
-    } else {
-      if (images.isEmpty) {
-        ToastMessage.show(context, "Please upload image");
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                'Add News',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              content: Text(
-                'Are you sure you want to add this news?',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text(
-                    'No',
-                    style: TextStyle(
-                      color: ThemeColor.theme_blue,
-                      fontSize: 12.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    createPost(context);
-                  },
-                  child: Text(
-                    'Yes',
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 12.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+      validationMessage = "Please add news title";
+      return false;
+    } else if (images.isEmpty) {
+      validationMessage = "Please upload image";
+      return false;
+    }
+
+    final result = await createPost();
+    return result;
+  }
+
+  Future<bool> createPost() async {
+    try {
+      User user = await LocalSharePreferences.localSharePreferences.getLoginData();
+
+      AddNewsRequest postLoad = AddNewsRequest()
+        ..companyName = user.content!.first.companyName!
+        ..description = descriptionController.text
+        ..date = ''
+        ..firstName = user.content!.first.firstName!
+        ..image = images[0]
+        ..lastName = user.content!.first.lastName
+        ..mobileNumber = user.content!.first.mobileNumber!
+        ..profilePicture = user.content!.first.profilePicture
+        ..topicName = topicController.text
+        ..userId = user.content!.first.id
+        ..image2 = images[0]
+        ..image3 = images[0]
+        ..image4 = images[0]
+        ..image5 = images[0]
+        ..imageType = "png"
+        ..isApproved = 1
+        ..youtubeLink = linkController.text;
+
+      ApiResponse response = await ApiHelper().postParameter(
+        ApiConstant.ADD_NEWS,
+        postLoad.toJson(),
+      );
+
+      print('The response status code: ${response.response}');
+
+      if (response.status == 200) {
+        Content content = Content.fromJson(response.response);
+        allNews.add(content);
+        toggleMyNews(_myNews);
+        notifySafely();
+        return true;
       }
+    } catch (e) {
+      print("Exception in createPost: $e");
     }
-    notifyListeners();
+
+    return false;
   }
 
-  createPost(BuildContext context) async {
-    User user =
-        await LocalSharePreferences.localSharePreferences.getLoginData();
-    AddNewsRequest postLoad = AddNewsRequest();
-    postLoad.companyName = user.content!.first.companyName!;
-    postLoad.description = descriptionController.text;
-    postLoad.date = '';
-    postLoad.firstName = user.content!.first.firstName!;
-    postLoad.image = images[0];
-    postLoad.lastName = user.content!.first.lastName;
-    postLoad.mobileNumber = user.content!.first.mobileNumber!;
-    postLoad.profilePicture = user.content!.first.profilePicture;
-    postLoad.topicName = topicController.text;
-    postLoad.userId = user.content!.first.id;
-    postLoad.image2 = images[0];
-    postLoad.image3 = images[0];
-    postLoad.image4 = images[0];
-    postLoad.image5 = images[0];
-    postLoad.imageType = "png";
-    postLoad.isApproved = 1;
-    postLoad.youtubeLink = linkController.text;
 
-    ApiResponse response = await ApiHelper().postParameter(
-        "${ApiConstant.ADD_NEWS}",
-        postLoad.toJson());
-    print('The response status code: ${response.status}');
-
-    if (response.status == 200) {
-      Content content = Content.fromJson(response.response);
-      allNews.add(content);
-      ToastMessage.show(context, "News added successfully!");
-      toggleMyNews(_myNews);
-      notifyListeners();
-      Navigator.pop(context);
-      Navigator.pop(context); // Close the first dialog
-    } else {
-      ToastMessage.show(context, "Please try again");
-    }
-  }
 
   getBySearchData() async {
     if (searchController.text.length > 2) {
       String myUrl = ApiConstant.SEARCH_NEWS(searchController.text);
       ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
+      print(apiResponse.response);
       if (apiResponse.status == 200) {
         GetAllNewsResponse newsResponse =
         GetAllNewsResponse.fromJson(apiResponse.response);
@@ -227,25 +179,25 @@ class NewsProvider extends BaseProvider {
       allNews.clear();
       allNews.addAll(allNewsTemp);
     }
-    notifyListeners();
+    notifySafely();
   }
 
   getMyNewsData() async {
     User user =
     await LocalSharePreferences.localSharePreferences.getLoginData();
-      String myUrl = ApiConstant.MY_NEWS(user.content!.first.id,selectedPage);
-      print(myUrl);
-      ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
-      if (apiResponse.status == 200) {
-        GetAllNewsResponse newsResponse =
-        GetAllNewsResponse.fromJson(apiResponse.response);
-        if (selectedPage == 0) {
-          allNews.clear();
-        }
-        allNews.addAll(newsResponse.content!);
-        //selectedPage++;
+    String myUrl = ApiConstant.MY_NEWS(user.content!.first.id, selectedPage);
+    print(myUrl);
+    ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(myUrl);
+    print(apiResponse.response);
+    if (apiResponse.status == 200) {
+      GetAllNewsResponse newsResponse =
+      GetAllNewsResponse.fromJson(apiResponse.response);
+      if (selectedPage == 0) {
+        allNews.clear();
       }
-    notifyListeners();
+      allNews.addAll(newsResponse.content!);
+    }
+    notifySafely();
   }
 
   getDetailsOfUserDirectory(int id, BuildContext context) async {
@@ -253,7 +205,7 @@ class NewsProvider extends BaseProvider {
         .apiWithoutDecodeGet(ApiConstant.GET_DIRECT_USER_DETAILS(id));
     if (apiResponse.status == 200) {
       TransportSearchModel transportSearchData =
-          TransportSearchModel.fromJson(apiResponse.response);
+      TransportSearchModel.fromJson(apiResponse.response);
       Navigator.pushNamed(context, AppRoutes.viewprofiledirectory,
           arguments: transportSearchData.content.first);
     } else {
@@ -264,27 +216,23 @@ class NewsProvider extends BaseProvider {
   bool enbleButton = false;
 
   enble() {
-    if (topicController.text.isNotEmpty &&
-        descriptionController.text.isNotEmpty) {
-      enbleButton = true;
-    } else {
-      enbleButton = false;
-    }
-    notifyListeners();
+    enbleButton = topicController.text.isNotEmpty &&
+        descriptionController.text.isNotEmpty;
+    notifySafely();
   }
 
-  deletePost(Content content,BuildContext context)async{
+  deletePost(Content content, BuildContext context) async {
     String myUrl = '${ApiConstant.DELETE_NEWS(content.id)}';
     print(myUrl);
-    ApiResponse apiResponse= await ApiHelper().ApiDeleteData(myUrl);
+    ApiResponse apiResponse = await ApiHelper().ApiDeleteData(myUrl);
     print(apiResponse.response);
-    if(apiResponse.status==200){
+    if (apiResponse.status == 200) {
       toggleMyNews(true);
       ToastMessage.show(context, "Post deleted successfully");
-      notifyListeners();
-    }else{
+    } else {
       ToastMessage.show(context, "Please try again");
     }
+    notifySafely();
   }
 
   Future<void> loadNews() async {
@@ -301,7 +249,6 @@ class NewsProvider extends BaseProvider {
     }
 
     isLoadDone = true;
-    notifyListeners();
+    notifySafely();
   }
-
 }

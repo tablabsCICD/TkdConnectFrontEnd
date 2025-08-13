@@ -9,6 +9,7 @@ import 'package:tkd_connect/utils/colors.dart';
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../provider/incident/report_incident_provider.dart';
+import '../../utils/toast.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/datepicker.dart';
@@ -88,8 +89,44 @@ class AddNewsScreen extends StatelessWidget {
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w600,
                   ),
-                  onClick: () {
-                     provider.checkValidation(context);
+                  onClick: () async {
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext dialogContext) {
+                        return AlertDialog(
+                          title: Text('Add News'),
+                          content: Text('Are you sure you want to add this news?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(dialogContext).pop();
+                              },
+                              child: Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                Navigator.of(dialogContext).pop();
+                                final result = await provider.checkValidation();
+
+                                if (!context.mounted) return;
+
+                                if (result) {
+                                  ToastMessage.show(context, "News added successfully!");
+                                  Navigator.pop(context); // Close AddNews screen
+                                } else {
+                                  ToastMessage.show(context, provider.validationMessage.isNotEmpty
+                                      ? provider.validationMessage
+                                      : "Please try again");
+                                }
+                              },
+                              child: Text('Yes'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
                   },
                   isEnbale: true,
                 ),

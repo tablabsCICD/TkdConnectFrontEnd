@@ -510,7 +510,6 @@ class _MoreScreen extends State<MoreScreen> {
                       fontSize: 14.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w400,
-
                     ),
                   ),
                 ),

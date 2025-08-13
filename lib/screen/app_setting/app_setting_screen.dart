@@ -5,6 +5,7 @@ import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
 import '../../constant/app_constant.dart';
 import '../../generated/l10n.dart';
+import '../laguage/change_language_screen.dart';
 import 'lang_change.dart';
 
 class AppSettingScreen extends StatelessWidget {
@@ -52,6 +53,7 @@ class AppSettingScreen extends StatelessWidget {
       child: InkWell(
         onTap: (){
           showBootomSheet(context);
+          //Navigator.push(context, MaterialPageRoute(builder: (builder)=>ChooseLanguagePage()));
         },
         child: Row(
           mainAxisSize: MainAxisSize.min,

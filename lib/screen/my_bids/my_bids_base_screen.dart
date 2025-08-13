@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/provider/mybids/my_bids_provider.dart';
 import 'package:tkd_connect/screen/my_bids/placed_bid_screen.dart';
+import 'package:tkd_connect/utils/colors.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -137,7 +138,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 12.h),
                                         decoration: ShapeDecoration(
-                                          color: provider.isMyPlacedBids?Colors.white:const Color(0xFF9D1C21),
+                                          color: provider.isMyPlacedBids?Colors.white:ThemeColor.theme_blue,
                                           shape: const RoundedRectangleBorder(
                                             side: BorderSide(
                                                 color: Color(0x332C363F)),
@@ -153,7 +154,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                             Text(
                                               S().quotesYouPlaced,
                                               style: TextStyle(
-                                                color:provider.isMyPlacedBids? const Color(0xFFC3262C):Colors.white,
+                                                color:provider.isMyPlacedBids?ThemeColor.theme_blue:Colors.white,
                                                 fontSize: 12,
                                                 fontFamily: AppConstant.FONTFAMILY,
                                                 fontWeight: provider.isMyPlacedBids?FontWeight.w600:FontWeight.w400,

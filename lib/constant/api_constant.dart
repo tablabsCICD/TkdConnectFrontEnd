@@ -5,7 +5,6 @@ class ApiConstant {
 
  //static const String BASE_URL = "http://ec2-43-204-150-67.ap-south-1.compute.amazonaws.com:8080/tkd/api/";
 
-
   static String  FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
 
   static String SEND_OTP(mobile) => "${BASE_URL}sendOtp?mobileNos=$mobile";
@@ -153,16 +152,16 @@ class ApiConstant {
  static String UPDATE_ACCEPTED_BID="${BASE_URL}acceptedBid/%7Bid%7D";
 
   static String GET_NEWS_LIST(page)=> "${BASE_URL}Gallery?page=$page&size=1000";
- static String MY_NEWS(id, page) => "${BASE_URL}Gallery/byUserId?userId=$id&page=$page&size=1000";
+ static String MY_NEWS(id, page) => "${BASE_URL}Gallery/byUserId?userId=$id&page=$page&size=100";
   static String ADD_NEWS= "${BASE_URL}Gallery";
   static String DELETE_NEWS(id) => "${BASE_URL}Gallery?id=$id";
   static String SEARCH_NEWS(char) => "${BASE_URL}Gallery/searchByAnyKey?key=$char&page=0&size=100";
 
 
- static String GET_REPORT_LIST(page)=> "${BASE_URL}ReportIncients?page=$page&size=1000";
- static String MY_INCIDENT(id) => "${BASE_URL}user/$id";
+ static String GET_REPORT_LIST(page)=> "${BASE_URL}ReportIncients?page=$page&size=100";
+ static String MY_INCIDENT(id) => "${BASE_URL}user/page/$id?page=0&size=100";
  static String ADD_REPORT = "${BASE_URL}ReportIncients";
  static String DELETE_INCIDENT(id) => "${BASE_URL}ReportIncients?id=$id";
- static String SEARCH_REPORT(char,id) => "${BASE_URL}getTicketsByUserIdAndSearch?userId=$id&keyword=$char";
+ static String SEARCH_REPORT(char,id) => "${BASE_URL}getTicketsByUserIdAndSearch/page?userId=$id&keyword=$char&page=0&size=10";
 
 }

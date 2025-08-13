@@ -206,7 +206,7 @@ class _JobListState extends State<JobListScreen> {
               jobData.name != null ? jobData.name! : "No Info",
               jobData.postJob!.companyName != null
                   ? jobData.postJob!.companyName!
-                  : "No Info",verify: jobData.isVerified!,transporterOrAgent: jobData.transporterOrAgent!),
+                  : "No Info",verify: jobData.isVerified??1,transporterOrAgent: jobData.transporterOrAgent??1),
           SizedBox(width: 8.w),
           BaseWidget().jobHeading(jobData.postJob!.salary!),
           BaseWidget().heading(

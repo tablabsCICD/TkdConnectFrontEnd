@@ -1,143 +1,138 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/model/response/userdata.dart';
-import 'package:tkd_connect/provider/news/news_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// --- app‑specific imports (update paths if they differ) --------------------
+import '../../../generated/l10n.dart';
 import '../../constant/app_constant.dart';
 import '../../constant/images.dart';
-import '../../generated/l10n.dart';
 import '../../model/response/allNewsResponse.dart';
-import '../../model/response/transport_directory_search.dart';
+import '../../model/response/userdata.dart';
+import '../../provider/news/news_provider.dart';
 import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../utils/sharepreferences.dart';
-import '../../utils/utils.dart';
-import '../../widgets/card/base_widgets.dart';
-import '../../widgets/card/dashboard_cards.dart';
-import '../../widgets/textview.dart';
+// ---------------------------------------------------------------------------
 
+/// All‑in‑one, scroll‑friendly, ANR‑safe news listing screen.
 class AllNewsScreen extends StatefulWidget {
-  const AllNewsScreen({Key? key}) : super(key: key);
+  bool? isBase;
+  AllNewsScreen({Key? key, required this.isBase}) : super(key: key);
 
   @override
   State<AllNewsScreen> createState() => _AllNewsScreenState();
 }
 
 class _AllNewsScreenState extends State<AllNewsScreen> {
-  late NewsProvider provider;
-  User? user;
+  /// Keep a single provider instance (no multiple ChangeNotifier creations).
+  final NewsProvider _newsProvider = NewsProvider();
+
+  User? _loggedUser;
 
   @override
   void initState() {
     super.initState();
-    provider = NewsProvider();
-    getUser();
-    Future.microtask(() => provider.loadNews()); // <-- Load news after build
+
+    _loadInitialData();
   }
 
-  getUser() async {
-    user = await LocalSharePreferences.localSharePreferences.getLoginData();
-    setState(() {}); // Update UI when user is ready
+  Future<void> _loadInitialData() async {
+    // 1️⃣  Get current user.
+    _loggedUser = await LocalSharePreferences.localSharePreferences.getLoginData();
+    // 2️⃣  Load news **after** first frame so build() is never blocked.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _newsProvider.loadNews();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: provider,
+      value: _newsProvider,
       child: Consumer<NewsProvider>(
-        builder: (context, provider, child) {
-          return _buildPage(context, provider);
+        builder: (context, provider, _) {
+          return Scaffold(
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: _buildFAB(context, provider),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  _buildHeader(context, provider),
+                  SizedBox(height: 16.h),
+                  _buildFilterChips(provider),
+                  SizedBox(height: 10.h),
+                  // ------------ LIST / EMPTY STATE -------------
+                  Expanded(
+                    child: provider.isLoadDone && provider.allNews.isEmpty
+                        ? _buildEmptyState(context)
+                        : RefreshIndicator(
+                      onRefresh: provider.loadNews,
+                      child: ListView.builder(
+                        controller: provider.scrollControllerVertical,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: provider.allNews.length,
+                        itemBuilder: (_, index) => _newsItem(
+                          context,
+                          content: provider.allNews[index],
+                          provider: provider,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
   }
 
-  Widget _buildPage(BuildContext context, NewsProvider provider) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Visibility(
-        visible: true,
-        child: InkWell(
-          onTap: () async {
-            await Navigator.pushNamed(context, AppRoutes.addNews);
-            provider.loadNews(); // <-- Refresh after coming back
-          },
-          child: Container(
-            width: 155.w,
-            height: 38.h,
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-            decoration: ShapeDecoration(
-              color: ThemeColor.theme_blue,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r)),
+  // ────────────────────────── UI COMPONENTS ──────────────────────────
+
+  /// Add‑news button.
+  Widget _buildFAB(BuildContext context, NewsProvider provider) {
+    return InkWell(
+      onTap: () async {
+        await Navigator.pushNamed(context, AppRoutes.addNews);
+        provider.loadNews(); // 🔄 refresh after returning
+      },
+      child: Container(
+        width: 155.w,
+        height: 38.h,
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+        decoration: ShapeDecoration(
+          color: ThemeColor.theme_blue,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              S.of(context).addNews,
+              style: TextStyle(
+                color: ThemeColor.progress_color,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  S().addNews,
-                  style: TextStyle(
-                    color: ThemeColor.progress_color,
-                    fontSize: 12.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(width: 8.w),
-                SvgPicture.asset(Images.add, width: 16.w, height: 16.h),
-              ],
-            ),
-          ),
+            SizedBox(width: 8.w),
+            SvgPicture.asset(Images.add, width: 16.w, height: 16.h),
+          ],
         ),
       ),
-      body: Column(
-        children: [
-          top_bar(context, provider),
-          SizedBox(height: 16.h),
-          allNewsTag(provider),
-          SizedBox(height: 10.h),
-
-          if (provider.allNews.isEmpty && provider.isLoadDone)
-            Center(
-              child:  SizedBox(
-                height: MediaQuery.of(context).size.height - 250.h, // Adjust based on your header size
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(S().noRecordFound),
-                ),
-              ),
-            )
-          else
-            SizedBox(
-                height: MediaQuery.of(context).size.height - 250.h,child: allNewsData())
-        ],
-      ),
     );
   }
 
-  Widget allNewsData() {
-    return Consumer<NewsProvider>(
-      builder: (context, provider, child) {
-        return ListView.builder(
-          controller: provider.scrollControllerVertical,
-          itemCount: provider.allNews.length,
-          itemBuilder: (BuildContext context, int index) {
-            return newsItem(provider.allNews[index]);
-          },
-        );
-      },
-    );
-  }
-
-  top_bar(BuildContext context, provider) {
+  /// Top red header with search box.
+  Widget _buildHeader(BuildContext context, NewsProvider provider) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: double.infinity,
       height: 87.h,
       decoration: const ShapeDecoration(
         color: Color(0xFFC3262C),
@@ -148,335 +143,270 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
           ),
         ),
       ),
-      child: searchBoxFilter(),
-    );
-  }
-
-  searchBoxFilter() {
-    return Consumer<NewsProvider>(
-      builder: (context, provider, child) {
-        return Transform.translate(
-          offset: Offset(0.0, 25.0.h),
-          // Adjust as needed for vertical centering
-          child: Center(
-            // This ensures the search bar is centered
-            child: serachBarFilter(),
-          ),
-        );
-      },
-    );
-  }
-
-  serachBarFilter() {
-    return Consumer<NewsProvider>(
-      builder: (context, provider, child) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 260.w,
-              height: 52.h,
-              padding: const EdgeInsets.symmetric(horizontal: 0),
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 24.w,
-                          height: 24.h,
-                          margin: EdgeInsets.only(left: 10.w),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 24.w,
-                                height: 24.h,
-                                child: Stack(children: [
-                                  SvgPicture.asset(Images.search_normal)
-                                ]),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Expanded(
-                          child: SizedBox(
-                            child: TextField(
-                              controller: provider.searchController,
-                              onChanged: (value) {
-                                provider.getBySearchData();
-                              },
-                              decoration: InputDecoration(
-                                  hintText: S().searchNews,
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                    color: const Color(0x662C363F),
-                                    fontSize: 14.sp,
-                                    fontFamily:
-                                        GoogleFonts.poppins().fontFamily,
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14.sp,
-                                fontFamily: GoogleFonts.poppins().fontFamily,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
-  Widget allNewsTag(NewsProvider provider) {
-    return Container(
-      margin: EdgeInsets.only(left: 20.w, top: 0.h),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ChoiceChip(
-            backgroundColor: Colors.transparent,
-            selectedColor: ThemeColor.theme_blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-              side: BorderSide(
-                color: ThemeColor.theme_blue,
-              ),
+          widget.isBase==false?IconButton(onPressed: (){Navigator.of(context).pop();}, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)):SizedBox.shrink(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 12.h),
+              child: _buildSearchBar(context, provider),
             ),
-            label: Text(
-              S().allNews,
-              style: TextStyle(
-                color: !provider.myNews ? Colors.white : Colors.black,
-                fontSize: 12.sp,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-            ),
-            selected: !provider.myNews,
-            onSelected: (_) => provider.toggleMyNews(false),
-          ),
-          ChoiceChip(
-            backgroundColor: Colors.transparent,
-            selectedColor: ThemeColor.theme_blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-              side: BorderSide(
-                color: ThemeColor.theme_blue,
-              ),
-            ),
-            label: Text(
-              "My News",
-              style: TextStyle(
-                color: provider.myNews ? Colors.white : Colors.black,
-                fontSize: 12.sp,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-            ),
-            selected: provider.myNews,
-            onSelected: (_) => provider.toggleMyNews(true),
           ),
         ],
       ),
     );
   }
 
-
-  newsItem(Content content)  {
-
-    return Consumer<NewsProvider>(
-      builder: (context, provider, child) {
-
-        return Container(
-          width: 375.w,
-          //height: 67.h,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              left: BorderSide(color: Color(0x192C363F)),
-              top: BorderSide(color: Color(0x192C363F)),
-              right: BorderSide(color: Color(0x192C363F)),
-              bottom: BorderSide(width: 1, color: Color(0x192C363F)),
+  Widget _buildSearchBar(BuildContext context, NewsProvider provider) {
+    return Container(
+      width: 260.w,
+      height: 52.h,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(width: .5, color: Color(0x332C363F)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 12.w),
+          SvgPicture.asset(Images.search_normal, width: 24.w, height: 24.h),
+          SizedBox(width: 8.w),
+          Expanded(
+            child: TextField(
+              controller: provider.searchController,
+              onChanged: (_) => provider.getBySearchData(),
+              decoration: InputDecoration(
+                hintText: S.of(context).searchNews,
+                border: InputBorder.none,
+                hintStyle: TextStyle(
+                  color: const Color(0x662C363F),
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                ),
+              ),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+              ),
             ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Text(
-                      content.topicName ?? "",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 12.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        content.date.toString() ?? "",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts.poppins().fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 10.w),
-                      if (user?.content?.first.id == content.userId)
-                        InkWell(
-                          onTap: () {
-                            showDeletePopup(content, provider);
-                          },
-                          child:  CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.red.shade50,
-                            child: SvgPicture.asset(
-                              Images.delete,
-                              width: 20.w,
-                              height: 20.w,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-
-              Container(
-                child: Text(
-                  content.description!,
-                  style: TextStyle(
-                    color: const Color(0x99001E49),
-                    fontSize: 10.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              BaseWidget().image(image: content.image!),
-              SizedBox(
-                height: 10.h,
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (content.youtubeLink != null &&
-                      content.youtubeLink!.isNotEmpty) {
-                    _launchURL(content.youtubeLink!);
-                  }
-                },
-                child: Container(
-                  child: Text(
-                    content.youtubeLink ?? "",
-                    style: TextStyle(
-                      color: const Color(0x99126CEE),
-                      fontSize: 12.0,
-                      // Replace `10.sp` if not using `flutter_screenutil`
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      },
+        ],
+      ),
     );
   }
 
-  Future<void> _launchURL(String url) async {
-    // Ensure the URL has a scheme
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://$url';
-    }
+  /// All / My chips.
+  Widget _buildFilterChips(NewsProvider provider) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        ChoiceChip(
+          backgroundColor: Colors.transparent,
+          selectedColor: ThemeColor.theme_blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+            side: BorderSide(color: ThemeColor.theme_blue),
+          ),
+          label: Text(
+            S.of(context).allNews,
+            style: TextStyle(
+              color: !provider.myNews ? Colors.white : Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          selected: !provider.myNews,
+          onSelected: (_) => provider.toggleMyNews(false),
+        ),
+        ChoiceChip(
+          backgroundColor: Colors.transparent,
+          selectedColor: ThemeColor.theme_blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+            side: BorderSide(color: ThemeColor.theme_blue),
+          ),
+          label: Text(
+            "My News",
+            style: TextStyle(
+              color: provider.myNews ? Colors.white : Colors.black,
+              fontSize: 12.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          selected: provider.myNews,
+          onSelected: (_) => provider.toggleMyNews(true),
+        ),
+      ],
+    );
+  }
 
-    final Uri uri = Uri.parse(url);
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Text(
+          S.of(context).noRecordFound,
+          style: TextStyle(
+            color: ThemeColor.theme_blue,
+            fontSize: 14.sp,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Single news card.
+  Widget _newsItem(BuildContext context, {required Content content, required NewsProvider provider}) {
+    final bool isOwner = _loggedUser?.content?.first.id == content.userId;
+
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(bottom: 8.h),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          left: BorderSide(color: Color(0x192C363F)),
+          top: BorderSide(color: Color(0x192C363F)),
+          right: BorderSide(color: Color(0x192C363F)),
+          bottom: BorderSide(width: 1, color: Color(0x192C363F)),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── Header row ──────────────────────────────────────────────
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  content.topicName ?? '-',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Text(
+                content.date as String,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(width: 10.w),
+              if (isOwner)
+                InkWell(
+                  onTap: () => _showDeletePopup(content, provider),
+                  child: CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Colors.red.shade50,
+                    child: SvgPicture.asset(Images.delete, width: 20.w, height: 20.h),
+                  ),
+                ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+
+          // ── Description ─────────────────────────────────────────────
+          Text(
+            content.description ?? '',
+            style: TextStyle(
+              color: const Color(0x99001E49),
+              fontSize: 10.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+          ),
+          SizedBox(height: 10.h),
+
+          // ── Image (cached) ──────────────────────────────────────────
+          if ((content.image ?? '').isNotEmpty)
+            CachedNetworkImage(
+              imageUrl: content.image!,
+              fit: BoxFit.cover,
+              placeholder: (_, __) => const Center(child: CircularProgressIndicator()),
+              errorWidget: (_, __, ___) => const Icon(Icons.error),
+            ),
+          SizedBox(height: 10.h),
+
+          // ── YouTube link ───────────────────────────────────────────
+          if ((content.youtubeLink ?? '').isNotEmpty)
+            GestureDetector(
+              onTap: () => _launchURL(content.youtubeLink!),
+              child: Text(
+                content.youtubeLink!,
+                style: TextStyle(
+                  color: const Color(0x99126CEE),
+                  fontSize: 12.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  // ────────────────────────── ACTIONS ───────────────────────────────
+  Future<void> _launchURL(String url) async {
+    final normalised = url.startsWith(RegExp(r'https?://')) ? url : 'https://$url';
+    final uri = Uri.parse(normalised);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      throw 'Could not launch $url';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $normalised')),
+      );
     }
   }
 
-  Future<void> showDeletePopup(Content content, NewsProvider provider) {
+  Future<void> _showDeletePopup(Content content, NewsProvider provider) {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
-          content:  SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(S().deleteMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
-
-              ],
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          S.of(ctx).delete,
+          style: TextStyle(fontFamily: AppConstant.FONTFAMILY, color: ThemeColor.theme_blue),
+        ),
+        content: Text(
+          S.of(ctx).deleteMsg,
+          style: TextStyle(fontFamily: AppConstant.FONTFAMILY, color: ThemeColor.theme_blue),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              provider.deletePost(content, ctx);
+              Navigator.pop(ctx);
+            },
+            child: Text(
+              S.of(ctx).delete,
+              style: TextStyle(fontFamily: AppConstant.FONTFAMILY, color: ThemeColor.red),
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              child:  Text(S().delete,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
-              onPressed: () {
-                provider.deletePost(content, context);
-                Navigator.of(context).pop();
-              },
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(
+              S.of(ctx).no,
+              style: TextStyle(fontFamily: AppConstant.FONTFAMILY, color: ThemeColor.green),
             ),
-            TextButton(
-              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
   }
 }

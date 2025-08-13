@@ -89,7 +89,7 @@ class Utils {
   }
 
   callPrivacyAndPolicy(BuildContext context) async {
-    const url = 'https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1716531122336-tkd_privacy_policy.txt';
+    const url = 'https://tkd-images.s3.ap-south-1.amazonaws.com/1753176642391-tkd_privacy_policy.txt';
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
@@ -106,7 +106,7 @@ class Utils {
 
   callTermsAndCondition(BuildContext context) async {
     
-    const url = 'https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1713253757588-1711368168541-termsadnCondition_(1).pdf';
+    const url = 'https://tkd-images.s3.ap-south-1.amazonaws.com/1713253757588-1711368168541-termsadnCondition_(1).pdf';
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }

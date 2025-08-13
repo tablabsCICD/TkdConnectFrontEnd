@@ -19,7 +19,8 @@ import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class DirectoryScreen extends StatefulWidget {
-  const DirectoryScreen({super.key});
+  bool? isBase;
+  DirectoryScreen({super.key,required this.isBase});
 
   @override
   State<StatefulWidget> createState() {
@@ -117,7 +118,13 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           ),
         ),
       ),
-      child: provider.filterisVisible ? searchBoxFilter(): const SizedBox(),
+      child: Row(
+        children: [
+          widget.isBase==false?IconButton(onPressed: (){Navigator.of(context).pop();}, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)):SizedBox.shrink(),
+
+          provider.filterisVisible ? searchBoxFilter(): const SizedBox(),
+        ],
+      )
     );
   }
 

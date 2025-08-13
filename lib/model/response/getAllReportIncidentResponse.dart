@@ -34,7 +34,7 @@ class GetAllReportIncidentResponse {
   );
 
   Map<String, dynamic> toJson() => {
-    "content": content == null ? [] : List<dynamic>.from(content!.map((x) => x.toJson())),
+    "content": content == [] || content == null ? [] : List<dynamic>.from(content!.map((x) => x.toJson())),
     "last": last,
     "totalElements": totalElements,
     "totalPages": totalPages,
@@ -60,6 +60,7 @@ class IncidentObject {
   dynamic cheatedBy;
   dynamic incidentType;
   dynamic isFirLounched;
+  int? mobileNumber;
 
   IncidentObject({
     this.id,
@@ -75,6 +76,7 @@ class IncidentObject {
     this.cheatedBy,
     this.incidentType,
     this.isFirLounched,
+    this.mobileNumber
   });
 
   factory IncidentObject.fromJson(Map<String, dynamic> json) => IncidentObject(
@@ -91,6 +93,7 @@ class IncidentObject {
     cheatedBy: json["cheatedBy"],
     incidentType: json["incidentType"],
     isFirLounched: json["isFIRLounched"],
+    mobileNumber: json["mobileNumber"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -107,5 +110,6 @@ class IncidentObject {
     "cheatedBy": cheatedBy,
     "incidentType": incidentType,
     "isFIRLounched": isFirLounched,
+    "mobileNumber":mobileNumber
   };
 }

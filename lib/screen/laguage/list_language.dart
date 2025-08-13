@@ -13,218 +13,174 @@ import '../../model/request/language_select.dart';
 import '../../route/app_routes.dart';
 import '../../widgets/button.dart';
 
-class ListLanguage extends StatefulWidget{
-  const ListLanguage({super.key});
+class LanguageChange extends StatefulWidget{
+  const LanguageChange({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _ListLanguageState();
+    return _LanguageChange();
   }
 }
 
-class _ListLanguageState extends State<ListLanguage>{
+class _LanguageChange extends State<LanguageChange>{
   List<LanaguageSelect>listLaugaes=LanaguageSelect().getLang();
   bool isLangSelect=false;
   String selectLanguage="en";
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
 
-     body: Container(
-       color: Colors.white,
-      child: Container(
-        margin: EdgeInsets.only(left: 20.w,top: 12.h,right: 20.w),
-        child: Column(
-          children: [
+      body: Container(
+        color: Colors.white,
+        child: Container(
+          margin: EdgeInsets.only(left: 20.w,top: 12.h,right: 20.w),
+          child: Column(
+            children: [
 
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 36.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Textview(
-                    title: 'Choose a language',
-                     TextStyle(
-                      color: Colors.black,
-                      fontSize: 20.sp,
-                       fontFamily:GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 36.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Textview(
+                      title: 'Choose a language',
+                      TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontFamily:GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  InkWell(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child: SvgPicture.asset(Images.close_circle))
-                ],
+                    InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: SvgPicture.asset(Images.close_circle))
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 24.h,),
-           // searchBox(),
-            Expanded(
-              child: ListView.builder(
+              SizedBox(height: 24.h,),
+              Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.all(16),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 0.8,
+                  ),
                   itemCount: listLaugaes.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return laguagesList(index);
-                  }),
-            )
+                    return _languageCircle(context, index);
+                  },
+                ),
+              )
+            ],
 
-          ],
-
+          ),
         ),
       ),
-     ),
-     bottomNavigationBar: Container(
-       margin: EdgeInsets.only(bottom: 60.h,left: 20.w,right: 20.w),
-       child: Button(isEnbale: isLangSelect,title: "Save preferred language", width: MediaQuery.of(context).size.width,height: 52.h,textStyle: TextStyle(
-         color: Colors.white,
-         fontSize: 14.sp,
-         fontFamily: GoogleFonts.poppins().fontFamily,
-         fontWeight: FontWeight.w600,
-       ), onClick: ()async{
-         if(isLangSelect){
-           S.load(Locale(selectLanguage));
-           LocalSharePreferences sharePreferences=LocalSharePreferences();
-           await sharePreferences.setLanguage(selectLanguage);
-           Navigator.pushReplacementNamed(context, AppRoutes.intro_one);
-         }else{
-           ToastMessage.show(context, "Please Select the language");
-         }
-       },),
-     ),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(bottom: 60.h,left: 20.w,right: 20.w),
+        child: Button(isEnbale: isLangSelect,title: "Save preferred language", width: MediaQuery.of(context).size.width,height: 52.h,textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 14.sp,
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          fontWeight: FontWeight.w600,
+        ), onClick: ()async{
+          if(isLangSelect){
+            S.load(Locale(selectLanguage));
+            LocalSharePreferences sharePreferences=LocalSharePreferences();
+            await sharePreferences.setLanguage(selectLanguage);
+            Navigator.pushReplacementNamed(context, AppRoutes.intro_one);
+          }else{
+            ToastMessage.show(context, "Please Select the language");
+          }
+        },),
+      ),
 
-   );
+    );
   }
 
-  searchBox(){
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 52.h,
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 24.w,
-                        height: 24.h,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 24.w,
-                              height: 24.h,
-                              child: Stack(children: [
-                                SvgPicture.asset(Images.search_normal)
 
-                                  ]),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Search a language',
-                            style: TextStyle(
-                              color: const Color(0x662C363F),
-                              fontSize: 14.sp,
-                              fontFamily:GoogleFonts.poppins().fontFamily,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+
+  Widget _languageCircle(BuildContext context, int index) {
+    // Predefined unique border colors
+    final List<Color> borderColors = [
+      Colors.amber,
+      Colors.teal,
+      Colors.orange,
+      Colors.purple,
+      Colors.blue,
+      Colors.indigo,
+      Colors.red,
+      Colors.cyan,
+      Colors.green,
+      Colors.deepOrange,
+    ];
+
+    final language = listLaugaes[index];
+    final borderColor =  borderColors[index % borderColors.length];
+
+    return InkWell(
+      onTap: () {
+        for (int i = 0; i < listLaugaes.length; i++) {
+          listLaugaes[i].isSelect = false;
+        }
+        language.isSelect = true;
+        selectLanguage = language.langCode!;
+        selectLanguage=listLaugaes[index].langCode!;
+        isLangSelect = true;
+        setState(() {});
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: borderColor,
+                    width: 2,
+                  ),
+                  color: language.isSelect!
+                      ?borderColor:Colors.white,
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  (language.langName?.isNotEmpty ?? false)
+                      ? language.langName![0] // First letter of language name
+                      : '',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: language.isSelect!
+                        ?Colors.white:Colors.black,
                   ),
                 ),
-              ],
-            ),
+              ),
+
+            ],
           ),
-          Container(
-            width: 327.w,
-            padding: EdgeInsets.only(top: 4.h),
+          SizedBox(height: 8),
+          Text(
+            language.langName ?? '',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ],
       ),
     );
   }
-
-  laguagesList(int index){
-    return InkWell(
-      onTap: (){
-        for(int i=0;i<listLaugaes.length;i++){
-          listLaugaes[i].isSelect=false;
-        }
-        listLaugaes[index].isSelect=true;
-        selectLanguage=listLaugaes[index].langCode!;
-       // S.load(Locale("hi"));
-        isLangSelect=true;
-      setState(() {
-        });
-        },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 52.h,
-        padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 14.w),
-        decoration: BoxDecoration(
-          color: listLaugaes[index].isSelect!?ThemeColor.select_green:ThemeColor.white,
-          border: const Border(
-
-            bottom: BorderSide(width: 0.50, color: Color(0x332C363F)),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: 52.h,
-                child: Text(
-                  listLaugaes[index].langName!,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily:GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-
-            ),
-            listLaugaes[index].isSelect!? SvgPicture.asset(Images.green_tick,height: 24.h,width: 24.w,):const SizedBox()
-          ],
-        ),
-      ),
-    );
-  }
-
 }
