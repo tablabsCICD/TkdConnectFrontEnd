@@ -225,7 +225,9 @@ class _BuySellScreen extends State<BuySellScreen>{
             height: 5.h,
           ),
 
-
+          BaseWidget().buySellCallButton(((val){
+              Utils().openMenu(val, truckLoad, context);
+          }),_user.content!.first.id!=truckLoad.userId),
 
         ],
       ),
@@ -290,14 +292,14 @@ class _BuySellScreen extends State<BuySellScreen>{
                 height: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.h),
                 decoration:
-                !isTabBuy?const ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
+                !isTabBuy?ShapeDecoration(
+                  color: ThemeColor.theme_blue,
+                  shape: const RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
                 ):
                 const ShapeDecoration(
-                  color: Color(0x19001E49),
+                  color: Colors.white,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
@@ -310,7 +312,7 @@ class _BuySellScreen extends State<BuySellScreen>{
                     Text(
                       S().sell,
                       style: !isTabBuy? TextStyle(
-                        color: const Color(0xCC001E49),
+                        color: Colors.white,
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
@@ -347,13 +349,13 @@ class _BuySellScreen extends State<BuySellScreen>{
               child: Container(
                 height: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.h),
-                decoration: isTabBuy?const ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
+                decoration: isTabBuy?ShapeDecoration(
+                  color: ThemeColor.theme_blue,
+                  shape: const RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
-                ): const ShapeDecoration(
-                  color: Color(0x19001E49),
+                ): ShapeDecoration(
+                  color: Colors.white,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color(0x332C363F)),
                   ),
@@ -366,13 +368,13 @@ class _BuySellScreen extends State<BuySellScreen>{
                     Text(
                       S().buy,
                       style: isTabBuy?TextStyle(
-                        color: const Color(0xCC001E49),
+                        color: Colors.white,
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ):TextStyle(
-                        color: const Color(0xCC001E49),
+                        color: Color(0xCC001E49),
                         fontSize: 12.sp,
                         fontFamily: GoogleFonts.poppins().fontFamily,
                         fontWeight: FontWeight.w600,
@@ -391,21 +393,36 @@ class _BuySellScreen extends State<BuySellScreen>{
   }
 
   listView() {
-    return Container(
-      child: Expanded(
-        child:  RefreshIndicator(
-        onRefresh: _pullRefresh,
-          child: ListView.builder(
-              itemCount: buyVehicleList.length,
-              controller: scrollController,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 10.h),child: iteamBuy(buyVehicleList[index],index),);
-              }),
-        ),
+    return Expanded(
+      child: buyVehicleList.isEmpty
+          ? _buildEmptyState(context)
+          :RefreshIndicator(
+      onRefresh: _pullRefresh,
+        child: ListView.builder(
+            itemCount: buyVehicleList.length,
+            controller: scrollController,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(padding: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 10.h),child: iteamBuy(buyVehicleList[index],index),);
+            }),
       ),
     );
   }
 
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Text(
+          S.of(context).noRecordFound,
+          style: TextStyle(
+            color: ThemeColor.theme_blue,
+            fontSize: 14.sp,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+          ),
+        ),
+      ),
+    );
+  }
   Future<void> _pullRefresh()async{
     selectedPage=0;
     await callBuyApi();
@@ -413,13 +430,14 @@ class _BuySellScreen extends State<BuySellScreen>{
 
 
   List<TruckLoad> buyVehicleList = [];
+
   callBuyApi()async{
 
     ApiResponse response=await ApiHelper().apiWithoutDecodeGet(ApiConstant.BUY_SELL_ALL_CARD(isTabBuy?"Buy":"Sell", selectedPage));
     if(response.status==200){
 
       var type = TruckLoadType.fromJson(response.response);
-      if(         selectedPage==0){
+      if( selectedPage==0){
         buyVehicleList.clear();
       }
       buyVehicleList.addAll(type.content);
@@ -428,7 +446,12 @@ class _BuySellScreen extends State<BuySellScreen>{
 
       });
     }else{
+      buyVehicleList.clear();
+
       ToastMessage.show(context, "Please try again");
+      setState(() {
+
+      });
     }
 
   }

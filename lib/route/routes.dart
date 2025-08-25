@@ -22,6 +22,7 @@ import 'package:tkd_connect/screen/report_incident/report_incident_form.dart';
 import 'package:tkd_connect/screen/report_incident/report_incident_list.dart';
 import 'package:tkd_connect/screen/search/search_edit_screen.dart';
 import 'package:tkd_connect/screen/search/search_result_screen.dart';
+import 'package:tkd_connect/splash_screen.dart';
 
 import '../entry_screen.dart';
 import '../model/response/AllCard.dart';
@@ -181,7 +182,7 @@ class RouteGenerator {
 
        default:
       //
-         return buildRoute(const EntryScreen(), settings: settings);
+         return buildRoute(const SplashScreen(), settings: settings);
     }
   }
 

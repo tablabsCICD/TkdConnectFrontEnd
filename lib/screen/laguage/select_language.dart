@@ -25,7 +25,7 @@ class SelectLanguageScreen extends StatelessWidget{
          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-           SvgPicture.asset(Images.logo,height: 93.h,width: 160.w,),
+          SvgPicture.asset(Images.logo,height: 93.h,width: 160.w,),
             SizedBox(height: 39.h,),
             Center(
               child: InkWell(

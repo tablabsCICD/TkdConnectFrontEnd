@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
 import 'package:tkd_connect/screen/directory/directory_screen.dart';
 import 'package:tkd_connect/screen/jobs/job_list_screen.dart';
+import 'package:tkd_connect/screen/more/edit_profile/edit_profile_base_screen.dart';
+import 'package:tkd_connect/screen/my_bids/my_bids_base_screen.dart';
 import 'package:tkd_connect/screen/news/allNews.dart';
 import 'package:tkd_connect/screen/report_incident/report_incident_list.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
@@ -31,33 +33,39 @@ import '../../../widgets/button.dart';
 import '../../../widgets/card/base_widgets.dart';
 import '../../../widgets/card/dashboard_cards.dart';
 import '../../../widgets/textview.dart';
+import '../../app_setting/lang_change.dart';
 import 'home_page.dart';
 
 class NewHomeScreen extends StatelessWidget implements DeletePostInf{
-  final List<_MenuItem> menuItems = [
-    _MenuItem('Load Post', Icons.local_shipping, HomeScreen(),Images.new_load_post),
-    _MenuItem('Finance', Icons.attach_money, HomeScreen(),Images.new_finance),
-    _MenuItem('Insurance', Icons.verified_user, HomeScreen(),Images.new_insurane),
-    _MenuItem('Toll Recharge', Icons.credit_card, HomeScreen(),Images.new_toll),
-    _MenuItem('Check RTO Documents', Icons.insert_drive_file, HomeScreen(),Images.new_mParivahan),
-    _MenuItem('Transport Directory', Icons.menu_book, DirectoryScreen(isBase:false),Images.new_transport_directory),
-    _MenuItem('News', Icons.newspaper, AllNewsScreen(isBase: false,),Images.new_news),
-    _MenuItem('Jobs', Icons.person, JobListScreen(),Images.new_jobs),
-    _MenuItem('Buy/Sell Vehicles', Icons.directions_car, BuySellScreen(),Images.new_buy_sell),
-  ];
+
 
   late HomeScreenProvider homeScreenProvider;
   late BuildContext context;
 
   @override
   Widget build(BuildContext context) {
+    final List<_MenuItem> menuItems = [
+      _MenuItem(S.of(context).loadPost, Icons.local_shipping, HomeScreen(),Images.new_load_post,1),
+      _MenuItem(S.of(context).financeInquiry, Icons.attach_money, HomeScreen(),Images.new_finance,2),
+      _MenuItem(S.of(context).insurance, Icons.verified_user, HomeScreen(),Images.new_insurane,3),
+      _MenuItem(S.of(context).tollCalculation, Icons.credit_card, HomeScreen(),Images.new_toll,4),
+      _MenuItem(S.of(context).checkRTODocs, Icons.insert_drive_file, HomeScreen(),Images.new_mParivahan,5),
+      _MenuItem(S.of(context).transportDirectory, Icons.menu_book, DirectoryScreen(isBase:false),Images.new_transport_directory,6),
+      _MenuItem(S.of(context).news, Icons.newspaper, AllNewsScreen(isBase: false,),Images.new_news,7),
+      _MenuItem(S.of(context).jobs, Icons.person, JobListScreen(),Images.new_jobs,8),
+      _MenuItem(S.of(context).buySellVehicle, Icons.directions_car, BuySellScreen(),Images.new_buy_sell,9),
+      _MenuItem(S.of(context).myQuote, Icons.person, MyBidsBaseScreen(),Images.my_quote,10),
+      _MenuItem(S.of(context).profile, Icons.directions_car, EditProfileBaseScreen(),Images.new_profile,11),
+      _MenuItem(S.of(context).language, Icons.language, ReportIncidentList(),Images.language,12),
+    ];
+
     return ChangeNotifierProvider(
       create: (BuildContext context) => HomeScreenProvider(context),
-      builder: (context, child) => _buildPage(context),
+      builder: (context, child) => _buildPage(context,menuItems),
     );
   }
 
-  _buildPage(BuildContext context) {
+  _buildPage(BuildContext context,List<_MenuItem> menuItems) {
     this.context=context;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -75,10 +83,9 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
               ),
               topBar(provider),
               SizedBox(
-                width: 11.5.w,
+                height: 16.h,
               ),
-              provider.filterisVisible ? const SizedBox() : filterBox(),
-              provider.filterisVisible ? routeSelect() : const SizedBox(),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16), // No top padding
                 child: GridView.builder(
@@ -99,26 +106,41 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
               ),
 
               // Report Incident Button
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 5),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => ReportIncidentList()));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+             Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 21,vertical: 15),
+                child: SizedBox(
+                  height: 70.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => ReportIncidentList()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 50),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Report Incident',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Images.new_report_incident,
+                          height: 30.h,
+                          width: 35.w,
+                        ),
+                        SizedBox(width: 10.w,),
+                        Text(
+                          S.of(context).reportIncident,
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
+            /*  SizedBox(
                 height: 12.h,
               ),
               Expanded(
@@ -136,11 +158,12 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                             child: setCardToList(index, provider,provider.truckLoadTypeList[index]),
                           );
                         }),
-                  )),
+                  )),*/
             ],
           ),
         );}
       ),
+
     );
   }
 
@@ -278,145 +301,127 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
     );
   }
 
-  topBar(HomeScreenProvider provider) {
+  Widget topBar(HomeScreenProvider provider) {
     return Consumer<HomeScreenProvider>(
       builder: (context, provider, child) {
         return Container(
-            width: 375.w,
-            height: provider.filterisVisible ? 202.h : 136.h,
-            padding: EdgeInsets.symmetric(horizontal: 24.h),
-            decoration: ShapeDecoration(
-              color: ThemeColor.red,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                ),
+          width: 375.w,
+          height: provider.filterisVisible ? 204.h : 120.h,
+          padding: EdgeInsets.symmetric(horizontal: 24.h),
+          decoration: ShapeDecoration(
+            color: ThemeColor.red,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
               ),
             ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, AppRoutes.editprofile);
-                      },
-                      child: Column(
-                        children: [
-                          // SvgPicture.asset(
-                          //   Images.profilepicture,
-                          //   color: Colors.white,
-                          //   width: 40.w,
-                          //   height: 40.h,
-                          // ),
-                          InkWell(
-                            onTap: (){
-                              Navigator.pushNamed(context, AppRoutes.editprofile);
-                            },
-                            child:  BaseWidget().getImageclip(provider.imageUrl,
-                                height: 40.h, width: 40.w),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: 50.h),
+
+              /// Top action row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  switchNewAppOldApp(),
+                  SizedBox(width: 10.5.w),
+
+                  IconButton(
+                    icon: const Icon(
+                      Icons.report_problem_outlined,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                    onPressed: () => _showPopup(context),
+                  ),
+                  SizedBox(width: 5.w),
+
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                    child: SvgPicture.asset(
+                      Images.search_normal,
+                      color: Colors.white,
+                      width: 24.w,
+                      height: 24.h,
+                    ),
+                  ),
+                  SizedBox(width: 15.5.w),
+
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.notificationlist),
+                    child: SvgPicture.asset(
+                      Images.notification,
+                      color: Colors.white,
+                      width: 24.w,
+                      height: 24.h,
+                    ),
+                  ),
+                  SizedBox(width: 15.5.w),
+
+                  /// Profile section
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.editprofile),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(
+                              context, AppRoutes.editprofile),
+                          child: BaseWidget().getImageclip(
+                            provider.imageUrl,
+                            height: 40.h,
+                            width: 40.w,
                           ),
-
-                          Container(
-                            transform:
-                            Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                            width: 42.w,
-                            height: 12.h,
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
-                            decoration: ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r)),
+                        ),
+                        Container(
+                          transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
+                          width: 42.w,
+                          height: 12.h,
+                          padding: EdgeInsets.symmetric(horizontal: 4.h),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                Utils().getSelectedPackageImage(provider.ispaid),
+                                height: 8.h,
+                                width: 8.w,
+                              ),
+                              SizedBox(width: 1.w),
+                              Text(
+                                Utils().getSelectedPackageName(provider.ispaid),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8.sp,
+                                  fontFamily: AppConstant.FONTFAMILY,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 15.5.w),
+                ],
+              ),
 
-                                SvgPicture.asset(
-                                  Utils().getSelectedPackageImage(provider.ispaid),
-                                  height: 8.h,
-                                  width: 8.w,
-                                ),
-                                SizedBox(
-                                  width: 1.w,
-                                ),
-                                Text(
-                                  Utils().getSelectedPackageName(provider.ispaid),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 8.sp,
-                                    fontFamily: AppConstant.FONTFAMILY,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 35.5.w,
-                    ),
-                    switchNewAppOldApp(),
-                    SizedBox(
-                      width: 10.5.w,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.report_problem_outlined,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                      onPressed: () {
-                        _showPopup(context);
-                      },
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.search);
-                      },
-                      child: SvgPicture.asset(
-                        Images.search_normal,
-                        color: Colors.white,
-                        width: 24.w,
-                        height: 24.h,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15.5.w,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.notificationlist);
-                      },
-                      child: SvgPicture.asset(
-                        Images.notification,
-                        color: Colors.white,
-                        width: 24.w,
-                        height: 24.h,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: provider.filterisVisible ? 16 : 0,
-                ),
-                provider.filterisVisible ? filterBox() : const SizedBox(),
-              ],
-            ));
+
+            ],
+          ),
+        );
       },
     );
   }
@@ -425,14 +430,6 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
     return SizedBox(
       width: 136.w,
       height: 28.h,
-      //clipBehavior: Clip.antiAlias,
-      // decoration: ShapeDecoration(
-      //   color: ThemeColor.border_grey,
-      //   shape: RoundedRectangleBorder(
-      //     side: BorderSide(color: ThemeColor.red),
-      //     borderRadius: BorderRadius.circular(8.r),
-      //   ),
-      // ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1109,14 +1106,16 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
       child: InkWell(
 
         onTap: (){
-          if(item.title=="Check RTO Documents"){
+          if(item.number==5){
             callMParivahan();
-          }else if(item.title=="Toll Recharge"){
+          }else if(item.number==4){
             callTollCalculation();
-          }else  if(item.title=="Insurance"){
+          }else  if(item.number==3){
             showInsuranceDialog(context,"Insurance enquiry");
-          }else  if(item.title=="Finance"){
+          }else  if(item.number==2){
             showInsuranceDialog(context,"Finance enquiry");
+          }else  if(item.number==12){
+            showBootomSheet(context);
           }else{
             Navigator.push(
                 context,
@@ -1145,6 +1144,15 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
         ),
       ),
     );
+  }
+
+  void showBootomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return const FractionallySizedBox(heightFactor:0.7,child:ListLanguageChange());
+        });
   }
 
   Future<void> showInsuranceDialog(BuildContext context, String enquiry) async {
@@ -1207,6 +1215,7 @@ class _MenuItem {
   final IconData icon;
   final Widget screen;
   final String image;
-  _MenuItem(this.title, this.icon, this.screen,this.image);
+  final int number;
+  _MenuItem(this.title, this.icon, this.screen,this.image,this.number);
 }
 

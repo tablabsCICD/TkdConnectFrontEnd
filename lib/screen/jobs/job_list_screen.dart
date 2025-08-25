@@ -42,7 +42,7 @@ class _JobListState extends State<JobListScreen> {
         child: Column(
           children: [
             BaseWidget().appBarSearchFilter(context, S().jobs),
-            SizedBox(
+            searchBoxFilter(),            SizedBox(
               height: 20.h,
             ),
             Expanded(
@@ -152,6 +152,77 @@ class _JobListState extends State<JobListScreen> {
     );
   }
 
+  searchBoxFilter() {
+    return Consumer<JobListProvider>(
+      builder: (context, provider, child) {
+        return Container(
+         // width: 300.w,
+          height: 52.h,
+
+          margin: const EdgeInsets.fromLTRB(20,16,20,0),
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 24.w,
+                height: 24.h,
+                margin: EdgeInsets.only(left: 10.w),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 24.w,
+                      height: 24.h,
+                      child: Stack(children: [
+                        SvgPicture.asset(Images.search_normal)
+                      ]),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: SizedBox(
+                  child: TextField(
+                    controller: provider.searchQuery,
+                    onChanged: (value) {
+                      provider.getBySearchData();
+                    },
+                    decoration: InputDecoration(
+                        hintText: "Search by user,salary,experience",
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                          color: const Color(0x662C363F),
+                          fontSize: 14.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w400,
+                        )),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   jobCard(JobData jobData) {
     return Container(

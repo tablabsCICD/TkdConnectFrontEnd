@@ -41,7 +41,6 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
              Container(
              transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
              child: popUpmenu((p0) => (){
-
           }, context)),
           Visibility(
            visible: provider.isMyPlacedBids,
@@ -77,7 +76,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
       builder: (context, provider, child) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: 137.h,
+          height: 145.h,
           //padding: const EdgeInsets.only(bottom: 16),
           decoration: const ShapeDecoration(
             color: Color(0xFFC3262C),
@@ -93,6 +92,11 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20.h,),
+              SizedBox(height: 0.h,child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: IconButton(onPressed: (){Navigator.of(context).pop();},icon: Icon(Icons.arrow_back_ios,color: Colors.white,),),
+              ),),
               SizedBox(
                 width: double.infinity,
                 height: 92.h,
@@ -138,7 +142,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 12.h),
                                         decoration: ShapeDecoration(
-                                          color: provider.isMyPlacedBids?Colors.white:ThemeColor.theme_blue,
+                                          color: provider.isMyPlacedBids?ThemeColor.theme_blue:Colors.white,
                                           shape: const RoundedRectangleBorder(
                                             side: BorderSide(
                                                 color: Color(0x332C363F)),
@@ -154,7 +158,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                             Text(
                                               S().quotesYouPlaced,
                                               style: TextStyle(
-                                                color:provider.isMyPlacedBids?ThemeColor.theme_blue:Colors.white,
+                                                color:provider.isMyPlacedBids?Colors.white:ThemeColor.theme_blue,
                                                 fontSize: 12,
                                                 fontFamily: AppConstant.FONTFAMILY,
                                                 fontWeight: provider.isMyPlacedBids?FontWeight.w600:FontWeight.w400,
@@ -176,7 +180,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 12.h),
                                           decoration: ShapeDecoration(
-                                            color: provider.isMyPlacedBids?const Color(0xFF9D1C21):Colors.white,
+                                            color: provider.isMyPlacedBids?Colors.white:ThemeColor.theme_blue,
                                             shape: const RoundedRectangleBorder(
                                               side: BorderSide(
                                                   color: Color(0x332C363F)),
@@ -192,7 +196,7 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
                                               Text(
                                                 S().quotesYouReceived,
                                                 style: TextStyle(
-                                                  color:provider.isMyPlacedBids? Colors.white:const Color(0xFFC3262C),
+                                                  color:provider.isMyPlacedBids? ThemeColor.theme_blue:Colors.white,
                                                   fontSize: 12,
                                                   fontFamily: AppConstant.FONTFAMILY,
                                                   fontWeight:provider.isMyPlacedBids? FontWeight.w400:FontWeight.w600,

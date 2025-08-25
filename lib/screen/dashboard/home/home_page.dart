@@ -86,16 +86,62 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
           );
         },
       ),
-    /*  floatingActionButton:IconButton(
-        icon: Icon(
-          Icons.report_problem,
-          color: Colors.red,
-          size: 50,
-        ),
-        onPressed: () {
-          _showPopup(context);
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: InkWell(
+        onTap: ()async{
+          var ob= await Navigator.pushNamed(context,AppRoutes.create_post);
+          if(ob==1){
+            refreshHome();
+          }
         },
-      ),*/
+        child: Container(
+          width: 155.w,
+          height: 38.h,
+          padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+          decoration: ShapeDecoration(
+            color: ThemeColor.theme_blue,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                S().createPost,
+                style: TextStyle(
+                  color: ThemeColor.progress_color,
+                  fontSize: 12.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(
+                width: 2.w,
+              ),
+              SizedBox(
+                width: 16.w,
+                height: 16.w,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 16.w,
+                      height: 16.w,
+                      child: Stack(children: [
+                        SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
+
+                      ]),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -233,145 +279,137 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
     );
   }
 
-  topBar(HomeScreenProvider provider) {
+  Widget topBar(HomeScreenProvider provider) {
     return Consumer<HomeScreenProvider>(
       builder: (context, provider, child) {
         return Container(
-            width: 375.w,
-            height: provider.filterisVisible ? 202.h : 136.h,
-            padding: EdgeInsets.symmetric(horizontal: 24.h),
-            decoration: ShapeDecoration(
-              color: ThemeColor.red,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                ),
+          width: 375.w,
+          height: provider.filterisVisible ? 202.h : 136.h,
+          padding: EdgeInsets.symmetric(horizontal: 24.h),
+          decoration: ShapeDecoration(
+            color: ThemeColor.red,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
               ),
             ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 30.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, AppRoutes.editprofile);
-                      },
-                      child: Column(
-                        children: [
-                          // SvgPicture.asset(
-                          //   Images.profilepicture,
-                          //   color: Colors.white,
-                          //   width: 40.w,
-                          //   height: 40.h,
-                          // ),
-                         InkWell(
-                           onTap: (){
-                             Navigator.pushNamed(context, AppRoutes.editprofile);
-                           },
-                           child:  BaseWidget().getImageclip(provider.imageUrl,
-                               height: 40.h, width: 40.w),
-                         ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: 36.h),
 
-                          Container(
-                            transform:
-                                Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                            width: 42.w,
-                            height: 12.h,
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
-                            decoration: ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r)),
+              /// Top action row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(onTap: (){Navigator.of(context).pop();},child: Icon(Icons.arrow_back_ios,color: Colors.white,),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      switchNewAppOldApp(),
+                      SizedBox(width: 10.5.w),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.report_problem_outlined,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        onPressed: () => _showPopup(context),
+                      ),
+                      SizedBox(width: 5.w),
+
+                      InkWell(
+                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                        child: SvgPicture.asset(
+                          Images.search_normal,
+                          color: Colors.white,
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                      ),
+                      SizedBox(width: 15.5.w),
+
+                      InkWell(
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.notificationlist),
+                        child: SvgPicture.asset(
+                          Images.notification,
+                          color: Colors.white,
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                      ),
+                      SizedBox(width: 15.5.w),
+
+                      /// Profile section
+                      InkWell(
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.editprofile),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () => Navigator.pushNamed(
+                                  context, AppRoutes.editprofile),
+                              child: BaseWidget().getImageclip(
+                                provider.imageUrl,
+                                height: 40.h,
+                                width: 40.w,
+                              ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-
-                                SvgPicture.asset(
-                                  Utils().getSelectedPackageImage(provider.ispaid),
-                                  height: 8.h,
-                                  width: 8.w,
+                            Container(
+                              transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
+                              width: 42.w,
+                              height: 12.h,
+                              padding: EdgeInsets.symmetric(horizontal: 4.h),
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
                                 ),
-                                SizedBox(
-                                  width: 1.w,
-                                ),
-                                Text(
-                                  Utils().getSelectedPackageName(provider.ispaid),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 8.sp,
-                                    fontFamily: AppConstant.FONTFAMILY,
-                                    fontWeight: FontWeight.w600,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    Utils().getSelectedPackageImage(provider.ispaid),
+                                    height: 8.h,
+                                    width: 8.w,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 1.w),
+                                  Text(
+                                    Utils().getSelectedPackageName(provider.ispaid),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 8.sp,
+                                      fontFamily: AppConstant.FONTFAMILY,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 35.5.w,
-                    ),
-                    switchNewAppOldApp(),
-                    SizedBox(
-                      width: 10.5.w,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.report_problem_outlined,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                      onPressed: () {
-                        _showPopup(context);
-                      },
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.search);
-                      },
-                      child: SvgPicture.asset(
-                        Images.search_normal,
-                        color: Colors.white,
-                        width: 24.w,
-                        height: 24.h,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15.5.w,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.notificationlist);
-                      },
-                      child: SvgPicture.asset(
-                        Images.notification,
-                        color: Colors.white,
-                        width: 24.w,
-                        height: 24.h,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: provider.filterisVisible ? 16 : 0,
-                ),
-                provider.filterisVisible ? filterBox() : const SizedBox(),
-              ],
-            ));
+                      SizedBox(width: 15.5.w),
+                    ],
+                  ),
+                ],
+              ),
+
+              SizedBox(height: provider.filterisVisible ? 16 : 0),
+
+              /// Filter box
+              provider.filterisVisible
+                  ? filterBox()
+                  : const SizedBox(),
+            ],
+          ),
+        );
       },
     );
   }

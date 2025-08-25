@@ -1185,6 +1185,101 @@ class BaseWidget {
     );
   }
 
+  Widget buySellCallButton(Function(int) onMenuTap, bool isDeleteVisible) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(right: 8.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: isDeleteVisible,
+            child: InkWell(
+              onTap: () {
+                onMenuTap(2);
+              },
+              child: Container(
+                height: 38.h,
+                width: 113.w,
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      S().call,
+                      style: TextStyle(
+                        color: ThemeColor.black,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                   // SvgPicture.asset(Images.delete)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Visibility(
+            visible: isDeleteVisible,
+            child: InkWell(
+              onTap: () {
+                onMenuTap(1);
+              },
+              child: Container(
+                height: 38.h,
+                width: 113.w,
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 0.50.w, color: const Color(0x33001E49)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      S().chat,
+                      style: TextStyle(
+                        color: ThemeColor.black,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    // SvgPicture.asset(Images.delete)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Visibility(
+              visible: isDeleteVisible,
+              child: InkWell(onTap: () {}, child: popUpmenu(onMenuTap)))
+        ],
+      ),
+    );
+  }
+
+
+
   Widget buyDeleteButton(Function(int) onMenuTap, bool isDeleteVisible) {
     return Container(
       width: double.infinity,
@@ -1225,14 +1320,16 @@ class BaseWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                   // SvgPicture.asset(Images.delete)
+                    // SvgPicture.asset(Images.delete)
                   ],
                 ),
               ),
             ),
           ),
           SizedBox(width: 8.w),
-          InkWell(onTap: () {}, child: popUpmenu(onMenuTap))
+          Visibility(
+              visible: isDeleteVisible,
+              child: InkWell(onTap: () {}, child: popUpmenu(onMenuTap)))
         ],
       ),
     );

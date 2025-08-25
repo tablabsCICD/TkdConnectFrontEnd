@@ -170,11 +170,17 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           SizedBox(
             height: 8.h,
           ),
-          postBidData.bidings!.isEmpty
+         /* postBidData.bidings!.isEmpty
               ? SizedBox.shrink()
-              : Row(
+              :*/ Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text("(Your quote)", style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w400,
+                    ),),
+                    SizedBox(width: 5.w,),
                     Icon(Icons.list,
                         color: !postBidData.genericCardsDto!.showCharts
                             ? ThemeColor.red
@@ -196,6 +202,12 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                         color: postBidData.genericCardsDto!.showCharts
                             ? ThemeColor.red
                             : Colors.grey),
+                    SizedBox(width: 5.w,),
+                    Text("(Average Market Rate)", style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                      fontWeight: FontWeight.w400,
+                    ),),
                   ],
                 ),
           postBidData.genericCardsDto!.showCharts!
@@ -499,34 +511,32 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                 SizedBox(height: 16),
                 Form(
                   key: _formKey,
-                  child: Expanded( // Use Expanded to handle overflow
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          labelText("Vehicle Number"),
-                          SizedBox(height: 8),
-                          EditTextError(
-                            validate: true,
-                            width: 335.w,
-                            height: 52.h,
-                            hint: "Vehicle Number",
-                            controller: _vehicleNumberController,
-                            onChange: (val) {},
-                          ),
-                          SizedBox(height: 12),
-                          labelText("Driver Number"),
-                          SizedBox(height: 8),
-                          EditTextError(
-                            validate: true,
-                            width: 335.w,
-                            height: 52.h,
-                            keybordType: TextInputType.number,
-                            hint: "Driver Contact Number",
-                            controller: _driverNumberController,
-                            onChange: (val) {},
-                          ),
-                        ],
-                      ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        labelText("Vehicle Number"),
+                        SizedBox(height: 8),
+                        EditTextError(
+                          validate: true,
+                          width: 335.w,
+                          height: 52.h,
+                          hint: "Vehicle Number",
+                          controller: _vehicleNumberController,
+                          onChange: (val) {},
+                        ),
+                        SizedBox(height: 12),
+                        labelText("Driver Number"),
+                        SizedBox(height: 8),
+                        EditTextError(
+                          validate: true,
+                          width: 335.w,
+                          height: 52.h,
+                          keybordType: TextInputType.number,
+                          hint: "Driver Contact Number",
+                          controller: _driverNumberController,
+                          onChange: (val) {},
+                        ),
+                      ],
                     ),
                   ),
                 ),

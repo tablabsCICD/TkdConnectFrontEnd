@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -29,7 +27,6 @@ import '../bulkupload/load_upload.dart';
 import '../kyc/kyc_screen_one.dart';
 import 'package:http/http.dart' as http;
 
-
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
 
@@ -37,63 +34,62 @@ class MoreScreen extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _MoreScreen();
   }
-
 }
-class _MoreScreen extends State<MoreScreen> {
 
+class _MoreScreen extends State<MoreScreen> {
   @override
   void initState() {
     super.initState();
     getLogin();
   }
 
-
   late User user;
-  bool isLoad=true;
+  bool isLoad = true;
 
-  getLogin()async{
-    user=await LocalSharePreferences().getLoginData();
-    isLoad=false;
-    setState(() {
-
-    });
+  getLogin() async {
+    user = await LocalSharePreferences().getLoginData();
+    isLoad = false;
+    setState(() {});
   }
 
   callInsuranceApi(String enquiry) async {
     String url = ApiConstant.INSURANCE_API;
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    Map<String,dynamic> data = {
+    User user =
+        await LocalSharePreferences.localSharePreferences.getLoginData();
+    Map<String, dynamic> data = {
       "date": "",
       "id": 0,
-      "requirement": "I AM INTERESTED IN GETTING A GOOD DEAL FOR Insurance Inquiry.",
+      "requirement":
+          "I AM INTERESTED IN GETTING A GOOD DEAL FOR Insurance Inquiry.",
       "userId": user.content![0].id
     };
-    ApiResponse response=await ApiHelper().postParameter(url, data);
+    ApiResponse response = await ApiHelper().postParameter(url, data);
     print('the resopnse is ${response.status}');
-    if(response.status==200){
+    if (response.status == 200) {
       ToastMessage.show(context, "Insurance Enquiry submitted successfully!");
       Navigator.pop(context);
-    }else{
+    } else {
       ToastMessage.show(context, "Please try again");
     }
   }
 
-
   callFinanceApi(String enquiry) async {
     String url = ApiConstant.FINANCE_API;
-    User user=await LocalSharePreferences.localSharePreferences.getLoginData();
-    Map<String,dynamic> data = {
+    User user =
+        await LocalSharePreferences.localSharePreferences.getLoginData();
+    Map<String, dynamic> data = {
       "date": "",
       "id": 0,
-      "requirement": "I AM INTERESTED IN GETTING A GOOD DEAL FOR Finance Inquiry.",
+      "requirement":
+          "I AM INTERESTED IN GETTING A GOOD DEAL FOR Finance Inquiry.",
       "userId": user.content![0].id
     };
-    ApiResponse response=await ApiHelper().postParameter(url, data);
+    ApiResponse response = await ApiHelper().postParameter(url, data);
     print('the resopnse is ${response.status}');
-    if(response.status==200){
+    if (response.status == 200) {
       ToastMessage.show(context, "Finance Enquiry submitted successfully!");
       Navigator.pop(context);
-    }else{
+    } else {
       ToastMessage.show(context, "Please try again");
     }
   }
@@ -107,15 +103,16 @@ class _MoreScreen extends State<MoreScreen> {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      if(jsonResponse['message']=="success"){
-       // ToastMessage.show(context, jsonResponse['url']);
+      if (jsonResponse['message'] == "success") {
+        // ToastMessage.show(context, jsonResponse['url']);
         debugPrint(jsonResponse['url']);
-        Utils().callDynamicUrl(context,jsonResponse['url']);
-      }else{
-        ToastMessage.show(context, jsonResponse['message']+"Something went wrong!!");
+        Utils().callDynamicUrl(context, jsonResponse['url']);
+      } else {
+        ToastMessage.show(
+            context, jsonResponse['message'] + "Something went wrong!!");
       }
-    //  Navigator.pop(context,1);
-    }else{
+      //  Navigator.pop(context,1);
+    } else {
       ToastMessage.show(context, "Please try again");
     }
   }
@@ -129,154 +126,131 @@ class _MoreScreen extends State<MoreScreen> {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
-      if(jsonResponse['message']=="success"){
-      //  ToastMessage.show(context, jsonResponse['url']);
+      if (jsonResponse['message'] == "success") {
+        //  ToastMessage.show(context, jsonResponse['url']);
         debugPrint(jsonResponse['url']);
-        Utils().callDynamicUrl(context,jsonResponse['url']);
-      }else{
-        ToastMessage.show(context, jsonResponse['message']+"Something went wrong!!");
+        Utils().callDynamicUrl(context, jsonResponse['url']);
+      } else {
+        ToastMessage.show(
+            context, jsonResponse['message'] + "Something went wrong!!");
       }
       //Navigator.pop(context,1);
-    }else{
+    } else {
       ToastMessage.show(context, "Please try again");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: isLoad?Container():SingleChildScrollView(
-          child: Column(
-            children: [
-              topBar(context),
-              item(S().myPost,(){
-                Navigator.pushNamed(context, AppRoutes.mypost);
+        child: isLoad
+            ? Container()
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    topBar(context),
+                    item(S().myPost, () {
+                      Navigator.pushNamed(context, AppRoutes.mypost);
+                    }, FontWeight.w600),
+                    item(S().bulkUpload, () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => BulkUploadLoad()));
+                    }, FontWeight.w600),
+                    item(S().jobs, () {
+                      Navigator.pushNamed(context, AppRoutes.job);
+                    }, FontWeight.w600),
+                    AppConstant.USERTYPE == AppConstant.TRANSPOTER ||
+                            AppConstant.USERTYPE == AppConstant.AGENT
+                        ? item(S().buySell, () {
+                            Navigator.pushNamed(context, AppRoutes.buysell);
+                          }, FontWeight.w600)
+                        : const SizedBox(),
+                    item(S().group, () {
+                      //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
+                      Navigator.pushNamed(context, AppRoutes.group,
+                          arguments: user.content!.first.id);
+                    }, FontWeight.w600),
+                    item(S().change_plan, () {
+                      //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
 
-              },FontWeight.w600),
-              item(S().bulkLoadUpload,(){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>BulkUploadLoad()));
-
-
-              },FontWeight.w600),
-              item(S().jobs,(){
-                Navigator.pushNamed(context, AppRoutes.job);
-
-              },FontWeight.w600),
-              AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.USERTYPE==AppConstant.AGENT?
-              item(S().buySell,(){
-                Navigator.pushNamed(context, AppRoutes.buysell);
-
-              },FontWeight.w600):const SizedBox(),
-              item(S().group,(){
-
-                //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
-                Navigator.pushNamed(context, AppRoutes.group,arguments: user.content!.first.id);
-
-              },FontWeight.w600),
-              item(S().change_plan,(){
-
-                //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
-
-                Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-
-              },FontWeight.w600),
-
-              item(S().getVerified,(){
-
-                openVerifiedTag();
-              },FontWeight.w600),
-               item(S().financeInquiry,(){
-                 showInsuranceDialog(context,"Finance enquiry");
-              },FontWeight.w600),
-              item(S().insurance,(){
-                showInsuranceDialog(context,"Insurance enquiry");
-              },FontWeight.w600),
-              item(S().tollCalculation,(){
-                callTollCalculation();
-
-              },FontWeight.w600),
-              item(S().mParivahan,(){
-                callMParivahan();
-
-              },FontWeight.w600),
-              item("Report Incident",(){
-                Navigator.pushNamed(context, AppRoutes.reportIncidentList);
-              },FontWeight.w600),
-              item(S().appSetting,(){
-                Navigator.pushNamed(context, AppRoutes.appsetting);
-              },FontWeight.w400),
-              item(S().helpSupport,(){
-                Navigator.pushNamed(context, AppRoutes.helpsupport);
-
-              },FontWeight.w400),
-
-              item(S().shareapp,(){
-
-                String meesage="Download TKD Connect now and use it to \n "
-                    "We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly. \n \n "
-                "https://play.google.com/store/apps/details?id=com.pdk.tkd";
-                Utils().callShareFunction(meesage);
-
-
-
-              },FontWeight.w400),
-
-              item(S().rateAndReviewApp,() async {
-                Utils().requestReview(context);
-
-              },FontWeight.w400),
-
-              item(S().terms_condition,() async {
-                Utils().callTermsAndCondition(context);
-
-              },FontWeight.w400),
-
-              item(S().privacyAndPolicy,() async {
-                Utils().callPrivacyAndPolicy(context);
-
-              },FontWeight.w400),
-
-              itemLogout(S().logout,(){
-
-                _showMyDialog();
-
-              },)
-            ],
-          ),
-        ),
+                      Navigator.pushNamed(
+                          context, AppRoutes.registration_plan_details);
+                    }, FontWeight.w600),
+                    item(S().getVerified, () {
+                      openVerifiedTag();
+                    }, FontWeight.w600),
+                    item(S().financeInquiry, () {
+                      showInsuranceDialog(context, "Finance enquiry");
+                    }, FontWeight.w600),
+                    item(S().insurance, () {
+                      showInsuranceDialog(context, "Insurance enquiry");
+                    }, FontWeight.w600),
+                    item(S().tollCalculation, () {
+                      callTollCalculation();
+                    }, FontWeight.w600),
+                    item(S().mParivahan, () {
+                      callMParivahan();
+                    }, FontWeight.w600),
+                    item(S().reportIncident, () {
+                      Navigator.pushNamed(
+                          context, AppRoutes.reportIncidentList);
+                    }, FontWeight.w600),
+                    item(S().appSetting, () {
+                      Navigator.pushNamed(context, AppRoutes.appsetting);
+                    }, FontWeight.w400),
+                    item(S().helpSupport, () {
+                      Navigator.pushNamed(context, AppRoutes.helpsupport);
+                    }, FontWeight.w400),
+                    item(S().shareapp, () {
+                      String meesage =
+                          "Download TKD Connect now and use it to \n "
+                          "We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly. \n \n "
+                          "https://play.google.com/store/apps/details?id=com.pdk.tkd";
+                      Utils().callShareFunction(meesage);
+                    }, FontWeight.w400),
+                    item(S().rateAndReviewApp, () async {
+                      Utils().requestReview(context);
+                    }, FontWeight.w400),
+                    item(S().terms_condition, () async {
+                      Utils().callTermsAndCondition(context);
+                    }, FontWeight.w400),
+                    item(S().privacyAndPolicy, () async {
+                      Utils().callPrivacyAndPolicy(context);
+                    }, FontWeight.w400),
+                    itemLogout(
+                      S().logout,
+                      () {
+                        _showMyDialog();
+                      },
+                    )
+                  ],
+                ),
+              ),
       ),
-
     );
   }
 
-
-  openVerifiedTag()async{
-    int id=user.content!.first.id!;
-
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.VERFIED_USER(id));
-    if(apiResponse.status==200){
-      VerifiedUser bidStateObj=VerifiedUser.fromJson(jsonDecode(apiResponse.response));
-      if(bidStateObj.data==0){
-        showBootomSheet(context);
-      }else{
+  openVerifiedTag() async {
+    int id = user.content!.first.id!;
+    ApiResponse apiResponse =
+        await ApiHelper().apiWithoutDecodeGet(ApiConstant.VERFIED_USER(id));
+    if (apiResponse.status == 200) {
+      VerifiedUser bidStateObj =
+          VerifiedUser.fromJson(jsonDecode(apiResponse.response));
+      if (bidStateObj.data == 0) {
+        //  showBootomSheet(context);
+        comingSoonDailog(context);
+      } else {
         ToastMessage.show(context, "You Already Verified");
       }
-
-    }else{
-    }
-
-
+    } else {}
   }
-
-
-
 
   topBar(BuildContext context) {
     return Container(
         width: 375.w,
-        height:  266.h ,
+        height: 266.h,
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         decoration: ShapeDecoration(
           color: ThemeColor.red,
@@ -294,7 +268,12 @@ class _MoreScreen extends State<MoreScreen> {
             SizedBox(
               height: 20.h,
             ),
-            BaseWidget().getImageclip(user.content!.first.companyLogo!=null?user.content!.first.companyLogo!:"",width: 80.w,height: 112.h),
+            BaseWidget().getImageclip(
+                user.content!.first.companyLogo != null
+                    ? user.content!.first.companyLogo!
+                    : "",
+                width: 80.w,
+                height: 112.h),
             selectedPlan(),
             nameWithVerfiyTag(),
             Text(
@@ -308,7 +287,9 @@ class _MoreScreen extends State<MoreScreen> {
                 height: 0,
               ),
             ),
-            SizedBox(height:6.h,),
+            SizedBox(
+              height: 6.h,
+            ),
             Text(
               user.content!.first.companyAddress!,
               textAlign: TextAlign.center,
@@ -320,22 +301,21 @@ class _MoreScreen extends State<MoreScreen> {
                 height: 0,
               ),
             ),
-            SizedBox(height:6.h,),
+            SizedBox(
+              height: 6.h,
+            ),
             button(context)
           ],
         ));
   }
 
-  selectedPlan(){
-    return  Container(
+  selectedPlan() {
+    return Container(
       transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
-      // width: 36.w,
-      // height: 12.h,
       padding: EdgeInsets.symmetric(horizontal: 4.h),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -347,7 +327,9 @@ class _MoreScreen extends State<MoreScreen> {
             height: 8.h,
             width: 8.w,
           ),
-          SizedBox(width: 4.w,),
+          SizedBox(
+            width: 4.w,
+          ),
           Text(
             Utils().getSelectedPackageName(user.content!.first.isPaid!),
             textAlign: TextAlign.center,
@@ -362,8 +344,8 @@ class _MoreScreen extends State<MoreScreen> {
       ),
     );
   }
-  
-  nameWithVerfiyTag(){
+
+  nameWithVerfiyTag() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -378,24 +360,28 @@ class _MoreScreen extends State<MoreScreen> {
             height: 0,
           ),
         ),
-        SizedBox(width: 8.w,),
-        Visibility(visible:user.content!.first.verified!=0?true:false,child: VerifiedTag().onVeriedTag())
+        SizedBox(
+          width: 8.w,
+        ),
+        Visibility(
+            visible: user.content!.first.verified != 0 ? true : false,
+            child: VerifiedTag().onVeriedTag())
       ],
     );
   }
 
-  button(BuildContext context){
+  button(BuildContext context) {
     return InkWell(
-      onTap: ()async{
-       var obj=await  Navigator.pushNamed(context, AppRoutes.editprofile);
-          if(obj==1){
-            getLogin();
-          }
-       },
+      onTap: () async {
+        var obj = await Navigator.pushNamed(context, AppRoutes.editprofile);
+        if (obj == 1) {
+          getLogin();
+        }
+      },
       child: Container(
         width: 117.w,
         //height: 27.h,
-        padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 1.w, color: Colors.white),
@@ -423,10 +409,9 @@ class _MoreScreen extends State<MoreScreen> {
     );
   }
 
-
-  item(String  title,Function onClick,FontWeight fontWeight){
+  item(String title, Function onClick, FontWeight fontWeight) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onClick();
       },
       child: Container(
@@ -434,12 +419,10 @@ class _MoreScreen extends State<MoreScreen> {
         height: 60.h,
         decoration: const BoxDecoration(
           border: Border(
-
             bottom: BorderSide(width: 1, color: Color(0x192C363F)),
           ),
         ),
         child: Row(
-
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -455,7 +438,6 @@ class _MoreScreen extends State<MoreScreen> {
                       fontSize: 14.sp,
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: fontWeight,
-
                     ),
                   ),
                 ),
@@ -472,9 +454,8 @@ class _MoreScreen extends State<MoreScreen> {
                   SizedBox(
                     width: 24.w,
                     height: 24.h,
-                    child: Stack(children: [
-                      SvgPicture.asset(Images.arrow_right)
-                        ]),
+                    child:
+                        Stack(children: [SvgPicture.asset(Images.arrow_right)]),
                   ),
                 ],
               ),
@@ -485,10 +466,9 @@ class _MoreScreen extends State<MoreScreen> {
     );
   }
 
-
-  itemLogout(String  title,Function onClick){
+  itemLogout(String title, Function onClick) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onClick();
       },
       child: SizedBox(
@@ -527,7 +507,7 @@ class _MoreScreen extends State<MoreScreen> {
                     width: 24.w,
                     height: 24.h,
                     child: const Stack(children: [
-                    //  SvgPicture.asset(Images.arrow_right)
+                      //  SvgPicture.asset(Images.arrow_right)
                     ]),
                   ),
                 ],
@@ -539,45 +519,55 @@ class _MoreScreen extends State<MoreScreen> {
     );
   }
 
-
   void showBootomSheet(BuildContext context) {
-
     showModalBottomSheet<void>(
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          return const FractionallySizedBox(heightFactor:0.7,child: KYCScreenOne());
+          return const FractionallySizedBox(
+              heightFactor: 0.7, child: KYCScreenOne());
         });
-
   }
 
-
-  Future<void> _showMyDialog ()async{
+  Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title:  Text(S().logout,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue)),
-          content:  SingleChildScrollView(
+          title: Text(S().logout,
+              style: TextStyle(
+                  fontFamily: AppConstant.FONTFAMILY,
+                  color: ThemeColor.theme_blue)),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(S().logoutMsg,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.theme_blue),),
-
+                Text(
+                  S().logoutMsg,
+                  style: TextStyle(
+                      fontFamily: AppConstant.FONTFAMILY,
+                      color: ThemeColor.theme_blue),
+                ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child:  Text(S().yes,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.red)),
-              onPressed: () async{
+              child: Text(S().yes,
+                  style: TextStyle(
+                      fontFamily: AppConstant.FONTFAMILY,
+                      color: ThemeColor.red)),
+              onPressed: () async {
                 await LocalSharePreferences().logOut();
-                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.login, (route) => false);
               },
             ),
-
             TextButton(
-              child:  Text(S().no,style: TextStyle(fontFamily: AppConstant.FONTFAMILY,color: ThemeColor.green)),
+              child: Text(S().no,
+                  style: TextStyle(
+                      fontFamily: AppConstant.FONTFAMILY,
+                      color: ThemeColor.green)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -586,8 +576,7 @@ class _MoreScreen extends State<MoreScreen> {
         );
       },
     );
-}
-
+  }
 
   Future<void> showInsuranceDialog(BuildContext context, String enquiry) async {
     final TextEditingController _reasonController = TextEditingController();
@@ -607,7 +596,7 @@ class _MoreScreen extends State<MoreScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-             /* content: SizedBox(
+              /* content: SizedBox(
                 height: 130.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -621,7 +610,7 @@ class _MoreScreen extends State<MoreScreen> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                   *//* SizedBox(height: 16.h,),
+                   */ /* SizedBox(height: 16.h,),
                     EditText(
                       width: 335.w,
                       height: 52.h,
@@ -632,7 +621,7 @@ class _MoreScreen extends State<MoreScreen> {
                           enable = val.isNotEmpty; // Enable button if text is entered
                         });
                       },
-                    ),*//*
+                    ),*/ /*
                   ],
                 ),
               ),*/
@@ -641,7 +630,10 @@ class _MoreScreen extends State<MoreScreen> {
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the dialog
                   },
-                  child: Text('Cancel',style: TextStyle(color: ThemeColor.red),),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: ThemeColor.red),
+                  ),
                 ),
                 Button(
                   width: MediaQuery.of(context).size.width / 3,
@@ -654,11 +646,11 @@ class _MoreScreen extends State<MoreScreen> {
                     fontWeight: FontWeight.w600,
                   ),
                   onClick: () {
-                      if ("Insurance enquiry" == enquiry) {
-                        callInsuranceApi(_reasonController.text);
-                      } else {
-                        callFinanceApi(_reasonController.text);
-                      }
+                    if ("Insurance enquiry" == enquiry) {
+                      callInsuranceApi(_reasonController.text);
+                    } else {
+                      callFinanceApi(_reasonController.text);
+                    }
                   },
                   isEnbale: true,
                 ),
@@ -670,4 +662,34 @@ class _MoreScreen extends State<MoreScreen> {
     );
   }
 
+  comingSoonDailog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Coming Soon" ,style: TextStyle(
+            fontSize: 14.sp,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontWeight: FontWeight.w600,
+          ),),
+          content: Text("This feature will be available soon.", style: TextStyle(
+            fontSize: 12.sp,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontWeight: FontWeight.w400,
+          ),),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("OK", style: TextStyle(
+                fontSize: 16.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.bold,
+                color: Colors.green
+              ),),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

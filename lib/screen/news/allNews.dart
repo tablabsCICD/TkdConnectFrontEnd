@@ -214,7 +214,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             side: BorderSide(color: ThemeColor.theme_blue),
           ),
           label: Text(
-            S.of(context).allNews,
+            S().allNews,
             style: TextStyle(
               color: !provider.myNews ? Colors.white : Colors.black,
               fontSize: 12.sp,
@@ -233,7 +233,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             side: BorderSide(color: ThemeColor.theme_blue),
           ),
           label: Text(
-            "My News",
+            S.of(context).myNews,
             style: TextStyle(
               color: provider.myNews ? Colors.white : Colors.black,
               fontSize: 12.sp,

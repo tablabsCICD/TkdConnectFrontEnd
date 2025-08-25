@@ -128,7 +128,7 @@ class BulkUploadProvider extends BaseProvider {
             TextButton(
               onPressed: () {
                 //
-                uploadFile(context,"http://ec2-13-127-217-17.ap-south-1.compute.amazonaws.com:8080/tkd2/api/uploadFullTruckLoad", file, fields);
+                uploadFile(context,"${ApiConstant.BULK_UPLOAD}", file, fields);
 
               },
               child: Text(

@@ -71,17 +71,19 @@ static String general_post = "assets/images/general_post.svg";
 static String swap = "assets/images/swap.svg";
 
 
-static String new_load_post = "assets/svg/load_post.svg";
-  static String new_jobs = "assets/svg/job.svg";
+  static String new_load_post = "assets/svg/load_post.svg";
+  static String new_jobs = "assets/svg/new_job.svg";
   static String new_buy_sell = "assets/svg/buy_sell.svg";
-  static String new_news = "assets/svg/news.svg";
+  static String new_news = "assets/svg/new_news.svg";
   static String new_report_incident = "assets/svg/incident.svg";
   static String new_toll = "assets/svg/toll.svg";
   static String new_finance = "assets/svg/finance.svg";
   static String new_insurane = "assets/svg/insurance.svg";
   static String new_mParivahan = "assets/svg/mParivahan.svg";
   static String new_transport_directory = "assets/svg/directory.svg";
-
-
-
+  static String reporting = "assets/svg/reporting.svg";
+  static String my_quote = "assets/svg/my_quote.svg";
+  static String language = "assets/svg/language.svg";
+  static String new_load = "assets/svg/load1.svg";
+  static String new_profile = "assets/svg/job.svg";
 }

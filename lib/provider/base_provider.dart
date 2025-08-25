@@ -20,6 +20,7 @@ class BaseProvider extends ChangeNotifier {
     XFile file = await CameraBottomsheet().show(context);
     String response = await ApiHelper().uploadImage(file);
     response = response.replaceAll("\"", "");
+    debugPrint(response);
     return response;
   }
   

@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/screen/dashboard/home/home_page.dart';
 import 'package:tkd_connect/screen/dashboard/home/new_home_screen.dart';
 import 'package:tkd_connect/screen/more/more_screen.dart';
 import 'package:tkd_connect/screen/news/allNews.dart';
@@ -39,87 +40,85 @@ class _BaseDashboard extends State<BaseDashboard>{
     int maintain=0;
   @override
   Widget build(BuildContext context) {
-   return SafeArea(
-     child: Scaffold(
-       body:WillPopScope(
-         onWillPop: onWillPop,child: PageView(
-           controller: controller,
-           onPageChanged: (page){
-             onPageChanges(page);
-           },
-           children: <Widget>[
-             homeScreen,
-             const MyBidsBaseScreen(),
-             DirectoryScreen(isBase:true),
-            AllNewsScreen(isBase:true),
-             const MoreScreen()
-           ],
-         ),
+   return Scaffold(
+     body:WillPopScope(
+       onWillPop: onWillPop,child: PageView(
+         controller: controller,
+         onPageChanged: (page){
+           onPageChanges(page);
+         },
+         children: <Widget>[
+           homeScreen,
+           HomeScreen(),
+           DirectoryScreen(isBase:true),
+          AllNewsScreen(isBase:true),
+           const MoreScreen()
+         ],
        ),
-       
-     
-       bottomNavigationBar: tabs(),
-       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-       floatingActionButton: Visibility(
-         visible: isButtonVisible,
-         child: InkWell(
-           onTap: ()async{
-             var ob= await Navigator.pushNamed(context,AppRoutes.create_post);
-             if(ob==1){
-                homeScreen.refreshHome();
-             }
-           },
-           child: Container(
-             width: 155.w,
-             height: 38.h,
-             padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-             decoration: ShapeDecoration(
-               color: ThemeColor.theme_blue,
-               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-             ),
-             child: Row(
-               mainAxisSize: MainAxisSize.min,
-               mainAxisAlignment: MainAxisAlignment.center,
-               crossAxisAlignment: CrossAxisAlignment.center,
-               children: [
-                 Text(
-                   S().createPost,
-                   style: TextStyle(
-                     color: ThemeColor.progress_color,
-                     fontSize: 12.sp,
-                     fontFamily: GoogleFonts.poppins().fontFamily,
-                     fontWeight: FontWeight.w600,
-                   ),
+     ),
+
+
+     bottomNavigationBar: tabs(),
+     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+     floatingActionButton: Visibility(
+       visible: isButtonVisible,
+       child: InkWell(
+         onTap: ()async{
+           var ob= await Navigator.pushNamed(context,AppRoutes.create_post);
+           if(ob==1){
+              homeScreen.refreshHome();
+           }
+         },
+         child: Container(
+           width: 155.w,
+           height: 38.h,
+           padding:  EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+           decoration: ShapeDecoration(
+             color: ThemeColor.theme_blue,
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+           ),
+           child: Row(
+             mainAxisSize: MainAxisSize.min,
+             mainAxisAlignment: MainAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             children: [
+               Text(
+                 S().createPost,
+                 style: TextStyle(
+                   color: ThemeColor.progress_color,
+                   fontSize: 12.sp,
+                   fontFamily: GoogleFonts.poppins().fontFamily,
+                   fontWeight: FontWeight.w600,
                  ),
-                 SizedBox(
-                   width: 2.w,
+               ),
+               SizedBox(
+                 width: 2.w,
+               ),
+               SizedBox(
+                 width: 16.w,
+                 height: 16.w,
+                 child: Row(
+                   mainAxisSize: MainAxisSize.min,
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   crossAxisAlignment: CrossAxisAlignment.center,
+                   children: [
+                     SizedBox(
+                       width: 16.w,
+                       height: 16.w,
+                       child: Stack(children: [
+                         SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
+
+                       ]),
+                     ),
+                   ],
                  ),
-                 SizedBox(
-                   width: 16.w,
-                   height: 16.w,
-                   child: Row(
-                     mainAxisSize: MainAxisSize.min,
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     crossAxisAlignment: CrossAxisAlignment.center,
-                     children: [
-                       SizedBox(
-                         width: 16.w,
-                         height: 16.w,
-                         child: Stack(children: [
-                           SvgPicture.asset(Images.add,height: 16.h,width: 16.w,)
-     
-                         ]),
-                       ),
-                     ],
-                   ),
-                 ),
-               ],
-             ),
+               ),
+             ],
            ),
          ),
        ),
-         ),
-   );
+     ),
+       );
   }
 
 
@@ -143,7 +142,7 @@ class _BaseDashboard extends State<BaseDashboard>{
             onTap: (){
               onPageChanges(1);
             },
-            child: selectedTab(isMyBid,S().myQuotes,Images.bid),
+            child: selectedTab(isMyBid,S().loads,Images.new_load),
           ),
           InkWell(
             onTap: (){

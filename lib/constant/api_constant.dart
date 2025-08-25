@@ -3,7 +3,7 @@
 class ApiConstant {
   static const String BASE_URL = "https://api.tkdost.com/tkd2/api/";
 
- //static const String BASE_URL = "http://ec2-43-204-150-67.ap-south-1.compute.amazonaws.com:8080/tkd/api/";
+ //static const String BASE_URL = "http://ec2-13-200-229-164.ap-south-1.compute.amazonaws.com:8080/tkd2/api/";
 
   static String  FULL_LOAD_BY_ID = '${BASE_URL}fullTruckLoad/';
 
@@ -85,7 +85,7 @@ class ApiConstant {
   static String HELPSUPPORTIKET = "${BASE_URL}HelpAndSupportTicket";
 
   static String BUY_SELL_ALL_CARD(type, currentPage) =>
-      "${BASE_URL}allCards/buySell?type=$type&&page=$currentPage";
+      "${BASE_URL}allCards/buySell?type=$type&&page=$currentPage&page=10";
   static String POST_JOB = "$BASE_URL/postJob";
   static String GET_CURRENT_VERSION = '${BASE_URL}VersionAndroidAndroid/GetLatestVaersion';
   static String ADHAR_CREATE_TOKEN = '${BASE_URL}Aadhaar/authenticate';
@@ -163,5 +163,8 @@ class ApiConstant {
  static String ADD_REPORT = "${BASE_URL}ReportIncients";
  static String DELETE_INCIDENT(id) => "${BASE_URL}ReportIncients?id=$id";
  static String SEARCH_REPORT(char,id) => "${BASE_URL}getTicketsByUserIdAndSearch/page?userId=$id&keyword=$char&page=0&size=10";
+
+  static String BULK_UPLOAD= "${BASE_URL}uploadFullTruckLoad";
+  static String JOB_SEARCH(search) => "${BASE_URL}postJob/getAllJobsWithSearch?search=$search";
 
 }

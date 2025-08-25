@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -8,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:open_file/open_file.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/notification/local_notification.dart';
 import '../../constant/app_constant.dart';
@@ -19,6 +22,7 @@ import '../../widgets/app_bar.dart';
 import '../../widgets/bottomsheet.dart';
 import '../../widgets/button.dart';
 import '../../widgets/drop_down.dart';
+import 'file_downloader.dart';
 
 class BulkUploadLoad extends StatelessWidget {
   @override
@@ -68,7 +72,7 @@ class BulkUploadLoad extends StatelessWidget {
             SizedBox(height: 10,),
             InkWell(
               onTap: (){
-                downloadFile();
+                FileDownloader.downloadFile(context);
 
               },
               child: Text(
@@ -112,31 +116,51 @@ class BulkUploadLoad extends StatelessWidget {
 
 
 
-
-
-  Future<void> downloadFile() async {
+  Future<void> downloadFileToDownloads() async {
     try {
-      // Get the app's document directory
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/full_truck_load_-_Copy.xls';
+      // Request storage permission
+      var status = await Permission.storage.request();
+      if (!status.isGranted) {
+        print('Storage permission denied!');
+        return;
+      }
 
-      // Create a Dio instance
+      Directory? downloadsDirectory;
+      String fileName = "full_truck_load_-_Copy.xlsx";
+      if (Platform.isAndroid) {
+        final directories = await getExternalStorageDirectories(type: StorageDirectory.downloads);
+        downloadsDirectory = directories?.first;
+      } else if (Platform.isIOS) {
+        downloadsDirectory = await getApplicationDocumentsDirectory();
+      }
+
+      if (downloadsDirectory == null) {
+        print('Could not get downloads directory');
+        return;
+      }
+      final filePath = '${downloadsDirectory.path}/$fileName';
+
       Dio dio = Dio();
+      await dio.download(
+          "https://s3.ap-south-1.amazonaws.com/tkd-images/1724739670774-full_truck_load_-_Copy.xlsx",
+          filePath,
+          onReceiveProgress: (received, total) {
+            if (total != -1) {
+              print((received / total * 100).toStringAsFixed(0) + "%");
+            }
+          }
+      );
 
-      // Download the file
-      await dio.download("https://s3.ap-south-1.amazonaws.com//tkd-images/profileImages//1724739670774-full_truck_load_-_Copy.xlsx", filePath, onReceiveProgress: (received, total) {
-        if (total != -1) {
-          // Print the progress
-          print((received / total * 100).toStringAsFixed(0) + "%");
-        }
-      });
+      // Show notification, open file, etc. Here you should update to point to new path.
       LocalNotificationService.localNotification();
-      OpenFile.open(directory.path);
+      OpenFile.open(filePath);
+
       print('File downloaded to $filePath');
     } catch (e) {
       print('Error downloading file: $e');
     }
   }
+
 
   // Future<void> _checkPermission() async {
   //   final status = await Permission.storage.request();

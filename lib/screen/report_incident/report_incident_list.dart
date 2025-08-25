@@ -101,7 +101,7 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         ),
         child: Text(
-          "Report Your Incident",
+          S.of(context).reportIncident,
           style: TextStyle(
             color: ThemeColor.progress_color,
             fontSize: 12.sp,
@@ -136,12 +136,12 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _chip(
-            label: "All Incident",
+            label: S.of(context).allIncident,
             selected: !provider.myIncident,
             onSelected: () => provider.toggleMyReport(false),
           ),
           _chip(
-            label: "My Incident",
+            label: S.of(context).myIncident,
             selected: provider.myIncident,
             onSelected: () => provider.toggleMyReport(true),
           ),

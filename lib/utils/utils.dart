@@ -342,6 +342,8 @@ class Utils {
         return 'Full vehicle required';
       case 'Part load available':
         return 'Part vehicle required';
+      case 'Part load available ':
+        return 'Part vehicle required';
       case 'Full load required':
         return 'Full load required';
       case 'Part load required':
