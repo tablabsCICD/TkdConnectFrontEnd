@@ -252,10 +252,15 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
     bidPlace.type=widget.truckLoad.type;
     
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.PLACED_BID, bidPlace.toJson());
+    print(ApiConstant.PLACED_BID);
+    print(apiResponse.response);
     if(apiResponse.status==200){
         PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
         if(postUpload.statusCode==401){
           ToastMessage.show(context, "Please update your package");
+          Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+        }else if(postUpload.statusCode==500){
+          ToastMessage.show(context, postUpload.message.toString());
           Navigator.pushNamed(context, AppRoutes.registration_plan_details);
         }else{
           ToastMessage.show(context, "Quote submitted successfully");

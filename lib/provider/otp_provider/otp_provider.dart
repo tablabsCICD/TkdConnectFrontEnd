@@ -94,7 +94,7 @@ class OtpProvider extends BaseProvider{
     print('the device id is $deviceId');
     String otp=textControllerOne.text+textControllerTwo.text+textControllerThree.text+textControllerFour.text+textControllerFive.text+textControllerSix.text;
 
-    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp);
+    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp,deviceId);
     var req = await ApiHelper().apiPost(myUrl);
     if(req.status== 200){
      // try{
@@ -103,7 +103,7 @@ class OtpProvider extends BaseProvider{
           LocalSharePreferences localSharePreferences=LocalSharePreferences();
           localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
           localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(req.response));
-
+          print("User login Response: "+req.response.toString());
           if(isRegistration){
             Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home,(Route<dynamic> route) => false);
           }else{

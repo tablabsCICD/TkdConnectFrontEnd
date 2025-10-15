@@ -14,6 +14,7 @@ class ApiHelper {
     EasyLoading.show(status: "Loading");
     try {
       var request = await dio.get(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -29,6 +30,7 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var request = await dio.get(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -43,6 +45,7 @@ class ApiHelper {
     print(URL);
     try {
       var request = await dio.get(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -56,6 +59,7 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var request = await dio.post(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -70,6 +74,7 @@ class ApiHelper {
     print(URL);
     try {
       var request = await dio.post(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -82,6 +87,7 @@ class ApiHelper {
     print(URL);
     try {
       var request = await dio.put(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -95,6 +101,7 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var request = await dio.put(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -110,6 +117,7 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var request = await dio.post(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -124,7 +132,9 @@ class ApiHelper {
     print(URL);
     try {
       var body = json.encode(data);
+      print(body);
       var request = await dio.put(URL, data: body);
+      print(request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -138,6 +148,7 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var request = await dio.delete(URL);
+      print(request.data);
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -154,7 +165,9 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var body = json.encode(data);
+      print(body);
       final request = await dio.post(url, data: body);
+      print(request.data);
       print("Post response: ${request.data}");
       ApiResponse apiResponseHelper = returnResponse(request);
       return apiResponseHelper;
@@ -171,7 +184,9 @@ class ApiHelper {
     try {
       EasyLoading.show(status: "Loading");
       var body = json.encode(data);
+      print(body);
       final request = await dio.post(url, data: body);
+      print(request.data);
       ApiResponse apiResponseHelper = returnNotDecodeResponse(request);
       return apiResponseHelper;
     } catch (e) {
@@ -190,7 +205,13 @@ class ApiHelper {
           data = json.decode(data);
         }
         return ApiResponse(request.statusCode!, data);
-      } else {
+      } else if (request.statusCode == 500) {
+        var data = request.data;
+        if (data is String) {
+          data = json.decode(data);
+        }
+        return ApiResponse(request.statusCode!, data);
+      }else{
         return ApiResponse(request.statusCode!, null);
       }
     } catch (e) {

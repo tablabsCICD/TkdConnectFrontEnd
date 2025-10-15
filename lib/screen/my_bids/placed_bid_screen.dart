@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/bid_placed.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
 import '../../generated/l10n.dart';
+import '../../network/geo_helper.dart';
 import '../../provider/mybids/my_bids_provider.dart';
 import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/editText.dart';
+import '../tracking/vehicle_tracking.dart';
 
 class PlacedBidScreen extends StatefulWidget {
   final MyBidsProvider provider;
@@ -146,12 +149,97 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
             height: 12.h,
           ),
           BaseWidget().heading(bids.topicName!, bids.postingTime!.split(" ").first, bids.content!),
-          bids.isAccepted==0?SizedBox.shrink():Text(
-            Utils().mainTag(bids.mainTag!)=="Full vehicle required" ||  Utils().mainTag(bids.mainTag!)=="Part vehicle required"
-                ?'Your Quote is accepted kindly share driver contact number and vehicle number.':"",
-            style: TextStyle(color: Colors.orange, fontSize: 12.sp,
-              fontFamily: GoogleFonts.poppins().fontFamily,
-              fontWeight: FontWeight.bold,),
+          bids.isAccepted==0?SizedBox.shrink():Column(
+            children: [
+              Text(
+                Utils().mainTag(bids.mainTag!)=="Full vehicle required" ||  Utils().mainTag(bids.mainTag!)=="Part vehicle required"
+                    ?'Your Quote is accepted kindly share driver contact number and vehicle number.':"",
+                style: TextStyle(color: Colors.orange, fontSize: 12.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.bold,),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Vehicle Number : ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12.sp,
+                      fontFamily: AppConstant.FONTFAMILY,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    bids.vehicleNumber ?? '',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12.sp,
+                      fontFamily: AppConstant.FONTFAMILY,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Driver Number : ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12.sp,
+                      fontFamily: AppConstant.FONTFAMILY,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    bids.driverContact ?? "",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12.sp,
+                      fontFamily: AppConstant.FONTFAMILY,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+              ActionChip(
+                avatar: const Icon(Icons.location_on_outlined, size: 18, color: Colors.white),
+                label: const Text(
+                  "Track",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+                backgroundColor: Colors.green,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)), // 🔹 No rounded corners
+                ),
+                onPressed: () async {
+                  final startCoords = await GeoHelper.getLatLngFromCity(bids.source ?? "");
+                  final endCoords = await GeoHelper.getLatLngFromCity(bids.destination ?? "");
+
+                  if (startCoords != null && endCoords != null) {
+                    LatLng startLatLong = LatLng(startCoords['lat']!, startCoords['lng']!);
+                    LatLng endLatLong = LatLng(endCoords['lat']!, endCoords['lng']!);
+                    print("${startLatLong}${endLatLong}");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => VehicleTrackingWithTwoPolylines(
+                            startLocation: startLatLong,
+                            endLocation: endLatLong,
+                            vehicleId: bids.vehicleNumber ?? '',
+                            driverNumber: bids.driverContact ?? '',
+                            postId:bids.id
+                        ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Failed to get location from city")),
+                    );
+                  }
+                },
+              )
+            ],
           ),
           bids.isAccepted==0?BaseWidget().onlyBidButton((){
             showDialog(
@@ -200,7 +288,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
           }):InkWell(
             onTap: () {
               Utils().mainTag(bids.mainTag!)=="Full vehicle required" ||  Utils().mainTag(bids.mainTag!)=="Part vehicle required"
-              ?showAcceptQuoteDialog(context,bids,):null;
+              ?showAcceptQuoteDialog(context,bids,provider):null;
             },
             child: Container(
               height: 38.h,
@@ -238,7 +326,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
   }
 
 
-  Future<void> showAcceptQuoteDialog(BuildContext context, Bids bids) async {
+  Future<void> showAcceptQuoteDialog(BuildContext context, Bids bids,MyBidsProvider provider) async {
     final _formKey = GlobalKey<FormState>();
     final TextEditingController _driverNumberController = TextEditingController();
     final TextEditingController _vehicleNumberController = TextEditingController();
@@ -313,7 +401,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          Provider.of<MyBidsProvider>(context, listen: false).updateAcceptBid(context, bids,_driverNumberController.text,_vehicleNumberController.text);
+                          provider.updateAcceptBid(context, bids,_driverNumberController.text,_vehicleNumberController.text);
                         }
                       },
                       child: const Text('Submit'),

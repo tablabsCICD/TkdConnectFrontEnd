@@ -164,6 +164,35 @@ class Utils {
 
   }
 
+  openEmail(BuildContext context,String email) async {
+
+      final Uri emailUri = Uri(
+        scheme: 'mailto',
+        path: email,
+        query: Uri.encodeFull('subject=Inquiry&body=Hello Sir,'),
+      );
+
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(emailUri);
+      } else {
+        throw 'Could not launch $emailUri';
+      }
+
+  }
+
+  Future<void> openWebsite(String url) async {
+    final Uri uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication, // opens in browser (e.g. Chrome, Safari)
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   Future openwhatsapp(BuildContext context,int number,String text,) async{
     final link = WhatsAppUnilink(
       phoneNumber: "+91 $number",

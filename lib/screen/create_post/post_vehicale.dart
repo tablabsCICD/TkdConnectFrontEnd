@@ -125,7 +125,7 @@ class _PostVehicleScreen extends State<PostVehicleScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editViewError("eg.100",provider.vehicleSizeController,provider,provider.vehicaleSize),
+                editViewError("eg.13 ft",provider.vehicleSizeController,provider,provider.vehicaleSize),
                 SizedBox(
                   height: 12.h,
                 ),

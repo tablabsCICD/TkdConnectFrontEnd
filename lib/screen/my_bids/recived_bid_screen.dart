@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/response/userdata.dart';
+import 'package:tkd_connect/network/geo_helper.dart';
 import 'package:tkd_connect/provider/my_post/my_post_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/my_bids/show_bids_screen.dart';
@@ -23,6 +28,7 @@ import '../../utils/colors.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card/base_widgets.dart';
 import '../../widgets/editText.dart';
+import '../tracking/vehicle_tracking.dart';
 
 class RecivedBidScreen extends StatefulWidget {
   final MyBidsProvider provider;
@@ -170,46 +176,55 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           SizedBox(
             height: 8.h,
           ),
-         /* postBidData.bidings!.isEmpty
-              ? SizedBox.shrink()
-              :*/ Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("(Your quote)", style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w400,
-                    ),),
-                    SizedBox(width: 5.w,),
-                    Icon(Icons.list,
-                        color: !postBidData.genericCardsDto!.showCharts
-                            ? ThemeColor.red
-                            : Colors.grey),
-                    Switch(
-                      value: postBidData.genericCardsDto!.showCharts,
-                      onChanged: (value) async {
-                        if (value == true) {
-                          await widget.provider.getGraphDataForBids(
-                              context, postBidData.genericCardsDto!.id!,index);
-                        }
-                        setState(() {
-                          postBidData.genericCardsDto!.showCharts = value;
-                        });
-                      },
-                      activeColor: ThemeColor.theme_blue,
-                    ),
-                    Icon(Icons.bar_chart,
-                        color: postBidData.genericCardsDto!.showCharts
-                            ? ThemeColor.red
-                            : Colors.grey),
-                    SizedBox(width: 5.w,),
-                    Text("(Average Market Rate)", style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w400,
-                    ),),
-                  ],
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "(Your quote)",
+                style: TextStyle(
+                  fontSize: 10.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w400,
                 ),
+              ),
+              SizedBox(
+                width: 5.w,
+              ),
+              Icon(Icons.list,
+                  color: !postBidData.genericCardsDto!.showCharts
+                      ? ThemeColor.red
+                      : Colors.grey),
+              Switch(
+                value: postBidData.genericCardsDto!.showCharts,
+                onChanged: (value) async {
+                  if (value == true) {
+                    await widget.provider.getGraphDataForBids(
+                        context, postBidData.genericCardsDto!.id!, index);
+                  }
+                  setState(() {
+                    postBidData.genericCardsDto!.showCharts = value;
+                  });
+                },
+                activeColor: ThemeColor.theme_blue,
+              ),
+              Icon(Icons.bar_chart,
+                  color: postBidData.genericCardsDto!.showCharts
+                      ? ThemeColor.red
+                      : Colors.grey),
+              SizedBox(
+                width: 5.w,
+              ),
+              Text(
+                "(Average Market Rate)",
+                style: TextStyle(
+                  fontSize: 10.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
           postBidData.genericCardsDto!.showCharts!
               ? drawGraph(postBidData)
               : iteams(postBidData, index),
@@ -219,7 +234,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
           BaseWidget().showBidButton((val) async {
             if (val == 0) {
               if (postBidData.bidings!.isNotEmpty) {
-                showBootomSheet(context, postBidData.bidings,postBidData);
+                showBootomSheet(context, postBidData.bidings, postBidData);
               } else {
                 ToastMessage.show(context, "There are no bids to show ");
               }
@@ -235,7 +250,11 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     );
   }
 
-  void showBootomSheet(BuildContext context, List<Bidings>? bidings, PostBidData postBidData,) async {
+  void showBootomSheet(
+    BuildContext context,
+    List<Bidings>? bidings,
+    PostBidData postBidData,
+  ) async {
     User use = await LocalSharePreferences().getLoginData();
     if (use.content!.first.isPaid == 0) {
       Navigator.pushNamed(context, AppRoutes.registration_plan_details);
@@ -248,8 +267,8 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                 heightFactor: 0.7,
                 child: ShowBidsScreen(
                   listBidings: bidings,
-                    postBidData: postBidData,
-                                  ));
+                  postBidData: postBidData,
+                ));
           });
     }
   }
@@ -259,20 +278,20 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
       return Container();
     } else {
       if (postBidData.bidings!.length == 1) {
-        return iteamBid(postBidData.bidings![0], true, index,postBidData);
+        return itemBid(postBidData.bidings![0], true, index, postBidData);
       } else if (postBidData.bidings!.length == 2) {
         List<Widget> list = [
-          iteamBid(postBidData.bidings![0], false, index,postBidData),
-          iteamBid(postBidData.bidings![1], true, index,postBidData)
+          itemBid(postBidData.bidings![0], false, index, postBidData),
+          itemBid(postBidData.bidings![1], true, index, postBidData)
         ];
         return Column(
           children: list,
         );
       } else {
         List<Widget> list = [
-          iteamBid(postBidData.bidings![0], false, index,postBidData),
-          iteamBid(postBidData.bidings![1], false, index,postBidData),
-          iteamBid(postBidData.bidings![2], true, index,postBidData)
+          itemBid(postBidData.bidings![0], false, index, postBidData),
+          itemBid(postBidData.bidings![1], false, index, postBidData),
+          itemBid(postBidData.bidings![2], true, index, postBidData)
         ];
         return Column(
           children: list,
@@ -281,10 +300,9 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     }
   }
 
-  iteamBid(Bidings bidings, bool isLast, int index, PostBidData postBidData) {
+  Widget itemBid(Bidings bidings, bool isLast, int index, PostBidData postBidData) {
     return Container(
       width: 311.w,
-      //  height: 69.h,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border(
@@ -295,185 +313,225 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
         ),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Profile, Name, Company, Quote Panel
           Expanded(
-            child: Container(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BaseWidget().getImage(
-                      bidings.profileImage != null ? bidings.profileImage! : "",
-                      height: 28.h,
-                      width: 28.w),
-                  SizedBox(width: 10.w),
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BaseWidget().getImage(
+                  bidings.profileImage ?? "",
+                  height: 28.h,
+                  width: 28.w,
+                ),
+                SizedBox(width: 10.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Name & Verified tag
+                      Row(
                         children: [
-                          Container(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${bidings.firstName!} ${bidings.lastName!}",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 10.sp,
-                                    fontFamily: AppConstant.FONTFAMILY,
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                                ),
-                                SizedBox(width: 4.w),
-                                Visibility(
-                                  visible:
-                                      bidings.isVerified != 0 ? true : false,
-                                  child: VerifiedTag().onVeriedTag(),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              bidings.companyName!,
-                              style: TextStyle(
-                                color: const Color(0x99001E49),
-                                fontSize: 10.sp,
-                                fontFamily: AppConstant.FONTFAMILY,
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  '₹ ${bidings.bidings!.amount!}',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.sp,
-                                    fontFamily: AppConstant.FONTFAMILY,
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                           Text(
-                            'Quote Justification : ${bidings.bidings!.description ?? '-'}',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                            "${bidings.firstName!} ${bidings.lastName!}",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 12.sp,
+                              fontSize: 10.sp,
                               fontFamily: AppConstant.FONTFAMILY,
-                              fontWeight: FontWeight.w400,
-                              height: 0,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          bidings.isAccepted==1?
+                          SizedBox(width: 4.w),
+                          if (bidings.isVerified != 0)
+                            VerifiedTag().onVeriedTag(),
+                        ],
+                      ),
+                      Text(
+                        bidings.companyName ?? '',
+                        style: TextStyle(
+                          color: const Color(0x99001E49),
+                          fontSize: 10.sp,
+                          fontFamily: AppConstant.FONTFAMILY,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 2.h),
+                      Text(
+                        '₹ ${bidings.bidings?.amount ?? '-'}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.sp,
+                          fontFamily: AppConstant.FONTFAMILY,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      Text(
+                        'Quote Justification : ${bidings.bidings?.description ?? '-'}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontFamily: AppConstant.FONTFAMILY,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      // Accepted Quote details and actions
+                      if (bidings.isAccepted == 1)
+                        ...[
+                          SizedBox(height: 4.h),
                           Text(
-                           "Quote Accepted",
+                            "Quote Accepted",
                             style: TextStyle(
                               color: Colors.green,
                               fontSize: 12.sp,
                               fontFamily: AppConstant.FONTFAMILY,
                               fontWeight: FontWeight.w400,
                             ),
-                          ): postBidData.genericCardsDto!.isOpenForBid==1?Button(
-                            width: 100,
-                            height: 35,
-                            title: 'Accept quote',
-                            onClick: () {
-                              postBidData.genericCardsDto!.mainTag=="Full load required" || postBidData.genericCardsDto!.mainTag=="Part load required"
-                                  ?showAcceptQuoteDialog(context,postBidData,bidings)
-                                  :widget.provider.acceptBidSaveForm(context, postBidData,bidings,'','');
-                            },
-                            textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontFamily: AppConstant.FONTFAMILY,
-                              fontWeight: FontWeight.w400,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Vehicle Number : ",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.sp,
+                                  fontFamily: AppConstant.FONTFAMILY,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                bidings.vehicleNumber ?? '',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 12.sp,
+                                  fontFamily: AppConstant.FONTFAMILY,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Driver Number : ",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.sp,
+                                  fontFamily: AppConstant.FONTFAMILY,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Text(
+                                bidings.driverContact ?? "",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 12.sp,
+                                  fontFamily: AppConstant.FONTFAMILY,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          ActionChip(
+                            avatar: const Icon(Icons.location_on_outlined, size: 18, color: Colors.white),
+                            label: const Text(
+                              "Track",
+                              style: TextStyle(color: Colors.white, fontSize: 12),
                             ),
-                          ):SizedBox()
-                        ],
-                      ),
-                    ),
+                            backgroundColor: Colors.green,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)), // 🔹 No rounded corners
+                            ),
+                            onPressed: () async {
+                              final startCoords = await GeoHelper.getLatLngFromCity(postBidData.genericCardsDto?.source ?? "");
+                              final endCoords = await GeoHelper.getLatLngFromCity(postBidData.genericCardsDto?.destination ?? "");
+
+                              if (startCoords != null && endCoords != null) {
+                                LatLng startLatLong = LatLng(startCoords['lat']!, startCoords['lng']!);
+                                LatLng endLatLong = LatLng(endCoords['lat']!, endCoords['lng']!);
+                                print("${startLatLong}${endLatLong}");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => VehicleTrackingWithTwoPolylines(
+                                      startLocation: startLatLong,
+                                      endLocation: endLatLong,
+                                      vehicleId: bidings.vehicleNumber ?? '',
+                                      driverNumber: bidings.driverContact ?? '',
+                                      postId:postBidData.genericCardsDto!.id
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Failed to get location from city")),
+                                );
+                              }
+                            },
+                          )
+
+
+                        ]
+                      else if (postBidData.genericCardsDto?.isOpenForBid == 1)
+                        Button(
+                          width: 100,
+                          height: 35,
+                          title: 'Accept quote',
+                          onClick: () {
+                            if (["Full load required", "Part load required"].contains(postBidData.genericCardsDto?.mainTag)) {
+                              showAcceptQuoteDialog(context, postBidData, bidings);
+                            } else {
+                              widget.provider.acceptBidSaveForm(context, postBidData, bidings, '', '');
+                            }
+                          },
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.sp,
+                            fontFamily: AppConstant.FONTFAMILY,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           SizedBox(width: 8.w),
+          // Call Button Panel
           Container(
             width: 38.w,
             height: 38.h,
             decoration: ShapeDecoration(
-              color: Colors.white.withOpacity(0.07999999821186066),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
+              color: Colors.white.withOpacity(0.08),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () async {
-                    // widget.provider.deleteBid(index, bidings);
-
-                    User use = await LocalSharePreferences().getLoginData();
-                    if (use.content!.first.isPaid == 0) {
-                      Navigator.pushNamed(
-                          context, AppRoutes.registration_plan_details);
-                    } else {
-                      Utils().callFunction(
-                        "${bidings.bidings!.mobileNumber}",
-                      );
-                    }
-                  },
-                  child: SizedBox(
-                    width: 22.w,
-                    height: 22.h,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 22.w,
-                          height: 22.h,
-                          child: Stack(children: [
-                            SvgPicture.asset(
-                              Images.call_white,
-                              color: ThemeColor.theme_blue,
-                              height: 25.h,
-                              width: 25.w,
-                            )
-                          ]),
-                        ),
-                      ],
-                    ),
+            child: Center(
+              child: InkWell(
+                onTap: () async {
+                  User use = await LocalSharePreferences().getLoginData();
+                  if (use.content?.first.isPaid == 0) {
+                    Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+                  } else {
+                    Utils().callFunction("${bidings.bidings?.mobileNumber}");
+                  }
+                },
+                child: SizedBox(
+                  width: 22.w,
+                  height: 22.h,
+                  child: SvgPicture.asset(
+                    Images.call_white,
+                    color: ThemeColor.theme_blue,
+                    height: 25.h,
+                    width: 25.w,
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -482,21 +540,29 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
   }
 
 
-  Future<void> showAcceptQuoteDialog(BuildContext context, PostBidData postBidData, Bidings bidings) async {
+
+  Future<void> showAcceptQuoteDialog(
+      BuildContext context, PostBidData postBidData, Bidings bidings) async {
     final _formKey = GlobalKey<FormState>();
-    final TextEditingController _driverNumberController = TextEditingController();
-    final TextEditingController _vehicleNumberController = TextEditingController();
+    final TextEditingController _driverNumberController =
+        TextEditingController();
+    final TextEditingController _vehicleNumberController =
+        TextEditingController();
 
     await showDialog(
       context: context,
       builder: (context) {
-        return Dialog( // Use Dialog for custom sizing
+        return Dialog(
+          // Use Dialog for custom sizing
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // Optional: Add rounded corners
+            borderRadius:
+                BorderRadius.circular(12), // Optional: Add rounded corners
           ),
           child: Container(
-            height: 350, // Adjust height here
-            padding: EdgeInsets.all(16), // Optional: Add padding inside the dialog
+            height: 350,
+            // Adjust height here
+            padding: EdgeInsets.all(16),
+            // Optional: Add padding inside the dialog
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -547,16 +613,25 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                       onPressed: () {
                         Navigator.of(context).pop(); // Close the dialog
                       },
-                      child: Text('Cancel',style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 12.sp,
-                        fontFamily: AppConstant.FONTFAMILY,
-                        fontWeight: FontWeight.w400,),),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.sp,
+                          fontFamily: AppConstant.FONTFAMILY,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          widget.provider.acceptBidSaveForm(context, postBidData,bidings,_driverNumberController.text,_vehicleNumberController.text);
+                          widget.provider.acceptBidSaveForm(
+                              context,
+                              postBidData,
+                              bidings,
+                              _driverNumberController.text,
+                              _vehicleNumberController.text);
                         }
                       },
                       child: const Text('Submit'),
@@ -570,8 +645,6 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
       },
     );
   }
-
-
 
   labelText(String label) {
     return SizedBox(
@@ -594,8 +667,6 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     );
   }
 
-
-
   Map<String, Map<String, int>> prepareChartData(List<MonthData> response) {
     Map<String, Map<String, int>> chartData = {};
 
@@ -611,9 +682,9 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
   }
 
   List<BarChartGroupData> _createBarGroups(
-      Map<String, Map<String, int>> parsedData,
-      List<String> xAxisLabels,
-      ) {
+    Map<String, Map<String, int>> parsedData,
+    List<String> xAxisLabels,
+  ) {
     return xAxisLabels.asMap().entries.map((entry) {
       final index = entry.key;
       final date = entry.value;
@@ -636,8 +707,6 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
       );
     }).toList();
   }
-
-
 
   Widget drawGraph(PostBidData postBidData) {
     return Consumer<MyBidsProvider>(builder: (context, provider, child) {
@@ -680,14 +749,16 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 12.0,top: 30),
+                      padding: const EdgeInsets.only(left: 12.0, top: 30),
                       child: SizedBox(
                         height: 300,
-                        width: xAxisLabels.length * 60.0, // Adjust dynamic width
+                        width: xAxisLabels.length * 60.0,
+                        // Adjust dynamic width
                         child: BarChart(
                           BarChartData(
                             barGroups: chartData,
-                            groupsSpace: 16, // Space between bar groups
+                            groupsSpace: 16,
+                            // Space between bar groups
                             titlesData: FlTitlesData(
                               leftTitles: AxisTitles(
                                 sideTitles: SideTitles(
@@ -697,10 +768,13 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                                     // Display meaningful Y-axis titles at intervals
                                     if (value % 1 == 0) {
                                       return Padding(
-                                        padding: const EdgeInsets.only(right: 8),
+                                        padding:
+                                            const EdgeInsets.only(right: 8),
                                         child: Text(
                                           value.toInt().toString(),
-                                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                                          style: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       );
                                     }
@@ -708,8 +782,10 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                                   },
                                 ),
                               ),
-                              rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              rightTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false)),
+                              topTitles: AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false)),
                               bottomTitles: AxisTitles(
                                 sideTitles: SideTitles(
                                   showTitles: true,
@@ -719,7 +795,9 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                                         padding: const EdgeInsets.only(top: 8),
                                         child: Text(
                                           xAxisLabels[value.toInt()],
-                                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                                          style: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       );
                                     }
@@ -730,19 +808,27 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                             ),
 
                             borderData: FlBorderData(show: false),
-                            gridData: FlGridData(show: false), // Optionally show grid lines
+                            gridData: FlGridData(show: false),
+                            // Optionally show grid lines
                             barTouchData: BarTouchData(
                               touchTooltipData: BarTouchTooltipData(
                                 //tooltipBgColor: Colors.black87,
-                                getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                                getTooltipItem:
+                                    (group, groupIndex, rod, rodIndex) {
                                   if (groupIndex < xAxisLabels.length) {
                                     final date = xAxisLabels[groupIndex];
-                                    final nestedData = parsedData[date]?.entries.toList();
-                                    if (nestedData != null && rodIndex < nestedData.length) {
+                                    final nestedData =
+                                        parsedData[date]?.entries.toList();
+                                    if (nestedData != null &&
+                                        rodIndex < nestedData.length) {
                                       final entry = nestedData[rodIndex];
                                       return BarTooltipItem(
-                                        '${entry.key}: ${entry.value}', // Display key and amount
-                                        const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                        '${entry.key}: ${entry.value}',
+                                        // Display key and amount
+                                        const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
                                       );
                                     }
                                   }
@@ -751,7 +837,6 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                               ),
                             ),
                           ),
-
                         ),
                       ),
                     ),
@@ -776,6 +861,4 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
       );
     });
   }
-
-
 }

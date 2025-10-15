@@ -162,7 +162,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
         child: Container(
           height: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 4.h),
-          color: isSelect ? const Color(0x19001E49) : ThemeColor.white,
+          color: isSelect?ThemeColor.theme_blue:ThemeColor.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -171,7 +171,7 @@ class _EditProfileBaseState extends State<EditProfileBaseScreen> {
               Text(
                 title,
                 style: TextStyle(
-                  color: ThemeColor.subColor,
+                  color: isSelect?ThemeColor.white:ThemeColor.subColor,
                   fontSize: 12.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: isSelect ? FontWeight.w600 : FontWeight.w400,

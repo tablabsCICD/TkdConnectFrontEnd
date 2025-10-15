@@ -83,6 +83,8 @@ class Bids {
   int? bidingId;
   int? isAccepted;
   int? acceptBidId;
+  String? vehicleNumber;
+  String? driverContact;
 
   Bids(
       {this.id,
@@ -108,7 +110,7 @@ class Bids {
         this.privatePost,
         this.amount,
         this.description,
-        this.bidingId,this.isAccepted,this.acceptBidId});
+        this.bidingId,this.isAccepted,this.acceptBidId,this.driverContact,this.vehicleNumber});
 
   Bids.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -137,6 +139,8 @@ class Bids {
     bidingId = json['bidingId'];
     isAccepted = json['isAccepted'];
     acceptBidId = json['acceptBidId'];
+    driverContact=json['driverContact'];
+    vehicleNumber=json['vehicleNumber'];
   }
 
   Map<String, dynamic> toJson() {
@@ -167,6 +171,8 @@ class Bids {
     data['bidingId'] = bidingId;
     data['isAccepted'] = isAccepted;
     data['acceptBidId'] = acceptBidId;
+    data['vehicleNumber']= vehicleNumber;
+    data['driverContact'] = driverContact;
     return data;
   }
 }

@@ -46,11 +46,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                // SvgPicture.asset(
-                //   Images.load_post,
-                //   height: 133.h,
-                //   width: 200.w,
-                // ),
                 labelText(S().loads),
                 SizedBox(
                   height: 4.h,
@@ -59,7 +54,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                   onClick: () async {
                     ItemBottomSheet itemBottomSheet = ItemBottomSheet();
                     int a = await itemBottomSheet.showIteam(context, provider.reqirement, "Select Load Type");
-
                     provider.selectedRequrimentType(a);
                   },
                   hint: provider.selectedRequriment,
@@ -127,7 +121,7 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editViewError("eg.100 Tons",provider.vehicleSizeController,provider,provider.vehicaleSize),
+                editViewError("eg.13 ft",provider.vehicleSizeController,provider,provider.vehicaleSize),
                 SizedBox(
                   height: 12.h,
                 ),
@@ -199,14 +193,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 10.h,
                 ),
-               /* provider.isRepeat==true?labelText("Start Date of Repeat Post"):SizedBox.shrink(),
-                provider.isRepeat==true? SizedBox(
-                  height: 4.h,
-                ):SizedBox.shrink(),
-               provider.isRepeat==true? _buildStartDateText(context,"yyyy-mm-dd",provider.startDateController, provider,true):SizedBox.shrink(),
-                provider.isRepeat==true? SizedBox(
-                  height: 12.h,
-                ):SizedBox.shrink(),*/
                 provider.isRepeat==true?labelText("End Date of Repeat Post"):SizedBox.shrink(),
                 provider.isRepeat==true? SizedBox(
                   height: 4.h,
@@ -219,7 +205,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-
                 DropDown(
                   onClick: () async {
 
@@ -230,35 +215,6 @@ class _PostLoadScreen extends State<PostLoadScreen> {
                   },
                   hint: provider.selectedGroup,
                 ),
-
-              /*  SizedBox(
-                  height: 30.h,
-                ),
-                provider.images.isNotEmpty? BaseWidget().carouseImageDelete(provider.images,(item){
-                  provider.images.remove(item);
-                  provider.notifyListeners();
-                }
-                ):const SizedBox(),
-                SizedBox(
-                  height: 44.h,
-                ),
-                InkWell(
-                    onTap: () {
-                      provider.uploadImage(context);
-                    },
-                    child: SvgPicture.asset(Images.add_image)),
-                Text(
-                  S().addImagesAt,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: const Color(0xFF001E49),
-                    fontSize: 12.sp,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),*/
-
-
                 SizedBox(
                   height: 30.h,
                 ),

@@ -16,7 +16,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tkd_connect/model/response/quoteResponse.dart';
+import 'package:tkd_connect/provider/location/location_provider.dart';
 import 'package:tkd_connect/provider/message/chat_provider.dart';
+import 'package:tkd_connect/provider/mybids/my_bids_provider.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/route/routes.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -118,6 +120,8 @@ class _MyApp extends State<MyApp> {
                   firebaseStorage: firebaseStorage,
                 ),
               ),
+              ChangeNotifierProvider(create: (_) => MyBidsProvider('Idel')),
+              ChangeNotifierProvider(create: (_) => LocationProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

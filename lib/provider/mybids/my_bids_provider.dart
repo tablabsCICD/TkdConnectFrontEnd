@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/main.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -10,6 +11,7 @@ import 'package:tkd_connect/model/response/acceptBidResponse.dart';
 import 'package:tkd_connect/model/response/bid_placed.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
+import 'package:tkd_connect/provider/location/location_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
@@ -39,9 +41,9 @@ class MyBidsProvider extends BaseProvider {
       User user = await LocalSharePreferences().getLoginData();
 
       ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(
-          "${ApiConstant.MY_BIDS_PLACED(user.content![0].userName, selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr");
+          "${ApiConstant.MY_BIDS_PLACED(user.content![0].id, selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr");
       print(
-          'the response is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName, selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr}');
+          'the response is ${ApiConstant.MY_BIDS_PLACED(user.content![0].id, selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr}');
       if (apiResponse.status == 200) {
         BidPlaced bidPlaced = BidPlaced.fromJson(apiResponse.response);
         listBids.clear();
@@ -63,7 +65,8 @@ class MyBidsProvider extends BaseProvider {
     } else {
       User user = await LocalSharePreferences().getLoginData();
       ApiResponse apiResponse = await ApiHelper().apiWithoutDecodeGet(
-          "${ApiConstant.MYPOSTBID(user.content![0].userName, selectedPage)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr");
+          "${ApiConstant.MYPOSTBID(user.content![0].id, selectedPage)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr");
+     print(apiResponse.response);
       if (apiResponse.status == 200) {
         MyPostBids bidPlaced = MyPostBids.fromJson(apiResponse.response);
         if (selectedPage == 0) {
@@ -104,6 +107,14 @@ class MyBidsProvider extends BaseProvider {
 
       if(acceptBidResponse.success == true){
         ToastMessage.show(context, acceptBidResponse.message.toString());
+        if ((acceptBidResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
+            (acceptBidResponse.data?.driverContact?.isNotEmpty ?? false)) {
+          Provider.of<LocationProvider>(context, listen: false).startTracking(
+            data.genericCardsDto!.id!,
+            acceptBidResponse.data!.vehicleNumber!,
+            acceptBidResponse.data!.driverContact!,
+          );
+        }
       }else{
         ToastMessage.show(context, acceptBidResponse.message.toString());
       }
@@ -125,14 +136,24 @@ class MyBidsProvider extends BaseProvider {
       "vehicleNumber": vehicleNumber
     };
     print(ApiConstant.UPDATE_ACCEPTED_BID);
+    print(mapData);
     ApiResponse apiResponse = await ApiHelper().apiPut(ApiConstant.UPDATE_ACCEPTED_BID,mapData);
+    print(apiResponse.response);
     if (apiResponse.status == 200) {
       AcceptBidResponse acceptBidResponse = AcceptBidResponse.fromJson(apiResponse.response);
 
       if(acceptBidResponse.success == true){
-        ToastMessage.show(context, acceptBidResponse.message.toString());
+        ToastMessage.show(context, "Detail Sent successfully");
+        if ((acceptBidResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
+            (acceptBidResponse.data?.driverContact?.isNotEmpty ?? false)) {
+          Provider.of<LocationProvider>(context, listen: false).startTracking(
+            data.id!,
+            acceptBidResponse.data!.vehicleNumber!,
+            acceptBidResponse.data!.driverContact!,
+          );
+        }
       }else{
-        ToastMessage.show(context, acceptBidResponse.message.toString());
+        ToastMessage.show(context, "Something went wrong");
       }
       notifyListeners();
       Navigator.of(context).pop();

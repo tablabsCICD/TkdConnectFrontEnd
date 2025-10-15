@@ -21,7 +21,6 @@ class ViewProfileDirectory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-
         child: Container(
           color: ThemeColor.white,
           child: Column(
@@ -34,17 +33,34 @@ class ViewProfileDirectory extends StatelessWidget {
               ),
               // marginContainer(aboutCompany(), 22.h, 0),
               // marginContainer(discriptionCompny(), 4.h, 0),
-              marginContainer(operatingRouteTag(), 24.h, 0),
-              marginContainer(cityChip(), 6.h, 0),
-              marginContainer(titleTag(S().mobileNumber), 24.h, 0),
-              marginContainer(
-                  emailLink(data.mobileNumber.toString()), 6.h, 0),
-             // marginContainer(titleTag(S().traffic), 24.h, 0),
+              InkWell(
+                onTap: () {
+                  Utils().callFunction("${data.mobileNumber}");
+                },
+                child: marginContainer(titleTag(S().mobileNumber), 24.h, 0),
+              ),
+
+              InkWell(
+                onTap: () {
+                  Utils().callFunction("${data.mobileNumber}");
+                },
+                child: marginContainer(
+                    emailLink(data.mobileNumber.toString()), 6.h, 0),
+              ),
+
+              // marginContainer(titleTag(S().traffic), 24.h, 0),
               // marginContainer(
               //     emailLink("traffic@shreejitranslogistics.com"), 6.h, 0),
               marginContainer(titleTag(S().accounts), 24.h, 0),
-              marginContainer(
-                  emailLink(data.emailId!), 6.h, 0),
+              InkWell(
+                onTap: () {
+                  Utils().openEmail(context, "${data.emailId}");
+                },
+                child: marginContainer(emailLink(data.emailId!), 6.h, 0),
+              ),
+
+              marginContainer(operatingRouteTag(), 24.h, 0),
+              marginContainer(cityChip(), 6.h, 0),
             ],
           ),
         ),
@@ -54,11 +70,11 @@ class ViewProfileDirectory extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-
           FloatingActionButton(
             backgroundColor: Colors.green.shade800,
             onPressed: () {
-              Utils().openwhatsapp(context, data.mobileNumber!, "Hi We send message from from TKD connect application ");
+              Utils().openwhatsapp(context, data.mobileNumber!,
+                  "Hi We send message from from TKD connect application ");
             },
             child: const FaIcon(FontAwesomeIcons.whatsapp),
           ),
@@ -66,15 +82,15 @@ class ViewProfileDirectory extends StatelessWidget {
       ),
     );
   }
-  callButton(){
+
+  callButton() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Utils().callFunction(data.mobileNumber.toString());
       },
       child: Container(
         width: 335.w,
         height: 49.h,
-
         decoration: ShapeDecoration(
           color: const Color(0xFF001E49),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -84,17 +100,24 @@ class ViewProfileDirectory extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              S().contact,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14.sp,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-                fontWeight: FontWeight.w600,
-                height: 0,
+            InkWell(
+              onTap: () {
+                Utils().callFunction(data.mobileNumber.toString());
+              },
+              child: Text(
+                S().contact,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),
               ),
             ),
-            const SizedBox(width: 3,),
+            const SizedBox(
+              width: 3,
+            ),
             SizedBox(
               width: 16.w,
               height: 16.h,
@@ -106,10 +129,8 @@ class ViewProfileDirectory extends StatelessWidget {
                   SizedBox(
                     width: 16.w,
                     height: 16.h,
-                    child: Stack(children: [
-                      SvgPicture.asset(Images.call_white)
-
-                        ]),
+                    child:
+                        Stack(children: [SvgPicture.asset(Images.call_white)]),
                   ),
                 ],
               ),
@@ -149,7 +170,8 @@ class ViewProfileDirectory extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            BaseWidget().getImage(data.companyLogo!, width: 80.w, height: 112.h),
+            BaseWidget()
+                .getImage(data.companyLogo!, width: 80.w, height: 112.h),
             nameWithVerfiyTag(),
             Text(
               data.companyName!,
@@ -165,15 +187,20 @@ class ViewProfileDirectory extends StatelessWidget {
             SizedBox(
               height: 6.h,
             ),
-            Text(
-              data.website!,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontFamily: AppConstant.FONTFAMILY,
-                fontWeight: FontWeight.w700,
-                height: 0,
+            InkWell(
+              onTap: (){
+                Utils().openWebsite(data.website.toString());
+              },
+              child: Text(
+                data.website!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.sp,
+                  fontFamily: AppConstant.FONTFAMILY,
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
               ),
             ),
             SizedBox(
@@ -204,7 +231,7 @@ class ViewProfileDirectory extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.sp,
-            fontFamily:AppConstant.FONTFAMILY,
+            fontFamily: AppConstant.FONTFAMILY,
             fontWeight: FontWeight.w600,
             height: 0,
           ),
@@ -212,7 +239,9 @@ class ViewProfileDirectory extends StatelessWidget {
         SizedBox(
           width: 8.w,
         ),
-        Visibility(visible: data.isPaid !=0?true:false, child: SvgPicture.asset(Images.verified))
+        Visibility(
+            visible: data.isPaid != 0 ? true : false,
+            child: SvgPicture.asset(Images.verified))
       ],
     );
   }
@@ -256,19 +285,25 @@ class ViewProfileDirectory extends StatelessWidget {
     );
   }
 
-  cityChip(){
-    List<Widget>list=[];
-    for(int i=0;i<data.listOfPreferredRoutes.length;i++){
-      list.add(cityTag(data.listOfPreferredRoutes[i].routeSource!));
-      list.add(const Text("<->"));
-      list.add(cityTag(data.listOfPreferredRoutes[i].routeDestination!));
-      list.add(const Text(","));
-    }
-
-    return Wrap(
-      spacing: 10.0,
-      runSpacing: 6.0,
-      children: list,
+  Widget cityChip() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(data.listOfPreferredRoutes.length, (i) {
+        final route = data.listOfPreferredRoutes[i];
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              cityTag(route.routeSource!),
+              const SizedBox(width: 6),
+              const Text("<->", style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(width: 6),
+              cityTag(route.routeDestination!),
+            ],
+          ),
+        );
+      }),
     );
   }
 

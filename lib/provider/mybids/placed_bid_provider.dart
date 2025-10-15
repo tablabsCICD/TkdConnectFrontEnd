@@ -30,9 +30,9 @@ class PlacedBidProvider extends BaseProvider {
 
   getAllBids(BuildContext context,bool tabChang)async{
     User user=await LocalSharePreferences().getLoginData();
-    print('the flas is ${ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids)}');
+    print('the flas is ${ApiConstant.MY_BIDS_PLACED(user.content![0].id,selectedPageAllBids)}');
 
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].userName,selectedPageAllBids));
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MY_BIDS_PLACED(user.content![0].id,selectedPageAllBids));
     //print('the response is ${apiResponse.response}');
     if(apiResponse.status==200){
       BidPlaced bidPlaced=BidPlaced.fromJson(apiResponse.response);

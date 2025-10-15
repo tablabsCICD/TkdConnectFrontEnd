@@ -65,6 +65,10 @@
 <string>App needs camera access.</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>App needs microphone access.</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs location access to track your vehicle</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This app needs background location access to track your vehicle</string>
 
 </dict>
 </plist>

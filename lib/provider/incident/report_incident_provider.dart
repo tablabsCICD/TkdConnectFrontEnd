@@ -167,7 +167,7 @@ class ReportIncidentProvider extends BaseProvider {
             ),
             TextButton(
               onPressed: () async {
-                final isSuccess = await addReport();
+                final isSuccess = await addReport(context);
                 if (!context.mounted) return;
                 if (isSuccess) {
                   ToastMessage.show(context, "Your report is submitted successfully!");
@@ -186,7 +186,7 @@ class ReportIncidentProvider extends BaseProvider {
     );
   }
 
-  Future<bool> addReport() async {
+  Future<bool> addReport(BuildContext context) async {
     try {
       String cheatedByList = cheatedBy.join(", ");
       String incidentTypeList = incidentTypes.join(", ");
@@ -210,6 +210,13 @@ class ReportIncidentProvider extends BaseProvider {
           .postParameter(ApiConstant.ADD_REPORT, reportIncidentRequest.toJson());
 
       if (response.status == 200) {
+        // First dialog logic
+        Navigator.pop(context); // Close the first dialog
+
+        // Delay showing the second dialog
+        Future.microtask(() {
+          _showConfirmationDialog(context);
+        });
         clear();
         notifyListeners();
         return true;
@@ -219,6 +226,44 @@ class ReportIncidentProvider extends BaseProvider {
       print("Error while adding report: $e");
       return false;
     }
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Report Submitted Successfully',
+            style: TextStyle(  fontSize: 16.sp,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontWeight: FontWeight.bold,),
+          ),
+          content: Text(
+            'Your report has been successfully submitted to the Admin. Our team will review your report promptly and respond as soon as possible.\n\n'
+                'If your report involves serious issues like theft, fraud, or any suspicious activity, please stay alert and avoid direct contact with the parties involved until you receive further communication from Admin.',
+            style: TextStyle(  fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600, color: Colors.red),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();// Close the dialog
+              },
+              child: Text(
+                'Ok',
+                style: TextStyle(  fontSize: 14.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.bold,),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> getAllData({bool forceRefresh = false}) async {

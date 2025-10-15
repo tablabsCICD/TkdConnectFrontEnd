@@ -30,8 +30,8 @@ class MyPostProvider extends BaseProvider{
   getReceviedBids(BuildContext context)async{
 
     User user=await LocalSharePreferences().getLoginData();
-    print('the link is ${ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage)}');
-    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content!.first.userName,selectedPage));
+    print('the link is ${ApiConstant.MYPOSTBID(user.content!.first.id,selectedPage)}');
+    ApiResponse apiResponse=await ApiHelper().apiWithoutDecodeGet(ApiConstant.MYPOSTBID(user.content!.first.id,selectedPage));
     if(apiResponse.status==200){
       MyPostBids bidPlaced=MyPostBids.fromJson(apiResponse.response);
       listOwnBid.addAll(bidPlaced.content!);

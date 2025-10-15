@@ -21,7 +21,7 @@ class ApiConstant {
   static String CHAT_USER_LIST(id) => "${BASE_URL}chatBackup/userId?userId=$id";
 
   static String CHAT_USER_LIST_COMPANY(name) =>
-      "${BASE_URL}companyRegistration/ByName8?firstName=$name";
+      "${BASE_URL}companyRegistration/ByName8?firstName=$name&page=0&size=100";
 
   static String IMG_UPLOAD = "${BASE_URL}uploadImages";
   static String POST_CHAT = "${BASE_URL}chatBackup";
@@ -45,12 +45,12 @@ class ApiConstant {
   static String CREATE_ORDER_ID(amount,userId) => '${BASE_URL}transaction/initiatePayment?amount=$amount&userId=$userId';
 
   // static String OTP_VERIFICATION(mobile,otp,deviceToken) => BASE_URL + "verifyOTP?mobileNumber=$mobile&otp=$otp&deviceId=$deviceToken";
-  static String OTP_VERIFICATION(mobile, otp) =>
-      "${BASE_URL}VerifyOtp?mobileNumber=$mobile&otp=$otp";
+  static String OTP_VERIFICATION(mobile, otp, String deviceId) =>
+      "${BASE_URL}VerifyOtp?mobileNumber=$mobile&otp=$otp&deviceId=$deviceId";
 
   //static String MY_BIDS_PLACED(userName,page) => BASE_URL + "GetPostsAndBidsForUser?userName=$userName&privatePost=0&page=$page";
   static String   MY_BIDS_PLACED(userName, page) =>
-      "${BASE_URL}GetPostsAndBidsForUserWithFilter?userName=$userName&privatePost=0&page=$page";
+      "${BASE_URL}GetPostsAndBidsForUserWithFilterUserId?userId=$userName&privatePost=0&page=$page";
 
   static String AVG_BID(bidId) => "${BASE_URL}GetAvgOfBid?id=$bidId";
 
@@ -73,7 +73,7 @@ class ApiConstant {
   static String ROUTE = "${BASE_URL}preferredroutes";
 
   static String MYPOSTBID(id, page) =>
-      "${BASE_URL}getOwnPostAndBid?userName=$id&page=$page";
+      "${BASE_URL}getOwnPostAndBid?userId=$id&page=$page";
 
   static String GET_BID_TREND(id) =>
       "${BASE_URL}trend/new/$id";
@@ -162,9 +162,13 @@ class ApiConstant {
  static String MY_INCIDENT(id) => "${BASE_URL}user/page/$id?page=0&size=100";
  static String ADD_REPORT = "${BASE_URL}ReportIncients";
  static String DELETE_INCIDENT(id) => "${BASE_URL}ReportIncients?id=$id";
- static String SEARCH_REPORT(char,id) => "${BASE_URL}getTicketsByUserIdAndSearch/page?userId=$id&keyword=$char&page=0&size=10";
+ static String SEARCH_REPORT(char,id) => "${BASE_URL}getTicketsByUserIdAndSearch/page?userId=$id&keyword=$char&page=0&size=100";
 
   static String BULK_UPLOAD= "${BASE_URL}uploadFullTruckLoad";
   static String JOB_SEARCH(search) => "${BASE_URL}postJob/getAllJobsWithSearch?search=$search";
+
+
+  static String SAVE_LATLNG(postId,vehicleNumber,driverNumber) => "${BASE_URL}vehicleTracking/save/new?postId=$postId&vehicleNumber=$vehicleNumber&driverContact=$driverNumber";
+  static String GET_LATLNG(postId) => "${BASE_URL}vehicleTracking/getVehicleTrackingByPostId/newJson/$postId";
 
 }

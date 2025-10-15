@@ -35,9 +35,10 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    // Run checks after first frame
+    // Show prominent disclosure first
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkPermissions();
+     // showProminentDisclosureDialog();
+      requestAllPermissions();
     });
   }
 
@@ -49,7 +50,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Show minimal loading UI (not splash anymore)
+    // Minimal loading UI
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
@@ -57,9 +58,52 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> checkPermissions() async {
-    permissionStatusFuture = checkNotificationPermissionStatus();
-    String permissionStatus = await permissionStatusFuture;
+  // ------------------- PROMINENT DISCLOSURE DIALOG -------------------
+  void showProminentDisclosureDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "Location Access Disclosure",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const SingleChildScrollView(
+            child: Text(
+              "TKD Connect collects location data, including in the background, "
+                  "to provide live route tracking between source and destination for accepted quotes. "
+                  "This ensures accurate route updates and delivery tracking even when the app is closed "
+                  "or not in active use. The location data is used only for this purpose and is never shared "
+                  "with third parties.",
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                requestAllPermissions(); // Request permissions after consent
+              },
+              child: const Text("Continue"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // ------------------- PERMISSION HANDLING -------------------
+  Future<void> requestAllPermissions() async {
+    // Request location permissions (foreground + background)
+   /* await Permission.locationWhenInUse.request();
+    await Permission.locationAlways.request();
+*/
+    // Request notification permission (non-sensitive but required for alerts)
+    await Permission.notification.request();
+
+    // Continue logic after permissions
+    String permissionStatus = await checkNotificationPermissionStatus();
     if ([permGranted, permProvisional].contains(permissionStatus)) {
       initializeUniLinks();
     } else {
@@ -67,45 +111,67 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     }
   }
 
-  void navigateToNextScreen() async {
-    LocalSharePreferences prefs = LocalSharePreferences();
-    bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-    String langCode = await prefs.getLangCode();
-    if (isLoggedIn) {
-      S.load(Locale(langCode));
-      Navigator.pushReplacementNamed(context, AppRoutes.home);
+  Future<String> checkNotificationPermissionStatus() async {
+    PermissionStatus status = await Permission.notification.status;
+    if (status.isGranted) {
+      return permGranted;
+    } else if (status.isDenied) {
+      return permDenied;
+    } else if (status.isRestricted || status.isPermanentlyDenied) {
+      return permUnknown;
     } else {
-      if (langCode == "no") {
-        Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
-      } else {
-        S.load(Locale(langCode));
-        Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
-      }
+      return permProvisional;
     }
   }
 
-  void showUpdateDialog() {
+  void showPermissionDialog() {
     showDialog<String>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('TKD Connect Update'),
-        content: const Text('A new application update is available on the Play Store. Please update the app.'),
+        title: Text(
+          'Notification Permission',
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Text(
+          'Please enable notification permissions to receive important alerts and updates.',
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: [
           TextButton(
-            onPressed: redirectToPlayStore,
-            child: const Text('Update'),
+            onPressed: () async {
+              await Permission.notification.request();
+              Navigator.of(context, rootNavigator: true).pop();
+              String permissionStatus = await checkNotificationPermissionStatus();
+              if ([permGranted, permProvisional].contains(permissionStatus)) {
+                initializeUniLinks();
+              } else {
+                fetchVersionAndNavigate();
+              }
+            },
+            child: const Text('Enable Permission'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+              fetchVersionAndNavigate();
+            },
+            child: const Text('Close'),
           ),
         ],
       ),
     );
   }
 
-  void redirectToPlayStore() {
-    final Uri url = Uri.parse('market://details?id=com.pdk.tkd');
-    launchUrl(url, mode: LaunchMode.externalApplication);
-  }
-
+  // ------------------- NAVIGATION & LOGIC -------------------
   Future<void> initializeUniLinks() async {
     try {
       String? initialLink = await getInitialLink();
@@ -136,66 +202,45 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> requestNotificationPermission() async {
-    await Permission.notification.request();
-  }
-
-  Future<String> checkNotificationPermissionStatus() async {
-    PermissionStatus status = await Permission.notification.status;
-    if (status.isGranted) {
-      return permGranted;
-    } else if (status.isDenied) {
-      return permDenied;
-    } else if (status.isRestricted || status.isPermanentlyDenied) {
-      return permUnknown;
+  void navigateToNextScreen() async {
+    LocalSharePreferences prefs = LocalSharePreferences();
+    bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
+    String langCode = await prefs.getLangCode();
+    if (isLoggedIn) {
+      S.load(Locale(langCode));
+      Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
-      return permProvisional;
+      if (langCode == "no") {
+        Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
+      } else {
+        S.load(Locale(langCode));
+        Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
+      }
     }
   }
 
-  void showPermissionDialog() {
+  void showUpdateDialog() {
     showDialog<String>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(
-          'Notification Permission',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: GoogleFonts.poppins().fontFamily,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        content: Text(
-          'Please enable notification permissions.',
-          style: TextStyle(
-            fontSize: 16,
-            fontFamily: GoogleFonts.poppins().fontFamily,
-            fontWeight: FontWeight.w600,
-          ),
+        title: const Text('TKD Connect Update'),
+        content: const Text(
+          'A new version of TKD Connect is available. Please update the app from the Play Store to continue using all features.',
         ),
         actions: [
           TextButton(
-            onPressed: () async {
-              await requestNotificationPermission();
-              Navigator.of(context, rootNavigator: true).pop();
-              String permissionStatus = await checkNotificationPermissionStatus();
-              if ([permGranted, permProvisional].contains(permissionStatus)) {
-                initializeUniLinks();
-              }
-            },
-            child: const Text('Enable Permission'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop();
-              fetchVersionAndNavigate();
-            },
-            child: const Text('Close'),
+            onPressed: redirectToPlayStore,
+            child: const Text('Update'),
           ),
         ],
       ),
     );
+  }
+
+  void redirectToPlayStore() {
+    final Uri url = Uri.parse('market://details?id=com.pdk.tkd');
+    launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
   @override

@@ -177,7 +177,7 @@
   "uploadLoad": "Upload Load",
   "complete": "Complete",
   "completed": "Completed",
-  "expiryDate": "Expiry Date",
+  "expiryDate": "Post Expiry Date",
   "quoteReason": "quote justification with cost (optional)",
   "completeMsg": "Do you want to complete this post.",
   "expired": "Expired",

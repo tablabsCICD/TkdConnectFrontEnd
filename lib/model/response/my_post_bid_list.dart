@@ -299,6 +299,8 @@ class Bidings {
   int?    isVerified;
   int?    isPaid;
   int?    isAccepted;
+  String? vehicleNumber;
+  String? driverContact;
 
 
   Bidings(
@@ -306,7 +308,7 @@ class Bidings {
         this.firstName,
         this.lastName,
         this.profileImage,
-        this.companyName,this.isVerified,this.isPaid,this.isAccepted});
+        this.companyName,this.isVerified,this.isPaid,this.isAccepted,this.vehicleNumber,this.driverContact});
 
   Bidings.fromJson(Map<String, dynamic> json) {
     bidings =
@@ -318,6 +320,8 @@ class Bidings {
     isVerified=json['isVerified'];
     isPaid=json['isPaid'];
     isAccepted=json['isAccepted'];
+    vehicleNumber=json['vehicleNumber'];
+    driverContact = json['driverContact'];
   }
 
   Map<String, dynamic> toJson() {
@@ -332,6 +336,8 @@ class Bidings {
     data['isVerified'] = isVerified;
     data['isPaid'] = isPaid;
     data['isAccepted'] = isAccepted;
+    data['vehicleNumber'] = vehicleNumber;
+    data['driverContact'] = driverContact;
     return data;
   }
 }

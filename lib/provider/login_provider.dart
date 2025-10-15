@@ -41,7 +41,6 @@ class LoginProvider extends BaseProvider{
     if(Validation().isValidPhoneNumber(mobileNumber)){
       ApiHelper apiHelper=ApiHelper();
       var response= await apiHelper.apiGet(ApiConstant.USER_FIND_BY_MOBILE(mobileNumber));
-
       if(response.status==200){
         DeleteUser deleteUser=DeleteUser.fromJson(response.response);
         callSwitch(deleteUser,context,mobileNumber);

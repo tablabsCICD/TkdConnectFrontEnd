@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/screen/buy_sell/buy_sell_screen.dart';
+import 'package:tkd_connect/screen/dashboard/home/demoVehicleTracking.dart';
 import 'package:tkd_connect/screen/directory/directory_screen.dart';
 import 'package:tkd_connect/screen/jobs/job_list_screen.dart';
 import 'package:tkd_connect/screen/more/edit_profile/edit_profile_base_screen.dart';
 import 'package:tkd_connect/screen/my_bids/my_bids_base_screen.dart';
 import 'package:tkd_connect/screen/news/allNews.dart';
 import 'package:tkd_connect/screen/report_incident/report_incident_list.dart';
+import 'package:tkd_connect/screen/tracking/vehicle_tracking.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 
 import '../../../constant/api_constant.dart';
@@ -113,7 +116,7 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) => ReportIncidentList()));
-                    },
+                      },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       backgroundColor: Colors.white,

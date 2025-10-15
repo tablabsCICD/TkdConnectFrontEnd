@@ -31,7 +31,6 @@ class SelectPlanProvider extends BaseProvider {
   String expDate="";
 
   selectClearPerl() {
-
     selectedPlanCode=0;
     if(selectedPlanCode==previousPlanCheck){
       selectPlan = "CURRENT PLAN";
@@ -50,7 +49,6 @@ class SelectPlanProvider extends BaseProvider {
     User user=await LocalSharePreferences().getLoginData();
     previousPlan=user.content!.first.isPaid!;
     previousPlanCheck=user.content!.first.isPaid!;
-
     selectedPlanCode=previousPlan;
     planAmount = 0;
     clearPearl = false;
@@ -74,9 +72,6 @@ class SelectPlanProvider extends BaseProvider {
         notifyListeners();
         return;
     }
-
-
-
   }
 
   selectBlue() {
@@ -138,8 +133,10 @@ class SelectPlanProvider extends BaseProvider {
                 image: image,
                 subtitle: Title,
                 amount: amount,
-              ));
-        });
+              )
+          );
+        }
+    );
   }
 
   void showBootomSheet(BuildContext context) {
@@ -163,8 +160,6 @@ class SelectPlanProvider extends BaseProvider {
     }
   }
 
-
-
   selectedPlan(BuildContext context) async {
     User user=await LocalSharePreferences().getLoginData();
     ApiResponse apiResponse = await ApiHelper().apiPutDat(ApiConstant.UPDATE_YOUR_PLAN(user.content!.first.id,selectedPlanCode));
@@ -174,8 +169,7 @@ class SelectPlanProvider extends BaseProvider {
         LocalSharePreferences localSharePreferences=LocalSharePreferences();
         localSharePreferences.setBool(AppConstant.LOGIN_BOOl, true);
         localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));
-        ToastMessage.show(context, "Plan Update Sucesss");
-
+        ToastMessage.show(context, "Plan Update Success");
       }
       goHome(context);
     } else {
