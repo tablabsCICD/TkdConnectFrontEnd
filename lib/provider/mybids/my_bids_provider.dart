@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/main.dart';
@@ -15,12 +17,17 @@ import 'package:tkd_connect/provider/location/location_provider.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:tkd_connect/utils/toast.dart';
 
+import '../../constant/app_constant.dart';
+import '../../model/response/delete_user.dart';
 import '../../model/response/my_post_bid_list.dart';
 import '../../model/response/quoteResponse.dart';
 import '../../model/response/userdata.dart';
+import '../../route/app_routes.dart';
+import '../../utils/validation.dart';
 
 class MyBidsProvider extends BaseProvider {
   bool isMyPlacedBids = true;
+  bool isMobileNumberValid=false;
   List<Bids> listBids = [];
 
   MyBidsProvider(super.appState);
@@ -290,5 +297,81 @@ class MyBidsProvider extends BaseProvider {
       getAllBids(context, false);
       notifyListeners();
     }
+  }
+
+  Future<bool> callOtp(BuildContext context,String mobileNumber) async{
+    try {
+      var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(mobileNumber));
+      if (req.status == 200) {
+        ToastMessage.show(context, "OTP Sent Successfully");
+        return true;
+      } else {
+        ToastMessage.show(context, "Failed to send OTP");
+        return false;
+      }
+    } catch (e) {
+      ToastMessage.show(context, "Error: $e");
+      return false;
+    }
+  }
+
+  void callSwitch(DeleteUser user,BuildContext context,String mobileNumber) {
+    switch (user.errorCode){
+      case '200':
+        callOtp(context,mobileNumber);
+        break;
+      case '201':
+        ToastMessage.show(context, "User is deleted please register again");
+        break;
+      case '500':
+        ToastMessage.show(context, "Mobile number is not register please register");
+        break;
+    }
+  }
+
+  isUserDeleted(String mobileNumber,BuildContext context)async{
+    if(Validation().isValidPhoneNumber(mobileNumber)){
+      ApiHelper apiHelper=ApiHelper();
+      var response= await apiHelper.apiGet(ApiConstant.USER_FIND_BY_MOBILE(mobileNumber));
+      if(response.status==200){
+        DeleteUser deleteUser=DeleteUser.fromJson(response.response);
+        callSwitch(deleteUser,context,mobileNumber);
+      }else{
+        ToastMessage.show(context, " Please try again ");
+      }
+    }else{
+      ToastMessage.show(context, " Enter valid mobile number ");
+    }
+  }
+
+  isMobileValide(String mobile){
+    isMobileNumberValid= Validation().isValidPhoneNumber(mobile);
+    notifyListeners();
+  }
+
+
+  verifyOtp(BuildContext context,String mobileNumber,String otp) async{
+    String  deviceId="null";
+    try{
+    try {
+      deviceId = (await FirebaseMessaging.instance.getToken())!;
+    } on PlatformException {
+      deviceId = 'Failed to get deviceId.';
+    }
+    print('the device id is $deviceId');
+
+    String myUrl = ApiConstant.OTP_VERIFICATION(mobileNumber,otp,deviceId);
+    var req = await ApiHelper().apiPost(myUrl);
+    if (req.status == 200) {
+      ToastMessage.show(context, "OTP Verified");
+      return true;
+    } else {
+      ToastMessage.show(context, "Incorrect OTP");
+      return false;
+    }
+  } catch (e) {
+  ToastMessage.show(context, "Error: $e");
+  return false;
+  }
   }
 }
