@@ -116,11 +116,11 @@ class MyBidsProvider extends BaseProvider {
         ToastMessage.show(context, acceptBidResponse.message.toString());
         if ((acceptBidResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
             (acceptBidResponse.data?.driverContact?.isNotEmpty ?? false)) {
-          Provider.of<LocationProvider>(context, listen: false).startTracking(
+         /* Provider.of<LocationProvider>(context, listen: false).startTracking(
             data.genericCardsDto!.id!,
             acceptBidResponse.data!.vehicleNumber!,
             acceptBidResponse.data!.driverContact!,
-          );
+          );*/
         }
       }else{
         ToastMessage.show(context, acceptBidResponse.message.toString());
@@ -153,11 +153,11 @@ class MyBidsProvider extends BaseProvider {
         ToastMessage.show(context, "Detail Sent successfully");
         if ((acceptBidResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
             (acceptBidResponse.data?.driverContact?.isNotEmpty ?? false)) {
-          Provider.of<LocationProvider>(context, listen: false).startTracking(
+         /* Provider.of<LocationProvider>(context, listen: false).startTracking(
             data.id!,
             acceptBidResponse.data!.vehicleNumber!,
             acceptBidResponse.data!.driverContact!,
-          );
+          );*/
         }
       }else{
         ToastMessage.show(context, "Something went wrong");

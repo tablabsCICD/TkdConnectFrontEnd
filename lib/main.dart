@@ -121,7 +121,7 @@ class _MyApp extends State<MyApp> {
                 ),
               ),
               ChangeNotifierProvider(create: (_) => MyBidsProvider('Idel')),
-              ChangeNotifierProvider(create: (_) => LocationProvider()),
+          //    ChangeNotifierProvider(create: (_) => LocationProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

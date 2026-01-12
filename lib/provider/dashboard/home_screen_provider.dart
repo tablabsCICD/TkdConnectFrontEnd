@@ -10,7 +10,6 @@ import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/request/post_load.dart';
 import 'package:tkd_connect/model/response/oneadd.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
-import 'package:tkd_connect/screen/tracking/location_service.dart';
 
 import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
@@ -233,7 +232,7 @@ class HomeScreenProvider extends BaseProvider{
     if(apiResponse.status==200){
      // truckLoadTypeList .removeAt(index);
       ToastMessage.show(context, "Your Post Completed Successfully");
-      Provider.of<LocationProvider>(context, listen: false).stopTracking(id);
+      //Provider.of<LocationProvider>(context, listen: false).stopTracking(id);
       callDashboradApi(context,0);
 
       notifyListeners();
