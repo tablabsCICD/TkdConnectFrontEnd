@@ -217,6 +217,20 @@
   "buySellVehicle": "વાહન ખરીદો/વેચો",
   "myNews": "મારી સમાચાર",
   "myIncident": "મારી ઘટના",
-  "bulkUpload": "થોક અપલોડ"
-
-}
+  "bulkUpload": "થોક અપલોડ",
+  "verifyTracking": "ટ્રેકિંગ ચકાસો",
+  "allRoutesRequirement": "બધા રૂટની આવશ્યકતાઓ",
+  "fullLoadRequired": "પૂર્ણ લોડ જરૂરી",
+  "partLoadRequired": "આંશિક લોડ જરૂરી",
+  "partVehicleRequired": "આંશિક વાહન જરૂરી",
+  "fullVehicleRequired": "પૂર્ણ વાહન જરૂરી",
+  "generalPost": "સામાન્ય પોસ્ટ",
+  "sellBuyPost": "ખરીદ-વેચાણ પોસ્ટ",
+  "showPostTo": "પોસ્ટ બતાવો",
+  "saveMsg": "શું તમે ખરેખર આ આવશ્યકતા પોસ્ટ કરવા માંગો છો?",
+  "pleaseFillAllInformation": "કૃપા કરીને તમામ માહિતી ભરો",
+  "postSubmittedSuccessfully": "પોસ્ટ સફળતાપૂર્વક સબમિટ થઈ ગઈ છે!",
+  "pleaseTryAgain": "કૃપા કરીને ફરી પ્રયાસ કરો",
+  "pleaseUpdateYourPackage": "કૃપા કરીને તમારું પેકેજ અપડેટ કરો",
+  "importantNotice": "મહત્વપૂર્ણ સૂચના",
+  "noticeMsg": "ટ્રક લોડ કરતા પહેલા અને mParivahan વેબસાઇટ પર RTO દસ્તાવેજોની ચકાસણી કર્યા વિના કોઈ પણ આગોતરું ચૂકવણી ન કરો."

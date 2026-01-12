@@ -204,5 +204,21 @@
   "buySellVehicle": "Buy/Sell Vehicle",
   "myNews": "My News",
   "myIncident": "My Incident",
-  "bulkUpload": "Bulk Load Upload"
+  "bulkUpload": "Bulk Load Upload",
+  "verifyTracking": "Verify Tracking",
+  "allRoutesRequirement": "All routes requirement",
+  "fullLoadRequired": "Full load required",
+  "partLoadRequired": "Part load required",
+  "partVehicleRequired": "Part vehicle required",
+  "fullVehicleRequired": "Full vehicle  required",
+  "generalPost": "General Post",
+  "sellBuyPost": "Sell Buy Post",
+  "showPostTo": "Show Post to",
+  "saveMsg": "Are you sure you want to post this requirement?",
+  "pleaseFillAllInformation": "Please fill all information",
+  "postSubmittedSuccessfully": "Post submitted successfully!",
+  "pleaseTryAgain": "Please try again",
+  "pleaseUpdateYourPackage": "Please update your package",
+  "importantNotice": "Important Notice",
+  "noticeMsg": "Do not Pay any Advance before Loading of Truck and verifying RTO documents on mParivahan website."
 }

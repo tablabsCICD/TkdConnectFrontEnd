@@ -268,6 +268,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहनाचा आकार"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("सत्यापित वापरकर्ते"),
+        "verifyTracking":
+            MessageLookupByLibrary.simpleMessage("Verify Tracking"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("प्रोफाइल पहा"),
         "website": MessageLookupByLibrary.simpleMessage("वेबसाइट"),
         "withdrawQuotes": MessageLookupByLibrary.simpleMessage("कोट मागे घ्या"),

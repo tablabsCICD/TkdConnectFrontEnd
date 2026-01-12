@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
+import 'package:tkd_connect/constant/images.dart';
 import 'package:tkd_connect/model/response/bid_placed.dart';
 import 'package:tkd_connect/utils/colors.dart';
 
@@ -33,6 +34,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
     // TODO: implement initState
     super.initState();
     widget.provider.getAllBids(context, true);
+    widget.provider.pagenationPlacedBid(context);
   }
 
   @override
@@ -46,6 +48,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                 ),
               )
             : ListView.builder(
+                 controller: provider.scrollController,
                 itemCount: provider.listBids.length,
                 itemBuilder: (
                   BuildContext context,
@@ -162,11 +165,12 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                   : Column(
                       children: [
                         Text(
-                          Utils().mainTag(bids.mainTag!) ==
-                                      "Full vehicle required" ||
-                                  Utils().mainTag(bids.mainTag!) ==
-                                      "Part vehicle required"
-                              ? 'Your Quote is accepted kindly share driver contact number and vehicle number.'
+                          (Utils().mainTag(bids.mainTag!) == "Full vehicle required" ||
+                              Utils().mainTag(bids.mainTag!) == "Part vehicle required")
+                              ? ((bids.vehicleNumber?.isNotEmpty ?? false) &&
+                              (bids.driverContact?.isNotEmpty ?? false))
+                              ? ""
+                              : "Your Quote is accepted, kindly share driver contact number and vehicle number."
                               : "",
                           style: TextStyle(
                             color: Colors.orange,
@@ -175,6 +179,7 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+
                         Row(
                           children: [
                             Text(
@@ -219,126 +224,115 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                             ),
                           ],
                         ),
+                        bids.isCompleted == 1
+                            ? const SizedBox.shrink()
+                            : ((bids.driverContact != null &&
+                            bids.driverContact!.isNotEmpty) ||
+                            (bids.vehicleNumber != null &&
+                                bids.vehicleNumber!.isNotEmpty))
+                            ?
                         ActionChip(
                           avatar: const Icon(Icons.location_on_outlined,
                               size: 18, color: Colors.white),
-                          label: const Text(
-                            "Track",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          label: Text(
+                            bids.isQuoteOwnerVerifiedForTrack ==
+                                0
+                                ? "Track Driver"
+                                : "Track Ride",
+                                                    style: TextStyle(color: Colors.white, fontSize: 12),
                           ),
                           backgroundColor: Colors.green,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
-                          onPressed: () async {
-                            // Step 1: Show send OTP dialog
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text("Send OTP"),
-                                  content: Text("Send OTP to ${bids.driverContact}?"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text("Cancel"),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        Navigator.pop(context); // close confirm dialog
+                            onPressed: () async {
+                              bool verifying = bids.isQuoteOwnerVerifiedForTrack ==
+                                  0
+                                  ? false
+                                  : true;
+                              if (verifying) {
+                                final startCoords =
+                                await GeoHelper.getLatLngFromCity(
+                                    bids.source ??
+                                        "");
+                                final endCoords =
+                                await GeoHelper.getLatLngFromCity(
+                                    bids
+                                        .destination ??
+                                        "");
 
-                                        // Step 2: Call your existing OTP API
-                                        final otpSuccess =
-                                        await provider.isUserDeleted(bids.driverContact ?? "",context);
+                                if (startCoords != null && endCoords != null) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              VehicleTrackingWithTwoPolylines(
+                                                startLocation: LatLng(
+                                                    startCoords['lat']!,
+                                                    startCoords['lng']!),
+                                                endLocation: LatLng(
+                                                    endCoords['lat']!,
+                                                    endCoords['lng']!),
+                                                vehicleId:
+                                                bids.vehicleNumber ?? '',
+                                                driverNumber:
+                                                bids.driverContact ?? '',
+                                                postId: bids.id,
+                                              )));
+                                }
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (dialogCtx) {
+                                    return StatefulBuilder(
+                                      builder: (context, setState) {
+                                        return AlertDialog(
+                                          title:
+                                          Text("Send Otp To Verify Driver"),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                  "Send OTP for driver verification "),
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: const Text("Cancel"),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                final success = await widget
+                                                    .provider
+                                                    .isUserDeleted(
+                                                    bids.driverContact ??
+                                                        "",
+                                                    context,
+                                                    bids
 
-                                        if (otpSuccess) {
-                                          // Step 3: If success, show Enter OTP dialog
-                                          showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (context) {
-                                              final TextEditingController otpController =
-                                              TextEditingController();
-                                              return AlertDialog(
-                                                title: const Text("Enter OTP"),
-                                                content: TextField(
-                                                  controller: otpController,
-                                                  keyboardType: TextInputType.number,
-                                                  decoration: const InputDecoration(
-                                                    hintText: "Enter OTP",
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () => Navigator.pop(context),
-                                                    child: const Text("Cancel"),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () async {
-                                                      final enteredOtp = otpController.text.trim();
-                                                      Navigator.pop(context);
+                                                        .id!,
+                                                    false);
 
-                                                      // 🔹 Verify OTP here (replace with your API logic)
-                                                      final verified = await provider.verifyOtp(
-                                                          context, bids.driverContact ?? "", enteredOtp);
-
-                                                      if (verified) {
-                                                        // Redirect to tracking screen
-                                                        final startCoords =
-                                                        await GeoHelper.getLatLngFromCity(
-                                                            bids.source ?? "");
-                                                        final endCoords =
-                                                        await GeoHelper.getLatLngFromCity(
-                                                            bids.destination ?? "");
-
-                                                        if (startCoords != null && endCoords != null) {
-                                                          LatLng startLatLong = LatLng(
-                                                              startCoords['lat']!, startCoords['lng']!);
-                                                          LatLng endLatLong = LatLng(
-                                                              endCoords['lat']!, endCoords['lng']!);
-
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (_) =>
-                                                                  VehicleTrackingWithTwoPolylines(
-                                                                    startLocation: startLatLong,
-                                                                    endLocation: endLatLong,
-                                                                    vehicleId: bids.vehicleNumber ?? '',
-                                                                    driverNumber: bids.driverContact ?? '',
-                                                                    postId: bids.id,
-                                                                  ),
-                                                            ),
-                                                          );
-                                                        } else {
-                                                          ScaffoldMessenger.of(context).showSnackBar(
-                                                            const SnackBar(
-                                                                content: Text(
-                                                                    "Failed to get location from city")),
-                                                          );
-                                                        }
-                                                      } else {
-                                                        ToastMessage.show(context, "Invalid OTP");
-                                                      }
-                                                    },
-                                                    child: const Text("Verify"),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        } else {
-                                          ToastMessage.show(context, "Failed to send OTP");
-                                        }
+                                                if (success) {
+                                                  Navigator.of(context).pop();
+                                                } else {
+                                                  ToastMessage.show(context,
+                                                      "Failed to send OTP");
+                                                }
+                                              },
+                                              child: Text("Send OTP"),
+                                            ),
+                                          ],
+                                        );
                                       },
-                                      child: const Text("Send OTP"),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          },
-                        ),
+                              }
+                            }):SizedBox.shrink(),
                         bids.isAccepted == 0
                             ? BaseWidget().onlyBidButton(() {
                                 showDialog(
@@ -436,13 +430,13 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        Utils().mainTag(bids.mainTag!) ==
-                                                    "Full vehicle required" ||
-                                                Utils().mainTag(
-                                                        bids.mainTag!) ==
-                                                    "Part vehicle required"
-                                            ? "Click to share details"
-                                            : "Your Quote is accepted",
+                                      Utils().mainTag(bids.mainTag!) == "Full vehicle required" ||
+                                      Utils().mainTag(bids.mainTag!) == "Part vehicle required"
+                                      ? (bids.vehicleNumber != null && bids.vehicleNumber!.isNotEmpty &&
+                                      bids.driverContact != null && bids.driverContact!.isNotEmpty)
+                                      ? "Your Quote is accepted"
+                                      : "Click to share details"
+                                      : "Your Quote is accepted",
                                         style: TextStyle(
                                           color: Colors.green,
                                           fontSize: 12.sp,
@@ -496,34 +490,31 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                 SizedBox(height: 16),
                 Form(
                   key: _formKey,
-                  child: Expanded(
-                    // Use Expanded to handle overflow
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          labelText("Vehicle Number"),
-                          SizedBox(height: 8),
-                          EditTextError(
-                            validate: true,
-                            width: 335.w,
-                            height: 52.h,
-                            hint: "Vehicle Number",
-                            controller: _vehicleNumberController,
-                            onChange: (val) {},
-                          ),
-                          SizedBox(height: 12),
-                          labelText("Driver Number"),
-                          SizedBox(height: 8),
-                          EditTextError(
-                            validate: true,
-                            width: 335.w,
-                            height: 52.h,
-                            hint: "Driver Contact Number",
-                            controller: _driverNumberController,
-                            onChange: (val) {},
-                          ),
-                        ],
-                      ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        labelText("Vehicle Number"),
+                        SizedBox(height: 8),
+                        EditTextError(
+                          validate: true,
+                          width: 335.w,
+                          height: 52.h,
+                          hint: "Vehicle Number",
+                          controller: _vehicleNumberController,
+                          onChange: (val) {},
+                        ),
+                        SizedBox(height: 12),
+                        labelText("Driver Number"),
+                        SizedBox(height: 8),
+                        EditTextError(
+                          validate: true,
+                          width: 335.w,
+                          height: 52.h,
+                          hint: "Driver Contact Number",
+                          controller: _driverNumberController,
+                          onChange: (val) {},
+                        ),
+                      ],
                     ),
                   ),
                 ),

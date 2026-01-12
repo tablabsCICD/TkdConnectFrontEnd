@@ -52,11 +52,13 @@ class CreateGroupProvider extends BaseProvider{
       EasyLoading.dismiss();
       var type = SearchDataList.fromJson(json.decode(responseBody.response));
       allUserList.addAll(type.data!);
+      print("All Users ${allUserList.length}");
     }
     if(isFromEdit==true){
       currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
-      getGroupMember(currentGroup!.id!);
+      await getGroupMember(currentGroup!.id!);
       print(listAddedMember.length);
+      print("All Added ${listAddedMember.length}");
       for(int i=0;i<allUserList.length;i++){
         allUserList[i].addedIngroup=false;
         for(int j=0;j<listAddedMember.length;j++){
@@ -69,6 +71,8 @@ class CreateGroupProvider extends BaseProvider{
           filterByName.add(allUserList[i]);
         }
       }
+      print("All Users ${selectedUsers.length}");
+
     }else{
       for(int i=0;i<allUserList.length;i++){
         allUserList[i].isSelected=false;
@@ -125,10 +129,12 @@ class CreateGroupProvider extends BaseProvider{
   callGroupMember(int? groupId,int? userId,BuildContext context,bool isFrom,List<SearchData> memberList) async{
     String date = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateTime.now());
     List<GroupMember>selectedUserId=[];
+    print("selected users ${memberList.length}");
     for(int i=0;i<memberList.length;i++){
       String? dpName= "${memberList[i].firstName!} ${memberList[i].lastName!}";
-      selectedUserId.add(GroupMember(displayName:dpName,userId: memberList[i].id));
+      selectedUserId.add(GroupMember(displayName:dpName,userId: memberList[i].id,email: memberList[i].emailId,location: memberList[i].city,contact: memberList[i].mobileNumber));
     }
+    print("selected group member ${selectedUserId.length}");
     ApiHelper apiHelper=ApiHelper();
     Map<String,dynamic>parameter={
       'addedByUserId':userId,

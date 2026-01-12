@@ -239,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "users": MessageLookupByLibrary.simpleMessage("பயனர்கள்"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("சரிபார்க்கப்பட்ட பயனர்கள்"),
+        "verifyTracking":
+            MessageLookupByLibrary.simpleMessage("Verify Tracking"),
         "viewProfile":
             MessageLookupByLibrary.simpleMessage("சுயவிவரத்தைக் காண்க"),
         "yes": MessageLookupByLibrary.simpleMessage("ஆம்")

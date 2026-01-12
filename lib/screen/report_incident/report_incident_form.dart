@@ -81,7 +81,7 @@ class ReportIncidentFormScreen extends StatelessWidget {
               SizedBox(
                 height: 12.h,
               ),
-              labelText(S().companyName),
+              labelText(S().contact),
               SizedBox(
                 height: 4.h,
               ),

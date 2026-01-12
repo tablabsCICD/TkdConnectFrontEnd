@@ -35,17 +35,19 @@ class _EditGroupScreenState extends State<EditGroupScreen> {
   _buildPage(BuildContext context) {
     return Scaffold(
       // appBar: AppBarCommon(context, title: "Create Group").appBar(),
-      body:  Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 50,),
-          groupName(),
-          const SizedBox(height: 30,),
-          particepent(),
-          const SizedBox(height: 20,),
-          selectUserList(),
-        ],
+      body: Consumer<CreateGroupProvider>(
+        builder: (context, provider, child) => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 50,),
+            groupName(provider),
+            const SizedBox(height: 30,),
+            particepent(provider),
+            const SizedBox(height: 20,),
+            selectUserList(provider),
+          ],
+        ),
       ),
 
 
@@ -68,44 +70,66 @@ class _EditGroupScreenState extends State<EditGroupScreen> {
   }
 
   bool buttonEnable = false;
-  groupName() {
+  groupName(CreateGroupProvider provider) {
     return Consumer<CreateGroupProvider>(
-        builder: (context, provider, child) {
-          String img=provider.currentGroup!.imageUrl!;
-          _controller.text = provider.currentGroup!.groupName!;
-          /*setState(() {
+      builder: (context, provider, child) {
 
-          });*/
-          //provider.setData();
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.grey, // Button color
-                    child: InkWell(
-                      splashColor: Colors.grey, // Splash color
-                      onTap: () async{
-                        await provider.uploadProfileImage(context);
-                      },
-                      child: BaseWidget().getImageclip(provider.changeImageUrl==''?img:provider.changeImageUrl,
-                          height: 40.h, width: 40.w),
+        final String? rawUrl = provider.changeImageUrl.isNotEmpty
+            ? provider.changeImageUrl
+            : provider.currentGroup?.imageUrl;
+
+        final bool isValidUrl = rawUrl != null &&
+            rawUrl.isNotEmpty &&
+            rawUrl != 'null' &&
+            (rawUrl.startsWith('http'));
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: ClipOval(
+                child: Material(
+                  color: Colors.grey,
+                  child: InkWell(
+                    splashColor: Colors.grey,
+                    onTap: () async {
+                      await provider.uploadProfileImage(context);
+                    },
+                    child: isValidUrl
+                        ? BaseWidget().getImageclip(
+                      rawUrl,
+                      height: 40.h,
+                      width: 40.w,
+                    )
+                        : const Icon(
+                      Icons.account_circle,
+                      size: 40,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 50,width: 250,
-                  child: EditText(controller: _controller, hint: "Enter Group Name", keybordType: TextInputType.text,
+            ),
 
-                    width: 250,height: 50,))
-            ],
-          );}
+            SizedBox(
+              height: 50,
+              width: 250,
+              child: EditText(
+                controller: _controller,
+                hint: "Enter Group Name",
+                keybordType: TextInputType.text,
+                width: 250,
+                height: 50,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  particepent() {
+
+  particepent(CreateGroupProvider provider) {
     return Container(
       height: 40,
       color: Colors.black12,
@@ -117,7 +141,7 @@ class _EditGroupScreenState extends State<EditGroupScreen> {
 
 
 
-  selectUserList(){
+  selectUserList(CreateGroupProvider provider){
     return Expanded(
       child: ListView.builder(
         // controller: _scrollController,
@@ -139,13 +163,32 @@ class _EditGroupScreenState extends State<EditGroupScreen> {
                         width: 34,
                       ),
                       const SizedBox(width: 10,),
-                      Text(
-                          "${widget.memberList[index].firstName!} ${widget.memberList[index].lastName!}",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontFamily: AppConstant.FONTFAMILY,
-                            fontWeight: FontWeight.w600,
-                          ))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              "${widget.memberList[index].firstName!} ${widget.memberList[index].lastName!}",
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w600,
+                              )),
+                          Text(
+                              "${widget.memberList[index].mobileNumber!}",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          Text(
+                              "${widget.memberList[index].city!}",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w500,
+                              )),
+                        ],
+                      )
                     ],
                   ),
                 ),

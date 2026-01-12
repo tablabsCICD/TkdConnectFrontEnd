@@ -1,14 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/my_post_bid_list.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/verified_tag.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -18,7 +22,7 @@ import '../textview.dart';
 
 class BaseWidget {
   Widget profile(String profileLink, String name, String companyName,
-      {int verify = 0,double ratings= 4.5}) {
+      {int verify = 0,required double rating}) {
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -120,16 +124,16 @@ class BaseWidget {
                                         ),
                                         RatingBar.builder(
                                           itemSize: 10,
-                                          initialRating: ratings,
+                                          initialRating: rating,
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
                                           itemPadding: const EdgeInsets.symmetric(
                                               horizontal: 1.0),
-                                          itemBuilder: (context, _) => const Icon(
+                                          itemBuilder: (context, _) => Icon(
                                             Icons.star,
-                                            color: Colors.amber,
+                                            color: ThemeColor.red,
                                             size: 5,
                                           ),
                                           onRatingUpdate: (rating) {
@@ -158,7 +162,7 @@ class BaseWidget {
   }
 
   Widget profileWithUser(String profileLink, String name, String companyName,
-      {int verify = 0, int transporterOrAgent = 0,double ratings= 4.5}) {
+      {int verify = 0, int transporterOrAgent = 0,required double ratings,required bool isJob,required String email}) {
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -215,9 +219,9 @@ class BaseWidget {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           children: [
@@ -227,8 +231,8 @@ class BaseWidget {
                                                 color: Colors.black,
                                                 fontSize: 14.sp,
                                                 fontFamily:
-                                                    GoogleFonts.poppins()
-                                                        .fontFamily,
+                                                GoogleFonts.poppins()
+                                                    .fontFamily,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),
@@ -236,14 +240,14 @@ class BaseWidget {
                                               width: 4.w,
                                             ),
                                             Visibility(
-                                                visible:
-                                                    verify != 0 ? true : false,
-                                                // child: SvgPicture.asset(
-                                                //   Images.verified,
-                                                //   height: 12.h,
-                                                //   width: 12.w,
-                                                // ))
-                                            child: VerifiedTag().onVeriedTag(),
+                                              visible:
+                                              verify != 0 ? true : false,
+                                              // child: SvgPicture.asset(
+                                              //   Images.verified,
+                                              //   height: 12.h,
+                                              //   width: 12.w,
+                                              // ))
+                                              child: VerifiedTag().onVeriedTag(),
                                             )
                                           ],
                                         ),
@@ -253,7 +257,7 @@ class BaseWidget {
                                             title: companyName,
                                             TextStyle(
                                               color: const Color(0x99001E49),
-                                              fontSize: 10.sp,
+                                              fontSize: 12.sp,
                                               fontFamily: GoogleFonts.poppins()
                                                   .fontFamily,
                                               fontWeight: FontWeight.w400,
@@ -263,19 +267,40 @@ class BaseWidget {
                                         SizedBox(
                                           width: double.infinity,
                                           child: Textview(
-                                            title: Utils().getTranport(
+                                            title: Utils().getTransport(
                                                 transporterOrAgent),
                                             TextStyle(
-                                              color: const Color(0x99001E49),
-                                              fontSize: 10.sp,
+                                              color: const Color(0xFF000000),
+                                              fontSize: 12.sp,
                                               fontFamily: GoogleFonts.poppins()
                                                   .fontFamily,
-                                              fontWeight: FontWeight.w400,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                         ),
-                                        RatingBar.builder(
-                                          itemSize: 10,
+                                        isJob?InkWell(
+                                          onTap: () async {
+                                            final Uri emailUri = Uri(
+                                              scheme: 'mailto',
+                                              path: email,
+                                            );
+
+                                            if (await canLaunchUrl(emailUri)) {
+                                              await launchUrl(emailUri);
+                                            }
+                                          },
+                                          child: Text(
+                                            email,
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 12,
+                                              fontFamily: GoogleFonts.poppins().fontFamily,
+                                              fontWeight: FontWeight.w600,
+                                              decoration: TextDecoration.underline, // optional
+                                            ),
+                                          ),
+                                        ):RatingBar.builder(
+                                          itemSize: 12,
                                           initialRating: ratings,
                                           minRating: 1,
                                           direction: Axis.horizontal,
@@ -285,7 +310,7 @@ class BaseWidget {
                                               horizontal: 1.0),
                                           itemBuilder: (context, _) => const Icon(
                                             Icons.star,
-                                            color: Colors.amber,
+                                            color: Colors.red,
                                             size: 5,
                                           ),
                                           onRatingUpdate: (rating) {
@@ -313,7 +338,7 @@ class BaseWidget {
     );
   }
 
-  Widget profileDirectory(String profileLink, String name, String companyName,
+  Widget profileDirectory(String profileLink, String name, String companyName,double rating,
       {int verify = 0}) {
     return SizedBox(
       width: double.infinity,
@@ -415,16 +440,16 @@ class BaseWidget {
                                         ),
                                         RatingBar.builder(
                                           itemSize: 10,
-                                          initialRating: 3,
+                                          initialRating: rating,
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
                                           itemPadding: const EdgeInsets.symmetric(
                                               horizontal: 1.0),
-                                          itemBuilder: (context, _) => const Icon(
+                                          itemBuilder: (context, _) => Icon(
                                             Icons.star,
-                                            color: Colors.amber,
+                                            color: ThemeColor.red,
                                             size: 5,
                                           ),
                                           onRatingUpdate: (rating) {
@@ -657,7 +682,7 @@ class BaseWidget {
   }
 
 
-  Widget headingWithDescription(String title, String date, String field1,String field2,String field3,bool isJobPost) {
+  Widget headingWithDescription(String title, String date, String field1,String field2,String field3,String field4,String field5,bool isJobPost) {
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -673,37 +698,44 @@ class BaseWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w600,
-                          ),
+                SizedBox(
+                width: double.infinity,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // 📝 TITLE (takes remaining space)
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
                         ),
-                        const SizedBox(width: 4),
-                        Text(
-                          date,
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: const Color(0x99001E49),
-                            fontSize: 12.sp,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4.h),
+
+                    const SizedBox(width: 8),
+
+                    // 📅 DATE (fixed width, right aligned)
+                    Text(
+                      date,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: const Color(0x99001E49),
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+        SizedBox(height: 4.h),
                   SizedBox(
                     width: double.infinity,
                     child: Column(
@@ -766,6 +798,50 @@ class BaseWidget {
                             ),
                             Text(
                               field3,
+                              style: TextStyle(
+                                color: const Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Location : ",
+                              style: TextStyle(
+                                color: const Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              field4,
+                              style: TextStyle(
+                                color: const Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        isJobPost?const SizedBox.shrink():Row(
+                          children: [
+                            Text(
+                              "Vehicle Number : ",
+                              style: TextStyle(
+                                color: const Color(0x99001E49),
+                                fontSize: 12.sp,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              field5,
                               style: TextStyle(
                                 color: const Color(0x99001E49),
                                 fontSize: 12.sp,
@@ -1586,7 +1662,7 @@ class BaseWidget {
         ),
         PopupMenuItem(
           onTap: () {
-            postBidData.genericCardsDto!.isOpenForBid==1? onMenuTap(8):ToastMessage.show(context, "Your Post already Completed Successfully");;
+            postBidData.genericCardsDto!.isCompleted==0? onMenuTap(8):ToastMessage.show(context, "Your Post already Completed Successfully");;
           },
           child: Row(
             children: [
@@ -1596,14 +1672,14 @@ class BaseWidget {
                 width: 20.w,
                 height: 20.h,
               ),*/
-              Icon(Icons.done,color: postBidData.genericCardsDto!.isOpenForBid==1?Colors.black:Colors.green,),
+              Icon(Icons.done,color: postBidData.genericCardsDto!.isCompleted==0?Colors.black:Colors.green,),
               SizedBox(
                 width: 12.w,
               ),
               Text(
-                postBidData.genericCardsDto!.isOpenForBid==1?S().complete:S().completed,
+                postBidData.genericCardsDto!.isCompleted==0?S().complete:S().completed,
                 style: TextStyle(
-                  color: postBidData.genericCardsDto!.isOpenForBid==1?Colors.black:Colors.green,
+                  color: postBidData.genericCardsDto!.isCompleted==0?Colors.black:Colors.green,
                   fontSize: 14.sp,
                   fontFamily: GoogleFonts.poppins().fontFamily,
                   fontWeight: FontWeight.w400,
@@ -2208,29 +2284,82 @@ class BaseWidget {
     return image(image: link);
   }
 
-  Widget carouseImage(List<String?> imgList) {
-    return /*Container(
-        child: carousel.CarouselSlider(
-      options: carousel.CarouselOptions(
-        padEnds: false,
-        pageSnapping: false,
-        enableInfiniteScroll: false,
-      ),
-      items: imgList
-          .map((item) => Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(child: imageLink(item!)),
+  final CarouselSliderController _controller = CarouselSliderController();
+  Widget carouseImage(context,List<String> imgList) {
+    return     Stack(
+        children: [
+          CarouselSlider(
+            items: imgList.map((url) {
+              return GestureDetector(
+                onTap: () => showImageDialog(
+                  context,
+                  imgList,
+                  imgList.indexOf(url),
                 ),
-              ))
-          .toList(),
-    ));*/
-      Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(child: imageLink(imgList[0]!)),
-        ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    url,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.broken_image, size: 60),
+                  ),
+                ),
+              );
+            }).toList(),
+            carouselController: _controller,          // ← add controller
+            options: CarouselOptions(
+              height: 180,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              viewportFraction: 1.0,
+              enlargeCenterPage: false,
+            ),
+          ),
+
+          /// LEFT ARROW
+          Positioned(
+            left: 10,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: InkWell(
+                onTap: () => _controller.previousPage(),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.black45,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 18),
+                ),
+              ),
+            ),
+          ),
+
+          /// RIGHT ARROW
+          Positioned(
+            right: 10,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: InkWell(
+                onTap: () => _controller.nextPage(),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.black45,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18),
+                ),
+              ),
+            ),
+          ),
+        ],
       );
+
   }
 
   Widget carouseImageDelete(List<String?> imgList, Function(String) onDelete) {
@@ -2375,15 +2504,15 @@ class BaseWidget {
                           ),
                         ),
                         const SizedBox(width: 2),
-                        // Text(
-                        //   '( ${likeCount} )',
-                        //   style: TextStyle(
-                        //     color: Color(0xFF001E49),
-                        //     fontSize: 12.sp,
-                        //     fontFamily: GoogleFonts.poppins().fontFamily,
-                        //     fontWeight: FontWeight.w400,
-                        //   ),
-                        // ),
+                         Text(
+                           '( ${likeCount} )',
+                           style: TextStyle(
+                             color: Color(0xFF001E49),
+                             fontSize: 12.sp,
+                             fontFamily: GoogleFonts.poppins().fontFamily,
+                             fontWeight: FontWeight.w400,
+                           ),
+                         ),
                       ],
                     ),
                   ),
@@ -2437,15 +2566,15 @@ class BaseWidget {
                             ),
                           ),
                           const SizedBox(width: 2),
-                          // Text(
-                          //   '( ${commentCount} )',
-                          //   style: TextStyle(
-                          //     color: Color(0xFF001E49),
-                          //     fontSize: 12.sp,
-                          //     fontFamily: GoogleFonts.poppins().fontFamily,
-                          //     fontWeight: FontWeight.w400,
-                          //   ),
-                          // ),
+                           Text(
+                             '( ${commentCount} )',
+                             style: TextStyle(
+                               color: Color(0xFF001E49),
+                               fontSize: 12.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -2706,37 +2835,115 @@ class BaseWidget {
     );
   }
 
-  appBar(BuildContext context, String title) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(left: 20.w),
-      height: 50.h,
-      color: Colors.white,
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: textFiled(title),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                Images.arrow_back,
-                height: 24.h,
-                width: 24.w,
+  Widget appBar(BuildContext context, String title, {bool isSearch=true}) {
+    return Stack(
+      children: [
+        // 🔴 Red background with rounded bottom
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 70.h,
+          decoration: const ShapeDecoration(
+            color: Color(0xFFC3262C),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(0),
+                bottomRight: Radius.circular(0),
               ),
             ),
           ),
-          SizedBox(width: 8.w),
-          SizedBox(width: 8.w),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 30),
+
+              // Back button + Title
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                    ),
+                    SizedBox(width: 16.w),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // 🔍 Floating search bar (UI only)
+        Visibility(
+          visible: isSearch,
+          child: Positioned(
+            bottom: 0,
+            left: 50.w,
+            right: 50.w,
+            child: Transform.translate(
+              offset: Offset(0, 35.h),
+              child: Center(
+                child: Container(
+                  width: 260.w,
+                  height: 52.h,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(width: 0.5, color: Color(0x332C363F)),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.w),
+                        child: SvgPicture.asset(
+                          Images.search_normal,
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+
+                      Expanded(
+                        child: TextField(
+                          readOnly: true, // No controller, no action
+                          decoration: InputDecoration(
+                            hintText: "Search here",
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: const Color(0x662C363F),
+                              fontSize: 14.sp,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                            ),
+                          ),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
+
 
   appBarSearchFilter(BuildContext context, String title) {
     return Container(
@@ -2829,6 +3036,43 @@ class BaseWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void showImageDialog(BuildContext context, List<String> imageUrls, int initialIndex) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.all(8),
+          backgroundColor: Colors.black,
+          child: Stack(
+            children: [
+              PhotoViewGallery.builder(
+                itemCount: imageUrls.length,
+                builder: (context, index) {
+                  return PhotoViewGalleryPageOptions(
+                    imageProvider: NetworkImage(imageUrls[index]),
+                    minScale: PhotoViewComputedScale.contained,
+                    maxScale: PhotoViewComputedScale.covered * 2,
+                  );
+                },
+                pageController: PageController(initialPage: initialIndex),
+                scrollPhysics: const BouncingScrollPhysics(),
+                backgroundDecoration: const BoxDecoration(color: Colors.black),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -120,7 +120,7 @@ class _EditPostBase extends State<EditPostBase>{
 
             });
           }),
-          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==1 ?   tabItem(isVehicle,S().vehicle,(){
+          tabItem(isVehicle,S().vehicle,(){
             isLoad=false;
             isVehicle=true;
             isGeneral=false;
@@ -132,7 +132,7 @@ class _EditPostBase extends State<EditPostBase>{
             });
 
 
-          }):const SizedBox(),
+          })
          /* tabItem(isGeneral,S().general,(){
             isLoad=false;
             isVehicle=false;

@@ -772,7 +772,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             PopupMenuItem(
               onTap: () {
                 // provider.changeDropDown("Login issue");
-                provider.drooDwonheading = 'All routes requirement';
+                provider.drooDwonheading = S().allRoutesRequirement;
                 provider.falseAllFilter();
                 provider.notifyListeners();
                 provider.applyDropDwonFilter(context);
@@ -782,7 +782,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'All routes requirement',
+                      S().allRoutesRequirement,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -800,7 +800,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
             ),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Full load Required ';
+                  provider.drooDwonheading = S().fullLoadRequired;
                   provider.falseAllFilter();
                   provider.flr = true;
                   provider.notifyListeners();
@@ -809,7 +809,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Full load Required ',
+                      S().fullLoadRequired,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -822,7 +822,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Part load required ';
+                  provider.drooDwonheading = S().partLoadRequired;
                   provider.falseAllFilter();
                   provider.plr = true;
                   provider.notifyListeners();
@@ -831,7 +831,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Part load required ',
+                      S().partLoadRequired,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -844,7 +844,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Full vehicle  required ';
+                  provider.drooDwonheading = S().fullVehicleRequired;
                   provider.falseAllFilter();
                   provider.fla = true;
                   provider.notifyListeners();
@@ -853,7 +853,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Full vehicle  required ',
+                      S().fullVehicleRequired,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -866,7 +866,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Part vehicle Required ';
+                  provider.drooDwonheading = S().partVehicleRequired;
                   provider.falseAllFilter();
                   provider.pla = true;
                   provider.notifyListeners();
@@ -875,7 +875,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Part vehicle Required ',
+                      S().partVehicleRequired,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -888,7 +888,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'General Post ';
+                  provider.drooDwonheading = S().generalPost;
                   provider.falseAllFilter();
                   provider.gp = true;
                   provider.notifyListeners();
@@ -897,7 +897,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'General Post ',
+                      S().generalPost,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -910,7 +910,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Sell Buy Post';
+                  provider.drooDwonheading = S().sellBuyPost;
                   provider.falseAllFilter();
                   provider.buy_sell = true;
                   provider.notifyListeners();
@@ -919,7 +919,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Sell Buy Post',
+                      S().sellBuyPost,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,
@@ -932,7 +932,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 )),
             PopupMenuItem(
                 onTap: () {
-                  provider.drooDwonheading = 'Jobs ';
+                  provider.drooDwonheading = S().jobs;
                   provider.falseAllFilter();
                   provider.jobs = true;
                   provider.notifyListeners();
@@ -941,7 +941,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
                 child: Row(
                   children: [
                     Text(
-                      'Jobs ',
+                      S().jobs,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.sp,

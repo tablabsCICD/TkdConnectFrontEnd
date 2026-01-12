@@ -220,6 +220,21 @@
 
   "myNews": "माझ्या बातम्या",
   "myIncident": "माझी घटना",
-  "bulkUpload": "बलक लोड अपलोड"
-
+  "bulkUpload": "बलक लोड अपलोड",
+  "verifyTracking": "ट्रॅकिंग तपासा",
+  "allRoutesRequirement": "सर्व मार्गांच्या आवश्यकता",
+  "fullLoadRequired": "पूर्ण लोड आवश्यक",
+  "partLoadRequired": "आंशिक लोड आवश्यक",
+  "partVehicleRequired": "आंशिक वाहन आवश्यक",
+  "fullVehicleRequired": "पूर्ण वाहन आवश्यक",
+  "generalPost": "सामान्य पोस्ट",
+  "sellBuyPost": "खरेदी / विक्री पोस्ट",
+  "showPostTo": "पोस्ट दाखवा",
+  "saveMsg": "आपण ही आवश्यकता पोस्ट करू इच्छिता याची खात्री आहे का?",
+  "pleaseFillAllInformation": "कृपया सर्व माहिती भरा",
+  "postSubmittedSuccessfully": "पोस्ट यशस्वीरीत्या सबमिट झाली आहे!",
+  "pleaseTryAgain": "कृपया पुन्हा प्रयत्न करा",
+  "pleaseUpdateYourPackage": "कृपया आपले पॅकेज अपडेट करा",
+  "importantNotice": "महत्त्वाची सूचना",
+  "noticeMsg": "ट्रक लोड करण्यापूर्वी आणि mParivahan वेबसाइटवर RTO कागदपत्रांची पडताळणी केल्याशिवाय कोणतीही आगाऊ रक्कम भरू नका."
 }

@@ -16,6 +16,7 @@ import '../../provider/news/news_provider.dart';
 import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../utils/sharepreferences.dart';
+import '../../widgets/common_app_bar.dart';
 // ---------------------------------------------------------------------------
 
 /// All‑in‑one, scroll‑friendly, ANR‑safe news listing screen.
@@ -58,33 +59,41 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
           return Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             floatingActionButton: _buildFAB(context, provider),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  _buildHeader(context, provider),
-                  SizedBox(height: 16.h),
-                  _buildFilterChips(provider),
-                  SizedBox(height: 10.h),
-                  // ------------ LIST / EMPTY STATE -------------
-                  Expanded(
-                    child: provider.isLoadDone && provider.allNews.isEmpty
-                        ? _buildEmptyState(context)
-                        : RefreshIndicator(
-                      onRefresh: provider.loadNews,
-                      child: ListView.builder(
-                        controller: provider.scrollControllerVertical,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount: provider.allNews.length,
-                        itemBuilder: (_, index) => _newsItem(
-                          context,
-                          content: provider.allNews[index],
-                          provider: provider,
-                        ),
+            body: Column(
+              children: [
+               // buildNewsHeader(context, provider,true),
+                CommonAppBar(
+                  title: S.of(context).allNews,
+                  isTitle: true,
+                  isBack: widget.isBase == false?true:false,  // allow hiding back button
+                  isSearchBar: true,
+                  isFilter: false,                // news does not have filter
+                  searchController: provider.searchController,
+                  onBackTap: () => Navigator.pop(context),
+                  onSearchChanged: (q) => provider.getBySearchData(),
+                ),
+
+                SizedBox(height: 30.h),
+                _buildFilterChips(provider),
+                // ------------ LIST / EMPTY STATE -------------
+                Expanded(
+                  child: provider.isLoadDone && provider.allNews.isEmpty
+                      ? _buildEmptyState(context)
+                      : RefreshIndicator(
+                    onRefresh: provider.loadNews,
+                    child: ListView.builder(
+                      controller: provider.scrollControllerVertical,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: provider.allNews.length,
+                      itemBuilder: (_, index) => _newsItem(
+                        context,
+                        content: provider.allNews[index],
+                        provider: provider,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -130,76 +139,115 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
   }
 
   /// Top red header with search box.
-  Widget _buildHeader(BuildContext context, NewsProvider provider) {
-    return Container(
-      width: double.infinity,
-      height: 87.h,
-      decoration: const ShapeDecoration(
-        color: Color(0xFFC3262C),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(16),
-            bottomRight: Radius.circular(16),
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          widget.isBase==false?IconButton(onPressed: (){Navigator.of(context).pop();}, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)):SizedBox.shrink(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 12.h),
-              child: _buildSearchBar(context, provider),
+  Widget buildNewsHeader(BuildContext context, NewsProvider provider, bool isBase) {
+    return Stack(
+      children: [
+        // 🔴 Background AppBar
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 100.h,
+          decoration: const ShapeDecoration(
+            color: Color(0xFFC3262C),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
             ),
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 45.h),
+
+              // Back + Title Row
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Row(
+                  children: [
+                    isBase == false
+                        ? InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                    )
+                        : const SizedBox.shrink(),
+
+                    SizedBox(width: 16.w),
+
+                    Text(
+                      S.of(context).allNews,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.sp,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // 🔍 Floating Search Box
+        Positioned(
+          bottom: 0,
+          left: 20.w,
+          right: 20.w,
+          child: Transform.translate(
+            offset: Offset(0, 25.h),
+            child: Center(
+              child: Container(
+                width: 320.w,
+                height: 52.h,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(width: .5, color: Color(0x332C363F)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 12.w),
+                    SvgPicture.asset(
+                      Images.search_normal,
+                      width: 24.w,
+                      height: 24.h,
+                    ),
+                    SizedBox(width: 8.w),
+
+                    Expanded(
+                      child: TextField(
+                        controller: provider.searchController,
+                        onChanged: (_) => provider.getBySearchData(),
+                        decoration: InputDecoration(
+                          hintText: S.of(context).searchNews,
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                            color: const Color(0x662C363F),
+                            fontSize: 14.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildSearchBar(BuildContext context, NewsProvider provider) {
-    return Container(
-      width: 260.w,
-      height: 52.h,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(width: .5, color: Color(0x332C363F)),
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      child: Row(
-        children: [
-          SizedBox(width: 12.w),
-          SvgPicture.asset(Images.search_normal, width: 24.w, height: 24.h),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: TextField(
-              controller: provider.searchController,
-              onChanged: (_) => provider.getBySearchData(),
-              decoration: InputDecoration(
-                hintText: S.of(context).searchNews,
-                border: InputBorder.none,
-                hintStyle: TextStyle(
-                  color: const Color(0x662C363F),
-                  fontSize: 14.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                ),
-              ),
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 14.sp,
-                fontFamily: GoogleFonts.poppins().fontFamily,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   /// All / My chips.
   Widget _buildFilterChips(NewsProvider provider) {

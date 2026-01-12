@@ -11,6 +11,8 @@ import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 import 'package:tkd_connect/widgets/editText.dart';
 
+import '../../widgets/common_app_bar.dart';
+
 class CreateGroupScreen extends StatefulWidget {
   List<SearchData> memberList;
   CreateGroupScreen(this.memberList, {super.key});
@@ -36,21 +38,26 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   _buildPage(BuildContext context) {
     return Scaffold(
            //appBar:  BaseWidget().appBar(context, "Users"),
-          body:  SafeArea(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BaseWidget().appBar(context, "Create Group"),
-                  const SizedBox(height: 50,),
-                  groupName(),
-                  const SizedBox(height: 30,),
-                  particepent(),
-                  const SizedBox(height: 20,),
-                  selectUserList()
-                ],
-              ),
-          ),
+          body:  Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CommonAppBar(
+                  title: "Create Group",
+                  isBack: true,
+                  isTitle: true,
+                  isSearchBar: false,
+                  isFilter: false,
+                  onBackTap: () => Navigator.pop(context),
+                ),
+                const SizedBox(height: 50,),
+                groupName(),
+                const SizedBox(height: 30,),
+                particepent(),
+                const SizedBox(height: 20,),
+                selectUserList()
+              ],
+            ),
 
 
           bottomNavigationBar: Consumer<CreateGroupProvider>(
@@ -139,13 +146,31 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     children: <Widget>[
                       BaseWidget().getImageclip( widget.memberList[index].profilePicture==null?"":widget.memberList[index].profilePicture!,height: 34.h,width: 34.w),
                       SizedBox(width: 10.w,),
-                      Text(
-                          "${widget.memberList[index].firstName!} ${widget.memberList[index].lastName!}",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: AppConstant.FONTFAMILY,
-                          fontWeight: FontWeight.w600,
-                        ))
+                      Column(
+                        children: [
+                          Text(
+                              "${widget.memberList[index].firstName!} ${widget.memberList[index].lastName!}",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: AppConstant.FONTFAMILY,
+                              fontWeight: FontWeight.w600,
+                            )),
+                          Text(
+                              "${widget.memberList[index].mobileNumber!}",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          Text(
+                              "${widget.memberList[index].city!}",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w500,
+                              )),
+                        ],
+                      )
                     ],
                   ),
                 ),

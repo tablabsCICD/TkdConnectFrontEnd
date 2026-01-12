@@ -339,31 +339,24 @@ class Utils {
 
   }
 
- String getTranport(int val){
-    switch(val){
-      case 0:
-     //   return "Transporters";
-        return "Agents/Brokers";
 
-      case 1:
-       // return "Agents/Brokers";
-        return "Transporters";
-
-      case 2:
-        return "PACKERS AND MOVERS";
-      case 3:
-        return "MANUFACTURERS";
-      case 4:
-        return "DISTRIBUTORS";
-      case 5:
-        return "CLEARING AND FORWARDING AGENTS";
+  String getTransport(int? val) {
+    switch (val) {
+      case AppConstant.USER_AGENT:
+        return AppConstant.BUSINESS_TYPE_AGENT;
+      case AppConstant.USER_TRANSPORTER:
+        return AppConstant.BUSINESS_TYPE_TRANSPORTER;
+      case AppConstant.USER_MANUFACTURER:
+        return AppConstant.BUSINESS_TYPE_MANUFACTURER;
+      case AppConstant.USER_DRIVER:
+        return AppConstant.BUSINESS_TYPE_DRIVER;
       default:
-        return "";
+        return AppConstant.BUSINESS_TYPE_TRANSPORTER;
     }
 
-
-
   }
+
+
 
   String mainTag(String tag){
     switch(tag){

@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "allIncident": MessageLookupByLibrary.simpleMessage("सभी घटनाएँ"),
         "allNews": MessageLookupByLibrary.simpleMessage("सभी समाचार"),
         "allRoutes": MessageLookupByLibrary.simpleMessage("सभी मार्ग"),
+        "allRoutesRequirement":
+            MessageLookupByLibrary.simpleMessage("सभी रूट की आवश्यकताएँ"),
         "allUsers": MessageLookupByLibrary.simpleMessage("सभी उपयोगकर्ता"),
         "already_have_account":
             MessageLookupByLibrary.simpleMessage("पहले से ही एक खाता है?"),
@@ -136,7 +138,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstName": MessageLookupByLibrary.simpleMessage("पहला नाम"),
         "from": MessageLookupByLibrary.simpleMessage("आरंभ"),
         "fromCity": MessageLookupByLibrary.simpleMessage("शहर से"),
+        "fullLoadRequired":
+            MessageLookupByLibrary.simpleMessage("पूर्ण लोड आवश्यक"),
+        "fullVehicleRequired":
+            MessageLookupByLibrary.simpleMessage("पूर्ण वाहन आवश्यक"),
         "general": MessageLookupByLibrary.simpleMessage("सामान्य"),
+        "generalPost": MessageLookupByLibrary.simpleMessage("सामान्य पोस्ट"),
         "getVerified": MessageLookupByLibrary.simpleMessage("सत्यापित करा लें"),
         "group": MessageLookupByLibrary.simpleMessage("समूह"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("मदद समर्थन"),
@@ -146,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveVehicle":
             MessageLookupByLibrary.simpleMessage("मेरे पास वाहन है"),
         "iWantVehicle": MessageLookupByLibrary.simpleMessage("मुझे वाहन चाहिए"),
+        "importantNotice":
+            MessageLookupByLibrary.simpleMessage("महत्वपूर्ण सूचना"),
         "insurance": MessageLookupByLibrary.simpleMessage("बीमा"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "नमस्ते! हम यहां आपके लॉजिस्टिक्स अनुभव को बेहतर बनाने के लिए हैं। आइए हम आपकी लॉजिस्टिक सहायता बनें और आपकी व्यावसायिक ज़रूरतें निर्बाध रूप से पूरी होंगी।"),
@@ -188,6 +197,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("नहीं"),
         "noRecordFound":
             MessageLookupByLibrary.simpleMessage("कोई रिकॉर्ड नहीं मिला"),
+        "noticeMsg": MessageLookupByLibrary.simpleMessage(
+            "ट्रक लोड होने से पहले और mParivahan वेबसाइट पर RTO दस्तावेज़ों की पुष्टि किए बिना कोई अग्रिम भुगतान न करें।"),
         "notifications": MessageLookupByLibrary.simpleMessage("सूचनाएं"),
         "off": MessageLookupByLibrary.simpleMessage("बंद"),
         "on": MessageLookupByLibrary.simpleMessage("चालू"),
@@ -196,13 +207,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "other": MessageLookupByLibrary.simpleMessage("अन्य"),
         "packersAndMovers":
             MessageLookupByLibrary.simpleMessage("पैकर्स और मोवेर्स"),
+        "partLoadRequired":
+            MessageLookupByLibrary.simpleMessage("आंशिक लोड आवश्यक"),
+        "partVehicleRequired":
+            MessageLookupByLibrary.simpleMessage("आंशिक वाहन आवश्यक"),
         "paymentType": MessageLookupByLibrary.simpleMessage("भुगतान प्रकार"),
         "personalDetails":
             MessageLookupByLibrary.simpleMessage("व्यक्तिगत विवरण"),
         "personalInfo":
             MessageLookupByLibrary.simpleMessage("व्यक्तिगत जानकारी"),
+        "pleaseFillAllInformation":
+            MessageLookupByLibrary.simpleMessage("कृपया सभी जानकारी भरें"),
         "pleaseSelectTopic":
             MessageLookupByLibrary.simpleMessage("कृपया विषय चुनें"),
+        "pleaseTryAgain":
+            MessageLookupByLibrary.simpleMessage("कृपया पुनः प्रयास करें"),
+        "pleaseUpdateYourPackage":
+            MessageLookupByLibrary.simpleMessage("कृपया अपना पैकेज अपडेट करें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "post": MessageLookupByLibrary.simpleMessage("भेजना"),
         "postAJob": MessageLookupByLibrary.simpleMessage("नौकरी पोस्ट करो"),
@@ -236,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sales": MessageLookupByLibrary.simpleMessage("बिक्री"),
         "saveChange":
             MessageLookupByLibrary.simpleMessage("परिवर्तनों को सुरक्षित करें"),
+        "saveMsg": MessageLookupByLibrary.simpleMessage(
+            "क्या आप वाकई इस आवश्यकता को पोस्ट करना चाहते हैं?"),
         "searchNews": MessageLookupByLibrary.simpleMessage("समाचार खोजें"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("स्थान खोजें"),
         "searchUsersCompanies": MessageLookupByLibrary.simpleMessage(
@@ -243,10 +266,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_here": MessageLookupByLibrary.simpleMessage("यहां तलाश करो"),
         "selectOne": MessageLookupByLibrary.simpleMessage("एक का चयन करें"),
         "sell": MessageLookupByLibrary.simpleMessage("बेचना"),
+        "sellBuyPost":
+            MessageLookupByLibrary.simpleMessage("खरीद-बिक्री पोस्ट"),
         "share": MessageLookupByLibrary.simpleMessage("शेयर करना"),
         "shareapp": MessageLookupByLibrary.simpleMessage("ऐप शेयर करें"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("सभी उद्धरण दिखाएँ"),
+        "showPostTo": MessageLookupByLibrary.simpleMessage("पोस्ट दिखाएँ"),
         "showPostto": MessageLookupByLibrary.simpleMessage("को पोस्ट दिखाएँ"),
         "signIn": MessageLookupByLibrary.simpleMessage("दाखिल करना"),
         "specialInstruction":
@@ -275,6 +301,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "vehicleSize": MessageLookupByLibrary.simpleMessage("वाहन का आकार"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("सत्यापित उपयोगकर्ता"),
+        "verifyTracking":
+            MessageLookupByLibrary.simpleMessage("ट्रैकिंग सत्यापित करें"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("प्रोफ़ाइल देखें"),
         "website": MessageLookupByLibrary.simpleMessage("वेबसाइट"),
         "withdrawQuotes":

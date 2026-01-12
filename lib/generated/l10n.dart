@@ -2109,6 +2109,166 @@ class S {
       args: [],
     );
   }
+
+  /// `Verify Tracking`
+  String get verifyTracking {
+    return Intl.message(
+      'Verify Tracking',
+      name: 'verifyTracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All routes requirement`
+  String get allRoutesRequirement {
+    return Intl.message(
+      'All routes requirement',
+      name: 'allRoutesRequirement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full load required`
+  String get fullLoadRequired {
+    return Intl.message(
+      'Full load required',
+      name: 'fullLoadRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Part load required`
+  String get partLoadRequired {
+    return Intl.message(
+      'Part load required',
+      name: 'partLoadRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Part vehicle required`
+  String get partVehicleRequired {
+    return Intl.message(
+      'Part vehicle required',
+      name: 'partVehicleRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full vehicle  required`
+  String get fullVehicleRequired {
+    return Intl.message(
+      'Full vehicle  required',
+      name: 'fullVehicleRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General Post`
+  String get generalPost {
+    return Intl.message(
+      'General Post',
+      name: 'generalPost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell Buy Post`
+  String get sellBuyPost {
+    return Intl.message(
+      'Sell Buy Post',
+      name: 'sellBuyPost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Post to`
+  String get showPostTo {
+    return Intl.message(
+      'Show Post to',
+      name: 'showPostTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to post this requirement?`
+  String get saveMsg {
+    return Intl.message(
+      'Are you sure you want to post this requirement?',
+      name: 'saveMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please fill all information`
+  String get pleaseFillAllInformation {
+    return Intl.message(
+      'Please fill all information',
+      name: 'pleaseFillAllInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post submitted successfully!`
+  String get postSubmittedSuccessfully {
+    return Intl.message(
+      'Post submitted successfully!',
+      name: 'postSubmittedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please try again`
+  String get pleaseTryAgain {
+    return Intl.message(
+      'Please try again',
+      name: 'pleaseTryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please update your package`
+  String get pleaseUpdateYourPackage {
+    return Intl.message(
+      'Please update your package',
+      name: 'pleaseUpdateYourPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Important Notice`
+  String get importantNotice {
+    return Intl.message(
+      'Important Notice',
+      name: 'importantNotice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do not Pay any Advance before Loading of Truck and verifying RTO documents on mParivahan website.`
+  String get noticeMsg {
+    return Intl.message(
+      'Do not Pay any Advance before Loading of Truck and verifying RTO documents on mParivahan website.',
+      name: 'noticeMsg',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

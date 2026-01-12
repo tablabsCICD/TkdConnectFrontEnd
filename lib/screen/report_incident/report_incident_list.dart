@@ -20,6 +20,7 @@ import '../../route/app_routes.dart';
 import '../../utils/colors.dart';
 import '../../utils/sharepreferences.dart';
 import '../../widgets/card/base_widgets.dart';
+import '../../widgets/common_app_bar.dart';
 
 
 
@@ -62,8 +63,15 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
               color: ThemeColor.baground,
               child: Column(
                 children: [
-                  _topBar(context),
-                  SizedBox(height: 35.h),
+                  CommonAppBar(
+                    title: "All Incident",
+                    isBack: true,
+                    isTitle: true,
+                    isSearchBar: true,
+                    isFilter: false,
+                    onBackTap: () => Navigator.pop(context),
+                  ),
+                  SizedBox(height: 30.h),
                   _buildFilterChips(provider),
                   Expanded(
                     child: provider.allReport.isEmpty

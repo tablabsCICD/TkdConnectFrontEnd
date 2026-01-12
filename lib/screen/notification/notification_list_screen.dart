@@ -79,7 +79,7 @@ class _NotificationListScreen extends State<NotificationListScreen> {
           if(model.tableName=="FullTruckLoad"){
 
             int id =model.tableId!;
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>DeepLink(id: id.toString())));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>DeepLink(id: id.toString(), type: 'post',)));
 
           }
 

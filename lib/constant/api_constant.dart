@@ -14,7 +14,7 @@ class ApiConstant {
 
   static String COMPLETE_POST = '${BASE_URL}MarkAsComplete?postId=';
 
-  static String DIRECTORY(search) => "${BASE_URL}directory?search=$search";
+  static String DIRECTORY(search) => "${BASE_URL}directory?search=$search&page=0&size=100";
 
   static String DIRECTORYALL(page) => "${BASE_URL}directory?page=$page";
 
@@ -84,8 +84,8 @@ class ApiConstant {
 
   static String HELPSUPPORTIKET = "${BASE_URL}HelpAndSupportTicket";
 
-  static String BUY_SELL_ALL_CARD(type, currentPage) =>
-      "${BASE_URL}allCards/buySell?type=$type&&page=$currentPage&page=10";
+  static String BUY_SELL_ALL_CARD =
+      "${BASE_URL}allCards/buySell?";
   static String POST_JOB = "$BASE_URL/postJob";
   static String GET_CURRENT_VERSION = '${BASE_URL}VersionAndroidAndroid/GetLatestVaersion';
   static String ADHAR_CREATE_TOKEN = '${BASE_URL}Aadhaar/authenticate';
@@ -157,7 +157,6 @@ class ApiConstant {
   static String DELETE_NEWS(id) => "${BASE_URL}Gallery?id=$id";
   static String SEARCH_NEWS(char) => "${BASE_URL}Gallery/searchByAnyKey?key=$char&page=0&size=100";
 
-
  static String GET_REPORT_LIST(page)=> "${BASE_URL}ReportIncients?page=$page&size=100";
  static String MY_INCIDENT(id) => "${BASE_URL}user/page/$id?page=0&size=100";
  static String ADD_REPORT = "${BASE_URL}ReportIncients";
@@ -167,8 +166,11 @@ class ApiConstant {
   static String BULK_UPLOAD= "${BASE_URL}uploadFullTruckLoad";
   static String JOB_SEARCH(search) => "${BASE_URL}postJob/getAllJobsWithSearch?search=$search";
 
-
   static String SAVE_LATLNG(postId,vehicleNumber,driverNumber) => "${BASE_URL}vehicleTracking/save/new?postId=$postId&vehicleNumber=$vehicleNumber&driverContact=$driverNumber";
   static String GET_LATLNG(postId) => "${BASE_URL}vehicleTracking/getVehicleTrackingByPostId/newJson/$postId";
 
+ static String SEND_TRACKING_OTP(isPostOwner,postId) => "${BASE_URL}vehicleTracking/sendOtp?postId=$postId&isPostOwner=$isPostOwner";
+ static String OTP_TRACKING_VERIFICATION(isPostOwner, otp, postId) =>
+     "${BASE_URL}vehicleTracking/verifyOtp?postId=$postId&otp=$otp&isPostOwner=$isPostOwner";
+ static String totalAmountLost = "${BASE_URL}total-amount-lost";
 }

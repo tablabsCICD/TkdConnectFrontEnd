@@ -10,10 +10,12 @@ import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
-import 'package:uni_links5/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'generated/l10n.dart';
 import 'package:flutter/services.dart';
+
+// ✅ Deep linking package
+import 'package:app_links/app_links.dart';
 
 class EntryScreen extends StatefulWidget {
   const EntryScreen({super.key});
@@ -30,6 +32,12 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   final String permUnknown = "unknown";
   final String permProvisional = "provisional";
 
+  // ✅ Deep linking variables
+  final AppLinks _appLinks = AppLinks();
+  StreamSubscription<Uri>? _linkSub;
+  String? _lastHandledLink;
+
+
   @override
   void initState() {
     super.initState();
@@ -37,13 +45,17 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
     // Show prominent disclosure first
     WidgetsBinding.instance.addPostFrameCallback((_) {
-     // showProminentDisclosureDialog();
+      // showProminentDisclosureDialog();
       requestAllPermissions();
+
+      // ✅ Initialize deep linking
+      initializeDeepLinks();
     });
   }
 
   @override
   void dispose() {
+    _linkSub?.cancel(); // ✅ Stop listening to deep links
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -96,16 +108,16 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   // ------------------- PERMISSION HANDLING -------------------
   Future<void> requestAllPermissions() async {
     // Request location permissions (foreground + background)
-   /* await Permission.locationWhenInUse.request();
+    await Permission.locationWhenInUse.request();
     await Permission.locationAlways.request();
-*/
+
     // Request notification permission (non-sensitive but required for alerts)
     await Permission.notification.request();
 
     // Continue logic after permissions
     String permissionStatus = await checkNotificationPermissionStatus();
     if ([permGranted, permProvisional].contains(permissionStatus)) {
-      initializeUniLinks();
+      fetchVersionAndNavigate();
     } else {
       showPermissionDialog();
     }
@@ -152,7 +164,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
               Navigator.of(context, rootNavigator: true).pop();
               String permissionStatus = await checkNotificationPermissionStatus();
               if ([permGranted, permProvisional].contains(permissionStatus)) {
-                initializeUniLinks();
+                fetchVersionAndNavigate();
               } else {
                 fetchVersionAndNavigate();
               }
@@ -171,17 +183,32 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  // ------------------- NAVIGATION & LOGIC -------------------
-  Future<void> initializeUniLinks() async {
+  /* Future<void> initializeUniLinks() async {
     try {
       String? initialLink = await getInitialLink();
+
       if (initialLink != null) {
+        Uri uri = Uri.parse(initialLink);
+
+        // ✅ Extract ID from query param
+        String? id = uri.queryParameters['id'];
+
         LocalSharePreferences prefs = LocalSharePreferences();
         bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-        if (isLoggedIn) {
-          String id = initialLink.split("/").last;
-          Navigator.push(context, MaterialPageRoute(builder: (_) => DeepLink(id: id)));
+
+        if (id != null && id.isNotEmpty) {
+          if (isLoggedIn) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => DeepLink(id: id),
+              ),
+            );
+          } else {
+            fetchVersionAndNavigate();
+          }
         } else {
+          // ✅ Safety fallback if ID is missing
           fetchVersionAndNavigate();
         }
       } else {
@@ -191,6 +218,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       fetchVersionAndNavigate();
     }
   }
+*/
 
   Future<void> fetchVersionAndNavigate() async {
     ApiResponse response = await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
@@ -206,8 +234,19 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     LocalSharePreferences prefs = LocalSharePreferences();
     bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
     String langCode = await prefs.getLangCode();
+
     if (isLoggedIn) {
       S.load(Locale(langCode));
+
+      // 🔁 Check if there is a pending deep link
+      Map<String, String>? pendingLink = await getPendingDeepLink();
+
+      if (pendingLink != null) {
+        await clearPendingDeepLink();
+        openDeepLinkScreen(pendingLink["type"]!, pendingLink["id"]!);
+        return;
+      }
+
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
       if (langCode == "no") {
@@ -217,6 +256,17 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
         Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
       }
     }
+  }
+
+  void openDeepLinkScreen(String type, String id) {
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => DeepLink(type: type, id: id),
+      ),
+    );
   }
 
   void showUpdateDialog() {
@@ -251,4 +301,78 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       });
     }
   }
+
+  // =================== DEEP LINK HANDLING ===================
+
+  Future<void> initializeDeepLinks() async {
+    try {
+      // 1️⃣ App opened from terminated state
+      final Uri? initialUri = await _appLinks.getInitialLink();
+      if (initialUri != null) {
+        handleDeepLink(initialUri);
+      }
+
+      // 2️⃣ App opened from background
+      _linkSub = _appLinks.uriLinkStream.listen((Uri uri) {
+        handleDeepLink(uri);
+      });
+    } catch (e) {
+      debugPrint("Deep link error: $e");
+    }
+  }
+
+  Future<void> savePendingDeepLink(String type, String id) async {
+    LocalSharePreferences prefs = LocalSharePreferences();
+    await prefs.setString("pending_deeplink_type", type);
+    await prefs.setString("pending_deeplink_id", id);
+  }
+
+  Future<Map<String, String>?> getPendingDeepLink() async {
+    LocalSharePreferences prefs = LocalSharePreferences();
+    String? type = await prefs.getString("pending_deeplink_type");
+    String? id = await prefs.getString("pending_deeplink_id");
+
+    if (type != null && id != null) {
+      return {"type": type, "id": id};
+    }
+    return null;
+  }
+
+  Future<void> clearPendingDeepLink() async {
+    LocalSharePreferences prefs = LocalSharePreferences();
+    await prefs.remove("pending_deeplink_type");
+    await prefs.remove("pending_deeplink_id");
+  }
+
+  void handleDeepLink(Uri uri) async {
+    debugPrint("deep link : $uri");
+    final String linkKey = uri.toString();
+
+    // 🚫 Prevent duplicate opens
+    if (_lastHandledLink == linkKey) {
+      debugPrint("Duplicate deep link ignored: $linkKey");
+      return;
+    }
+    _lastHandledLink = linkKey;
+
+    List<String> segments = uri.pathSegments;
+
+    if (segments.length >= 3 && segments[0] == "tkd") {
+      String type = segments[1];
+      String id = segments[2];
+
+      LocalSharePreferences prefs = LocalSharePreferences();
+      bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
+
+      if (isLoggedIn) {
+        openDeepLinkScreen(type, id);
+      } else {
+        await savePendingDeepLink(type, id);
+        fetchVersionAndNavigate();
+      }
+    } else {
+      fetchVersionAndNavigate();
+    }
+  }
+
 }

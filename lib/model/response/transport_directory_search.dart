@@ -132,7 +132,7 @@ class TransportSearchData {
     verified = json['verified'] ?? 0;
     companyLogo = json['companyLogo'] ?? '';
     aadharCard = json['aadharCard'] ?? '';
-    ratings = json['ratings'] ?? 0.0;
+    ratings = json['ratings'] ?? 4.5;
     profilePicture = json['profilePicture'] ?? '';
     loggedUserName = json['loggedUserName'] ?? '';
     loggedTime = json['loggedTime'] ?? 0;
@@ -197,7 +197,7 @@ class ListOfPreferredRoutes {
   String? routeSource;
   String? routeDestination;
   String? loggedUserName;
-  String? loggedTime;
+  dynamic loggedTime;
 
   ListOfPreferredRoutes(
       {this.id,

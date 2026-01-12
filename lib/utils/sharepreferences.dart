@@ -77,5 +77,9 @@ class LocalSharePreferences{
     return val;
   }
 
+  Future<void> remove(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
 
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/request/rating_request.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/model/response/rating_model.dart';
@@ -10,6 +11,7 @@ import '../../model/api_response.dart';
 import '../../model/response/userdata.dart';
 import '../../network/api_helper.dart';
 import '../../utils/sharepreferences.dart';
+import 'home_screen_provider.dart';
 
 class RatingProvider extends BaseProvider {
   BuildContext context;
@@ -31,12 +33,14 @@ class RatingProvider extends BaseProvider {
     notifyListeners();
   }
 
-  postRatingRaviews(BuildContext context, TruckLoad? load) async {
 
+  postRatingRaviews(BuildContext context, TruckLoad? load) async {
+    final dashBoardProvider = Provider.of<HomeScreenProvider>(context, listen: false);
     User user=await LocalSharePreferences().getLoginData();
-    String myUrl = "http://ec2-13-234-76-107.ap-south-1.compute.amazonaws.com:8080/tkd3/api/companyRegistration/${load!.userId}";
+    String myUrl = ApiConstant.BASE_URL+"/companyRegistration/${load!.userId}";
+    print(myUrl);
     User? userData;
-    var req = await ApiHelper().apiPost(myUrl);
+    var req = await ApiHelper().apiGet(myUrl);
     print('the response is ${req.response}');
     if(req.status== 200){      // try{
       userData=User.fromJson(req.response);}
@@ -51,6 +55,9 @@ class RatingProvider extends BaseProvider {
     if(apiResponse.status==200){
       print(apiResponse.response);
       RatingModel ratingModel=RatingModel.fromJson(apiResponse.response);
+      ToastMessage.show(context, ratingModel.message.toString());
+      ToastMessage.show(context, "Rating submitted");
+      dashBoardProvider.callDashboradApi(context,0);
 
       isLoading=false;
       notifyListeners();

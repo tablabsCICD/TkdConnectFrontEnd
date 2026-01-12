@@ -220,6 +220,21 @@
 
   "myNews": "నా వార్తలు",
   "myIncident": "నా ఘటన",
-  "bulkUpload": "బల్క్ లోడ్ అప్లోడ్"
-
+  "bulkUpload": "బల్క్ లోడ్ అప్లోడ్",
+  "verifyTracking": "ట్రాకింగ్‌ను తనిఖీ చేయండి",
+  "allRoutesRequirement": "అన్ని మార్గాల అవసరాలు",
+  "fullLoadRequired": "పూర్తి లోడ్ అవసరం",
+  "partLoadRequired": "భాగ లోడ్ అవసరం",
+  "partVehicleRequired": "భాగ వాహనం అవసరం",
+  "fullVehicleRequired": "పూర్తి వాహనం అవసరం",
+  "generalPost": "సాధారణ పోస్ట్",
+  "sellBuyPost": "కొనుగోలు / అమ్మకపు పోస్ట్",
+  "showPostTo": "పోస్ట్ చూపించండి",
+  "saveMsg": "ఈ అవసరాన్ని పోస్ట్ చేయాలనుకుంటున్నారా?",
+  "pleaseFillAllInformation": "దయచేసి అన్ని వివరాలను పూరించండి",
+  "postSubmittedSuccessfully": "పోస్ట్ విజయవంతంగా సమర్పించబడింది!",
+  "pleaseTryAgain": "దయచేసి మళ్లీ ప్రయత్నించండి",
+  "pleaseUpdateYourPackage": "దయచేసి మీ ప్యాకేజీని అప్‌డేట్ చేయండి",
+  "importantNotice": "ముఖ్యమైన గమనిక",
+  "noticeMsg": "ట్రక్‌ను లోడ్ చేయడానికి ముందు మరియు mParivahan వెబ్‌సైట్‌లో RTO పత్రాలను ధృవీకరించకముందు ఎలాంటి ముందస్తు చెల్లింపు చేయకండి."
 }

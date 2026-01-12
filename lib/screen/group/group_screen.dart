@@ -17,6 +17,7 @@ import '../../generated/l10n.dart';
 import '../../model/response/userdata.dart';
 import '../../provider/directory/directory_provider.dart';
 import '../../widgets/card/base_widgets.dart';
+import '../../widgets/common_app_bar.dart';
 
 class GroupScreen extends StatefulWidget {
   int userId;
@@ -42,91 +43,98 @@ class _GroupScreenState extends State<GroupScreen> {
   _buildPage(BuildContext context) {
     return Consumer<GroupProvider>(
         builder: (context, provider, child) {
-          return SafeArea(
-            child: Scaffold(
-              body: Container(
-                color: ThemeColor.baground,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BaseWidget().appBar(context, "Groups"),
-                    serachBar(),
-                    provider.groupListByUserId.isEmpty && provider.isLoadDone
-                        ? Center(child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(S().noRecordFound),
-                    ))
-                        : const SizedBox(),
-                    allGroupData()
+          return Scaffold(
+            body: Container(
+              color: ThemeColor.baground,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonAppBar(
+                    title: "Groups",
+                    isTitle: true,
+                    isBack: true,
+                    isSearchBar: true,
+                    isFilter: false,
+                    searchController: provider.searchController,
+                    onBackTap: () => Navigator.pop(context),
+                    onSearchChanged: (value) => provider.groupSearch(value),
+                  ),
 
-                  ],
-                ),
+                  provider.groupListByUserId.isEmpty && provider.isLoadDone
+                      ? Center(child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(S().noRecordFound),
+                  ))
+                      : const SizedBox(),
+                  allGroupData()
+
+                ],
               ),
-              floatingActionButtonLocation: FloatingActionButtonLocation
-                  .centerFloat,
-              floatingActionButton: InkWell(
-                onTap: () async {
-                  User use=await LocalSharePreferences().getLoginData();
-                  if(use.content!.first.isPaid==0){
-                    Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-                  }else{
-                    var result = await Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
-                    if(result==1){
-                      provider.callSetState();
-                    }
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation
+                .centerFloat,
+            floatingActionButton: InkWell(
+              onTap: () async {
+                User use=await LocalSharePreferences().getLoginData();
+               /* if(use.content!.first.isPaid==0){
+                  Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+                }else{*/
+                  var result = await Navigator.pushNamed(context, AppRoutes.select_group_member,arguments: false);
+                  if(result==1){
+                    provider.callSetState();
                   }
-                },
-                child: Container(
-                  width: 155.w,
-                  height: 38.h,
-                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-                  decoration: ShapeDecoration(
-                    color: ThemeColor.theme_blue,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r)),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Create Group',
-                        style: TextStyle(
-                          color: ThemeColor.progress_color,
-                          fontSize: 12.sp,
-                          fontFamily: GoogleFonts
-                              .poppins()
-                              .fontFamily,
-                          fontWeight: FontWeight.w600,
-                        ),
+               // }
+              },
+              child: Container(
+                width: 155.w,
+                height: 38.h,
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                decoration: ShapeDecoration(
+                  color: ThemeColor.theme_blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.r)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Create Group',
+                      style: TextStyle(
+                        color: ThemeColor.progress_color,
+                        fontSize: 12.sp,
+                        fontFamily: GoogleFonts
+                            .poppins()
+                            .fontFamily,
+                        fontWeight: FontWeight.w600,
                       ),
-                      SizedBox(
-                        width: 2.w,
-                      ),
-                      SizedBox(
-                        width: 16.w,
-                        height: 16.w,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 16.w,
-                              height: 16.w,
-                              child: Stack(children: [
-                                SvgPicture.asset(
-                                  Images.add, height: 16.h, width: 16.w,)
+                    ),
+                    SizedBox(
+                      width: 2.w,
+                    ),
+                    SizedBox(
+                      width: 16.w,
+                      height: 16.w,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 16.w,
+                            height: 16.w,
+                            child: Stack(children: [
+                              SvgPicture.asset(
+                                Images.add, height: 16.h, width: 16.w,)
 
-                              ]),
-                            ),
-                          ],
-                        ),
+                            ]),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -269,7 +277,6 @@ class _GroupScreenState extends State<GroupScreen> {
 
     return InkWell(
       onTap: () async {
-        provider.currentGroup = await LocalSharePreferences.localSharePreferences.getCurrentGroupData();
         Navigator.pushNamed(context, AppRoutes.group_info,arguments: groupData);
       },
       child: Container(

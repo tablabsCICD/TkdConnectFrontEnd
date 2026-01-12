@@ -85,6 +85,9 @@ class Bids {
   int? acceptBidId;
   String? vehicleNumber;
   String? driverContact;
+  int? ispostOwnerVerifiedForTrack;
+  int? isQuoteOwnerVerifiedForTrack;
+  int? isCompleted;
 
   Bids(
       {this.id,
@@ -110,7 +113,8 @@ class Bids {
         this.privatePost,
         this.amount,
         this.description,
-        this.bidingId,this.isAccepted,this.acceptBidId,this.driverContact,this.vehicleNumber});
+        this.bidingId,this.isAccepted,this.acceptBidId,this.driverContact,this.vehicleNumber,
+        this.ispostOwnerVerifiedForTrack,this.isQuoteOwnerVerifiedForTrack,this.isCompleted});
 
   Bids.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -141,6 +145,9 @@ class Bids {
     acceptBidId = json['acceptBidId'];
     driverContact=json['driverContact'];
     vehicleNumber=json['vehicleNumber'];
+    ispostOwnerVerifiedForTrack = json['ispostOwnerVerifiedForTrack'] ?? 0;
+    isQuoteOwnerVerifiedForTrack = json['isQuoteOwnerVerifiedForTrack'] ?? 0;
+    isCompleted = json['isCompleted']??0;
   }
 
   Map<String, dynamic> toJson() {
@@ -173,6 +180,9 @@ class Bids {
     data['acceptBidId'] = acceptBidId;
     data['vehicleNumber']= vehicleNumber;
     data['driverContact'] = driverContact;
+    data['ispostOwnerVerifiedForTrack'] = ispostOwnerVerifiedForTrack;
+    data['isQuoteOwnerVerifiedForTrack'] = isQuoteOwnerVerifiedForTrack;
+    data['isCompleted'] = isCompleted;
     return data;
   }
 }

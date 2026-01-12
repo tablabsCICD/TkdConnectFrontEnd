@@ -308,7 +308,7 @@ class _PostCommentListState extends State<PostCommentList> {
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget().profile(truckLoad.companyLogo!,
                   truckLoad.nameOfPerson!, truckLoad.companyName!,
-                  verify: truckLoad.isPaid!)),
+                  verify: truckLoad.isPaid!,rating: truckLoad.ratings??0.0)),
           // SizedBox(
           //   height: 12.h,
           // ),
@@ -401,7 +401,7 @@ class _PostCommentListState extends State<PostCommentList> {
               Container(
                   transform: Matrix4.translationValues(0.0, -25.0.h, 00),
                   child: BaseWidget()
-                      .carouseImage(List<String>.from(load.postImages!))),
+                      .carouseImage(context,List<String>.from(load.images??[]))),
               SizedBox(
                 height: 9.h,
               ),

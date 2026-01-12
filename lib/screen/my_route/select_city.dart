@@ -536,8 +536,8 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
                     decoration: ShapeDecoration(
                       color: provider.isSelectStartLocation
-                          ? Colors.white
-                          : const Color(0x19001E49),
+                          ? ThemeColor.theme_blue
+                          : ThemeColor.white,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
                       ),
@@ -550,7 +550,9 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                         Text(
                           'Start location',
                           style: TextStyle(
-                            color: const Color(0xCC001E49),
+                            color: provider.isSelectStartLocation
+                                ? ThemeColor.white
+                                : ThemeColor.theme_blue,
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w400,
@@ -570,9 +572,9 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
                     decoration: ShapeDecoration(
-                      color: provider.isSelectDestination
-                          ? Colors.white
-                          : const Color(0x19001E49),
+                      color: provider.isSelectStartLocation
+                          ? ThemeColor.white
+                          : ThemeColor.theme_blue,
                       shape: const RoundedRectangleBorder(
                         side: BorderSide(color: Color(0x332C363F)),
                       ),
@@ -585,7 +587,9 @@ class _SelectCityScreen extends State<SelectCityScreen> {
                         Text(
                           'Destination',
                           style: TextStyle(
-                            color: const Color(0xCC001E49),
+                            color: provider.isSelectStartLocation
+                                ? ThemeColor.theme_blue
+                                : ThemeColor.white,
                             fontSize: 12.sp,
                             fontFamily: GoogleFonts.poppins().fontFamily,
                             fontWeight: FontWeight.w600,

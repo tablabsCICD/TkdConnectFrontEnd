@@ -111,6 +111,7 @@ class MyPostProvider extends BaseProvider{
     if(apiResponse.status==200){
       // truckLoadTypeList .removeAt(index);
       ToastMessage.show(context, "Your Post Completed Successfully");
+      getReceviedBids(context);
       notifyListeners();
     }else{
       ToastMessage.show(context, "Please try again");
@@ -233,6 +234,7 @@ class MyPostProvider extends BaseProvider{
     print('the resopnse is ${response.status}');
     if(response.status==200){
       ToastMessage.show(context, "Re-post submitted successfully!");
+      getReceviedBids(context);
       Navigator.pop(context,1);
     }else{
       ToastMessage.show(context, "Please try again");

@@ -136,6 +136,9 @@ class GenericCardsDto {
   bool showCharts = false;
   int? isOpenForBid;
   List<MonthData>? graphList=[];
+  int? ispostOwnerVerifiedForTrack;
+  int? isQuoteOwnerVerifiedForTrack;
+  int? isCompleted;
 
   GenericCardsDto(
       {this.id,
@@ -179,7 +182,8 @@ class GenericCardsDto {
         this.likes,
         this.cargoType,
         this.userList,
-        this.comment,this.expireDate,this.showCharts = false,this.isOpenForBid,this.graphList});
+        this.comment,this.expireDate,this.showCharts = false,this.isOpenForBid,this.graphList,
+        this.ispostOwnerVerifiedForTrack,this.isQuoteOwnerVerifiedForTrack,this.isCompleted});
 
   GenericCardsDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -233,6 +237,9 @@ class GenericCardsDto {
         graphList!.add(MonthData.fromJson(v));
       });
     }
+    ispostOwnerVerifiedForTrack = json['ispostOwnerVerifiedForTrack'] ?? 0;
+    isQuoteOwnerVerifiedForTrack = json['isQuoteOwnerVerifiedForTrack'] ?? 0;
+    isCompleted = json['isCompleted']??0;
   }
 
   Map<String, dynamic> toJson() {
@@ -286,6 +293,9 @@ class GenericCardsDto {
     if (graphList != null) {
       data['graphList'] = graphList!.map((v) => v.toJson()).toList();
     }
+    data['ispostOwnerVerifiedForTrack'] = ispostOwnerVerifiedForTrack;
+    data['isQuoteOwnerVerifiedForTrack'] = isQuoteOwnerVerifiedForTrack;
+    data['isCompleted'] = isCompleted;
     return data;
   }
 }

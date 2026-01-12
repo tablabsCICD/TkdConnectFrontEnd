@@ -22,6 +22,7 @@ import 'package:tkd_connect/screen/report_incident/report_incident_form.dart';
 import 'package:tkd_connect/screen/report_incident/report_incident_list.dart';
 import 'package:tkd_connect/screen/search/search_edit_screen.dart';
 import 'package:tkd_connect/screen/search/search_result_screen.dart';
+import 'package:tkd_connect/screen/tracking/verify_track.dart';
 import 'package:tkd_connect/splash_screen.dart';
 
 import '../entry_screen.dart';
@@ -91,7 +92,6 @@ class RouteGenerator {
         return buildRoute(const SelectPlanScreen(), settings: settings);
 
       case AppRoutes.create_post:
-       // return buildRoute(CreatePostBase(), settings: settings);
           return _createRoute(const CreatePostBase());
 
       case AppRoutes.viewprofiledirectory:
@@ -114,8 +114,10 @@ class RouteGenerator {
             settings: settings);
       case AppRoutes.notificationlist:
         return buildRoute(const NotificationListScreen(), settings: settings);
+
       case AppRoutes.helpsupport:
         return buildRoute(const HelpSupportScreen(), settings: settings);
+
       case AppRoutes.appsetting:
         return buildRoute(const AppSettingScreen(), settings: settings);
 
@@ -129,7 +131,6 @@ class RouteGenerator {
               userId: userId,
             ),
             settings: settings);
-       // return buildRoute(GeneralPostScreen(), settings: settings);
 
       case AppRoutes.select_group_member:
         bool isEdit = settings.arguments as bool;
@@ -165,8 +166,8 @@ class RouteGenerator {
       case AppRoutes.addNews:
         return buildRoute(AddNewsScreen(), settings: settings);
 
-
-
+      case AppRoutes.verifyTrack:
+        return buildRoute(VerifyTrack(), settings: settings);
 
       case AppRoutes.reportIncident:
         return buildRoute(ReportIncidentFormScreen(), settings: settings);
@@ -238,7 +239,7 @@ class RouteGenerator {
                   //child: Lottie.asset('assets/lottie/error.json'),
                 ),
                 Text(
-                  'Seems the route you\'ve navigated to doesn\'t exist!!',
+                  'Seems the route you\'ve navigated to dosen\'t exist!!',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,

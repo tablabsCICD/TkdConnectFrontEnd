@@ -11,6 +11,7 @@ import 'package:tkd_connect/model/request/post_load.dart';
 import 'package:tkd_connect/model/response/oneadd.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 
+
 import '../../model/api_response.dart';
 import '../../model/request/route_request.dart';
 import '../../model/response/AllCard.dart';
@@ -44,7 +45,7 @@ class HomeScreenProvider extends BaseProvider{
 
   String drooDwonheading="All routes requirements";
   HomeScreenProvider(BuildContext context) : super('Ideal'){
-
+    getTotalLostAmt();
     callUserData();
     callDashboradApi(context,selectedPage);
     pagenation(context);
@@ -155,6 +156,35 @@ class HomeScreenProvider extends BaseProvider{
   }
 
 
+  String _totalLostAmt = '';
+  String get totalLostAmt => _totalLostAmt;
+  Future<void> getTotalLostAmt() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final url = ApiConstant.totalAmountLost;
+      debugPrint('Total Lost Amount API: $url');
+
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+        // ✅ Convert to string safely
+        _totalLostAmt = jsonData['data']?.toString() ?? '0';
+      } else {
+        debugPrint('❌ API failed: ${response.statusCode}');
+        _totalLostAmt = '0';
+      }
+    } catch (e) {
+      debugPrint('❌ Exception in getTotalLostAmt: $e');
+      _totalLostAmt = '0';
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
 
   pagenation(BuildContext context){
     scrollController.addListener(() {
@@ -227,14 +257,11 @@ class HomeScreenProvider extends BaseProvider{
 
   completePost(int id,BuildContext context)async{
     String myUrl = '${ApiConstant.COMPLETE_POST}$id';
-
     ApiResponse apiResponse= await ApiHelper().apiPutDat(myUrl);
     if(apiResponse.status==200){
-     // truckLoadTypeList .removeAt(index);
       ToastMessage.show(context, "Your Post Completed Successfully");
-      //Provider.of<LocationProvider>(context, listen: false).stopTracking(id);
+      context.read<DriverTrackingProvider>().stopTracking();
       callDashboradApi(context,0);
-
       notifyListeners();
     }else{
       ToastMessage.show(context, "Please try again");
@@ -275,7 +302,6 @@ class HomeScreenProvider extends BaseProvider{
   }
 
   callToken()async {
-   // user=await LocalSharePreferences.localSharePreferences.getLoginData();
      String? token=await FirebaseMessaging.instance.getToken();
     ApiResponse result=await ApiHelper().apiPost("${ApiConstant.UPDATE_DEVICE_ID}?userId=${user.content!.first.id}&deviceId=$token");
     if(result.status==200){
@@ -291,7 +317,7 @@ class HomeScreenProvider extends BaseProvider{
     if(apiResponse.status==200){
       PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
       if(postUpload.statusCode==401){
-        ToastMessage.show(context, "Please update your package");
+        ToastMessage.show(context, postUpload.message.toString());
         Navigator.pushNamed(context, AppRoutes.registration_plan_details);
       }else{
         callDashboradApi(context,0);
@@ -307,14 +333,11 @@ class HomeScreenProvider extends BaseProvider{
     if(apiResponse.status==200){
       PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
       if(postUpload.statusCode==401){
-        ToastMessage.show(context, "Please update your package");
+        ToastMessage.show(context, postUpload.message.toString());
         Navigator.pushNamed(context, AppRoutes.registration_plan_details);
       }else{
         callDashboradApi(context,0);
       }
-
-
-
     }else{
       ToastMessage.show(context, "Please try again");
     }
@@ -394,7 +417,7 @@ class HomeScreenProvider extends BaseProvider{
           });
 
           return AllCards().imageDialogOneAdd(
-            advertisement.data!.companyName,
+            advertisement.data!.companyName??'-',
             dialogContext,
             advertisement.data!.images!.first,
           );

@@ -39,57 +39,75 @@ class SearchProvider extends BaseProvider {
     notifyListeners();
   }
 
-  callPostApiSearch(BuildContext context, int currentPage, String search) async {
-    User user = await LocalSharePreferences.localSharePreferences.getLoginData();
+  bool isDigitsButNotMobile(String? input) {
+    if (input == null) return false;
+
+    final value = input.trim();
+    return RegExp(r'^\d+$').hasMatch(value) && value.length != 10;
+  }
+
+  callPostApiSearch(
+      BuildContext context,
+      int currentPage,
+      String search,
+      ) async {
+    User user =
+    await LocalSharePreferences.localSharePreferences.getLoginData();
+
     EasyLoading.show(status: "Loading");
 
-    // Regular expression to find 'TKD' followed by optional space and digits
-    RegExp regex = RegExp(r'TKD\s*(\d+)');
-    Match? match = regex.firstMatch(search);
+    final trimmed = search.trim();
+    final lower = trimmed.toLowerCase();
 
-    int uniqueId = 0;
-    String url = '';
+    final bool startsWithTKD = lower.startsWith('tkd');
+    final bool digitsNotMobile = isDigitsButNotMobile(trimmed);
 
-    // Check if the search string is only digits
-    if (RegExp(r'^\d+$').hasMatch(search)) {
-      uniqueId = int.parse(search);
-      print("The unique ID is directly from the digit-only search: $uniqueId");
-    }
-    // Extract the unique ID if the match is found
-    else if (match != null) {
-      String digit = match.group(1) ?? ''; // Extract the digits after 'TKD'
-      uniqueId = int.parse(digit);
-      print("The unique ID is extracted from 'TKD': $uniqueId");
-    } else {
-      print("No unique ID found.");
-    }
+    String url;
 
-    // Construct the API URL
-    if (uniqueId == 0) {
+    // 🔥 USE ID SEARCH
+    if (startsWithTKD || digitsNotMobile) {
+      final uniqueId = trimmed;
+
+      print("🔍 Searching by ID: $uniqueId");
+
       url =
-      '${ApiConstant.HOMEPAGE_FILTER}?page=$currentPage&size=10&search=$search&loggedUserId=${user.content!.first.id}';
-    } else {
+      '${ApiConstant.HOMEPAGE_FILTER}'
+          '?page=$currentPage'
+          '&size=3'
+          '&loggedUserId=${user.content!.first.id}'
+          '&id=$uniqueId';
+    }
+    // 🔍 NORMAL SEARCH
+    else {
       url =
-      '${ApiConstant.HOMEPAGE_FILTER}?page=$currentPage&size=10&loggedUserId=${user.content!.first.id}&id=$uniqueId';
+      '${ApiConstant.HOMEPAGE_FILTER}'
+          '?page=$currentPage'
+          '&size=50'
+          '&search=$trimmed'
+          '&loggedUserId=${user.content!.first.id}';
     }
 
-    print(url);
+    print("API URL 👉 $url");
 
-    // Call the API
-    var req = await http.get(Uri.parse(url));
+    final req = await http.get(Uri.parse(url));
 
     isFirstLoading = false;
 
     if (req.statusCode == 200) {
       response = json.decode(req.body);
-      var type = TruckLoadType.fromJson(response);
+
+      final type = TruckLoadType.fromJson(response);
       totalPages = type.totalPages;
       truckLoadTypeList.addAll(type.content);
+
       isLoading = false;
       EasyLoading.dismiss();
       notifyListeners();
+    } else {
+      EasyLoading.dismiss();
     }
   }
+
 
 
   pagenation(BuildContext context, String val) {

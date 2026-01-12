@@ -115,7 +115,7 @@ class _CreatePostBase extends State<CreatePostBase>{
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==AppConstant.USERTYPE || AppConstant.MANUFACTURE==AppConstant.USERTYPE ?   tabItem(isVehicle,S().iWantVehicle,(){
+          AppConstant.USERTYPE==AppConstant.USER_AGENT || AppConstant.USER_TRANSPORTER==AppConstant.USERTYPE || AppConstant.USER_MANUFACTURER==AppConstant.USERTYPE ?   tabItem(isVehicle,S().iWantVehicle,(){
             isLoad=false;
             isVehicle=true;
             isGeneral=false;

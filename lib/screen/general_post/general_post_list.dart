@@ -38,7 +38,7 @@ class _GeneralPostState extends State<GeneralPostScreen> {
           child: Container(
             child: Column(
               children: [
-                BaseWidget().appBarSearchFilter(context, S().jobs),
+                BaseWidget().appBarSearchFilter(context, S().general),
                 SizedBox(
                   height: 20.h,
                 ),

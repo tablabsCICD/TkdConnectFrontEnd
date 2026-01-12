@@ -124,19 +124,27 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Column(
                       children: [
-                        SvgPicture.asset(
-                          Images.new_report_incident,
-                          height: 30.h,
-                          width: 35.w,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              Images.new_report_incident,
+                              height: 30.h,
+                              width: 35.w,
+                            ),
+                            SizedBox(width: 10.w,),
+                            Text(
+                              S.of(context).reportIncident,
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
+                            ),
+                          ],
                         ),
-                        SizedBox(width: 10.w,),
                         Text(
-                          S.of(context).reportIncident,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
+                          homeScreenProvider.totalLostAmt,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
                         ),
                       ],
                     ),
@@ -308,107 +316,126 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
     return Consumer<HomeScreenProvider>(
       builder: (context, provider, child) {
         return Container(
-          width: 375.w,
           height: provider.filterisVisible ? 204.h : 120.h,
-          padding: EdgeInsets.symmetric(horizontal: 24.h),
-          decoration: ShapeDecoration(
+          padding: EdgeInsets.symmetric(horizontal: 16.w), // ✅ FIX
+          decoration: BoxDecoration(
             color: ThemeColor.red,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
             ),
           ),
-          child: Column(
-            children: [
-              SizedBox(height: 50.h),
+          child: SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                SizedBox(height: 10.h),
 
-              /// Top action row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  switchNewAppOldApp(),
-                  SizedBox(width: 10.5.w),
-
-                  IconButton(
-                    icon: const Icon(
-                      Icons.report_problem_outlined,
-                      color: Colors.white,
-                      size: 25,
+                /// TOP ROW
+                Row(
+                  children: [
+                    /// LOGO
+                    Container(
+                      height: 48,
+                      width: 48,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        Images.logo,
+                        height: 26,
+                        width: 26,
+                      ),
                     ),
-                    onPressed: () => _showPopup(context),
-                  ),
-                  SizedBox(width: 5.w),
 
-                  InkWell(
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.search),
-                    child: SvgPicture.asset(
-                      Images.search_normal,
-                      color: Colors.white,
-                      width: 24.w,
-                      height: 24.h,
-                    ),
-                  ),
-                  SizedBox(width: 15.5.w),
+                    const Spacer(), // ✅ KEY FIX
 
-                  InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.notificationlist),
-                    child: SvgPicture.asset(
-                      Images.notification,
-                      color: Colors.white,
-                      width: 24.w,
-                      height: 24.h,
-                    ),
-                  ),
-                  SizedBox(width: 15.5.w),
-
-                  /// Profile section
-                  InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.editprofile),
-                    child: Column(
+                    /// ACTION ICONS
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
+                        switchNewAppOldApp(),
+                        SizedBox(width: 10.w),
+
+                        IconButton(
+                          constraints: const BoxConstraints(),
+                          padding: EdgeInsets.zero,
+                          icon: const Icon(
+                            Icons.report_problem_outlined,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          onPressed: () => _showPopup(context),
+                        ),
+                        SizedBox(width: 12.w),
+
+                        InkWell(
+                          onTap: () =>
+                              Navigator.pushNamed(context, AppRoutes.search),
+                          child: SvgPicture.asset(
+                            Images.search_normal,
+                            color: Colors.white,
+                            width: 22,
+                            height: 22,
+                          ),
+                        ),
+                        SizedBox(width: 12.w),
+
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(
+                              context, AppRoutes.notificationlist),
+                          child: SvgPicture.asset(
+                            Images.notification,
+                            color: Colors.white,
+                            width: 22,
+                            height: 22,
+                          ),
+                        ),
+                        SizedBox(width: 12.w),
+
+                        /// PROFILE
                         InkWell(
                           onTap: () => Navigator.pushNamed(
                               context, AppRoutes.editprofile),
-                          child: BaseWidget().getImageclip(
-                            provider.imageUrl,
-                            height: 40.h,
-                            width: 40.w,
-                          ),
-                        ),
-                        Container(
-                          transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                          width: 42.w,
-                          height: 12.h,
-                          padding: EdgeInsets.symmetric(horizontal: 4.h),
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          ),
-                          child: Row(
+                          child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SvgPicture.asset(
-                                Utils().getSelectedPackageImage(provider.ispaid),
-                                height: 8.h,
-                                width: 8.w,
+                              BaseWidget().getImageclip(
+                                provider.imageUrl,
+                                height: 36,
+                                width: 36,
                               ),
-                              SizedBox(width: 1.w),
-                              Text(
-                                Utils().getSelectedPackageName(provider.ispaid),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 8.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w600,
+                              Transform.translate(
+                                offset: const Offset(0, -6),
+                                child: Container(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Utils().getSelectedPackageImage(
+                                            provider.ispaid),
+                                        height: 8,
+                                        width: 8,
+                                      ),
+                                      const SizedBox(width: 2),
+                                      Text(
+                                        Utils().getSelectedPackageName(
+                                            provider.ispaid),
+                                        style: TextStyle(
+                                          fontSize: 8.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -416,18 +443,16 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(width: 15.5.w),
-                ],
-              ),
-
-
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },
     );
   }
+
 
   switchNewAppOldApp() {
     return SizedBox(

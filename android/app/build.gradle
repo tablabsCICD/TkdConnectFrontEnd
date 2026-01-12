@@ -7,6 +7,7 @@ plugins {
 
 }
 
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -20,20 +21,20 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = 91
+def flutterVersionCode = 100
 if (flutterVersionCode == null) {
-    flutterVersionCode = '91'
+    flutterVersionCode = '100'
 }
 
-def flutterVersionName = '3.0.23'
+def flutterVersionName = '3.0.24'
 if (flutterVersionName == null) {
-    flutterVersionName = '3.0.23'
+    flutterVersionName = '3.0.24'
 }
 
 android {
     namespace = "com.example.tkd_connect"
     compileSdk = 36
-    ndkVersion = "25.2.9519653"
+    ndkVersion = "29.0.14206865"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -75,7 +76,9 @@ android {
             minifyEnabled = true // Enable code shrinking, obfuscation, and optimization
             shrinkResources = true
             // Use ProGuard rules
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'
+            ), 'proguard-rules.pro'
         }
     }
 }

@@ -26,7 +26,7 @@ import '../../route/app_routes.dart';
 import '../../utils/validation.dart';
 
 class MyBidsProvider extends BaseProvider {
-  bool isMyPlacedBids = true;
+  bool isMyPlacedBids = false;
   bool isMobileNumberValid=false;
   List<Bids> listBids = [];
 
@@ -53,7 +53,10 @@ class MyBidsProvider extends BaseProvider {
           'the response is ${ApiConstant.MY_BIDS_PLACED(user.content![0].id, selectedPageAllBids)}&fullLoadAvailable=$fla&fullLoadRequired=$flr&partLoadAvailable=$pla&partLoadRequired=$plr}');
       if (apiResponse.status == 200) {
         BidPlaced bidPlaced = BidPlaced.fromJson(apiResponse.response);
-        listBids.clear();
+
+        if (selectedPageAllBids == 0) {
+          listBids.clear();
+        }
         listBids.addAll(bidPlaced.content!);
         // print('the size is ${listBids.length}');
         selectedPageAllBids++;
@@ -114,14 +117,13 @@ class MyBidsProvider extends BaseProvider {
 
       if(acceptBidResponse.success == true){
         ToastMessage.show(context, acceptBidResponse.message.toString());
-        if ((acceptBidResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
-            (acceptBidResponse.data?.driverContact?.isNotEmpty ?? false)) {
-         /* Provider.of<LocationProvider>(context, listen: false).startTracking(
-            data.genericCardsDto!.id!,
-            acceptBidResponse.data!.vehicleNumber!,
-            acceptBidResponse.data!.driverContact!,
-          );*/
-        }
+        isLoadMyPlacedBid = false;
+        selectedPage = 0;
+
+        await getReceviedBids(context, false);
+        notifyListeners();
+
+       // Navigator.of(context).pop();
       }else{
         ToastMessage.show(context, acceptBidResponse.message.toString());
       }
@@ -151,14 +153,14 @@ class MyBidsProvider extends BaseProvider {
 
       if(acceptBidResponse.success == true){
         ToastMessage.show(context, "Detail Sent successfully");
-        if ((acceptBidResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
-            (acceptBidResponse.data?.driverContact?.isNotEmpty ?? false)) {
-         /* Provider.of<LocationProvider>(context, listen: false).startTracking(
-            data.id!,
-            acceptBidResponse.data!.vehicleNumber!,
-            acceptBidResponse.data!.driverContact!,
-          );*/
-        }
+        // ✅ Reset & refresh Placed Bids
+        isLoad = false;
+        selectedPageAllBids = 0;
+
+        await getAllBids(context, false);
+        notifyListeners();
+
+      //  Navigator.of(context).pop();
       }else{
         ToastMessage.show(context, "Something went wrong");
       }
@@ -186,7 +188,13 @@ class MyBidsProvider extends BaseProvider {
     if (apiResponse.status == 200) {
       listBids.removeAt(index);
       ToastMessage.show(context, "Bid withdraw successful ");
+      isLoadMyPlacedBid = false;
+      selectedPage = 0;
+
+      await getReceviedBids(context, false);
       notifyListeners();
+
+      Navigator.of(context).pop();
     } else {
       ToastMessage.show(context, "Please try again");
     }
@@ -219,6 +227,7 @@ class MyBidsProvider extends BaseProvider {
             ToastMessage.show(context,response.message!);
           }
         }
+
 
         notifyListeners();
       } else {
@@ -299,9 +308,13 @@ class MyBidsProvider extends BaseProvider {
     }
   }
 
-  Future<bool> callOtp(BuildContext context,String mobileNumber) async{
+  Future<bool> callOtp(BuildContext context, String mobileNumber,int postId, bool isPostOwner) async {
     try {
-      var req = await ApiHelper().apiPost(ApiConstant.SEND_OTP(mobileNumber));
+      var req = await ApiHelper().apiPost(ApiConstant.SEND_TRACKING_OTP(isPostOwner,postId));
+
+      // ✅ Prevent calling Toasts on disposed context
+      if (!context.mounted) return false;
+
       if (req.status == 200) {
         ToastMessage.show(context, "OTP Sent Successfully");
         return true;
@@ -310,37 +323,75 @@ class MyBidsProvider extends BaseProvider {
         return false;
       }
     } catch (e) {
-      ToastMessage.show(context, "Error: $e");
+      if (context.mounted) {
+        ToastMessage.show(context, "Error: $e");
+      }
       return false;
     }
   }
 
-  void callSwitch(DeleteUser user,BuildContext context,String mobileNumber) {
-    switch (user.errorCode){
-      case '200':
-        callOtp(context,mobileNumber);
-        break;
-      case '201':
-        ToastMessage.show(context, "User is deleted please register again");
-        break;
-      case '500':
-        ToastMessage.show(context, "Mobile number is not register please register");
-        break;
+  Future<bool> callSwitch(DeleteUser user, BuildContext context, String mobileNumber,int postId, bool isPostOwner) async {
+    try {
+      switch (user.errorCode) {
+        case '200':
+          return await callOtp(context, mobileNumber,postId,isPostOwner);
+
+        case '201':
+          if (context.mounted) {
+            ToastMessage.show(context, "User is deleted, please register again");
+          }
+          return false;
+
+        case '500':
+          if (context.mounted) {
+            ToastMessage.show(context, "Mobile number is not registered, please register");
+          }
+          return false;
+
+        default:
+          if (context.mounted) {
+            ToastMessage.show(context, "Unexpected response");
+          }
+          return false;
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ToastMessage.show(context, "Error: $e");
+      }
+      return false;
     }
   }
 
-  isUserDeleted(String mobileNumber,BuildContext context)async{
-    if(Validation().isValidPhoneNumber(mobileNumber)){
-      ApiHelper apiHelper=ApiHelper();
-      var response= await apiHelper.apiGet(ApiConstant.USER_FIND_BY_MOBILE(mobileNumber));
-      if(response.status==200){
-        DeleteUser deleteUser=DeleteUser.fromJson(response.response);
-        callSwitch(deleteUser,context,mobileNumber);
-      }else{
-        ToastMessage.show(context, " Please try again ");
+  Future<bool> isUserDeleted(String mobileNumber, BuildContext context,int postId,bool isPostOwner) async {
+    if (!Validation().isValidPhoneNumber(mobileNumber)) {
+      if (context.mounted) {
+        ToastMessage.show(context, "Enter valid mobile number");
       }
-    }else{
-      ToastMessage.show(context, " Enter valid mobile number ");
+      return false;
+    }
+
+    try {
+      ApiHelper apiHelper = ApiHelper();
+      var response = await apiHelper.apiGet(ApiConstant.USER_FIND_BY_MOBILE(mobileNumber));
+
+      // ✅ Check again after API call
+      if (!context.mounted) return false;
+
+      if (response.status == 200) {
+        DeleteUser deleteUser = DeleteUser.fromJson(response.response);
+        bool returnVal = await callSwitch(deleteUser, context, mobileNumber,postId,isPostOwner);
+        return returnVal;
+      } else {
+        if (context.mounted) {
+          ToastMessage.show(context, "Please try again");
+        }
+        return false;
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ToastMessage.show(context, "Error: $e");
+      }
+      return false;
     }
   }
 

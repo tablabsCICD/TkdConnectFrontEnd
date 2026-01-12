@@ -20,7 +20,7 @@ class AppSettingScreen extends StatelessWidget {
           color: ThemeColor.baground,
           child: Column(
             children: [
-              BaseWidget().appBar(context, S().appSetting),
+              BaseWidget().appBar(context, S().appSetting,isSearch: false),
               Container(
                 height: 20.h,
                 color: ThemeColor.baground,

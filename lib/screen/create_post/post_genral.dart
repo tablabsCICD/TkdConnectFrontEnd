@@ -65,7 +65,7 @@ class _PostGenralScreen extends State<PostGenralScreen>{
                   height: 12.h,
                 ),
 
-                provider.images.isNotEmpty? BaseWidget().carouseImage(provider.images):const SizedBox(),
+                provider.images.isNotEmpty? BaseWidget().carouseImage(context,provider.images):const SizedBox(),
                 InkWell(
                     onTap: () {
                       provider.uploadImage(context);

@@ -17,6 +17,7 @@ import '../../model/response/transport_directory_search.dart';
 import '../../provider/directory/directory_provider.dart';
 import '../../utils/utils.dart';
 import '../../widgets/card/base_widgets.dart';
+import '../../widgets/common_app_bar.dart';
 
 class DirectoryScreen extends StatefulWidget {
   bool? isBase;
@@ -47,9 +48,19 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            top_bar(context,provider),
-            //serachBar(),
-            provider.filterisVisible ? const SizedBox(): searchBoxFilter(),
+            CommonAppBar(
+              title: S().directory,
+              isTitle: true,
+              isBack: widget.isBase == false,
+              isSearchBar: true,
+              isFilter: true,
+              searchController: provider.searchController,
+              onBackTap: () => Navigator.pop(context),
+              onSearchChanged: (v) => provider.getBySearchData(),
+              onFilterTap: () => provider.onCliclFilter(context),
+            ),
+            SizedBox(height: 30,),
+           // top_bar(context,provider),
             provider.filterisVisible ? routeSelect() : const SizedBox(),
             allUserTag(),
             provider.user.isEmpty && provider.isLoadDone?Center(child: Padding(
@@ -69,17 +80,15 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
   allUserData() {
     return Consumer<DirectoryProvider>(
       builder: (context, provider, child) {
-        return Container(
-          child: Expanded(
-            child: ListView.builder(
-                controller: provider.scrollControllerVertical,
-                itemCount: provider.user.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return
-                    provider.user[index].type=="Directory"?
-                    userItem(provider.user[index]):cardAdv(index,context,provider.user[index]);
-                }),
-          ),
+        return Expanded(
+          child: ListView.builder(
+              controller: provider.scrollControllerVertical,
+              itemCount: provider.user.length,
+              itemBuilder: (BuildContext context, int index) {
+                return
+                  provider.user[index].type=="Directory"?
+                  userItem(provider.user[index]):cardAdv(index,context,provider.user[index]);
+              }),
         );
       },
     );
@@ -103,30 +112,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
     );
   }
 
-  top_bar(BuildContext context,provider) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-     // height: 87.h,
-      height: provider.filterisVisible ? 170.h : 87.h,
-      //padding: const EdgeInsets.only(bottom: 16),
-      decoration: const ShapeDecoration(
-        color: Color(0xFFC3262C),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(16),
-            bottomRight: Radius.circular(16),
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          widget.isBase==false?IconButton(onPressed: (){Navigator.of(context).pop();}, icon: Icon(Icons.arrow_back_ios,color: Colors.white,)):SizedBox.shrink(),
 
-          provider.filterisVisible ? searchBoxFilter(): const SizedBox(),
-        ],
-      )
-    );
-  }
 
   searchBoxFilter() {
     return Consumer<DirectoryProvider>(
@@ -521,7 +507,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           ),
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
-              child: BaseWidget().profileDirectory(data.profilePicture!, "${data.firstName!} ${data.lastName!}", data.companyName!,verify: data.isPaid!)),
+              child: BaseWidget().profileDirectory(data.profilePicture!, "${data.firstName!} ${data.lastName!}", data.companyName!,data.ratings??0.0,verify: data.isPaid!)),
 
 
           //cityTag("Tag"),
@@ -592,7 +578,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
 
   allUserTag() {
     return Container(
-      margin: EdgeInsets.only(left: 20.w,top: 0.h),
+      margin: EdgeInsets.only(left: 20.w,top: 10.h),
       child: Text(
         S().allUsers,
         style: TextStyle(
@@ -723,7 +709,6 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
       builder: (context, provider, child) {
         return Center(
           child: Container(
-            transform: Matrix4.translationValues(0.0, -25.0.h, 00),
             width: 330.w,
             child: Stack(
               //  mainAxisAlignment: MainAxisAlignment.center,
@@ -972,7 +957,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget()
-                  .carouseImage(List<String>.from(load.images!))),
+                  .carouseImage(context,List<String>.from(load.images??[]))),
           SizedBox(
             height: 9.h,
           ),
@@ -1056,26 +1041,11 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
         children: [
           Container(
               transform: Matrix4.translationValues(0.0, -25.0, 00),
-              child: Container(
-                  child:/* CarouselSlider(
-                    options: CarouselOptions(
-                      padEnds: false,
-                      pageSnapping: false,
-                      enableInfiniteScroll: false,
-                    ),
-                    items: load.images!
-                        .map((item) => Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(child: AllCards().imageLink(item)),
-                      ),
-                    ))
-                        .toList(),*/Container(
               child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Center(child: AllCards().imageLink(load.images![0])),
-    ),
-                  ))),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(child: AllCards().imageLink(load.images![0])),
+                                )
+              ),
           const SizedBox(
             height: 9,
           ),

@@ -12,6 +12,8 @@ import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/button.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
+import '../../widgets/common_app_bar.dart';
+
 class SelectUserForGroupScreen extends StatefulWidget {
   bool isEdit;
 
@@ -42,69 +44,76 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
   }
 
   _buildPage(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ThemeColor.baground,
-        body: Consumer<CreateGroupProvider>(builder: (context, model, child) {
-        // getUserList(model);
-          return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    BaseWidget().appBar(context, "Users"),
-                    serachBar(),
-                    Visibility(
-                      visible: model.selectedUsers.isEmpty ? false : true,
-                      child: Container(
-                        color: Colors.black12,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SizedBox(
-                                child: selectedUsers(),
-                                height: 60.h,
-                              ),
+    return Scaffold(
+      backgroundColor: ThemeColor.baground,
+      body: Consumer<CreateGroupProvider>(builder: (context, model, child) {
+      // getUserList(model);
+        return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CommonAppBar(
+                    title: "Users",
+                    isBack: true,
+                    isTitle: true,
+                    isSearchBar: true,      // ✅ enable search
+                    isFilter: false,
+                    onBackTap: () => Navigator.pop(context),
+                    searchController: model.searchController,
+                    onSearchChanged: (value) => model.filterUser(value),
+                  ),
+                  SizedBox(height: 30,),
+                  Visibility(
+                    visible: model.selectedUsers.isEmpty ? false : true,
+                    child: Container(
+                      color: Colors.black12,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SizedBox(
+                              child: selectedUsers(),
+                              height: 60.h,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    listViewUser(),
-                  ],
-                );
-        }),
-        bottomNavigationBar: Consumer<CreateGroupProvider>(
-          builder: (context, provider, child) => Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: Button(
-                width: 327.w,
-                height: 49.h,
-                title: S().Next,
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.sp,
-                  fontFamily: AppConstant.FONTFAMILY,
-                  fontWeight: FontWeight.w600,
-                  height: 0,
-                ),
-                onClick: () async {
-                  if(widget.isEdit){
-                   var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
-                        arguments: provider.selectedUsers);
-                   if(result==1){
-                     Navigator.pop(context,1);
-                   }
-                  }else{
-                    var result = await Navigator.pushNamed(context, AppRoutes.create_group,
-                        arguments: provider.selectedUsers);
-                    if(result==1){
-                      Navigator.pop(context,1);
-                    }
+                  ),
+                  listViewUser(),
+                ],
+              );
+      }),
+      bottomNavigationBar: Consumer<CreateGroupProvider>(
+        builder: (context, provider, child) => Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+          child: Button(
+              width: 327.w,
+              height: 49.h,
+              title: S().Next,
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 14.sp,
+                fontFamily: AppConstant.FONTFAMILY,
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+              onClick: () async {
+                if(widget.isEdit){
+                 var result = await Navigator.pushNamed(context, AppRoutes.edit_group,
+                      arguments: provider.selectedUsers);
+                 if(result==1){
+                   Navigator.pop(context,1);
+                 }
+                }else{
+                  var result = await Navigator.pushNamed(context, AppRoutes.create_group,
+                      arguments: provider.selectedUsers);
+                  if(result==1){
+                    Navigator.pop(context,1);
                   }
-                },
-                isEnbale: provider.selectedUsers.isEmpty ? false : true),
-          ),
+                }
+              },
+              isEnbale: provider.selectedUsers.isEmpty ? false : true),
         ),
       ),
     );
@@ -128,100 +137,7 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
     );
   }
 
-  serachBar() {
-    return Consumer<CreateGroupProvider>(
-      builder: (context, provider, child) {
-        return Container(
-          // transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
-          margin: EdgeInsets.all(20.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                height: 52.h,
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 0.50, color: Color(0x332C363F)),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 24.w,
-                            height: 24.h,
-                            margin: EdgeInsets.only(left: 10.w),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 24.w,
-                                  height: 24.h,
-                                  child: Stack(children: [
-                                    SvgPicture.asset(Images.search_normal)
-                                  ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Expanded(
-                            child: SizedBox(
-                              child: TextField(
-                                controller: provider.searchController,
-                                onChanged: (value) {
-                                  provider.filterUser(
-                                      provider.searchController.text);
-                                },
-                                decoration: InputDecoration(
-                                    hintText: "Search users ",
-                                    border: InputBorder.none,
-                                    hintStyle: TextStyle(
-                                      color: const Color(0x662C363F),
-                                      fontSize: 14.sp,
-                                      fontFamily:
-                                          GoogleFonts.poppins().fontFamily,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontFamily:
-                                      GoogleFonts.poppins().fontFamily,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+
 
   listViewUser() {
     return Consumer<CreateGroupProvider>(
@@ -260,8 +176,8 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
           BaseWidget().getImageclipGroup(
           model.filterByName[index].companyLogo ==null ?"":
             model.filterByName[index].companyLogo.toString(),
-            height: 34,
-            width: 34,
+            height: 45,
+            width: 45,
           ),
           Expanded(
             child: Padding(
@@ -274,17 +190,46 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                     children: <Widget>[
                       Padding(
                         padding:  EdgeInsets.only(top: 3.h),
-                        child: Text(
-                          displayName,
-                          style: TextStyle(
-                            color: const Color(0xCC001E49),
-                            fontSize: 14.sp,
-                            fontFamily: AppConstant.FONTFAMILY,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          maxLines: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              displayName,
+                              style: TextStyle(
+                                color: const Color(0xCC001E49),
+                                fontSize: 14.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              maxLines: 1,
+                            ),
+                            Text(
+                              model.filterByName[index].mobileNumber.toString(),
+                              style: TextStyle(
+                                color: const Color(0xCC001E49),
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              maxLines: 1,
+                            ),
+                            Text(
+                              model.filterByName[index].city??"",
+                              style: TextStyle(
+                                color: const Color(0xCC001E49),
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              maxLines: 1,
+                            ),
+                          ],
                         ),
                       ),
                       widget.isEdit
@@ -309,8 +254,8 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
         controller: horizantalControllet,
         itemCount: model.selectedUsers.length,
         itemBuilder: (BuildContext context, int index) => SizedBox(
-          height: 50.h,
-
+          height: 80.h,
+          width: 100.w,
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Column(
@@ -321,10 +266,31 @@ class _SelectUserForGroupScreenState extends State<SelectUserForGroupScreen> {
                   width: 34,
                 ),
                 Text(
-                  model.selectedUsers[index].firstName!,
+                  "${model.selectedUsers[index].firstName!} ${model.selectedUsers[index].lastName!}",
                   style: TextStyle(
                     color: const Color(0xCC001E49),
-                    fontSize: 14.sp,
+                    fontSize: 12.sp,
+                    fontFamily: AppConstant.FONTFAMILY,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  maxLines: 1,
+                ),
+                Text(
+                  model.selectedUsers[index].mobileNumber.toString(),
+                  style: TextStyle(
+                    color: const Color(0xCC001E49),
+                    fontSize: 10.sp,
+                    fontFamily: AppConstant.FONTFAMILY,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  model.selectedUsers[index].city??"",
+                  style: TextStyle(
+                    color: const Color(0xCC001E49),
+                    fontSize: 10.sp,
                     fontFamily: AppConstant.FONTFAMILY,
                     fontWeight: FontWeight.w400,
                   ),
