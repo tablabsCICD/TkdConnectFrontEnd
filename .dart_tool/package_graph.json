@@ -9,6 +9,7 @@
       "dependencies": [
         "app_links",
         "avatar_glow",
+        "background_fetch",
         "cached_network_image",
         "carousel_slider",
         "cloud_firestore",
@@ -57,9 +58,11 @@
         "simple_circular_progress_bar",
         "sms_autofill",
         "speech_to_text",
+        "stomp_dart_client",
         "textfield_tags",
         "timeago",
         "url_launcher",
+        "web_socket_channel",
         "webview_flutter",
         "whatsapp_unilink"
       ],
@@ -136,6 +139,22 @@
         "flutter_background_service_android",
         "flutter_background_service_ios",
         "flutter_background_service_platform_interface"
+      ]
+    },
+    {
+      "name": "stomp_dart_client",
+      "version": "0.4.4",
+      "dependencies": [
+        "web_socket_channel"
+      ]
+    },
+    {
+      "name": "web_socket_channel",
+      "version": "2.4.0",
+      "dependencies": [
+        "async",
+        "crypto",
+        "stream_channel"
       ]
     },
     {
@@ -839,6 +858,13 @@
       "dependencies": [
         "flutter",
         "flutter_background_service_platform_interface"
+      ]
+    },
+    {
+      "name": "crypto",
+      "version": "3.0.7",
+      "dependencies": [
+        "typed_data"
       ]
     },
     {
@@ -1794,13 +1820,6 @@
       ]
     },
     {
-      "name": "crypto",
-      "version": "3.0.7",
-      "dependencies": [
-        "typed_data"
-      ]
-    },
-    {
       "name": "dio_web_adapter",
       "version": "2.1.1",
       "dependencies": [
@@ -2150,6 +2169,13 @@
       "name": "synchronized",
       "version": "3.4.0",
       "dependencies": []
+    },
+    {
+      "name": "background_fetch",
+      "version": "1.5.0",
+      "dependencies": [
+        "flutter"
+      ]
     }
   ],
   "configVersion": 1

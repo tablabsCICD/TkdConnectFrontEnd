@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +24,7 @@ import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/route/routes.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:tkd_connect/screen/deeplink/deeplink_service.dart';
+import 'package:tkd_connect/service/background_service.dart';
 import 'generated/l10n.dart';
 import 'dart:io' show Platform;
 import 'notification/local_notification.dart';
@@ -96,6 +98,20 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
 
+  await FlutterBackgroundService().configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      isForegroundMode: true,
+      autoStart: false,
+      initialNotificationTitle: "Vehicle Tracking",
+      initialNotificationContent: "Tracking running in background",
+    ),
+    iosConfiguration: IosConfiguration(
+      autoStart: false,
+      onForeground: onStart,
+      onBackground: (service) => true,
+    ),
+  );
 
   runApp(MyApp(prefs: prefs));
 }

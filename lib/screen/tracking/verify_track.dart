@@ -14,6 +14,7 @@ import 'package:tkd_connect/utils/toast.dart';
 import '../../provider/location/location_provider.dart';
 
 
+
 class VerifyTrack extends StatefulWidget {
   const VerifyTrack({super.key});
 
@@ -55,28 +56,13 @@ class _VerifyTrackState extends State<VerifyTrack> {
         DriverVerificationResponse.fromJson(data);
         if ((driverVerificationResponse.data?.vehicleNumber?.isNotEmpty ?? false) &&
             (driverVerificationResponse.data?.driverContact?.isNotEmpty ?? false)) {
-        /*  // ✅ Foreground tracking
-          startForegroundTracking(postId, driverVerificationResponse.data!.vehicleNumber!, driverVerificationResponse.data!.driverContact!);
-
-          // ✅ Background tracking REGISTERED WITH REAL DATA
-          await Workmanager().registerPeriodicTask(
-            "location_$postId",
-            fetchLocationTask,
-            frequency: const Duration(minutes: 15),
-            inputData: {
-              "postId": postId,
-              "vehicle": driverVerificationResponse.data?.vehicleNumber,
-              "driver": driverVerificationResponse.data?.driverContact,
-            },
-            existingWorkPolicy: ExistingWorkPolicy.replace,
-          );
-
-          ToastMessage.show(context, "Tracking started successfully");*/
           context.read<DriverTrackingProvider>().startTracking(
-            postId: postId,
-            vehicleId: driverVerificationResponse.data?.vehicleNumber??"",
-            driverNumber: driverVerificationResponse.data?.driverContact??"",
+         postId,
+           driverVerificationResponse.data?.vehicleNumber ?? "",
+            driverVerificationResponse.data?.driverContact ?? "",
           );
+
+
         }
       } else {
         ToastMessage.show(context, data['message'] ?? 'Invalid OTP');
