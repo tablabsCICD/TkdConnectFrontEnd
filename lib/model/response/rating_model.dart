@@ -134,7 +134,7 @@ class CompanyId {
     city = json['city'];
     state = json['state'];
     otp = json['otp'];
-    active = json['active']??true;
+    active = json['active']??'';
     logo = json['logo']??'';
   }
 

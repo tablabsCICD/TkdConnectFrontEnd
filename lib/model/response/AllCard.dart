@@ -6,7 +6,7 @@ class TruckLoadType {
     required this.last,
     required this.size,
     required this.number,
-  //  this.sort,
+    //  this.sort,
     required this.first,
     required this.numberOfElements,
   });
@@ -16,7 +16,7 @@ class TruckLoadType {
   late final bool last;
   late final int size;
   late final int number;
- // late final String? sort;
+  // late final String? sort;
   late final bool first;
   late final int numberOfElements;
 
@@ -40,7 +40,7 @@ class TruckLoadType {
     data['last'] = last;
     data['size'] = size;
     data['number'] = number;
-   // _data['sort'] = sort;
+    // _data['sort'] = sort;
     data['first'] = first;
     data['numberOfElements'] = numberOfElements;
     return data;
@@ -90,6 +90,7 @@ class TruckLoad {
     this.comment,
     this.likes,
     this.postImages,
+    this.images,
     this.transporterOrAgent,
     this.userList,
     this.mobileOrLandline,
@@ -98,7 +99,10 @@ class TruckLoad {
     this.repeatEndDate,
     this.isSharedInGroup,
     this.isOpenForBid,
-    this.isRepeat
+    this.isRepeat,
+    this.ispostOwnerVerifiedForTrack,this.isQuoteOwnerVerifiedForTrack,this.isCompleted,this.experience,this.department,
+    this.vehicleRegistrationNumber,
+    this.emailId
   });
   late final int? id;
   late final int? userId;
@@ -106,7 +110,7 @@ class TruckLoad {
   late final String? postingTime;
   late final String? companyName;
   late final String? nameOfPerson;
-  late final String? companyRating;
+  late final dynamic? companyRating;
   late final String? content;
   late final String? topicName;
   late final String? tableName;
@@ -138,9 +142,10 @@ class TruckLoad {
   late final String? loadWeight;
   late final String? typeOfCargo;
   late final String? otherDetails;
-  late final dynamic likes;
-  late final dynamic comment;
+  late final int? likes;
+  late final  List<dynamic>? comment;
   late final List<dynamic>?postImages;
+  late final List<dynamic>? images;
   late final int?transporterOrAgent;
   late final String? userList;
   late final String? mobileOrLandline;
@@ -151,9 +156,13 @@ class TruckLoad {
   late final bool? isSharedInGroup;
   late final int? isOpenForBid;
   late final int? isRepeat;
-
-
-
+  int? ispostOwnerVerifiedForTrack;
+  int? isQuoteOwnerVerifiedForTrack;
+  int? isCompleted;
+  late final String? experience;
+  late final String? department;
+  late final String? vehicleRegistrationNumber;
+  late final String? emailId;
 
   TruckLoad.fromJson(Map<String, dynamic> json){
     id = json['id']?? 0;
@@ -162,7 +171,7 @@ class TruckLoad {
     postingTime = json['postingTime']?? '';
     companyName = json['companyName']?? '';
     nameOfPerson = json['nameOfPerson']?? '';
-    companyRating = json['companyRating']?? '';
+    companyRating = json['companyRating']?? 0.0;
     content = json['content']?? '';
     topicName = json['topicName']?? '';
     tableName = json['tableName']?? '';
@@ -199,9 +208,10 @@ class TruckLoad {
     loadWeight = json['vehicleWeight']?? '';
     typeOfCargo = json['cargoType']?? '';
     otherDetails = json['otherDetails']?? '';
-    likes=json['likes']??'';
-    comment=json['comment']??'';
-    postImages=json['images']??'';
+    likes=json['likes']??0;
+    comment=json['comment']??[];
+    postImages=json['postImages']??[];
+    images=json['images']??[];
     userList=json['userList']??'';
     expireDate=json['expireDate']??'';
     repeatEndDate=json['repeatEndDate']??0;
@@ -210,6 +220,13 @@ class TruckLoad {
     isSharedInGroup=json['isSharedInGroup']??false;
     isOpenForBid=json['isOpenForBid']??1;
     isRepeat = json['isRepeat']??0;
+    ispostOwnerVerifiedForTrack = json['ispostOwnerVerifiedForTrack'] ?? 0;
+    isQuoteOwnerVerifiedForTrack = json['isQuoteOwnerVerifiedForTrack'] ?? 0;
+    isCompleted = json['isCompleted']??0;
+    experience = json['experience']??'';
+    department = json['department']??'';
+    vehicleRegistrationNumber = json['vehicleRegistrationNumber']??"";
+    emailId = json["emailId"]??"";
   }
 
   Map<String, dynamic> toJson() {
@@ -254,7 +271,8 @@ class TruckLoad {
     data['otherDetails'] = otherDetails;
     data['likes'] = likes;
     data['comment'] = comment;
-    data['images'] = postImages;
+    data['postImages'] = postImages;
+    data['images'] = images;
     data['transporterOrAgent'] = transporterOrAgent;
     data['userList'] = userList;
     data['isverified'] = isverified;
@@ -265,7 +283,13 @@ class TruckLoad {
     data['isSharedInGroup'] = isSharedInGroup;
     data['isOpenForBid'] = isOpenForBid;
     data['isRepeat']=isRepeat;
-
+    data['ispostOwnerVerifiedForTrack'] = ispostOwnerVerifiedForTrack;
+    data['isQuoteOwnerVerifiedForTrack'] = isQuoteOwnerVerifiedForTrack;
+    data['isCompleted'] = isCompleted;
+    data['experience'] = experience;
+    data['department'] = department;
+    data['vehicleRegistrationNumber'] = vehicleRegistrationNumber;
+    data["emailId"]= emailId;
     return data;
   }
 }

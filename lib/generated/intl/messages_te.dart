@@ -235,6 +235,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "users": MessageLookupByLibrary.simpleMessage("వినియోగదారులు"),
         "vehicle": MessageLookupByLibrary.simpleMessage("వాహనం"),
         "verifiedUsers":
-            MessageLookupByLibrary.simpleMessage("చకాసాయెల్ విస్తరణ")
+            MessageLookupByLibrary.simpleMessage("చకాసాయెల్ విస్తరణ"),
+        "verifyTracking":
+            MessageLookupByLibrary.simpleMessage("Verify Tracking")
       };
 }

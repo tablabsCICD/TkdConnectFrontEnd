@@ -1,11 +1,14 @@
 buildscript {
+    ext.kotlin_version = '2.1.0'
     repositories {
         google()   // Make sure this is here
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:8.3.2"// your AGP version
+        classpath "com.android.tools.build:gradle:8.9.1"
+// your AGP version
         classpath "com.google.gms:google-services:4.4.2"  // ADD THIS LINE
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

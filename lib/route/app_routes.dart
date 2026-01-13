@@ -1,4 +1,5 @@
-class AppRoutes {
+class
+AppRoutes {
   static const home = '/home';
   static const login = '/login';
   static const register = '/register';
@@ -29,6 +30,7 @@ class AppRoutes {
   static const appsetting = '/appsetting';
   static const job = '/job';
   static const group = '/group';
+  static const generalPost = '/generalPost';
   static const mypost = '/mypost';
   static const editpost = '/editpost';
   static const buysell = '/buysell';
@@ -39,6 +41,7 @@ class AppRoutes {
   static const reportIncident="/reportIncident";
   static const reportIncidentList="/reportIncidentList";
   static const news = "/news";
+  static const verifyTrack = '/verifyTrack';
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -183,6 +184,29 @@ class ViewProfileDirectory extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 height: 0,
               ),
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            RatingBar.builder(
+              itemSize: 10,
+              initialRating: data.ratings == null || data.ratings==0.0
+                  ? 0.0
+                  : data.ratings!,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: const EdgeInsets.symmetric(
+                  horizontal: 1.0),
+              itemBuilder: (context, _) => Icon(
+                Icons.star,
+                color: ThemeColor.red,
+                size: 5,
+              ),
+              onRatingUpdate: (rating) {
+                print(rating);
+              },
             ),
             SizedBox(
               height: 6.h,

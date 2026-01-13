@@ -12,7 +12,8 @@ import 'package:tkd_connect/widgets/textview.dart';
 import '../../generated/l10n.dart';
 
 class SearchEditScreen extends StatefulWidget {
-  const SearchEditScreen({super.key});
+  const
+  SearchEditScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {

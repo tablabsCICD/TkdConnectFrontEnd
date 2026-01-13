@@ -1,96 +1,99 @@
 class GroupMemberListResponse {
   List<GroupMember>? content;
   bool? last;
-  int? totalElements;
   int? totalPages;
-  String? sort;
-  bool? first;
+  int? totalElements;
   int? numberOfElements;
+  bool? first;
+  dynamic sort;
   int? size;
   int? number;
 
-  GroupMemberListResponse(
-      {this.content,
-        this.last,
-        this.totalElements,
-        this.totalPages,
-        this.sort,
-        this.first,
-        this.numberOfElements,
-        this.size,
-        this.number});
+  GroupMemberListResponse({
+    this.content,
+    this.last,
+    this.totalPages,
+    this.totalElements,
+    this.numberOfElements,
+    this.first,
+    this.sort,
+    this.size,
+    this.number,
+  });
 
-  GroupMemberListResponse.fromJson(Map<String, dynamic> json) {
-    if (json['content'] != null) {
-      content = <GroupMember>[];
-      json['content'].forEach((v) {
-        content!.add(GroupMember.fromJson(v));
-      });
-    }
-    last = json['last'];
-    totalElements = json['totalElements'];
-    totalPages = json['totalPages'];
-    sort = json['sort'];
-    first = json['first'];
-    numberOfElements = json['numberOfElements'];
-    size = json['size'];
-    number = json['number'];
-  }
+  factory GroupMemberListResponse.fromJson(Map<String, dynamic> json) => GroupMemberListResponse(
+    content: json["content"] == null ? [] : List<GroupMember>.from(json["content"]!.map((x) => GroupMember.fromJson(x))),
+    last: json["last"],
+    totalPages: json["totalPages"],
+    totalElements: json["totalElements"],
+    numberOfElements: json["numberOfElements"],
+    first: json["first"],
+    sort: json["sort"],
+    size: json["size"],
+    number: json["number"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (content != null) {
-      data['content'] = content!.map((v) => v.toJson()).toList();
-    }
-    data['last'] = last;
-    data['totalElements'] = totalElements;
-    data['totalPages'] = totalPages;
-    data['sort'] = sort;
-    data['first'] = first;
-    data['numberOfElements'] = numberOfElements;
-    data['size'] = size;
-    data['number'] = number;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "content": content == null ? [] : List<dynamic>.from(content!.map((x) => x.toJson())),
+    "last": last,
+    "totalPages": totalPages,
+    "totalElements": totalElements,
+    "numberOfElements": numberOfElements,
+    "first": first,
+    "sort": sort,
+    "size": size,
+    "number": number,
+  };
 }
 
 class GroupMember {
-  int? id;
-  int? groupId;
   int? date;
-  int? userId;
   int? isAvailable;
-  int? addedByUserId;
   String? displayName;
+  int? groupId;
+  int? contact;
+  String? name;
+  String? location;
+  int? id;
+  int? userId;
+  String? email;
 
-  GroupMember(
-      {this.id,
-        this.groupId,
-        this.date,
-        this.userId,
-        this.isAvailable,
-        this.addedByUserId,
-        this.displayName});
+  GroupMember({
+    this.date,
+    this.isAvailable,
+    this.displayName,
+    this.groupId,
+    this.contact,
+    this.name,
+    this.location,
+    this.id,
+    this.userId,
+    this.email,
+  });
 
-  GroupMember.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    groupId = json['groupId'];
-    date = json['date'];
-    userId = json['userId'];
-    isAvailable = json['isAvailable'];
-    addedByUserId = json['addedByUserId'];
-    displayName = json['displayName'];
-  }
+  factory GroupMember.fromJson(Map<String, dynamic> json) => GroupMember(
+    date: json["date"],
+    isAvailable: json["isAvailable"],
+    displayName: json["displayName"],
+    groupId: json["groupId"],
+    contact: json["contact"],
+    name: json["name"],
+    location: json["location"],
+    id: json["id"],
+    userId: json["userId"],
+    email: json["email"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['groupId'] = groupId;
-    data['date'] = date;
-    data['userId'] = userId;
-    data['isAvailable'] = isAvailable;
-    data['addedByUserId'] = addedByUserId;
-    data['displayName'] = displayName;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "date": date,
+    "isAvailable": isAvailable,
+    "displayName": displayName,
+    "groupId": groupId,
+    "contact": contact,
+    "name": name,
+    "location": location,
+    "id": id,
+    "userId": userId,
+    "email": email,
+  };
 }

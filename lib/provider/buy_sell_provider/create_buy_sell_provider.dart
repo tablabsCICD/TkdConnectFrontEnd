@@ -22,6 +22,7 @@ class CreateBuySellProvider extends BaseProvider{
   String selectedYear = 'Select One';
   bool isSellSelected=false;
   late User user;
+
   TextEditingController vehicleSizeController=TextEditingController();
   TextEditingController loadWeightController=TextEditingController();
   TextEditingController specialInstructionController=TextEditingController();
@@ -143,11 +144,14 @@ class CreateBuySellProvider extends BaseProvider{
     notifyListeners();
   }
 
-
+  uploadImage(BuildContext context) async {
+    String image = await postImage(context);
+    images.add(image);
+    notifyListeners();
+  }
 
 
   createBuySell(BuildContext context) async {
-
     Map<String, dynamic> data = {
       "additionalInformation": specialInstructionController.text,
       "agentName": "${user.content!.first.firstName!} ${user.content!.first.lastName!}",
@@ -160,10 +164,10 @@ class CreateBuySellProvider extends BaseProvider{
       "date": "2022-01-22T11:29:53.473Z",
       "estimatedPrice": price.text,
       "id": 0,
-      "image1": "",
-      "image2": " ",
-      "image3": " ",
-      "image4": " ",
+      "image1": images.isNotEmpty ? images[0] : "",
+      "image2": images.length > 1 ? images[1] : "",
+      "image3": images.length > 2 ? images[2] : "",
+      "image4": images.length > 3 ? images[3] : "",
       "insaurancePaidUpto": selectedYear,
       "loggedTime": "2022-01-22T11:29:53.473Z",
       "loggedUserName": user.content!.first.userName,
@@ -206,6 +210,10 @@ bool isPrise=true;
 bool isModelName=true;
 bool isKilo=true;
 bool isrlNo=true;
+  List<String> _images = [];
+
+  // OR if you want a getter, define one properly
+  List<String> get images => _images;
   checkValidation(BuildContext context){
     if(selectedRequriment=="Select One"){
       ToastMessage.show(context, "Please select type");

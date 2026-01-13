@@ -50,7 +50,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
           builder: (context, provider, child) {
             return Container(
               margin: EdgeInsets.only(left: 20.w, right: 20.w),
-              child:userType==3?Column(
+              child:/*userType==3?Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,7 +129,7 @@ class _SelectPlanScreen extends State<SelectPlanScreen> {
 
                 ],
 
-              ):
+              ):*/
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                 SizedBox(
                   height: 21.5.h,

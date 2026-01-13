@@ -34,7 +34,7 @@ class HelpSupportScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BaseWidget().appBar(context, S().helpSupport),
+              BaseWidget().appBar(context, S().helpSupport,isSearch: false),
               Container(
                 height: 20.h,
                 color: ThemeColor.baground,

@@ -51,6 +51,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "allIncident": MessageLookupByLibrary.simpleMessage("All Incident"),
         "allNews": MessageLookupByLibrary.simpleMessage("All News"),
         "allRoutes": MessageLookupByLibrary.simpleMessage("All routes"),
+        "allRoutesRequirement":
+            MessageLookupByLibrary.simpleMessage("All routes requirement"),
         "allUsers": MessageLookupByLibrary.simpleMessage("All users"),
         "already_have_account":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
@@ -138,7 +140,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
         "from": MessageLookupByLibrary.simpleMessage("From"),
         "fromCity": MessageLookupByLibrary.simpleMessage("From City"),
+        "fullLoadRequired":
+            MessageLookupByLibrary.simpleMessage("Full load required"),
+        "fullVehicleRequired":
+            MessageLookupByLibrary.simpleMessage("Full vehicle  required"),
         "general": MessageLookupByLibrary.simpleMessage("General"),
+        "generalPost": MessageLookupByLibrary.simpleMessage("General Post"),
         "getInTouch": MessageLookupByLibrary.simpleMessage("Get in tounch"),
         "getVerified": MessageLookupByLibrary.simpleMessage("Get verified"),
         "group": MessageLookupByLibrary.simpleMessage("Group"),
@@ -149,6 +156,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("How do you rate our app ?"),
         "iHaveVehicle": MessageLookupByLibrary.simpleMessage("I Have Vehicle"),
         "iWantVehicle": MessageLookupByLibrary.simpleMessage("I Want Vehicle"),
+        "importantNotice":
+            MessageLookupByLibrary.simpleMessage("Important Notice"),
         "insurance": MessageLookupByLibrary.simpleMessage("Insurance"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "Hello! We are here to elevate your logistics experience. Let us be your logistics assistance and your business needs will be fulfilled seamlessly."),
@@ -191,6 +200,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noRecordFound":
             MessageLookupByLibrary.simpleMessage("No Record Found"),
+        "noticeMsg": MessageLookupByLibrary.simpleMessage(
+            "Do not Pay any Advance before Loading of Truck and verifying RTO documents on mParivahan website."),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "off": MessageLookupByLibrary.simpleMessage("Off"),
         "on": MessageLookupByLibrary.simpleMessage("On"),
@@ -199,12 +210,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "other": MessageLookupByLibrary.simpleMessage("other"),
         "packersAndMovers":
             MessageLookupByLibrary.simpleMessage("Packers and Movers"),
+        "partLoadRequired":
+            MessageLookupByLibrary.simpleMessage("Part load required"),
+        "partVehicleRequired":
+            MessageLookupByLibrary.simpleMessage("Part vehicle required"),
         "paymentType": MessageLookupByLibrary.simpleMessage("Payment Type"),
         "personalDetails":
             MessageLookupByLibrary.simpleMessage("Personal details"),
         "personalInfo": MessageLookupByLibrary.simpleMessage("Personal info"),
+        "pleaseFillAllInformation":
+            MessageLookupByLibrary.simpleMessage("Please fill all information"),
         "pleaseSelectTopic":
             MessageLookupByLibrary.simpleMessage("Please Select Topic"),
+        "pleaseTryAgain":
+            MessageLookupByLibrary.simpleMessage("Please try again"),
+        "pleaseUpdateYourPackage":
+            MessageLookupByLibrary.simpleMessage("Please update your package"),
         "position": MessageLookupByLibrary.simpleMessage("Position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
         "postAJob": MessageLookupByLibrary.simpleMessage("Post a job"),
@@ -239,6 +260,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sales": MessageLookupByLibrary.simpleMessage("Sales"),
         "saveChange": MessageLookupByLibrary.simpleMessage("Save changes"),
+        "saveMsg": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to post this requirement?"),
         "searchNews": MessageLookupByLibrary.simpleMessage("Search News"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("Search place"),
         "searchUsersCompanies":
@@ -247,10 +270,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Search by name,company name and post id"),
         "selectOne": MessageLookupByLibrary.simpleMessage("Select one"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
+        "sellBuyPost": MessageLookupByLibrary.simpleMessage("Sell Buy Post"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "shareapp": MessageLookupByLibrary.simpleMessage(
             "Share application and Earn Surprise Gift"),
         "showAllQuotes": MessageLookupByLibrary.simpleMessage("Show all quote"),
+        "showPostTo": MessageLookupByLibrary.simpleMessage("Show Post to"),
         "showPostto": MessageLookupByLibrary.simpleMessage("Show Post to"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "specialInstruction":
@@ -280,6 +305,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "vehicle": MessageLookupByLibrary.simpleMessage("Vehicle"),
         "vehicleSize": MessageLookupByLibrary.simpleMessage("Vehicle size"),
         "verifiedUsers": MessageLookupByLibrary.simpleMessage("Verified users"),
+        "verifyTracking":
+            MessageLookupByLibrary.simpleMessage("Verify Tracking"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("View profile"),
         "website": MessageLookupByLibrary.simpleMessage("Website"),
         "withdrawQuotes":

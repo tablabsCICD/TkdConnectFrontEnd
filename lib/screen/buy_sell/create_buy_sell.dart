@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tkd_connect/provider/buy_sell_provider/create_buy_sell_provider.dart';
 
+import '../../constant/images.dart';
 import '../../generated/l10n.dart';
 import '../../model/request/route_request.dart';
 import '../../widgets/bottomsheet.dart';
@@ -34,7 +36,7 @@ class CreateBuySell extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
-              BaseWidget().appBar(context, "Post Buy/Sell"),
+              BaseWidget().appBar(context, "Post Buy/Sell",isSearch:false),
               Expanded(
                   child: ListView(
                       padding: EdgeInsets.only(left: 20.w, right: 20.w),
@@ -127,8 +129,8 @@ class CreateBuySell extends StatelessWidget {
                     SizedBox(
                       height: 4.h,
                     ),
-                        editViewError(
-                        "eg.Tata SCV", provider.modelName, provider, provider.isModelName),
+                    editViewError("eg.Tata SCV", provider.modelName, provider,
+                        provider.isModelName),
                     SizedBox(
                       height: 12.h,
                     ),
@@ -143,8 +145,8 @@ class CreateBuySell extends StatelessWidget {
                             SizedBox(
                               height: 4.h,
                             ),
-                            editViewError("eg.5000 Km", provider.kiloMeter, provider,
-                                provider.isKilo),
+                            editViewError("eg.5000 Km", provider.kiloMeter,
+                                provider, provider.isKilo),
                             SizedBox(
                               height: 12.h,
                             ),
@@ -161,8 +163,8 @@ class CreateBuySell extends StatelessWidget {
                             SizedBox(
                               height: 4.h,
                             ),
-                            editViewError("eg.MH09 EG 0000", provider.vehicleRno,
-                                provider, provider.isrlNo),
+                            editViewError("eg.MH09 EG 0000",
+                                provider.vehicleRno, provider, provider.isrlNo),
                             SizedBox(
                               height: 12.h,
                             ),
@@ -191,8 +193,8 @@ class CreateBuySell extends StatelessWidget {
                     DropDown(
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                        int a = await itemBottomSheet.showIteam(context,
-                            provider.vehicleSizeList, S().selectOne);
+                        int a = await itemBottomSheet.showIteam(
+                            context, provider.vehicleSizeList, S().selectOne);
                         provider.selectedvehicleSizeType(a);
                       },
                       hint: provider.selectedVehicleSize,
@@ -207,8 +209,8 @@ class CreateBuySell extends StatelessWidget {
                     DropDown(
                       onClick: () async {
                         ItemBottomSheet itemBottomSheet = ItemBottomSheet();
-                        int a = await itemBottomSheet.showIteam(context,
-                            provider.conditionList, S().selectOne);
+                        int a = await itemBottomSheet.showIteam(
+                            context, provider.conditionList, S().selectOne);
                         provider.selectedConditionType(a);
                       },
                       hint: provider.selectedCondition,
@@ -219,7 +221,9 @@ class CreateBuySell extends StatelessWidget {
                     labelText("Approx prise"),
                     SizedBox(
                       height: 4.h,
-                    ), editViewErrorNumber("eg.1000", provider.price, provider, provider.isPrise),
+                    ),
+                    editViewErrorNumber(
+                        "eg.1000", provider.price, provider, provider.isPrise),
                     SizedBox(
                       height: 12.h,
                     ),
@@ -231,6 +235,43 @@ class CreateBuySell extends StatelessWidget {
                         provider, false),
                     SizedBox(
                       height: 12.h,
+                    ),
+                    provider.images.isNotEmpty
+                        ? Visibility(
+                      visible: provider.isSellSelected,
+                          child: BaseWidget().carouseImageDelete(provider.images,
+                              (item) {
+                              provider.images.remove(item);
+                              provider.notifyListeners();
+                            }),
+                        )
+                        : const SizedBox(),
+                    Visibility(
+                      visible: provider.isSellSelected,
+                      child: SizedBox(
+                        height: 44.h,
+                      ),
+                    ),
+                    Visibility(
+                      visible: provider.isSellSelected,
+                      child: InkWell(
+                          onTap: () {
+                            provider.uploadImage(context);
+                          },
+                          child: SvgPicture.asset(Images.add_image)),
+                    ),
+                    Visibility(
+                       visible:  provider.isSellSelected,
+                      child: Text(
+                        S().addImagesAt,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: const Color(0xFF001E49),
+                          fontSize: 12.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ]))
             ],
@@ -311,9 +352,12 @@ class CreateBuySell extends StatelessWidget {
     );
   }
 
-
-  editViewErrorNumber(String hint, TextEditingController controller,
-      CreateBuySellProvider provider, bool valid,) {
+  editViewErrorNumber(
+    String hint,
+    TextEditingController controller,
+    CreateBuySellProvider provider,
+    bool valid,
+  ) {
     return EditTextError(
       validate: valid,
       width: 335.w,

@@ -55,21 +55,20 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     return Container(
       child: Consumer<MyBidsProvider>(
         builder: (context, provider, child) {
-          return widget.provider.isLoadMyPlacedBid &&
-                  widget.provider.listOwnBid.isEmpty
+          return provider.isLoadMyPlacedBid && provider.listOwnBid.isEmpty
               ? Container(
                   child: Center(
                     child: Text(S().noRecordFound),
                   ),
                 )
               : ListView.builder(
-                  controller: widget.provider.scrollController,
-                  itemCount: widget.provider.listOwnBid.length,
+                  controller: provider.scrollController,
+                  itemCount: provider.listOwnBid.length,
                   itemBuilder: (context, i) {
                     return Padding(
                       padding: EdgeInsets.only(
                           bottom: 12.h, left: 20.w, right: 20.w),
-                      child: iteamMyPost(widget.provider.listOwnBid[i], i),
+                      child: iteamMyPost(provider.listOwnBid[i], i, provider),
                     );
                   },
                 );
@@ -78,56 +77,83 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     );
   }
 
-  iteamMyPost(PostBidData postBidData, int index) {
-    return Container(
-      width: 335.w,
-      // height: 417.h,
-      padding: EdgeInsets.all(12.r),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
+  iteamMyPost(PostBidData postBidData, int index, MyBidsProvider provider) {
+    return Opacity(
+      opacity: postBidData.genericCardsDto!.isCompleted == 1?0.5:1,
+      child: Container(
+        width: 335.w,
+        // height: 417.h,
+        padding: EdgeInsets.all(12.r),
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          shadows: [
+            BoxShadow(
+              color: const Color(0x114A5568),
+              blurRadius: 8.r,
+              offset: const Offset(0, 3),
+              spreadRadius: 0,
+            )
+          ],
         ),
-        shadows: [
-          BoxShadow(
-            color: const Color(0x114A5568),
-            blurRadius: 8.r,
-            offset: const Offset(0, 3),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Visibility(
-                  visible: postBidData.genericCardsDto!.expireDate == ''
-                      ? false
-                      : true,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Visibility(
+                    visible: postBidData.genericCardsDto!.expireDate == ''
+                        ? false
+                        : true,
+                    child: Container(
+                      width: 120.w,
+                      height: 20.h,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(2)),
+                        border: Border.all(
+                          width: 0.5,
+                          color: ThemeColor.red,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "valid till : ${postBidData.genericCardsDto!.expireDate == '' ? "-" : postBidData.genericCardsDto!.expireDate!}",
+                          style: TextStyle(
+                            color: ThemeColor.black,
+                            fontSize: 8.sp,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
                   child: Container(
                     width: 120.w,
-                    height: 20.h,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(2)),
-                      border: Border.all(
-                        width: 0.5,
-                        color: ThemeColor.red,
-                        style: BorderStyle.solid,
-                      ),
+                    height: 18.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF2C8FEA),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.r)),
                     ),
                     child: Center(
                       child: Text(
-                        "valid till : ${postBidData.genericCardsDto!.expireDate == '' ? "-" : postBidData.genericCardsDto!.expireDate!}",
+                        Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
                         style: TextStyle(
-                          color: ThemeColor.black,
-                          fontSize: 8.sp,
+                          color: Colors.white,
+                          fontSize: 9.sp,
                           fontFamily: GoogleFonts.poppins().fontFamily,
                           fontWeight: FontWeight.w600,
                         ),
@@ -135,117 +161,92 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 120.w,
-                  height: 18.h,
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF2C8FEA),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.r)),
+              ],
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            BaseWidget().headingWithoutDate(
+                postBidData.genericCardsDto!.topicName!,
+                postBidData.genericCardsDto!.content!),
+            SizedBox(
+              height: 8.h,
+            ),
+            BaseWidget().routes(postBidData.genericCardsDto!.source!,
+                postBidData.genericCardsDto!.destination!),
+            SizedBox(
+              height: 8.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "(Your quote)",
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
                   ),
-                  child: Center(
-                    child: Text(
-                      Utils().mainTag(postBidData.genericCardsDto!.mainTag!),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 9.sp,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                ),
+                SizedBox(
+                  width: 5.w,
+                ),
+                Icon(Icons.list,
+                    color: !postBidData.genericCardsDto!.showCharts
+                        ? ThemeColor.red
+                        : Colors.grey),
+                Switch(
+                  value: postBidData.genericCardsDto!.showCharts,
+                  onChanged: (value) async {
+                    if (value == true) {
+                      await provider.getGraphDataForBids(
+                          context, postBidData.genericCardsDto!.id!, index);
+                    }
+                    setState(() {
+                      postBidData.genericCardsDto!.showCharts = value;
+                    });
+                  },
+                  activeColor: ThemeColor.theme_blue,
+                ),
+                Icon(Icons.bar_chart,
+                    color: postBidData.genericCardsDto!.showCharts
+                        ? ThemeColor.red
+                        : Colors.grey),
+                SizedBox(
+                  width: 5.w,
+                ),
+                Text(
+                  "(Average Market Rate)",
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 8.h,
-          ),
-          BaseWidget().headingWithoutDate(
-              postBidData.genericCardsDto!.topicName!,
-              postBidData.genericCardsDto!.content!),
-          SizedBox(
-            height: 8.h,
-          ),
-          BaseWidget().routes(postBidData.genericCardsDto!.source!,
-              postBidData.genericCardsDto!.destination!),
-          SizedBox(
-            height: 8.h,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "(Your quote)",
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(
-                width: 5.w,
-              ),
-              Icon(Icons.list,
-                  color: !postBidData.genericCardsDto!.showCharts
-                      ? ThemeColor.red
-                      : Colors.grey),
-              Switch(
-                value: postBidData.genericCardsDto!.showCharts,
-                onChanged: (value) async {
-                  if (value == true) {
-                    await widget.provider.getGraphDataForBids(
-                        context, postBidData.genericCardsDto!.id!, index);
-                  }
-                  setState(() {
-                    postBidData.genericCardsDto!.showCharts = value;
-                  });
-                },
-                activeColor: ThemeColor.theme_blue,
-              ),
-              Icon(Icons.bar_chart,
-                  color: postBidData.genericCardsDto!.showCharts
-                      ? ThemeColor.red
-                      : Colors.grey),
-              SizedBox(
-                width: 5.w,
-              ),
-              Text(
-                "(Average Market Rate)",
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-          postBidData.genericCardsDto!.showCharts!
-              ? drawGraph(postBidData)
-              : iteams(postBidData, index),
-          SizedBox(
-            height: 8.h,
-          ),
-          BaseWidget().showBidButton((val) async {
-            if (val == 0) {
-              if (postBidData.bidings!.isNotEmpty) {
-                showBootomSheet(context, postBidData.bidings, postBidData);
-              } else {
-                ToastMessage.show(context, "There are no bids to show ");
+              ],
+            ),
+            postBidData.genericCardsDto!.showCharts!
+                ? drawGraph(postBidData)
+                : iteams(postBidData, index, provider),
+            SizedBox(
+              height: 8.h,
+            ),
+            BaseWidget().showBidButton((val) async {
+              if (val == 0) {
+                if (postBidData.bidings!.isNotEmpty) {
+                  showBootomSheet(context, postBidData.bidings, postBidData);
+                } else {
+                  ToastMessage.show(context, "There are no bids to show ");
+                }
               }
-            }
-            if (val == 3) {
-              String description =
-                  "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://tkdost.com/tkd/?id=${postBidData.genericCardsDto!.id}";
-              await Utils().callShareFunction(description);
-            }
-          }, true)
-        ],
+              if (val == 3) {
+                String description =
+                    "${postBidData.genericCardsDto!.mobileNumber.toString()}'Type : ${postBidData.genericCardsDto!.type}, \nSubject : ${postBidData.genericCardsDto!.content}, \nSource : ${postBidData.genericCardsDto!.source}, \nDestination : ${postBidData.genericCardsDto!.destination}, \nLink : https://tkdost.com/tkd/?id=${postBidData.genericCardsDto!.id}";
+                await Utils().callShareFunction(description);
+              }
+            }, true)
+          ],
+        ),
       ),
     );
   }
@@ -273,25 +274,26 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     }
   }
 
-  iteams(PostBidData postBidData, int index) {
+  iteams(PostBidData postBidData, int index, MyBidsProvider provider) {
     if (postBidData.bidings!.isEmpty) {
       return Container();
     } else {
       if (postBidData.bidings!.length == 1) {
-        return itemBid(postBidData.bidings![0], true, index, postBidData);
+        return itemBid(
+            postBidData.bidings![0], true, index, postBidData, provider);
       } else if (postBidData.bidings!.length == 2) {
         List<Widget> list = [
-          itemBid(postBidData.bidings![0], false, index, postBidData),
-          itemBid(postBidData.bidings![1], true, index, postBidData)
+          itemBid(postBidData.bidings![0], false, index, postBidData, provider),
+          itemBid(postBidData.bidings![1], true, index, postBidData, provider)
         ];
         return Column(
           children: list,
         );
       } else {
         List<Widget> list = [
-          itemBid(postBidData.bidings![0], false, index, postBidData),
-          itemBid(postBidData.bidings![1], false, index, postBidData),
-          itemBid(postBidData.bidings![2], true, index, postBidData)
+          itemBid(postBidData.bidings![0], false, index, postBidData, provider),
+          itemBid(postBidData.bidings![1], false, index, postBidData, provider),
+          itemBid(postBidData.bidings![2], true, index, postBidData, provider)
         ];
         return Column(
           children: list,
@@ -300,7 +302,8 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     }
   }
 
-  Widget itemBid(Bidings bidings, bool isLast, int index, PostBidData postBidData) {
+  Widget itemBid(Bidings bidings, bool isLast, int index,
+      PostBidData postBidData, MyBidsProvider provider) {
     return Container(
       width: 311.w,
       padding: const EdgeInsets.all(8),
@@ -381,112 +384,194 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       // Accepted Quote details and actions
-                      if (bidings.isAccepted == 1)
-                        ...[
-                          SizedBox(height: 4.h),
-                          Text(
-                            "Quote Accepted",
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 12.sp,
-                              fontFamily: AppConstant.FONTFAMILY,
-                              fontWeight: FontWeight.w400,
-                            ),
+                      if (bidings.isAccepted == 1) ...[
+                        SizedBox(height: 4.h),
+                        Text(
+                          "Quote Accepted",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 12.sp,
+                            fontFamily: AppConstant.FONTFAMILY,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                "Vehicle Number : ",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Vehicle Number : ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
                               ),
-                              Text(
-                                bidings.vehicleNumber ?? '',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Driver Number : ",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                bidings.driverContact ?? "",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12.sp,
-                                  fontFamily: AppConstant.FONTFAMILY,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                          ActionChip(
-                            avatar: const Icon(Icons.location_on_outlined, size: 18, color: Colors.white),
-                            label: const Text(
-                              "Track",
-                              style: TextStyle(color: Colors.white, fontSize: 12),
                             ),
-                            backgroundColor: Colors.green,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5)), // 🔹 No rounded corners
+                            Text(
+                              bidings.vehicleNumber ?? '',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                            onPressed: () async {
-                              final startCoords = await GeoHelper.getLatLngFromCity(postBidData.genericCardsDto?.source ?? "");
-                              final endCoords = await GeoHelper.getLatLngFromCity(postBidData.genericCardsDto?.destination ?? "");
-
-                              if (startCoords != null && endCoords != null) {
-                                LatLng startLatLong = LatLng(startCoords['lat']!, startCoords['lng']!);
-                                LatLng endLatLong = LatLng(endCoords['lat']!, endCoords['lng']!);
-                                print("${startLatLong}${endLatLong}");
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => VehicleTrackingWithTwoPolylines(
-                                      startLocation: startLatLong,
-                                      endLocation: endLatLong,
-                                      vehicleId: bidings.vehicleNumber ?? '',
-                                      driverNumber: bidings.driverContact ?? '',
-                                      postId:postBidData.genericCardsDto!.id
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Driver Number : ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              bidings.driverContact ?? "",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 12.sp,
+                                fontFamily: AppConstant.FONTFAMILY,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        postBidData.genericCardsDto?.isCompleted == 1
+                            ? const SizedBox.shrink()
+                            : ((bidings.driverContact != null &&
+                                        bidings.driverContact!.isNotEmpty) ||
+                                    (bidings.driverContact != null &&
+                                        bidings.driverContact == ""))
+                                ? ActionChip(
+                                    avatar: const Icon(
+                                      Icons.location_on_outlined,
+                                      size: 18,
+                                      color: Colors.white,
                                     ),
-                                  ),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Failed to get location from city")),
-                                );
-                              }
-                            },
-                          )
+                                    label: Text(
+                                      postBidData.genericCardsDto!
+                                                  .ispostOwnerVerifiedForTrack ==
+                                              0
+                                          ? "Track Driver"
+                                          : "Track Ride",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.green,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                    ),
+                                    onPressed: () async {
+                                      bool verifying = postBidData
+                                              .genericCardsDto!
+                                              .ispostOwnerVerifiedForTrack !=
+                                          0;
 
+                                      if (verifying) {
+                                        final startCoords =
+                                            await GeoHelper.getLatLngFromCity(
+                                                postBidData.genericCardsDto
+                                                        ?.source ??
+                                                    "");
+                                        final endCoords =
+                                            await GeoHelper.getLatLngFromCity(
+                                                postBidData.genericCardsDto
+                                                        ?.destination ??
+                                                    "");
 
-                        ]
-                      else if (postBidData.genericCardsDto?.isOpenForBid == 1)
+                                        if (startCoords != null &&
+                                            endCoords != null) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  VehicleTrackingWithTwoPolylines(
+                                                startLocation: LatLng(
+                                                    startCoords['lat']!,
+                                                    startCoords['lng']!),
+                                                endLocation: LatLng(
+                                                    endCoords['lat']!,
+                                                    endCoords['lng']!),
+                                                vehicleId:
+                                                    bidings.vehicleNumber ?? '',
+                                                driverNumber:
+                                                    bidings.driverContact ?? '',
+                                                postId: postBidData
+                                                    .genericCardsDto?.id,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (dialogCtx) {
+                                            return AlertDialog(
+                                              title: const Text(
+                                                  "Send OTP To Verify Driver"),
+                                              content: const Text(
+                                                  "Send OTP for driver verification."),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: const Text("Cancel"),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () async {
+                                                    final success = await widget
+                                                        .provider
+                                                        .isUserDeleted(
+                                                      bidings.driverContact ??
+                                                          "",
+                                                      context,
+                                                      postBidData
+                                                          .genericCardsDto!.id!,
+                                                      true,
+                                                    );
+
+                                                    if (success) {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    } else {
+                                                      ToastMessage.show(
+                                                        context,
+                                                        "Failed to send OTP",
+                                                      );
+                                                    }
+                                                  },
+                                                  child: const Text("Send OTP"),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+                                    },
+                                  )
+                                : const SizedBox.shrink()
+                      ] else if (postBidData.genericCardsDto?.isOpenForBid == 1)
                         Button(
                           width: 100,
                           height: 35,
                           title: 'Accept quote',
                           onClick: () {
-                            if (["Full load required", "Part load required"].contains(postBidData.genericCardsDto?.mainTag)) {
-                              showAcceptQuoteDialog(context, postBidData, bidings);
+                            if ([
+                              "Full load required",
+                              "Part load required"
+                            ].contains(postBidData.genericCardsDto?.mainTag)) {
+                              showAcceptQuoteDialog(
+                                  context, postBidData, bidings, provider);
                             } else {
-                              widget.provider.acceptBidSaveForm(context, postBidData, bidings, '', '');
+                              provider.acceptBidSaveForm(
+                                  context, postBidData, bidings, '', '');
                             }
                           },
                           textStyle: TextStyle(
@@ -509,14 +594,16 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
             height: 38.h,
             decoration: ShapeDecoration(
               color: Colors.white.withOpacity(0.08),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100)),
             ),
             child: Center(
               child: InkWell(
                 onTap: () async {
                   User use = await LocalSharePreferences().getLoginData();
                   if (use.content?.first.isPaid == 0) {
-                    Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+                    Navigator.pushNamed(
+                        context, AppRoutes.registration_plan_details);
                   } else {
                     Utils().callFunction("${bidings.bidings?.mobileNumber}");
                   }
@@ -539,10 +626,8 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
     );
   }
 
-
-
-  Future<void> showAcceptQuoteDialog(
-      BuildContext context, PostBidData postBidData, Bidings bidings) async {
+  Future<void> showAcceptQuoteDialog(BuildContext context,
+      PostBidData postBidData, Bidings bidings, MyBidsProvider provider) async {
     final _formKey = GlobalKey<FormState>();
     final TextEditingController _driverNumberController =
         TextEditingController();

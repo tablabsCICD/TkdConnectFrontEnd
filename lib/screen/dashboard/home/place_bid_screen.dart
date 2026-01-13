@@ -126,7 +126,13 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
 
               ),
               SizedBox(height: 8.h,),
-              SizedBox(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "\u{20B9}", controller: controller,keybordType: TextInputType.number,
+              SizedBox(height:49.w,
+                  child: EditText(
+                    width: 300.w,
+                    height: 42.w,
+                    hint: "\u{20B9}",
+                    controller: controller,
+                    keybordType: TextInputType.number,
                 onChange: (val){
                 if(val==0){
                   buttonEnable=false;
@@ -149,19 +155,10 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                   fontWeight: FontWeight.w400,
                   height: 0,
                 ),
-
               ),
               SizedBox(height: 8.h,),
               SizedBox(height:49.w,child: EditText(width: 300.w,height: 42.w, hint: "Quote reason", controller: reasonController,keybordType: TextInputType.text,
                 onChange: (val){
-                 /* if(val==0){
-                    buttonEnable=false;
-                  }else{
-                    buttonEnable=true;
-                  }
-
-                  callSetState();*/
-
 
                 },)),
               const SizedBox(height: 8,),
@@ -174,13 +171,10 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
                   fontWeight: FontWeight.w400,
                   height: 0,
                 ),
-
               ),
-
             ],
           ),
         ),
-        
       ),
       bottomNavigationBar: Padding(padding: const EdgeInsets.all(20),child: Button(width: 327.w, height: 49.h, title: S().submit, textStyle: TextStyle(
         color: Colors.white,

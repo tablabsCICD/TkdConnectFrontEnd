@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:tkd_connect/utils/utils.dart';
 import '../../constant/images.dart';
 import '../../model/response/transport_directory_search.dart';
 import '../../route/app_routes.dart';
+import '../../utils/colors.dart';
 import '../../widgets/card/base_widgets.dart';
 
 class SearchUserScreen extends StatefulWidget {
@@ -127,6 +129,26 @@ class _SearchUserState extends State<SearchUserScreen> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
+                          ),
+                          RatingBar.builder(
+                            itemSize: 10,
+                            initialRating: user.ratings == null || user.ratings==0.0
+                                ? 0.0
+                                : user.ratings!,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: const EdgeInsets.symmetric(
+                                horizontal: 1.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: ThemeColor.red,
+                              size: 5,
+                            ),
+                            onRatingUpdate: (rating) {
+                              print(rating);
+                            },
                           ),
                         ],
                       ),

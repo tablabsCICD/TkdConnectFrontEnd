@@ -24,9 +24,9 @@ class MyBidsBaseScreen extends StatefulWidget {
 class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => MyBidsProvider("Ideal"),
-      builder: (context, child) => _buildPage(context),
+    return ChangeNotifierProvider<MyBidsProvider>(
+      create: (_) => MyBidsProvider("Ideal")..getReceviedBids(context,false), // Initial fetch
+      child: Builder(builder: (context) => _buildPage(context)),
     );
   }
 
@@ -36,20 +36,13 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
         builder: (context, provider, child) {
           return Column(
             children: [
-          top_bar(context),
-          //dropDwon(),
+              topBar(context),
              Container(
              transform: Matrix4.translationValues(0.0, -25.0.h, 0.0),
              child: popUpmenu((p0) => (){
           }, context)),
-          Visibility(
-           visible: provider.isMyPlacedBids,
-            child: Flexible(
-              child: PlacedBidScreen(
-                provider: provider,
-              ),
-            ),
-          ),
+              _toggleBox(),
+
 
           Visibility(
             visible: !provider.isMyPlacedBids,
@@ -60,7 +53,14 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
             ),
           ),
 
-
+              Visibility(
+                visible: provider.isMyPlacedBids,
+                child: Flexible(
+                  child: PlacedBidScreen(
+                    provider: provider,
+                  ),
+                ),
+              ),
 
             ],
           );
@@ -71,13 +71,13 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
 
 
 
-  top_bar(BuildContext context) {
-    return Consumer<MyBidsProvider>(
-      builder: (context, provider, child) {
-        return Container(
+  Widget topBar(BuildContext context) {
+    return Stack(
+      children: [
+        // ⬆ Red Background Header
+        Container(
           width: MediaQuery.of(context).size.width,
-          height: 145.h,
-          //padding: const EdgeInsets.only(bottom: 16),
+          height: 120.h,
           decoration: const ShapeDecoration(
             color: Color(0xFFC3262C),
             shape: RoundedRectangleBorder(
@@ -88,136 +88,96 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
             ),
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.h,),
-              SizedBox(height: 0.h,child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: IconButton(onPressed: (){Navigator.of(context).pop();},icon: Icon(Icons.arrow_back_ios,color: Colors.white,),),
-              ),),
-              SizedBox(
-                width: double.infinity,
-                height: 92.h,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+              SizedBox(height: 45.h),
+              _appBarRow(context),
 
-                  SizedBox(height: 20.h,),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: InkWell(
+            ],
+          ),
+        ),
 
-                              onTap:() {
-                                provider.changeTab();
-                              },
-                              child: Container(
-                                height: 32.h,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: ShapeDecoration(
-                                  color: const Color(0x332C363F),
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(color: Color(0xCCC3262C)),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        height: double.infinity,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 12.h),
-                                        decoration: ShapeDecoration(
-                                          color: provider.isMyPlacedBids?ThemeColor.theme_blue:Colors.white,
-                                          shape: const RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                color: Color(0x332C363F)),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              S().quotesYouPlaced,
-                                              style: TextStyle(
-                                                color:provider.isMyPlacedBids?Colors.white:ThemeColor.theme_blue,
-                                                fontSize: 12,
-                                                fontFamily: AppConstant.FONTFAMILY,
-                                                fontWeight: provider.isMyPlacedBids?FontWeight.w600:FontWeight.w400,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: InkWell(
-                                        onTap: (){
-                                          provider.changeTab();
 
-                                        },
-                                        child: Container(
-                                          height: double.infinity,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 12.h),
-                                          decoration: ShapeDecoration(
-                                            color: provider.isMyPlacedBids?Colors.white:ThemeColor.theme_blue,
-                                            shape: const RoundedRectangleBorder(
-                                              side: BorderSide(
-                                                  color: Color(0x332C363F)),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                S().quotesYouReceived,
-                                                style: TextStyle(
-                                                  color:provider.isMyPlacedBids? ThemeColor.theme_blue:Colors.white,
-                                                  fontSize: 12,
-                                                  fontFamily: AppConstant.FONTFAMILY,
-                                                  fontWeight:provider.isMyPlacedBids? FontWeight.w400:FontWeight.w600,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+      ],
+    );
+  }
+
+  Widget _appBarRow(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => Navigator.pop(context),
+            child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          ),
+          SizedBox(width: 16.w),
+          Text(
+            "My Quotes",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _toggleBox() {
+    return Consumer<MyBidsProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          height: 48.h,
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+
+              // ▢ Quotes You Received
+              ChoiceChip(
+                backgroundColor: Colors.transparent,
+                selectedColor: ThemeColor.theme_blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  side: BorderSide(color: ThemeColor.theme_blue),
                 ),
+                label: Text(
+                  S().quotesYouReceived,
+                  style: TextStyle(
+                    color: !provider.isMyPlacedBids
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                selected: !provider.isMyPlacedBids,
+                onSelected: (_) => provider.changeTab(),
+              ),
+
+              // ▢ Quotes You Placed
+              ChoiceChip(
+                backgroundColor: Colors.transparent,
+                selectedColor: ThemeColor.theme_blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  side: BorderSide(color: ThemeColor.theme_blue),
+                ),
+                label: Text(
+                  S().quotesYouPlaced,
+                  style: TextStyle(
+                    color: provider.isMyPlacedBids
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                selected: provider.isMyPlacedBids,
+                onSelected: (_) => provider.changeTab(),
               ),
             ],
           ),
@@ -225,6 +185,8 @@ class _MyBidsBaseScreenState extends State<MyBidsBaseScreen> {
       },
     );
   }
+
+
 
   dropDwon() {
     return Consumer<MyBidsProvider>(

@@ -219,7 +219,7 @@ class BulkUploadLoad extends StatelessWidget {
 
 
           }),
-          AppConstant.USERTYPE==AppConstant.TRANSPOTER || AppConstant.AGENT==AppConstant.USERTYPE || AppConstant.MANUFACTURE==AppConstant.USERTYPE ?   tabItem(!provider.isLoad,S().vehicle,(){
+          AppConstant.USERTYPE==AppConstant.USER_TRANSPORTER || AppConstant.USER_AGENT==AppConstant.USERTYPE || AppConstant.USER_MANUFACTURER==AppConstant.USERTYPE ?   tabItem(!provider.isLoad,S().vehicle,(){
 
             provider.isLoad=false;
             provider.changeTab();

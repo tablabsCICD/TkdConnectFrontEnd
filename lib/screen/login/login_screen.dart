@@ -13,6 +13,8 @@ import '../../generated/l10n.dart';
 import '../../provider/login_provider.dart';
 import '../../utils/utils.dart';
 import '../../widgets/editText_mobile.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -31,6 +33,18 @@ class _LoginScreen extends State<LoginScreen> {
       create: (BuildContext context) => LoginProvider("Ideal"),
       builder: (context, child) => _buildPage(context),
     );
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAppHash();
+  }
+  Future<void> getAppHash() async {
+    final signature = await SmsAutoFill().getAppSignature;
+    print("✅ YOUR APP HASH: $signature");
   }
 
   _buildPage(context) {
@@ -246,7 +260,4 @@ class _LoginScreen extends State<LoginScreen> {
       ),
     );
   }
-
-
-
 }

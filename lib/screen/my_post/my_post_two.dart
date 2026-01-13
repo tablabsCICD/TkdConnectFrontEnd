@@ -97,7 +97,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
             children: [
 
               Visibility(
-                visible:postBidData.genericCardsDto!.isOpenForBid==1?false:true,
+                visible:postBidData.genericCardsDto!.isCompleted==1?true:false,
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Container(
@@ -127,7 +127,7 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                   ),
                 ),
               ),
-              postBidData.genericCardsDto!.isOpenForBid==1?SizedBox.shrink():SizedBox(height: 20,),
+              postBidData.genericCardsDto!.isCompleted==0?SizedBox.shrink():SizedBox(height: 20,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -601,34 +601,32 @@ class _MyPostStateTwo extends State<MyPostScreenTwo> {
                 SizedBox(height: 16),
                 Form(
                   key: _formKey,
-                  child: Expanded( // Use Expanded to handle overflow
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          labelText("Vehicle Number"),
-                          SizedBox(height: 8),
-                          EditTextError(
-                            validate: true,
-                            width: 335.w,
-                            height: 52.h,
-                            hint: "Vehicle Number",
-                            controller: _vehicleNumberController,
-                            onChange: (val) {},
-                          ),
-                          SizedBox(height: 12),
-                          labelText("Driver Number"),
-                          SizedBox(height: 8),
-                          EditTextError(
-                            validate: true,
-                            width: 335.w,
-                            height: 52.h,
-                            keybordType: TextInputType.number,
-                            hint: "Driver Contact Number",
-                            controller: _driverNumberController,
-                            onChange: (val) {},
-                          ),
-                        ],
-                      ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        labelText("Vehicle Number"),
+                        SizedBox(height: 8),
+                        EditTextError(
+                          validate: true,
+                          width: 335.w,
+                          height: 52.h,
+                          hint: "Vehicle Number",
+                          controller: _vehicleNumberController,
+                          onChange: (val) {},
+                        ),
+                        SizedBox(height: 12),
+                        labelText("Driver Number"),
+                        SizedBox(height: 8),
+                        EditTextError(
+                          validate: true,
+                          width: 335.w,
+                          height: 52.h,
+                          keybordType: TextInputType.number,
+                          hint: "Driver Contact Number",
+                          controller: _driverNumberController,
+                          onChange: (val) {},
+                        ),
+                      ],
                     ),
                   ),
                 ),

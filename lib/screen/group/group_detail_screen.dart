@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,9 @@ import 'package:tkd_connect/provider/group/group_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
 
+import '../../widgets/common_app_bar.dart';
+ // <<< ADDED
+
 class GroupInfo extends StatefulWidget {
   GroupData groupData;
   GroupInfo(this.groupData, {super.key});
@@ -21,75 +25,70 @@ class GroupInfo extends StatefulWidget {
 class _GroupInfoState extends State<GroupInfo> {
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) =>
-          GroupProvider(widget.groupData.id!,context),
+          GroupProvider(widget.groupData.id!, context),
       builder: (context, child) => _buildPage(context),
-    ); }
+    );
+  }
 
   _buildPage(BuildContext context) {
-    return SafeArea(
-      child:  Scaffold(
-            backgroundColor: ThemeColor.baground,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BaseWidget().appBar(context, "Group Details"),
-                const SizedBox(height: 10,),
-                groupName(),
-                const SizedBox(height: 30,),
-                particepent(),
-                const SizedBox(height: 20,),
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: selectedUserList(),),
-              ],
+    return Scaffold(
+      backgroundColor: ThemeColor.baground,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+
+          CommonAppBar(
+            title: "Group Details",
+            isTitle: true,
+            isBack: true,
+            isSearchBar: false,
+            isFilter: false,
+            onBackTap: () => Navigator.pop(context),
+          ),
+
+          const SizedBox(height: 10),
+          groupName(),
+          const SizedBox(height: 30),
+          particepent(),
+          const SizedBox(height: 20),
+
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: selectedUserList(),
             ),
-
-
-          )
-
+          ),
+        ],
+      ),
     );
-
   }
 
   bool buttonEnable = false;
+
   groupName() {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(widget.groupData.date!);
-    String formattedDate = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    DateTime dateTime =
+    DateTime.fromMillisecondsSinceEpoch(widget.groupData.date!);
+    String formattedDate =
+        "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 15,right: 20),
+          padding: const EdgeInsets.only(left: 15, right: 20),
           child: ClipOval(
-            child: Material(
-              color: Colors.grey, // Button color
-              child: InkWell(
-                splashColor: Colors.grey, // Splash color
-                onTap: () async{
-                 /*await provider.uploadProfileImage(context);
-                  setState(() {
-                  });*/
-                },
-                child: BaseWidget().getImageclip(widget.groupData.imageUrl!,
-                    height: 40.h, width: 40.w),
-              ),
+            child: BaseWidget().getImageclip(
+              widget.groupData.imageUrl!,
+              height: 40.h,
+              width: 40.w,
             ),
           ),
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -101,29 +100,21 @@ class _GroupInfoState extends State<GroupInfo> {
                     fontSize: 18.sp,
                     fontFamily: GoogleFonts.poppins().fontFamily,
                     fontWeight: FontWeight.w700,
-                    height: 0,
-
                   ),
-
                 ),
-                SizedBox(width: 4.w,),
-                // Visibility(visible: groupData.isPaid !=0?true:false,child: SvgPicture.asset(Images.verified,height: 12.h,width: 12.w,))
-
               ],
             ),
-            Container(
-              child: Text(
-                formattedDate,
-                style: TextStyle(
-                  color: const Color(0x99001E49),
-                  fontSize: 14.sp,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  fontWeight: FontWeight.w400,
-                ),
+            Text(
+              formattedDate,
+              style: TextStyle(
+                color: const Color(0x99001E49),
+                fontSize: 14.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -132,100 +123,141 @@ class _GroupInfoState extends State<GroupInfo> {
     return Container(
       height: 40,
       color: Colors.black12,
-      child: Center(child: Text("Members in group",style: TextStyle(fontSize: 14.sp,
-        fontFamily: AppConstant.FONTFAMILY,
-        fontWeight: FontWeight.w600,))),
+      child: Center(
+        child: Text(
+          "Members in group",
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontFamily: AppConstant.FONTFAMILY,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
     );
   }
 
-
-
-  selectedUserList(){
+  selectedUserList() {
     return Consumer<GroupProvider>(
-        builder: (context, provider, child) {
-      return ListView.builder(
-        // controller: _scrollController,
+      builder: (context, provider, child) {
+        return ListView.builder(
           shrinkWrap: true,
           itemCount: provider.memberList.length,
+
           itemBuilder: (context, index) {
-            return InkWell(onTap: () {}, child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: <Widget>[
-                          const Icon(
-                            Icons.account_circle,
-                            size: 30.0,
-                          ),
-                          const SizedBox(width: 10,),
-                          Text(
-                              provider.memberList[index].displayName!,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontFamily: AppConstant.FONTFAMILY,
-                                fontWeight: FontWeight.w600,
-                              ))
-                        ],
-                      ),
-                      InkWell(
-                        onTap: (){
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Remove Member From Group',style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.sp,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
-                                  fontWeight: FontWeight.w600,
-                                ),),
-                                content: Text('Are you sure you want to remove member from group?',style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                  fontFamily: GoogleFonts.poppins().fontFamily,
-                                  fontWeight: FontWeight.w400,
-                                ),),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(); // Close the dialog
-                                    },
-                                    child: Text('Cancel',style: TextStyle(color: ThemeColor.theme_blue, fontSize: 12.sp,
-                                      fontFamily: GoogleFonts.poppins().fontFamily,
-                                      fontWeight: FontWeight.w600,),),
+            return InkWell(
+              onTap: () {},
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+
+                        Row(
+                          children: [
+                            const Icon(Icons.account_circle, size: 30),
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  provider.memberList[index].displayName!,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: AppConstant.FONTFAMILY,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      provider.removeMemberFromGroup(provider.memberList[index].id!, index);
-                                      Navigator.of(context).pop(); // Close the dialog
-                                    },
-                                    child: Text(
-                                      'Delete',
-                                      style: TextStyle(color: Colors.red, fontSize: 12.sp,
-                                        fontFamily: GoogleFonts.poppins().fontFamily,
-                                        fontWeight: FontWeight.w600,),
+                                ),
+                                Text(
+                                  provider.memberList[index].contact.toString(),
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontFamily: AppConstant.FONTFAMILY,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  provider.memberList[index].location!,
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontFamily: AppConstant.FONTFAMILY,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return AlertDialog(
+                                  title: Text(
+                                    'Remove Member From Group',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontFamily: GoogleFonts.poppins().fontFamily,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: SvgPicture.asset(Images.delete)
-                      )
-                    ],
+                                  content: Text(
+                                    'Are you sure you want to remove this member?',
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontFamily: GoogleFonts.poppins().fontFamily,
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(ctx),
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          color: ThemeColor.theme_blue,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        provider.removeMemberFromGroup(
+                                          provider.memberList[index].id!,
+                                          index,
+                                        );
+                                        Navigator.pop(ctx);
+                                      },
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: SvgPicture.asset(Images.delete),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const Divider()
-              ],
-            ));
-          });
-    });
+
+                  const Divider(),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
-
-
 }

@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "allIncident": MessageLookupByLibrary.simpleMessage("બધી ઘટનાઓ"),
         "allNews": MessageLookupByLibrary.simpleMessage("બધા સમાચાર"),
         "allRoutes": MessageLookupByLibrary.simpleMessage("બધા માર્ગો"),
+        "allRoutesRequirement":
+            MessageLookupByLibrary.simpleMessage("બધા રૂટની આવશ્યકતાઓ"),
         "allUsers": MessageLookupByLibrary.simpleMessage("બધા વપરાશકર્તાઓ"),
         "already_have_account":
             MessageLookupByLibrary.simpleMessage("પહેલેથી જ ખાતું છે?"),
@@ -131,7 +133,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstName": MessageLookupByLibrary.simpleMessage("પ્રથમ નામ"),
         "from": MessageLookupByLibrary.simpleMessage("માંથી"),
         "fromCity": MessageLookupByLibrary.simpleMessage("શહેરમાંથી"),
+        "fullLoadRequired":
+            MessageLookupByLibrary.simpleMessage("પૂર્ણ લોડ જરૂરી"),
+        "fullVehicleRequired":
+            MessageLookupByLibrary.simpleMessage("પૂર્ણ વાહન જરૂરી"),
         "general": MessageLookupByLibrary.simpleMessage("સામાન્ય"),
+        "generalPost": MessageLookupByLibrary.simpleMessage("સામાન્ય પોસ્ટ"),
         "getVerified": MessageLookupByLibrary.simpleMessage("ચકાસણી કરો"),
         "group": MessageLookupByLibrary.simpleMessage("જૂથ"),
         "helpSupport": MessageLookupByLibrary.simpleMessage("સહાય અને સમર્થન"),
@@ -142,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("મારી પાસે વાહન છે"),
         "iWantVehicle":
             MessageLookupByLibrary.simpleMessage("મને વાહન જોઈએ છે"),
+        "importantNotice":
+            MessageLookupByLibrary.simpleMessage("મહત્વપૂર્ણ સૂચના"),
         "insurance": MessageLookupByLibrary.simpleMessage("વીમા"),
         "introOneDescription": MessageLookupByLibrary.simpleMessage(
             "હેલો! અમે તમારા લોજિસ્ટિક્સ અનુભવને વધારવા માટે અહીં છીએ. અમને તમારી લોજિસ્ટિક્સ સહાયતા બનવા દો અને તમારી વ્યવસાયિક જરૂરિયાતો એકીકૃત રીતે પૂર્ણ થશે."),
@@ -185,19 +194,31 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("ના"),
         "noRecordFound":
             MessageLookupByLibrary.simpleMessage("કોઈ રેકોર્ડ મળ્યો નથી"),
+        "noticeMsg": MessageLookupByLibrary.simpleMessage(
+            "ટ્રક લોડ કરતા પહેલા અને mParivahan વેબસાઇટ પર RTO દસ્તાવેજોની ચકાસણી કર્યા વિના કોઈ પણ આગોતરું ચૂકવણી ન કરો."),
         "notifications": MessageLookupByLibrary.simpleMessage("સૂચના"),
         "off": MessageLookupByLibrary.simpleMessage("બંધ"),
         "operatingRoutes":
             MessageLookupByLibrary.simpleMessage("ઓપરેટિંગ માર્ગો"),
         "packersAndMovers":
             MessageLookupByLibrary.simpleMessage("પેકર્સ અને મૂવર્સ"),
+        "partLoadRequired":
+            MessageLookupByLibrary.simpleMessage("આંશિક લોડ જરૂરી"),
+        "partVehicleRequired":
+            MessageLookupByLibrary.simpleMessage("આંશિક વાહન જરૂરી"),
         "paymentType": MessageLookupByLibrary.simpleMessage("ચુકવણીનો પ્રકાર"),
         "personalDetails":
             MessageLookupByLibrary.simpleMessage("વ્યક્તિગત વિગતો"),
         "personalInfo":
             MessageLookupByLibrary.simpleMessage("વ્યક્તિગત માહિતી"),
+        "pleaseFillAllInformation":
+            MessageLookupByLibrary.simpleMessage("કૃપા કરીને તમામ માહિતી ભરો"),
         "pleaseSelectTopic":
             MessageLookupByLibrary.simpleMessage("કૃપા કરીને વિષય પસંદ કરો"),
+        "pleaseTryAgain":
+            MessageLookupByLibrary.simpleMessage("કૃપા કરીને ફરી પ્રયાસ કરો"),
+        "pleaseUpdateYourPackage": MessageLookupByLibrary.simpleMessage(
+            "કૃપા કરીને તમારું પેકેજ અપડેટ કરો"),
         "post": MessageLookupByLibrary.simpleMessage("પોસ્ટ"),
         "postAJob": MessageLookupByLibrary.simpleMessage("જોબ પોસ્ટ કરો"),
         "postLoad": MessageLookupByLibrary.simpleMessage("પોસ્ટ લોડ"),
@@ -227,6 +248,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "salary": MessageLookupByLibrary.simpleMessage("પગાર"),
         "sales": MessageLookupByLibrary.simpleMessage("વેચાણ"),
         "saveChange": MessageLookupByLibrary.simpleMessage("ફેરફારો સાચવો"),
+        "saveMsg": MessageLookupByLibrary.simpleMessage(
+            "શું તમે ખરેખર આ આવશ્યકતા પોસ્ટ કરવા માંગો છો?"),
         "searchNews": MessageLookupByLibrary.simpleMessage("સમાચાર શોધો"),
         "searchPlace": MessageLookupByLibrary.simpleMessage("સ્થળ શોધો"),
         "searchUsersCompanies":
@@ -234,11 +257,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_here": MessageLookupByLibrary.simpleMessage("અહીં શોધો"),
         "selectOne": MessageLookupByLibrary.simpleMessage("એક પસંદ કરો"),
         "sell": MessageLookupByLibrary.simpleMessage("વેચવું"),
+        "sellBuyPost": MessageLookupByLibrary.simpleMessage("ખરીદ-વેચાણ પોસ્ટ"),
         "share": MessageLookupByLibrary.simpleMessage("શેર કરો"),
         "shareapp": MessageLookupByLibrary.simpleMessage(
             "એપ્લિકેશન શેર કરો અને આશ્ચર્યજનક ભેટ મેળવો"),
         "showAllQuotes":
             MessageLookupByLibrary.simpleMessage("બધા ક્વોટ બતાવો"),
+        "showPostTo": MessageLookupByLibrary.simpleMessage("પોસ્ટ બતાવો"),
         "showPostto": MessageLookupByLibrary.simpleMessage("ને પોસ્ટ બતાવો"),
         "signIn": MessageLookupByLibrary.simpleMessage("સાઇન ઇન"),
         "specialInstruction": MessageLookupByLibrary.simpleMessage("ખાસ સૂચના"),
@@ -264,6 +289,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "vehicleSize": MessageLookupByLibrary.simpleMessage("વાહનનું કદ"),
         "verifiedUsers":
             MessageLookupByLibrary.simpleMessage("ચકાસાયેલ વપરાશકર્તાઓ"),
+        "verifyTracking":
+            MessageLookupByLibrary.simpleMessage("ટ્રેકિંગ ચકાસો"),
         "viewProfile": MessageLookupByLibrary.simpleMessage("પ્રોફાઇલ જુઓ"),
         "website": MessageLookupByLibrary.simpleMessage("વેબસાઇટ"),
         "withdrawQuotes":

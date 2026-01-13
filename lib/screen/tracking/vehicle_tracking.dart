@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,6 +12,9 @@ import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/tracking_response.dart';
 import '../../utils/colors.dart';
+import 'dart:typed_data';
+
+
 
 class VehicleTrackingWithTwoPolylines extends StatefulWidget {
   final LatLng startLocation;
@@ -36,20 +42,38 @@ class _VehicleTrackingWithTwoPolylinesState
   GoogleMapController? _mapController;
   final Set<Polyline> _polylines = {};
   final Set<Marker> _markers = {};
-  final List<LatLng> _coveredPath = [];
+   List<LatLng> _coveredPath = [];
   Timer? _timer;
+  BitmapDescriptor? _truckIcon;
 
   @override
   void initState() {
     super.initState();
     _addPlannedRoute();
     _addMarkers();
-
-   /* // fetch vehicle location every 5 seconds
-    _timer = Timer.periodic(const Duration(seconds: 5), (_) {
+    _loadTruckIcon();
+    // fetch vehicle location every 5 seconds
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) {
       _fetchVehicleLocation();
-    });*/
+    });
   }
+
+  Future<void> _loadTruckIcon() async {
+    final ByteData data = await rootBundle.load('assets/images/truck.png');
+    final codec = await instantiateImageCodec(
+      data.buffer.asUint8List(),
+      targetWidth: 120, // 👈 increase width here
+      targetHeight: 120, // 👈 and height here
+    );
+    final FrameInfo fi = await codec.getNextFrame();
+    final Uint8List resizedData =
+    (await fi.image.toByteData(format: ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+
+    _truckIcon = BitmapDescriptor.fromBytes(resizedData);
+  }
+
 
   @override
   void dispose() {
@@ -208,7 +232,7 @@ class _VehicleTrackingWithTwoPolylinesState
     ]);
   }
 
-/*  /// 2️⃣ Fetch live vehicle location periodically
+  /// 2️⃣ Fetch live vehicle location periodically
   Future<void> _fetchVehicleLocation() async {
     String myUrl = ApiConstant.GET_LATLNG(widget.postId);
     debugPrint("Fetching vehicle location: $myUrl");
@@ -220,15 +244,17 @@ class _VehicleTrackingWithTwoPolylinesState
         final trackingResponse = TrackingResponse.fromJson(json);
 
         if (trackingResponse.data != null && trackingResponse.data!.isNotEmpty) {
-          final lastPoint = trackingResponse.data!.last;
-          final double lat =
-              double.tryParse(lastPoint.latitude.toString()) ?? 0.0;
-          final double lng =
-              double.tryParse(lastPoint.longitude.toString()) ?? 0.0;
+          _coveredPath = trackingResponse.data!
+              .map((e) => LatLng(
+              double.parse(e.latitude.toString()),
+              double.parse(e.longitude.toString())))
+              .toList();
 
-          if (lat != 0.0 && lng != 0.0) {
-            _updateVehicleLocation(LatLng(lat, lng));
-          }
+          // Last known position
+          final lastPoint = _coveredPath.last;
+          // Update map with full path and vehicle
+          _updateVehicleLocation(lastPoint);
+
         } else {
           debugPrint("⚠️ Empty data in tracking API");
         }
@@ -241,40 +267,90 @@ class _VehicleTrackingWithTwoPolylinesState
   }
 
   /// Update live path
+  /// Update vehicle marker and route on map
+  /// Smooth vehicle animation like Ola/Uber
   void _updateVehicleLocation(LatLng newPos) {
-    setState(() {
-      _coveredPath.add(newPos);
+    if (_truckIcon == null) return;
 
-      // Remove old live polyline
-      _polylines.removeWhere(
-              (p) => p.polylineId == const PolylineId("coveredPath"));
+    final oldMarker = _markers.firstWhere(
+          (m) => m.markerId == const MarkerId("vehicle"),
+      orElse: () => Marker(
+        markerId: const MarkerId("vehicle"),
+        position: newPos,
+        icon: _truckIcon!,
+      ),
+    );
 
-      // Add new one
-      _polylines.add(Polyline(
-        polylineId: const PolylineId("coveredPath"),
-        color: Colors.blue,
-        width: 5,
-        points: List.from(_coveredPath),
-      ));
+    final oldPos = oldMarker.position;
 
-      // Vehicle marker
-      _markers.removeWhere((m) => m.markerId == const MarkerId("vehicle"));
-      _markers.add(
-        Marker(
-          markerId: const MarkerId("vehicle"),
-          position: newPos,
-          infoWindow: const InfoWindow(title: "Vehicle"),
-          icon:
-          BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        ),
+    // Calculate bearing (rotation)
+    double bearing = _getBearing(oldPos, newPos);
+
+    // Animate movement
+    const duration = Duration(seconds: 2);
+    const fps = 30;
+    int steps = duration.inMilliseconds ~/ (1000 ~/ fps);
+    int i = 0;
+    Timer.periodic(Duration(milliseconds: (1000 ~/ fps)), (timer) {
+      i++;
+      double t = i / steps;
+      double lat = oldPos.latitude + (newPos.latitude - oldPos.latitude) * t;
+      double lng = oldPos.longitude + (newPos.longitude - oldPos.longitude) * t;
+      LatLng intermediatePos = LatLng(lat, lng);
+
+      setState(() {
+        _markers.removeWhere((m) => m.markerId == const MarkerId("vehicle"));
+        _markers.add(
+          Marker(
+            markerId: const MarkerId("vehicle"),
+            position: intermediatePos,
+            icon: _truckIcon!,
+            rotation: bearing,
+            anchor: const Offset(0.5, 0.5),
+          ),
+        );
+      });
+
+      // Move camera smoothly
+      _mapController?.animateCamera(
+        CameraUpdate.newLatLng(intermediatePos),
       );
 
-      // Move camera to vehicle
-      _mapController?.animateCamera(CameraUpdate.newLatLng(newPos));
+      if (i >= steps) {
+        timer.cancel();
+        // Once animation completes, update path line
+        setState(() {
+          _polylines.removeWhere(
+                  (p) => p.polylineId == const PolylineId("coveredPath"));
+          _polylines.add(
+            Polyline(
+              polylineId: const PolylineId("coveredPath"),
+              color: Colors.blue,
+              width: 5,
+              points: List.from(_coveredPath),
+            ),
+          );
+        });
+      }
     });
+  }
 
-    debugPrint("✅ Updated vehicle at ${newPos.latitude}, ${newPos.longitude}");
-  }*/
+  /// Bearing calculation (direction angle between two points)
+  double _getBearing(LatLng start, LatLng end) {
+    double lat1 = start.latitude * (pi / 180.0);
+    double lon1 = start.longitude * (pi / 180.0);
+    double lat2 = end.latitude * (pi / 180.0);
+    double lon2 = end.longitude * (pi / 180.0);
+
+    double dLon = lon2 - lon1;
+    double y = sin(dLon) * cos(lat2);
+    double x = cos(lat1) * sin(lat2) -
+        sin(lat1) * cos(lat2) * cos(dLon);
+    double brng = atan2(y, x);
+    brng = brng * (180.0 / pi);
+    return (brng + 360.0) % 360.0;
+  }
+
 
   @override
   Widget build(BuildContext context) {

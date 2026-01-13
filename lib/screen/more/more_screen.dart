@@ -160,12 +160,24 @@ class _MoreScreen extends State<MoreScreen> {
                     item(S().jobs, () {
                       Navigator.pushNamed(context, AppRoutes.job);
                     }, FontWeight.w600),
-                    AppConstant.USERTYPE == AppConstant.TRANSPOTER ||
-                            AppConstant.USERTYPE == AppConstant.AGENT
-                        ? item(S().buySell, () {
+                   /* AppConstant.USERTYPE == AppConstant.TRANSPOTER ||
+                            AppConstant.USERTYPE == AppConstant.AGENT || AppConstant.USERTYPE == AppConstant.TRUCKDRIVER
+                        ? */item(S().buySell, () {
                             Navigator.pushNamed(context, AppRoutes.buysell);
-                          }, FontWeight.w600)
+                          }, FontWeight.w600),
+                        //: const SizedBox(),
+
+                         Utils().getTransport(AppConstant.USERTYPE)==AppConstant.BUSINESS_TYPE_DRIVER
+                        ? item(S().verifyTracking, () {
+                      Navigator.pushNamed(context, AppRoutes.verifyTrack);
+                    }, FontWeight.w600)
                         : const SizedBox(),
+
+                   /* item(S().general, () {
+                      //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
+                      Navigator.pushNamed(context, AppRoutes.generalPost,
+                          arguments: user.content!.first.id);
+                    }, FontWeight.w600),*/
                     item(S().group, () {
                       //RazorPayClass(context).initalPay(100,9503334903,"parag7kumbhar@gmail.com");
                       Navigator.pushNamed(context, AppRoutes.group,

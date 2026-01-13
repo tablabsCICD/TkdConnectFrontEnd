@@ -176,15 +176,15 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.h),
                     decoration: provider.tabPost
-                        ? const ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
+                        ? ShapeDecoration(
+                            color: ThemeColor.theme_blue,
+                            shape: const RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
                             ),
                           )
-                        : const ShapeDecoration(
-                            color: Color(0x19001E49),
-                            shape: RoundedRectangleBorder(
+                        : ShapeDecoration(
+                            color: ThemeColor.white,
+                            shape: const RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
                             ),
                           ),
@@ -197,14 +197,14 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                           S().posts,
                           style: provider.tabPost
                               ? TextStyle(
-                                  color: const Color(0xCC001E49),
+                                  color: ThemeColor.white,
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 )
                               : TextStyle(
-                                  color: const Color(0xCC001E49),
+                                  color: ThemeColor.theme_blue,
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w600,
@@ -225,14 +225,14 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                     height: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 12.h),
                     decoration: !provider.tabPost
-                        ? const ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
+                        ? ShapeDecoration(
+                            color: ThemeColor.theme_blue,
+                            shape: const RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
                             ),
                           )
-                        : const ShapeDecoration(
-                            color: Color(0x19001E49),
+                        :  ShapeDecoration(
+                            color: ThemeColor.white,
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Color(0x332C363F)),
                             ),
@@ -246,14 +246,14 @@ class _SearchResultScreen extends State<SearchResultScreen> {
                           S().users,
                           style: !provider.tabPost
                               ? TextStyle(
-                                  color: const Color(0xCC001E49),
+                                  color: ThemeColor.white,
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w400,
                                   height: 0,
                                 )
                               : TextStyle(
-                                  color: const Color(0xCC001E49),
+                                  color: ThemeColor.theme_blue,
                                   fontSize: 12.sp,
                                   fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontWeight: FontWeight.w600,
