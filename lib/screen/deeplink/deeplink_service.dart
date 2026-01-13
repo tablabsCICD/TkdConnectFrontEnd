@@ -1,118 +1,74 @@
 import 'dart:async';
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../../constant/api_constant.dart';
-import '../../constant/app_constant.dart';
-import '../../generated/l10n.dart';
-import '../../model/api_response.dart';
-import '../../model/response/version.dart';
-import '../../network/api_helper.dart';
-import '../../utils/sharepreferences.dart';
-import 'deeplinkscreen.dart';
-import 'package:tkd_connect/route/app_routes.dart';
-import '../../main.dart'; // ✅ navigatorKey import
+import 'package:app_links/app_links.dart';
 
 class DeepLinkService {
   final AppLinks _appLinks = AppLinks();
+  StreamSubscription<Uri>? _sub;
+  String? _lastHandledLink;
 
-  void init(BuildContext context) {
-    // ✅ Cold start
-    _appLinks.getInitialLink().then((uri) {
-      if (uri != null) {
-        _handleLink(uri);
+  void init(BuildContext context) async {
+    try {
+      // 1️⃣ App opened from terminated state
+      final Uri? initialUri = await _appLinks.getInitialLink();
+      if (initialUri != null) {
+        _handleUri(context, initialUri);
       }
-    });
 
-    // ✅ Foreground & background
-    _appLinks.uriLinkStream.listen((uri) {
-      if (uri != null) {
-        _handleLink(uri);
-      }
-    });
-  }
-
-  Future<void> _handleLink(Uri uri) async {
-    String? id = uri.queryParameters['id'];
-
-    LocalSharePreferences prefs = LocalSharePreferences();
-    bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-
-    if (id != null && id.isNotEmpty) {
-      if (isLoggedIn) {
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-            builder: (_) => DeepLink(id: id, type: '',),
-          ),
-        );
-      } else {
-        fetchVersionAndNavigate();
-      }
-    } else {
-      fetchVersionAndNavigate();
+      // 2️⃣ App opened from background / foreground
+      _sub = _appLinks.uriLinkStream.listen((Uri uri) {
+        _handleUri(context, uri);
+      });
+    } catch (e) {
+      debugPrint("Deep link init error: $e");
     }
   }
 
-  // ✅ FIXED
-  Future<void> fetchVersionAndNavigate() async {
-    ApiResponse response = await ApiHelper()
-        .apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
+  void _handleUri(BuildContext context, Uri uri) {
+    debugPrint("🔗 Deep Link Received: $uri");
 
-    Version version = Version.fromJson(response.response);
+    final String linkKey = uri.toString();
 
-    if (version.version == AppConstant.APP_VERSION) {
-      navigateToNextScreen();
-    } else {
-      showUpdateDialog();
+    // 🚫 Prevent duplicate opens
+    if (_lastHandledLink == linkKey) {
+      debugPrint("Duplicate deep link ignored: $linkKey");
+      return;
     }
-  }
+    _lastHandledLink = linkKey;
 
-  // ✅ FIXED CONTEXT ISSUE
-  void navigateToNextScreen() async {
-    LocalSharePreferences prefs = LocalSharePreferences();
+    List<String> segments = uri.pathSegments;
 
-    bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-    String langCode = await prefs.getLangCode();
+    /*
+      Expected:
+      https://tkdost.com/tkd/post/123
+      https://tkdost.com/tkd/quote/456
 
-    if (isLoggedIn) {
-      S.load(Locale(langCode));
-      navigatorKey.currentState
-          ?.pushReplacementNamed(AppRoutes.home);
-    } else {
-      if (langCode == "no") {
-        navigatorKey.currentState
-            ?.pushReplacementNamed(AppRoutes.select_lang);
-      } else {
-        S.load(Locale(langCode));
-        navigatorKey.currentState?.pushReplacementNamed(
-            AppRoutes.registration_personal_details);
+      segments[0] = tkd
+      segments[1] = post / quote
+      segments[2] = id
+    */
+
+    if (segments.length >= 3 && segments[0] == "tkd") {
+      String type = segments[1];
+      String id = segments[2];
+
+      if (type == "post") {
+        Navigator.pushNamed(context, "/post", arguments: id);
+        return;
       }
+
+      if (type == "quote") {
+        Navigator.pushNamed(context, "/quote", arguments: id);
+        return;
+      }
+
+      debugPrint("Unknown deep link type: $type");
+    } else {
+      debugPrint("Invalid deep link format: $uri");
     }
   }
 
-  // ✅ FIXED CONTEXT ISSUE
-  void showUpdateDialog() {
-    showDialog(
-      context: navigatorKey.currentContext!,
-      barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('TKD Connect Update'),
-        content: const Text(
-            'A new version of TKD Connect is available. Please update the app to continue.'),
-        actions: [
-          TextButton(
-            onPressed: redirectToPlayStore,
-            child: const Text('Update'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void redirectToPlayStore() {
-    final Uri url =
-    Uri.parse('https://play.google.com/store/apps/details?id=com.pdk.tkd');
-    launchUrl(url, mode: LaunchMode.externalApplication);
+  void dispose() {
+    _sub?.cancel();
   }
 }

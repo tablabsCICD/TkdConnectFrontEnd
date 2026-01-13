@@ -14,9 +14,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'generated/l10n.dart';
 import 'package:flutter/services.dart';
 
-// ✅ Deep linking package
-import 'package:app_links/app_links.dart';
-
 class EntryScreen extends StatefulWidget {
   const EntryScreen({super.key});
 
@@ -32,10 +29,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   final String permUnknown = "unknown";
   final String permProvisional = "provisional";
 
-  // ✅ Deep linking variables
-  final AppLinks _appLinks = AppLinks();
-  StreamSubscription<Uri>? _linkSub;
-  String? _lastHandledLink;
+
 
 
   @override
@@ -48,14 +42,11 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       // showProminentDisclosureDialog();
       requestAllPermissions();
 
-      // ✅ Initialize deep linking
-      initializeDeepLinks();
     });
   }
 
   @override
   void dispose() {
-    _linkSub?.cancel(); // ✅ Stop listening to deep links
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -237,16 +228,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
     if (isLoggedIn) {
       S.load(Locale(langCode));
-
-      // 🔁 Check if there is a pending deep link
-      Map<String, String>? pendingLink = await getPendingDeepLink();
-
-      if (pendingLink != null) {
-        await clearPendingDeepLink();
-        openDeepLinkScreen(pendingLink["type"]!, pendingLink["id"]!);
-        return;
-      }
-
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
       if (langCode == "no") {
@@ -299,79 +280,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       setState(() {
         permissionStatusFuture = checkNotificationPermissionStatus();
       });
-    }
-  }
-
-  // =================== DEEP LINK HANDLING ===================
-
-  Future<void> initializeDeepLinks() async {
-    try {
-      // 1️⃣ App opened from terminated state
-      final Uri? initialUri = await _appLinks.getInitialLink();
-      if (initialUri != null) {
-        handleDeepLink(initialUri);
-      }
-
-      // 2️⃣ App opened from background
-      _linkSub = _appLinks.uriLinkStream.listen((Uri uri) {
-        handleDeepLink(uri);
-      });
-    } catch (e) {
-      debugPrint("Deep link error: $e");
-    }
-  }
-
-  Future<void> savePendingDeepLink(String type, String id) async {
-    LocalSharePreferences prefs = LocalSharePreferences();
-    await prefs.setString("pending_deeplink_type", type);
-    await prefs.setString("pending_deeplink_id", id);
-  }
-
-  Future<Map<String, String>?> getPendingDeepLink() async {
-    LocalSharePreferences prefs = LocalSharePreferences();
-    String? type = await prefs.getString("pending_deeplink_type");
-    String? id = await prefs.getString("pending_deeplink_id");
-
-    if (type != null && id != null) {
-      return {"type": type, "id": id};
-    }
-    return null;
-  }
-
-  Future<void> clearPendingDeepLink() async {
-    LocalSharePreferences prefs = LocalSharePreferences();
-    await prefs.remove("pending_deeplink_type");
-    await prefs.remove("pending_deeplink_id");
-  }
-
-  void handleDeepLink(Uri uri) async {
-    debugPrint("deep link : $uri");
-    final String linkKey = uri.toString();
-
-    // 🚫 Prevent duplicate opens
-    if (_lastHandledLink == linkKey) {
-      debugPrint("Duplicate deep link ignored: $linkKey");
-      return;
-    }
-    _lastHandledLink = linkKey;
-
-    List<String> segments = uri.pathSegments;
-
-    if (segments.length >= 3 && segments[0] == "tkd") {
-      String type = segments[1];
-      String id = segments[2];
-
-      LocalSharePreferences prefs = LocalSharePreferences();
-      bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-
-      if (isLoggedIn) {
-        openDeepLinkScreen(type, id);
-      } else {
-        await savePendingDeepLink(type, id);
-        fetchVersionAndNavigate();
-      }
-    } else {
-      fetchVersionAndNavigate();
     }
   }
 

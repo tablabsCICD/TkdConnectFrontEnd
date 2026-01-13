@@ -56,28 +56,17 @@ xmlns:tools="http://schemas.android.com/tools">
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
-          <!--  <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                &lt;!&ndash; Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST &ndash;&gt;
-                <data
-                    android:scheme="https"
-                    android:host="paragkumbhar.com"
-                    />
-            </intent-filter>-->
 
             <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:scheme="https"
                     android:host="tkdost.com"
-                    android:pathPattern="/tkd.*"/>
+                    android:pathPrefix="/tkd" />
             </intent-filter>
 
         </activity>

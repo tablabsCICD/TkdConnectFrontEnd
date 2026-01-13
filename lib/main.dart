@@ -190,6 +190,9 @@ class _MyApp extends State<MyApp> {
       //getAppHash();
       sendNotification();
       super.initState();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _deepLinkService.init(context);
+      });
   }
 
 
