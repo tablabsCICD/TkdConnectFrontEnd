@@ -28,6 +28,7 @@ import '../../../model/response/userdata.dart';
 import '../../../network/api_helper.dart';
 import '../../../provider/dashboard/delete_interface.dart';
 import '../../../provider/dashboard/home_screen_provider.dart';
+import '../../../provider/location/location_provider.dart';
 import '../../../route/app_routes.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/toast.dart';
@@ -94,7 +95,7 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                 child: GridView.builder(
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: ScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 12,
@@ -114,9 +115,10 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                 child: SizedBox(
                   height: 70.h,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.push(context, MaterialPageRoute(builder: (_) => ReportIncidentList()));
-                      },
+
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       backgroundColor: Colors.white,
@@ -151,25 +153,7 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
                   ),
                 ),
               ),
-            /*  SizedBox(
-                height: 12.h,
-              ),
-              Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: _pullRefresh,
-                    child: ListView.builder(
-                        controller: provider.scrollController,
-                        itemCount: provider.truckLoadTypeList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            transform: Matrix4.translationValues(
-                                0.0,-30.0.h, 0.0),
-                            margin:
-                            EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
-                            child: setCardToList(index, provider,provider.truckLoadTypeList[index]),
-                          );
-                        }),
-                  )),*/
+
             ],
           ),
         );}

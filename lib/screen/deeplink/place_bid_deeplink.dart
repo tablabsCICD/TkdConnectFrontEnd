@@ -26,7 +26,7 @@ import '../../../widgets/textview.dart';
 import '../../model/response/AllCard.dart';
 import '../../widgets/card/base_widgets.dart';
 class PlaceDeepBidScreen extends StatefulWidget{
-  final Content truckLoad;
+  final TruckLoad truckLoad;
 
   const PlaceDeepBidScreen({super.key, required this.truckLoad});
   @override

@@ -481,6 +481,17 @@ class PostLoadProvider extends BaseProvider {
     'Other'
   ];
 
+  List<String> specialInstructionList = [
+    'Double Delivery',
+    'Express Delivery',
+    'Loading From Multiple Places',
+    'Unloading At Multiple Place ',
+    "Give Rate Inclusive Of Loading Hamali",
+    'Give Rate Inclusive Of Unloading Hamali',
+    'Others',
+    'None'
+  ];
+
   List<String> paymentList = ['Immediate', 'Fortnight', 'Weekly', 'Others'];
 
   String selectedRequriment = "Select Load";
@@ -489,6 +500,7 @@ class PostLoadProvider extends BaseProvider {
   String selectedGroup = "Select Group";
   String sourceCity = "Select Source City";
   String destinationCity = "Select Destination City";
+  String selectedSI = "Select Special Instruction";
 
   TextEditingController vehicleSizeController = TextEditingController();
   TextEditingController loadWeightController = TextEditingController();
@@ -802,6 +814,12 @@ class PostLoadProvider extends BaseProvider {
 
   selectedCargoType(int index) {
     selectedCargo = cargoList[index];
+    enble();
+    notifyListeners();
+  }
+
+  selectedSpecialInstruction(int index) {
+    selectedSI = specialInstructionList[index];
     enble();
     notifyListeners();
   }

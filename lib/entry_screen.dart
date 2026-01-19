@@ -8,6 +8,7 @@ import 'package:tkd_connect/model/api_response.dart';
 import 'package:tkd_connect/model/response/version.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
+import 'package:tkd_connect/screen/deeplink/deeplink_service.dart';
 import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,6 +31,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   final String permProvisional = "provisional";
 
 
+  final DeepLinkService _deepLinkService = DeepLinkService();
 
 
   @override
@@ -174,43 +176,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  /* Future<void> initializeUniLinks() async {
-    try {
-      String? initialLink = await getInitialLink();
-
-      if (initialLink != null) {
-        Uri uri = Uri.parse(initialLink);
-
-        // ✅ Extract ID from query param
-        String? id = uri.queryParameters['id'];
-
-        LocalSharePreferences prefs = LocalSharePreferences();
-        bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-
-        if (id != null && id.isNotEmpty) {
-          if (isLoggedIn) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => DeepLink(id: id),
-              ),
-            );
-          } else {
-            fetchVersionAndNavigate();
-          }
-        } else {
-          // ✅ Safety fallback if ID is missing
-          fetchVersionAndNavigate();
-        }
-      } else {
-        fetchVersionAndNavigate();
-      }
-    } on PlatformException {
-      fetchVersionAndNavigate();
-    }
-  }
-*/
-
   Future<void> fetchVersionAndNavigate() async {
     ApiResponse response = await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
     Version version = Version.fromJson(response.response);
@@ -228,7 +193,9 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
     if (isLoggedIn) {
       S.load(Locale(langCode));
-      Navigator.pushReplacementNamed(context, AppRoutes.home);
+      if (!_deepLinkService.isDeepLinkActive) {
+        Navigator.pushReplacementNamed(context, "/home");
+      }
     } else {
       if (langCode == "no") {
         Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
@@ -239,16 +206,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     }
   }
 
-  void openDeepLinkScreen(String type, String id) {
-    if (!mounted) return;
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => DeepLink(type: type, id: id),
-      ),
-    );
-  }
 
   void showUpdateDialog() {
     showDialog<String>(
