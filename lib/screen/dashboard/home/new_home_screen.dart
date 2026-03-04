@@ -38,6 +38,8 @@ import '../../../widgets/card/base_widgets.dart';
 import '../../../widgets/card/dashboard_cards.dart';
 import '../../../widgets/textview.dart';
 import '../../app_setting/lang_change.dart';
+import '../../deeplink/deeplinkscreen.dart';
+import '../../deeplink/tracking_otp_screen.dart';
 import 'home_page.dart';
 
 class NewHomeScreen extends StatelessWidget implements DeletePostInf{
@@ -78,83 +80,87 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
             homeScreenProvider=provider;
         return Container(
           color: ThemeColor.baground,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 11.5.w,
-              ),
-              topBar(provider),
-              SizedBox(
-                height: 16.h,
-              ),
-
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16), // No top padding
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: ScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                  ),
-                  itemCount: menuItems.length,
-                  itemBuilder: (context, index) {
-                    final item = menuItems[index];
-                    return _buildMenuCard(context, item);
-                  },
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 11.5.w,
                 ),
-              ),
+                topBar(provider),
+                SizedBox(
+                  height: 16.h,
+                ),
 
-              // Report Incident Button
-             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 21,vertical: 15),
-                child: SizedBox(
-                  height: 70.h,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => ReportIncidentList()));
-
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16), // No top padding
+                  child:GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(), // IMPORTANT
+                    padding: EdgeInsets.zero,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                    itemCount: menuItems.length,
+                    itemBuilder: (context, index) {
+                      final item = menuItems[index];
+                      return _buildMenuCard(context, item);
                     },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  ),
+
+                ),
+
+                // Report Incident Button
+               Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 21,vertical: 15),
+                  child: SizedBox(
+                    height: 70.h,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                       Navigator.push(context, MaterialPageRoute(builder: (_) => ReportIncidentList()));
+
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 50),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                Images.new_report_incident,
+                                height: 30.h,
+                                width: 35.w,
+                              ),
+                              SizedBox(width: 10.w,),
+                              Text(
+                                S.of(context).reportIncident,
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            homeScreenProvider.totalLostAmt,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: ThemeColor.red,fontFamily: AppConstant.FONTFAMILY,),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              Images.new_report_incident,
-                              height: 30.h,
-                              width: 35.w,
-                            ),
-                            SizedBox(width: 10.w,),
-                            Text(
-                              S.of(context).reportIncident,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          homeScreenProvider.totalLostAmt,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: AppConstant.FONTFAMILY,),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
-              ),
 
-            ],
+              ],
+            ),
           ),
         );}
       ),
@@ -217,56 +223,6 @@ class NewHomeScreen extends StatelessWidget implements DeletePostInf{
   }
 
 
-  Future<void> _pullRefresh() async {
-    refreshHome();
-  }
-
-
-  listCard() {
-    return Consumer<HomeScreenProvider>(
-      builder: (context, provider, child) {
-        return Expanded(
-          child: ListView.builder(
-              controller: provider.scrollController,
-              itemCount: provider.truckLoadTypeList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin:
-                  EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
-                  child: setCardToList(index, provider,provider.truckLoadTypeList[index]),
-                );
-              }),
-        );
-      },
-    );
-  }
-
-  setCardToList(int index,HomeScreenProvider provider,TruckLoad truckLoad){
-    if(truckLoad.type=="Full Load" || truckLoad.type=="Part Load"){
-
-      if(truckLoad.privatePost ==1){
-        return AllCards().cardLoadPrivateHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this,provider);
-
-      }else{
-        return AllCards().cardLoadHome(index, context, provider.truckLoadTypeList[index], provider.user.content!.first.id!,this,provider);
-
-      }
-
-    }else if(truckLoad.type=="Advertisement"){
-      return AllCards().cardAdv(index, context, provider.truckLoadTypeList[index]);
-    }
-    else if(truckLoad.type=="Buy/Sell"){
-      return AllCards().cardSellBuyPost(index, context, provider.truckLoadTypeList[index]);
-    }
-    else if(truckLoad.type=="Jobs"){
-      return AllCards().cardJobPost(index, context, provider.truckLoadTypeList[index]);
-    }
-    else if(truckLoad.type=="General Post"){
-      return AllCards().generalPost(truckLoad,context);
-    }else{
-      return AllCards().generalPost(truckLoad,context);
-    }
-  }
 
   filterBox() {
     return Consumer<HomeScreenProvider>(

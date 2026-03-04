@@ -61,7 +61,6 @@ class TrackingProvider extends ChangeNotifier with WidgetsBindingObserver {
     _bearings.putIfAbsent(vehicleId, () => 0.0);
 
     // 🔥 Load past route first
-    fetchPastRoute(vehicleId);
 
     notifyListeners();
   }
@@ -88,14 +87,18 @@ class TrackingProvider extends ChangeNotifier with WidgetsBindingObserver {
     // 🔋 Start background service (sending)
     final service = FlutterBackgroundService();
     await service.startService();
-    service.invoke("startTracking", {
+    for (final id in vehicleIds) {
+      service.invoke("startTracking", {
+        "postId": id,
+        "vehicleNumber": vehicleNumber,
+        "driverContact": driverContact,
+        "postOwnerNumber": postOwnerNumber,
+        "quoteOwnerNumber": quoteOwnerNumber,
+      });
+    }
 
-      "postId": vehicleIds.first,
-      "vehicleNumber": vehicleNumber,
-      "driverContact": driverContact,
-      "postOwnerNumber": postOwnerNumber,
-      "quoteOwnerNumber": quoteOwnerNumber,
-    });
+
+
 
     notifyListeners();
   }
@@ -200,55 +203,6 @@ class TrackingProvider extends ChangeNotifier with WidgetsBindingObserver {
   }
 
 
-  // ============================================================
-// 📜 FETCH PAST ROUTE FROM API
-// ============================================================
-  Future<void> fetchPastRoute(String vehicleId) async {
-    final String url =
-        "https://api.tkdost.com/tkd2/api/vehicleTracking/getVehicleTrackingByPostId/newJson/$vehicleId";
-
-    debugPrint("📡 Fetching past route: $url");
-
-    try {
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode != 200) {
-        _setNetworkError(true);
-        debugPrint("❌ Failed to load past route");
-        return;
-      }
-
-      final List<dynamic> data = jsonDecode(response.body);
-      if (data.isEmpty) return;
-
-      _setNetworkError(false);
-
-      // Clear existing route for this vehicle
-      _routes[vehicleId] = [];
-
-      for (final item in data) {
-        final lat = (item['latitude'] as num).toDouble();
-        final lng = (item['longitude'] as num).toDouble();
-        _routes[vehicleId]!.add(LatLng(lat, lng));
-      }
-
-      // Set last point as current location
-      final lastPoint = _routes[vehicleId]!.last;
-      _currentPositions[vehicleId] = lastPoint;
-
-      if (vehicleId == _selectedVehicleId) {
-        currentLocation = lastPoint;
-      }
-
-      notifyListeners();
-      debugPrint("✅ Past route loaded for $vehicleId");
-
-    } catch (e) {
-      _setNetworkError(true);
-      debugPrint("❌ fetchPastRoute error: $e");
-    }
-  }
-
 
   // ============================================================
 // ⏹ STOP ALL TRACKING
@@ -288,6 +242,23 @@ class TrackingProvider extends ChangeNotifier with WidgetsBindingObserver {
     if (value is num) return value.toDouble();
     if (value is String) return double.tryParse(value) ?? 0.0;
     return 0.0;
+  }
+
+  Future<void> stopVehicle(String vehicleId) async {
+    final service = FlutterBackgroundService();
+    service.invoke("stopTracking", {"postId": vehicleId});
+
+    _routes.remove(vehicleId);
+    _currentPositions.remove(vehicleId);
+    _bearings.remove(vehicleId);
+
+    if (_selectedVehicleId == vehicleId) {
+      _selectedVehicleId = null;
+      currentLocation = null;
+      bearing = 0.0;
+    }
+
+    notifyListeners();
   }
 
 }

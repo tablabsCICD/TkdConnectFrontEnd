@@ -348,7 +348,7 @@ class PostLoadProvider extends BaseProvider {
         break;
 
       case VoiceField.instruction:
-        specialInstructionController.text = formattedText;
+        selectedSI = formattedText;
         break;
 
       default:
@@ -504,7 +504,6 @@ class PostLoadProvider extends BaseProvider {
 
   TextEditingController vehicleSizeController = TextEditingController();
   TextEditingController loadWeightController = TextEditingController();
-  TextEditingController specialInstructionController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
@@ -642,12 +641,12 @@ class PostLoadProvider extends BaseProvider {
     postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Have Vehicle"; // I Have Vehicle
 
-    postLoad.instructions = specialInstructionController.text;
+    postLoad.instructions = selectedSI;
     postLoad.loadWeight = loadWeightController.text;
     postLoad.loggedUserName = user.content!.first.userName;
     postLoad.mainTag = selectedRequriment;
     postLoad.os = 'App';
-    postLoad.otherDetails = specialInstructionController.text;
+    postLoad.otherDetails = selectedSI;
     postLoad.source = sourceCity;
     postLoad.partLoad = selectedRequriment == 'Part Load' ? 1 : 0;
     postLoad.privatePost = hideMyID ? 1 : 0;
@@ -704,12 +703,12 @@ class PostLoadProvider extends BaseProvider {
     postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Want Vehicle";
 
-    postLoad.instructions = specialInstructionController.text;
+    postLoad.instructions = selectedSI;
     postLoad.loadWeight = loadWeightController.text;
     postLoad.loggedUserName = user.content!.first.userName;
     postLoad.mainTag = selectedRequriment;
     postLoad.os = 'App';
-    postLoad.otherDetails = specialInstructionController.text;
+    postLoad.otherDetails = selectedSI;
     postLoad.source = sourceCity;
     postLoad.partLoad = selectedRequriment == 'Part Load Vehicle' ? 1 : 0;
     postLoad.privatePost = hideMyID ? 1 : 0;
@@ -764,7 +763,7 @@ class PostLoadProvider extends BaseProvider {
         loadWeightController.text.isNotEmpty &&
         emailIdController.text.isNotEmpty &&
         mobileNumberController.text.isNotEmpty &&
-        specialInstructionController.text.isNotEmpty &&
+        selectedSI.isNotEmpty &&
         checkdropDown(selectedCargo) &&
         checkdropDown(selectedRequriment) &&
         checkdropDown(selectedPayment) &&

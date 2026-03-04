@@ -514,32 +514,38 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                                           barrierDismissible: false,
                                           builder: (dialogCtx) {
                                             return AlertDialog(
-                                              title: const Text(
-                                                  "Send OTP To Verify Driver"),
-                                              content: const Text(
-                                                  "Send OTP for driver verification."),
+                                              title: const Text("Send OTP To Verify Driver"),
+                                              content: const Text("Send OTP for driver verification."),
                                               actions: [
                                                 TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
+                                                  onPressed: () => Navigator.pop(context),
                                                   child: const Text("Cancel"),
                                                 ),
                                                 ElevatedButton(
                                                   onPressed: () async {
-                                                    final success = await widget
-                                                        .provider
-                                                        .isUserDeleted(
-                                                      bidings.driverContact ??
-                                                          "",
+
+                                                    // ✅ ADDED VALIDATION
+                                                    if (bidings.driverContact == null ||
+                                                        bidings.driverContact!.isEmpty ||
+                                                        bidings.vehicleNumber == null ||
+                                                        bidings.vehicleNumber!.isEmpty) {
+                                                      ToastMessage.show(
+                                                        context,
+                                                        "Driver or vehicle information is missing. Please add details first.",
+                                                      );
+                                                      return;
+                                                    }
+                                                    // ✅ END ADDED VALIDATION
+
+                                                    final success = await widget.provider.isUserDeleted(
+                                                      bidings.driverContact ?? "",
                                                       context,
-                                                      postBidData
-                                                          .genericCardsDto!.id!,
+                                                      postBidData.genericCardsDto!.id!,
                                                       true,
                                                     );
 
                                                     if (success) {
-                                                      Navigator.of(context)
-                                                          .pop();
+                                                      Navigator.of(context).pop();
                                                     } else {
                                                       ToastMessage.show(
                                                         context,
@@ -553,6 +559,7 @@ class _RecivedBidScreenState extends State<RecivedBidScreen> {
                                             );
                                           },
                                         );
+
                                       }
                                     },
                                   )

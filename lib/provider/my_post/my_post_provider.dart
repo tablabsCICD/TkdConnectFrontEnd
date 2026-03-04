@@ -114,7 +114,7 @@ class MyPostProvider extends BaseProvider{
       ApiResponse apiResponse = await ApiHelper().apiPutDat(myUrl);
       if (apiResponse.status == 200) {
 
-        await context.read<TrackingProvider>().stopAll();
+        await context.read<TrackingProvider>().stopVehicle(id.toString());
 
         ToastMessage.show(context, "Your Post Completed Successfully");
         getReceviedBids(context);

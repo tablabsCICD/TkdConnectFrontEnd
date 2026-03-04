@@ -1,20 +1,24 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/api_constant.dart';
+import '../../generated/l10n.dart';
 import '../../model/response/AllCard.dart';
 import '../../model/response/driver_verification_response.dart';
 import '../../network/api_helper.dart';
 import '../../provider/location/location_provider.dart';
 import '../../utils/toast.dart';
+import '../../widgets/button.dart';
 
 class TrackingOtpScreen extends StatefulWidget {
   final String postId; // from deep link
-
-  const TrackingOtpScreen({super.key, required this.postId});
+  bool isPostOwner;
+  TrackingOtpScreen({super.key, required this.postId, required this.isPostOwner});
 
   @override
   State<TrackingOtpScreen> createState() => _TrackingOtpScreenState();
@@ -48,11 +52,11 @@ class _TrackingOtpScreenState extends State<TrackingOtpScreen> {
     });
 
     String url = ApiConstant.OTP_TRACKING_VERIFICATION(
-      _selectedType == 1,
+      widget.isPostOwner,
       otp,
       widget.postId,
     );
-
+    print(url);
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -90,7 +94,7 @@ class _TrackingOtpScreenState extends State<TrackingOtpScreen> {
           );
 
           // 🔥 Move to tracking screen
-          Navigator.pushReplacementNamed(context, '/startTracking');
+          Navigator.pushReplacementNamed(context, '/home');
         }
       } else {
         _isError = true;
@@ -107,7 +111,17 @@ class _TrackingOtpScreenState extends State<TrackingOtpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OTP Verification'),
+        title: Text(
+            'OTP Verification',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16.sp,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xFFC3262C),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -121,11 +135,7 @@ class _TrackingOtpScreenState extends State<TrackingOtpScreen> {
               'Enter Tracking OTP',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'OTP is valid for 20 minutes',
-              style: TextStyle(color: Colors.grey),
-            ),
+
             const SizedBox(height: 30),
             TextField(
               controller: _otpController,
@@ -141,16 +151,23 @@ class _TrackingOtpScreenState extends State<TrackingOtpScreen> {
               ),
             ),
             const SizedBox(height: 25),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: _isLoading ? null : _verifyOtp,
-                child: _isLoading
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text('Verify OTP'),
+            Button(
+              width: MediaQuery.of(context).size.width,
+              height: 49.h,
+              title: "Verify OTP",
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                fontWeight: FontWeight.w600,
               ),
+              onClick: () {
+                if (!_isLoading) {
+                  _verifyOtp();
+                }
+              },
             ),
+
           ],
         ),
       ),

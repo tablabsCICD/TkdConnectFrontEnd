@@ -6,13 +6,11 @@ import 'package:tkd_connect/screen/deeplink/tracking_otp_screen.dart';
 import '../../main.dart';
 import 'deeplinkscreen.dart';
 
-
 class DeepLinkService {
   final AppLinks _appLinks = AppLinks();
   StreamSubscription<Uri>? _sub;
   String? _lastHandledLink;
   bool isDeepLinkActive = false;
-
 
   void init() async {
     try {
@@ -35,11 +33,15 @@ class DeepLinkService {
     debugPrint("🔗 Deep Link Received: $uri");
 
     final String linkKey = uri.toString();
-   // if (_lastHandledLink == linkKey) return;
+    // if (_lastHandledLink == linkKey) return;
     _lastHandledLink = linkKey;
 
     List<String> segments = uri.pathSegments;
     String? id = uri.queryParameters['id'];
+
+    // ✅ ADDITION (NO existing logic removed)
+    String? isPostOwnerStr = uri.queryParameters['isPostOwner'];
+    bool isPostOwner = isPostOwnerStr?.toLowerCase() == 'true';
 
     if (segments.length >= 2 && segments[0] == "tkd" && id != null) {
       String type = segments[1];
@@ -61,17 +63,15 @@ class DeepLinkService {
               builder: (_) => DeepLink(id: id, type: 'post'),
             ),
           );
-
           return;
         }
 
         if (type == "quote") {
           nav.pushReplacement(
             MaterialPageRoute(
-              builder: (_) => QuoteDeepLink(id: id, type: 'quote'),
+              builder: (_) => DeepLink(id: id, type: 'quote'),
             ),
           );
-
           return;
         }
 
@@ -79,7 +79,10 @@ class DeepLinkService {
           if (id != null && id.isNotEmpty) {
             nav.pushReplacement(
               MaterialPageRoute(
-                builder: (_) => TrackingOtpScreen(postId: id),
+                builder: (_) => TrackingOtpScreen(
+                  postId: id,
+                  isPostOwner: isPostOwner, // ✅ only added param
+                ),
               ),
             );
           }

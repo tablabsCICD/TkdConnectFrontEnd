@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -71,12 +72,12 @@ class _VehicleTrackingWithTwoPolylinesState
     _addPlannedRoute();
     _addMarkers();
     _loadTruckIcon();
-
+    _fetchVehicleLocation();
     // 🔥 Immediate fetch after UI loads
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+  /*  WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchVehicleLocation();
     });
-
+*/
     _startTrackingTimer();
   }
 
@@ -122,8 +123,8 @@ class _VehicleTrackingWithTwoPolylinesState
     final data = await rootBundle.load('assets/images/truck.png');
     final codec = await instantiateImageCodec(
       data.buffer.asUint8List(),
-      targetWidth: 80,
-      targetHeight: 80,
+      targetWidth: 100,
+      targetHeight: 100,
     );
     final fi = await codec.getNextFrame();
     final bytes =
@@ -201,7 +202,8 @@ class _VehicleTrackingWithTwoPolylinesState
     try {
       final response =
       await http.get(Uri.parse(ApiConstant.GET_LATLNG(widget.postId)));
-
+        print(ApiConstant.GET_LATLNG(widget.postId));
+        print(response.body);
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         final tracking = TrackingResponse.fromJson(json);
@@ -223,6 +225,18 @@ class _VehicleTrackingWithTwoPolylinesState
             }
 
             _lastVehiclePosition = _coveredPath.last;
+
+            // ✅ MOVE CAMERA TO LIVE VEHICLE LOCATION (ONLY FIRST TIME)
+            _mapController?.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: _lastVehiclePosition!,
+                  zoom: 16,
+                  tilt: 45,
+                ),
+              ),
+            );
+
 
             setState(() {
               _polylines.removeWhere(
@@ -292,15 +306,22 @@ class _VehicleTrackingWithTwoPolylinesState
   }
 
 
-  void _handleReachedDestination(LatLng finalPos) {
+  void _handleReachedDestination(LatLng finalPos) async {
     if (_hasReachedDestination) return;
     _hasReachedDestination = true;
 
-    debugPrint("🏁 Destination reached → stop tracking");
+    debugPrint("🏁 Destination reached → stop tracking (FG)");
 
+    // Stop UI timer
     _stopTrackingTimer();
     _isAnimating = false;
     _isFetching = false;
+
+    // 🔥 STOP BACKGROUND TRACKING FOR THIS VEHICLE
+    final service = FlutterBackgroundService();
+    service.invoke("stopTracking", {
+      "postId": widget.postId.toString(),
+    });
 
     setState(() {
       _markers.removeWhere(
@@ -320,6 +341,7 @@ class _VehicleTrackingWithTwoPolylinesState
       const SnackBar(content: Text("Vehicle reached destination 🚩")),
     );
   }
+
 
   // -------------------- ROAD SNAPPING --------------------
 
@@ -512,7 +534,7 @@ class _VehicleTrackingWithTwoPolylinesState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Vehicle Tracking',
+          'Live Vehicle Tracking',
           style: TextStyle(
             color: Colors.white,
             fontSize: 16.sp,

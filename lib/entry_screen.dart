@@ -30,20 +30,23 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   final String permUnknown = "unknown";
   final String permProvisional = "provisional";
 
-
   final DeepLinkService _deepLinkService = DeepLinkService();
 
+  // ---------------- ADDED FLAGS ----------------
+  bool _hasShownDisclosure = false;
+  // ---------------------------------------------
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    // Show prominent disclosure first
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // showProminentDisclosureDialog();
-      requestAllPermissions();
-
+      if (!_hasShownDisclosure) {
+        _hasShownDisclosure = true;
+        showProminentDisclosureDialog(); // 🔥 POLICY REQUIRED
+      }
     });
   }
 
@@ -55,7 +58,6 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Minimal loading UI
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
@@ -71,7 +73,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       builder: (context) {
         return AlertDialog(
           title: const Text(
-            "Location Access Disclosure",
+            "Background Location Access",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: const SingleChildScrollView(
@@ -79,7 +81,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
               "TKD Connect collects location data, including in the background, "
                   "to provide live route tracking between source and destination for accepted quotes. "
                   "This ensures accurate route updates and delivery tracking even when the app is closed "
-                  "or not in active use. The location data is used only for this purpose and is never shared "
+                  "or not in active use.\n\n"
+                  "Location data is used only for tracking and delivery purposes and is never shared "
                   "with third parties.",
               style: TextStyle(fontSize: 15),
             ),
@@ -88,7 +91,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                requestAllPermissions(); // Request permissions after consent
+                requestForegroundLocation(); // 🔥 STEP 1
               },
               child: const Text("Continue"),
             ),
@@ -98,16 +101,60 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  // ------------------- PERMISSION HANDLING -------------------
-  Future<void> requestAllPermissions() async {
-    // Request location permissions (foreground + background)
+  // ------------------- FOREGROUND LOCATION -------------------
+  Future<void> requestForegroundLocation() async {
+    PermissionStatus status =
     await Permission.locationWhenInUse.request();
+
+    if (status.isGranted) {
+      requestBackgroundLocation(); // 🔥 STEP 2
+    } else {
+      openAppSettings();
+    }
+  }
+
+  // ------------------- BACKGROUND LOCATION -------------------
+  Future<void> requestBackgroundLocation() async {
+    PermissionStatus status =
     await Permission.locationAlways.request();
 
-    // Request notification permission (non-sensitive but required for alerts)
+    if (status.isGranted) {
+      requestAllPermissions(); // 🔥 KEEP YOUR EXISTING FLOW
+    } else {
+      showBackgroundPermissionDialog();
+    }
+  }
+
+  void showBackgroundPermissionDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Allow Background Location"),
+          content: const Text(
+            "Please allow 'All the time' location access so we can track deliveries "
+                "in real-time even when the app is closed.",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                openAppSettings();
+              },
+              child: const Text("Open Settings"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // ------------------- YOUR EXISTING CODE (UNCHANGED) -------------------
+  Future<void> requestAllPermissions() async {
+    await Permission.locationWhenInUse.request();
+    await Permission.locationAlways.request();
     await Permission.notification.request();
 
-    // Continue logic after permissions
     String permissionStatus = await checkNotificationPermissionStatus();
     if ([permGranted, permProvisional].contains(permissionStatus)) {
       fetchVersionAndNavigate();
@@ -155,8 +202,10 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
             onPressed: () async {
               await Permission.notification.request();
               Navigator.of(context, rootNavigator: true).pop();
-              String permissionStatus = await checkNotificationPermissionStatus();
-              if ([permGranted, permProvisional].contains(permissionStatus)) {
+              String permissionStatus =
+              await checkNotificationPermissionStatus();
+              if ([permGranted, permProvisional]
+                  .contains(permissionStatus)) {
                 fetchVersionAndNavigate();
               } else {
                 fetchVersionAndNavigate();
@@ -177,7 +226,9 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   }
 
   Future<void> fetchVersionAndNavigate() async {
-    ApiResponse response = await ApiHelper().apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
+    ApiResponse response =
+    await ApiHelper().apiWithoutDilogDecodeGet(
+        ApiConstant.GET_CURRENT_VERSION);
     Version version = Version.fromJson(response.response);
     if (version.version == AppConstant.APP_VERSION) {
       navigateToNextScreen();
@@ -198,14 +249,15 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
       }
     } else {
       if (langCode == "no") {
-        Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
+        Navigator.pushReplacementNamed(
+            context, AppRoutes.select_lang);
       } else {
         S.load(Locale(langCode));
-        Navigator.pushReplacementNamed(context, AppRoutes.registration_personal_details);
+        Navigator.pushReplacementNamed(context,
+            AppRoutes.registration_personal_details);
       }
     }
   }
-
 
   void showUpdateDialog() {
     showDialog<String>(
@@ -227,7 +279,8 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   }
 
   void redirectToPlayStore() {
-    final Uri url = Uri.parse('market://details?id=com.pdk.tkd');
+    final Uri url =
+    Uri.parse('market://details?id=com.pdk.tkd');
     launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
@@ -235,9 +288,9 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       setState(() {
-        permissionStatusFuture = checkNotificationPermissionStatus();
+        permissionStatusFuture =
+            checkNotificationPermissionStatus();
       });
     }
   }
-
 }

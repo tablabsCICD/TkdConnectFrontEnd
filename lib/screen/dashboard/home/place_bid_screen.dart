@@ -248,22 +248,27 @@ class _PlaceBidScreen extends State<PlaceBidScreen> {
     ApiResponse apiResponse=await ApiHelper().postParameter(ApiConstant.PLACED_BID, bidPlace.toJson());
     print(ApiConstant.PLACED_BID);
     print(apiResponse.response);
-    if(apiResponse.status==200){
-        PostUpload postUpload=PostUpload.fromJson(apiResponse.response);
-        if(postUpload.statusCode==401){
-          ToastMessage.show(context, "Please update your package");
-          Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-        }else if(postUpload.statusCode==500){
-          ToastMessage.show(context, postUpload.message.toString());
-          Navigator.pushNamed(context, AppRoutes.registration_plan_details);
-        }else{
-          ToastMessage.show(context, "Quote submitted successfully");
-          Navigator.pop(context);
-        }
-    }else{
-      ToastMessage.show(context, "Please try again");
+    if (apiResponse.status == 200) {
+      PostUpload postUpload =
+      PostUpload.fromJson(apiResponse.response);
+
+      if (postUpload.statusCode == 200) {
+        // ✅ SUCCESS
+        ToastMessage.show(context, "Quote submitted successfully");
+        Navigator.pop(context);
+      } else if (postUpload.statusCode == 401) {
+        // ⚠️ PACKAGE EXPIRED / NOT ACTIVE
+        ToastMessage.show(context, postUpload.message ?? "Please update your package");
+        await Future.delayed(const Duration(milliseconds: 300));
+        Navigator.pushNamed(context, AppRoutes.registration_plan_details);
+      } else {
+        // ❌ ALL OTHER ERRORS
+        ToastMessage.show(context, postUpload.message ?? "Something went wrong");
+      }
+    } else {
+      ToastMessage.show(context, "Something went wrong, please try again");
     }
- }
+  }
 
   callSetState(){
     setState(() {
