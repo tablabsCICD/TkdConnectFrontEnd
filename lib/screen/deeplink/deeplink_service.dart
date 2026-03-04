@@ -7,12 +7,20 @@ import '../../main.dart';
 import 'deeplinkscreen.dart';
 
 class DeepLinkService {
+  DeepLinkService._internal();
+  static final DeepLinkService _instance = DeepLinkService._internal();
+  factory DeepLinkService() => _instance;
+
   final AppLinks _appLinks = AppLinks();
   StreamSubscription<Uri>? _sub;
   String? _lastHandledLink;
+  bool _isInitialized = false;
   bool isDeepLinkActive = false;
 
   void init() async {
+    if (_isInitialized) return;
+    _isInitialized = true;
+
     try {
       // 1️⃣ App opened from terminated state
       final Uri? initialUri = await _appLinks.getInitialLink();
@@ -45,9 +53,12 @@ class DeepLinkService {
 
     if (segments.length >= 2 && segments[0] == "tkd" && id != null) {
       String type = segments[1];
+      if (type == "post" || type == "quote" || type == "tracking") {
+        isDeepLinkActive = true;
+      }
 
       // ⏳ Wait until Navigator is ready
-      Future.delayed(const Duration(milliseconds: 300), () {
+      _navigateWhenReady(() {
         final nav = navigatorKey.currentState;
 
         if (nav == null) {
@@ -56,7 +67,6 @@ class DeepLinkService {
         }
 
         if (type == "post") {
-          isDeepLinkActive = true;
           print("Navigation to post");
           nav.pushReplacement(
             MaterialPageRoute(
@@ -96,7 +106,26 @@ class DeepLinkService {
     }
   }
 
+  void _navigateWhenReady(VoidCallback action, {int attempt = 0}) {
+    final nav = navigatorKey.currentState;
+    if (nav != null) {
+      action();
+      return;
+    }
+
+    if (attempt >= 10) {
+      debugPrint("❌ Navigator not ready after retries");
+      return;
+    }
+
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => _navigateWhenReady(action, attempt: attempt + 1),
+    );
+  }
+
   void dispose() {
     _sub?.cancel();
+    _isInitialized = false;
   }
 }
