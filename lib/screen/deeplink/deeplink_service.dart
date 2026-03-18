@@ -1,118 +1,131 @@
 import 'dart:async';
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../../constant/api_constant.dart';
-import '../../constant/app_constant.dart';
-import '../../generated/l10n.dart';
-import '../../model/api_response.dart';
-import '../../model/response/version.dart';
-import '../../network/api_helper.dart';
-import '../../utils/sharepreferences.dart';
+import 'package:app_links/app_links.dart';
+import 'package:tkd_connect/screen/deeplink/quote_deep_link.dart';
+import 'package:tkd_connect/screen/deeplink/tracking_otp_screen.dart';
+import '../../main.dart';
 import 'deeplinkscreen.dart';
-import 'package:tkd_connect/route/app_routes.dart';
-import '../../main.dart'; // ✅ navigatorKey import
 
 class DeepLinkService {
+  DeepLinkService._internal();
+  static final DeepLinkService _instance = DeepLinkService._internal();
+  factory DeepLinkService() => _instance;
+
   final AppLinks _appLinks = AppLinks();
+  StreamSubscription<Uri>? _sub;
+  String? _lastHandledLink;
+  bool _isInitialized = false;
+  bool isDeepLinkActive = false;
 
-  void init(BuildContext context) {
-    // ✅ Cold start
-    _appLinks.getInitialLink().then((uri) {
-      if (uri != null) {
-        _handleLink(uri);
-      }
-    });
+  void init() async {
+    if (_isInitialized) return;
+    _isInitialized = true;
 
-    // ✅ Foreground & background
-    _appLinks.uriLinkStream.listen((uri) {
-      if (uri != null) {
-        _handleLink(uri);
+    try {
+      // 1️⃣ App opened from terminated state
+      final Uri? initialUri = await _appLinks.getInitialLink();
+      if (initialUri != null) {
+        _handleUri(initialUri);
       }
-    });
+
+      // 2️⃣ App opened from background / foreground
+      _sub = _appLinks.uriLinkStream.listen((Uri uri) {
+        _handleUri(uri);
+      });
+    } catch (e) {
+      debugPrint("Deep link init error: $e");
+    }
   }
 
-  Future<void> _handleLink(Uri uri) async {
+  void _handleUri(Uri uri) {
+    debugPrint("🔗 Deep Link Received: $uri");
+
+    final String linkKey = uri.toString();
+    // if (_lastHandledLink == linkKey) return;
+    _lastHandledLink = linkKey;
+
+    List<String> segments = uri.pathSegments;
     String? id = uri.queryParameters['id'];
 
-    LocalSharePreferences prefs = LocalSharePreferences();
-    bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
+    // ✅ ADDITION (NO existing logic removed)
+    String? isPostOwnerStr = uri.queryParameters['isPostOwner'];
+    bool isPostOwner = isPostOwnerStr?.toLowerCase() == 'true';
 
-    if (id != null && id.isNotEmpty) {
-      if (isLoggedIn) {
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-            builder: (_) => DeepLink(id: id, type: '',),
-          ),
-        );
-      } else {
-        fetchVersionAndNavigate();
+    if (segments.length >= 2 && segments[0] == "tkd" && id != null) {
+      String type = segments[1];
+      if (type == "post" || type == "quote" || type == "tracking") {
+        isDeepLinkActive = true;
       }
+
+      // ⏳ Wait until Navigator is ready
+      _navigateWhenReady(() {
+        final nav = navigatorKey.currentState;
+
+        if (nav == null) {
+          debugPrint("❌ Navigator not ready yet");
+          return;
+        }
+
+        if (type == "post") {
+          print("Navigation to post");
+          nav.pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => DeepLink(id: id, type: 'post'),
+            ),
+          );
+          return;
+        }
+
+        if (type == "quote") {
+          nav.pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => DeepLink(id: id, type: 'quote'),
+            ),
+          );
+          return;
+        }
+
+        if (type == "tracking") {
+          if (id != null && id.isNotEmpty) {
+            nav.pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => TrackingOtpScreen(
+                  postId: id,
+                  isPostOwner: isPostOwner, // ✅ only added param
+                ),
+              ),
+            );
+          }
+          return;
+        }
+
+        debugPrint("Unknown deep link type: $type");
+      });
     } else {
-      fetchVersionAndNavigate();
+      debugPrint("Invalid deep link format: $uri");
     }
   }
 
-  // ✅ FIXED
-  Future<void> fetchVersionAndNavigate() async {
-    ApiResponse response = await ApiHelper()
-        .apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
-
-    Version version = Version.fromJson(response.response);
-
-    if (version.version == AppConstant.APP_VERSION) {
-      navigateToNextScreen();
-    } else {
-      showUpdateDialog();
+  void _navigateWhenReady(VoidCallback action, {int attempt = 0}) {
+    final nav = navigatorKey.currentState;
+    if (nav != null) {
+      action();
+      return;
     }
-  }
 
-  // ✅ FIXED CONTEXT ISSUE
-  void navigateToNextScreen() async {
-    LocalSharePreferences prefs = LocalSharePreferences();
-
-    bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
-    String langCode = await prefs.getLangCode();
-
-    if (isLoggedIn) {
-      S.load(Locale(langCode));
-      navigatorKey.currentState
-          ?.pushReplacementNamed(AppRoutes.home);
-    } else {
-      if (langCode == "no") {
-        navigatorKey.currentState
-            ?.pushReplacementNamed(AppRoutes.select_lang);
-      } else {
-        S.load(Locale(langCode));
-        navigatorKey.currentState?.pushReplacementNamed(
-            AppRoutes.registration_personal_details);
-      }
+    if (attempt >= 10) {
+      debugPrint("❌ Navigator not ready after retries");
+      return;
     }
-  }
 
-  // ✅ FIXED CONTEXT ISSUE
-  void showUpdateDialog() {
-    showDialog(
-      context: navigatorKey.currentContext!,
-      barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('TKD Connect Update'),
-        content: const Text(
-            'A new version of TKD Connect is available. Please update the app to continue.'),
-        actions: [
-          TextButton(
-            onPressed: redirectToPlayStore,
-            child: const Text('Update'),
-          ),
-        ],
-      ),
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => _navigateWhenReady(action, attempt: attempt + 1),
     );
   }
 
-  void redirectToPlayStore() {
-    final Uri url =
-    Uri.parse('https://play.google.com/store/apps/details?id=com.pdk.tkd');
-    launchUrl(url, mode: LaunchMode.externalApplication);
+  void dispose() {
+    _sub?.cancel();
+    _isInitialized = false;
   }
 }

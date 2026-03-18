@@ -72,6 +72,8 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
                     onBackTap: () => Navigator.pop(context),
                   ),
                   SizedBox(height: 30.h),
+                  _buildLostAmtWidget(provider),
+                  SizedBox(height: 10.h),
                   _buildFilterChips(provider),
                   Expanded(
                     child: provider.allReport.isEmpty
@@ -536,4 +538,72 @@ class _ReportIncidentListState extends State<ReportIncidentList> {
       },
     );
   }
+
+  _buildLostAmtWidget(ReportIncidentProvider provider) {
+    return Container(
+      height: 78,
+      margin: const EdgeInsets.symmetric(horizontal: 16), // horizontal margin
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.red.withOpacity(0.08),
+              shape: BoxShape.circle,
+            ),
+            child: SvgPicture.asset(
+              Images.new_report_incident,
+              height: 22,
+              width: 22,
+
+            ),
+          ),
+
+          const SizedBox(width: 14),
+
+          Expanded(
+            child: Text(
+             "Total Amount",
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+
+          Container(
+            padding:
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.red.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              provider.totalLostAmt,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 }

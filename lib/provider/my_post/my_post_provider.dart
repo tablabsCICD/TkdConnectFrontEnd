@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:tkd_connect/model/response/AllCard.dart';
 import 'package:tkd_connect/provider/base_provider.dart';
 
@@ -18,6 +20,7 @@ import '../../network/api_helper.dart';
 import '../../route/app_routes.dart';
 import '../../utils/sharepreferences.dart';
 import '../../utils/toast.dart';
+import '../location/location_provider.dart';
 
 class MyPostProvider extends BaseProvider{
   MyPostProvider(BuildContext context):super(""){
@@ -104,19 +107,27 @@ class MyPostProvider extends BaseProvider{
   }
 
 
-  completePost(int id,BuildContext context)async{
-    String myUrl = '${ApiConstant.COMPLETE_POST}$id';
+  completePost(int id, BuildContext context) async {
+    try {
+      String myUrl = '${ApiConstant.COMPLETE_POST}$id';
 
-    ApiResponse apiResponse= await ApiHelper().apiPutDat(myUrl);
-    if(apiResponse.status==200){
-      // truckLoadTypeList .removeAt(index);
-      ToastMessage.show(context, "Your Post Completed Successfully");
-      getReceviedBids(context);
-      notifyListeners();
-    }else{
-      ToastMessage.show(context, "Please try again");
+      ApiResponse apiResponse = await ApiHelper().apiPutDat(myUrl);
+      if (apiResponse.status == 200) {
+
+        await context.read<TrackingProvider>().stopVehicle(id.toString());
+
+        ToastMessage.show(context, "Your Post Completed Successfully");
+        getReceviedBids(context);
+        notifyListeners();
+      } else {
+        ToastMessage.show(context, "Please try again");
+      }
+    } catch (e) {
+      ToastMessage.show(context, "Something went wrong");
+      debugPrint("❌ completePost error: $e");
     }
   }
+
 
   // reSendPost(BuildContext context,PostBidData postBidData) async {
   //   addedMemberIdList = await getTruckLoadById(postBidData.genericCardsDto!.id!);

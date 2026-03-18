@@ -38,6 +38,18 @@ class EditPostLoadProvider extends BaseProvider {
     'Weekly',
     'Others'
   ];
+
+  List<String> specialInstructionList = [
+    'Double Delivery',
+    'Express Delivery',
+    'Loading From Multiple Places',
+    'Unloading At Multiple Place ',
+    "Give Rate Inclusive Of Loading Hamali",
+    'Give Rate Inclusive Of Unloading Hamali',
+    'Others',
+    'None'
+  ];
+
   List<String> images = [];
   String selectedRequriment = "Select One";
   String selectedCargo = "Select One";
@@ -45,10 +57,10 @@ class EditPostLoadProvider extends BaseProvider {
   String selectedGroup = "Select Group";
   String sourceCity = "Select One";
   String destinationCity = "Select One";
+  String selectedSI = "Select One";
 
   TextEditingController vehicleSizeController = TextEditingController();
   TextEditingController loadWeightController = TextEditingController();
-  TextEditingController specialInstructionController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
@@ -178,7 +190,7 @@ class EditPostLoadProvider extends BaseProvider {
     TruckLoad truckLoad = result.content.first;
     vehicleSizeController.text = truckLoad.vehicleSize!;
 
-    specialInstructionController.text = truckLoad.otherDetails!;
+    selectedSI = truckLoad.otherDetails!;
     selectedGroup = 'Select any one';
 
     selectedPayment = truckLoad.typeOfPayment!;
@@ -217,12 +229,12 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.dnd = dnd ? 1 : 0;
     postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Have Vehicle";
-    postLoad.instructions = specialInstructionController.text;
+    postLoad.instructions = selectedSI;
     postLoad.loadWeight = loadWeightController.text;
     postLoad.loggedUserName = user.content!.first.userName;
     postLoad.mainTag = selectedRequriment;
     postLoad.os = 'App';
-    postLoad.otherDetails = specialInstructionController.text;
+    postLoad.otherDetails = selectedSI;
     postLoad.source = sourceCity;
     postLoad.partLoad = selectedRequriment == 'Part Load' ? 1 : 0;
     postLoad.privatePost = hideMyID ? 1 : 0;
@@ -265,12 +277,12 @@ class EditPostLoadProvider extends BaseProvider {
     postLoad.emailId = user.content!.first.emailId!;
     postLoad.fullLoadChoice = "I Want Vehicle";
     postLoad.id = postBidData.genericCardsDto!.id;
-    postLoad.instructions = specialInstructionController.text;
+    postLoad.instructions = selectedSI;
     postLoad.loadWeight = loadWeightController.text;
     postLoad.loggedUserName = user.content!.first.userName;
     postLoad.mainTag = selectedRequriment;
     postLoad.os = 'App';
-    postLoad.otherDetails = specialInstructionController.text;
+    postLoad.otherDetails = selectedSI;
     postLoad.source = sourceCity;
     postLoad.partLoad = selectedRequriment == 'Part Load Vehicle' ? 1 : 0;
     postLoad.privatePost = hideMyID ? 1 : 0;
@@ -306,7 +318,7 @@ class EditPostLoadProvider extends BaseProvider {
         loadWeightController.text.isNotEmpty &&
         emailIdController.text.isNotEmpty &&
         mobileNumberController.text.isNotEmpty &&
-        specialInstructionController.text.isNotEmpty &&
+        selectedSI.isNotEmpty &&
         checkdropDown(selectedCargo) &&
         checkdropDown(selectedRequriment) &&
         checkdropDown(selectedPayment) &&
@@ -347,6 +359,12 @@ class EditPostLoadProvider extends BaseProvider {
 
   selectedPaymentType(int index) {
     selectedPayment = paymentList[index];
+    enble();
+    notifyListeners();
+  }
+
+  selectedSIType(int index) {
+    selectedSI = specialInstructionList[index];
     enble();
     notifyListeners();
   }

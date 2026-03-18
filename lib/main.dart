@@ -98,25 +98,32 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
 
-  await FlutterBackgroundService().configure(
-    androidConfiguration: AndroidConfiguration(
-      onStart: onStart,
-      isForegroundMode: true,
-      autoStart: false,
-      initialNotificationTitle: "Vehicle Tracking",
-      initialNotificationContent: "Tracking running in background",
-    ),
-    iosConfiguration: IosConfiguration(
-      autoStart: false,
-      onForeground: onStart,
-      onBackground: (service) => true,
-    ),
-  );
-
+  await initializeService();
   runApp(MyApp(prefs: prefs));
 }
 
+Future<void> initializeService() async {
+  final service = FlutterBackgroundService();
 
+  await service.configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      isForegroundMode: true,
+      autoStart: false,        // ❌ Disable auto restart
+      autoStartOnBoot: false, // ❌ Prevent restart after background / boot
+
+      notificationChannelId: 'location_channel',
+      initialNotificationTitle: 'TKD Connect',
+      initialNotificationContent: 'Location tracking is running',
+      foregroundServiceNotificationId: 1001,
+      foregroundServiceTypes: [AndroidForegroundType.location],
+
+    ),
+    iosConfiguration: IosConfiguration(
+      onForeground: onStart,
+    ),
+  );
+}
 
 // ✅ NEW: OTP popup dialog
 void _showOtpDialog(BuildContext context, String otp) {
@@ -187,23 +194,20 @@ class _MyApp extends State<MyApp> {
     @override
   void initState() {
     // TODO: implement initState
-      //getAppHash();
       sendNotification();
       super.initState();
-  }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _deepLinkService.init();
+      });
+
+    }
 
 
- /* Future<void> getAppHash() async {
-    final signature = await SmsAutoFill().getAppSignature;
-    print("✅ YOUR APP HASH: $signature");
-  }
-*/
+
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-   //   _deepLinkService.init(context);
-    });
+
     return  ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
@@ -218,8 +222,8 @@ class _MyApp extends State<MyApp> {
                   firebaseStorage: firebaseStorage,
                 ),
               ),
-              ChangeNotifierProvider(create: (_) => MyBidsProvider('Idel')),
-              ChangeNotifierProvider(create: (_) => DriverTrackingProvider()),
+              ChangeNotifierProvider(create: (_) => MyBidsProvider('Ideal')),
+              ChangeNotifierProvider(create: (_) => TrackingProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

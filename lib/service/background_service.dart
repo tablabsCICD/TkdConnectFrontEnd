@@ -5,37 +5,27 @@ import 'package:geolocator/geolocator.dart';
 import 'package:tkd_connect/service/web_socket.dart';
 
 
-const String foregroundIntervalKey = "FG_INTERVAL";
-const String backgroundIntervalKey = "BG_INTERVAL";
-const String vehicleKey = "VEHICLE_ID";
-
 @pragma('vm:entry-point')
 void onStart(ServiceInstance service) async {
   final WebSocketService socket = WebSocketService();
 
-  if (service is AndroidServiceInstance) {
-    service.on('setAsForeground').listen((event) {
-      service.setAsForegroundService();
-    });
-
-    service.on('setAsBackground').listen((event) {
-      service.setAsBackgroundService();
-    });
-  }
-
-  String? vehicleId;
-  Duration fgInterval = const Duration(minutes: 1);
-  Duration bgInterval = const Duration(minutes:1);
-
-  Timer? timer;
+  final Map<String, Timer> _timers = {};
+  final Map<String, Map<String, dynamic>> _vehicles = {};
   bool isForeground = true;
 
-  void restartTimer() {
-    timer?.cancel();
-    final interval = isForeground ? fgInterval : bgInterval;
 
-    timer = Timer.periodic(interval, (_) async {
-      if (vehicleId == null) return;
+  const fgInterval = Duration(seconds: 30);
+  const bgInterval = Duration(minutes: 1);
+
+  void startVehicleTimer(String postId) {
+    _timers[postId]?.cancel();
+
+    final interval =
+    isForeground ? const Duration(seconds: 30) : const Duration(minutes: 1);
+
+    _timers[postId] = Timer.periodic(interval, (_) async {
+      final v = _vehicles[postId];
+      if (v == null) return;
 
       try {
         final pos = await Geolocator.getCurrentPosition(
@@ -46,40 +36,72 @@ void onStart(ServiceInstance service) async {
           await socket.connect();
         }
 
-        socket.sendLocation(
-          vehicleId: vehicleId!,
-          lat: pos.latitude,
-          lng: pos.longitude,
-          postId: '',
-          driverNumber: ''
+        await socket.sendLocation(
+          postId: postId,
+          vehicleNumber: v["vehicleNumber"],
+          driverContact: v["driverContact"],
+          postOwnerNumber: v["postOwnerNumber"],
+          quoteOwnerNumber: v["quoteOwnerNumber"],
+          latitude: pos.latitude,
+          longitude: pos.longitude,
+          speed: pos.speed,
         );
 
-        print("📡 BG Sent: $vehicleId → ${pos.latitude}, ${pos.longitude}");
+        print("📡 ${isForeground ? "FG" : "BG"} Sent → $postId");
       } catch (e) {
-        print("❌ BG Location error: $e");
+        print("❌ BG error [$postId]: $e");
+      }
+    });
+  }
+
+  if (service is AndroidServiceInstance) {
+    service.on('setForeground').listen((_) {
+      isForeground = true;
+      for (final postId in _vehicles.keys) {
+        startVehicleTimer(postId);
+      }
+    });
+
+    service.on('setBackground').listen((_) {
+      isForeground = false;
+      for (final postId in _vehicles.keys) {
+        startVehicleTimer(postId);
       }
     });
   }
 
   service.on('startTracking').listen((event) async {
-    vehicleId = event?[vehicleKey];
-    await socket.connect();
-    restartTimer();
+    final postId = event?["postId"];
+    if (postId == null) return;
+
+    _vehicles[postId] = {
+      "vehicleNumber": event?["vehicleNumber"],
+      "driverContact": event?["driverContact"],
+      "postOwnerNumber": event?["postOwnerNumber"],
+      "quoteOwnerNumber": event?["quoteOwnerNumber"],
+    };
+
+    if (!socket.isConnected) {
+      await socket.connect();
+    }
+
+    startVehicleTimer(postId);
   });
+
+
+
 
   service.on('stopTracking').listen((event) {
-    timer?.cancel();
-    vehicleId = null;
-    service.stopSelf();
+    final postId = event?["postId"];
+    if (postId == null) return;
+
+    _timers[postId]?.cancel();
+    _timers.remove(postId);
+    _vehicles.remove(postId);
+
+    if (_vehicles.isEmpty) {
+      service.stopSelf();
+    }
   });
 
-  service.on('setForeground').listen((event) {
-    isForeground = true;
-    restartTimer();
-  });
-
-  service.on('setBackground').listen((event) {
-    isForeground = false;
-    restartTimer();
-  });
 }

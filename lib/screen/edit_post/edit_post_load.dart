@@ -163,7 +163,15 @@ class _EditPostLoadScreen extends State<EditPostLoadScreen> {
                 SizedBox(
                   height: 4.h,
                 ),
-                editView("eg.",provider.specialInstructionController,provider,false),
+                DropDown(
+                  onClick: () async {
+                    ItemBottomSheet itemBottomSheet = ItemBottomSheet();
+                    int a = await itemBottomSheet.showIteam(
+                        context,provider.specialInstructionList, "Select Special Instruction");
+                    provider.selectedSIType(a);
+                  },
+                  hint: provider.selectedSI,
+                ),
                 SizedBox(
                   height: 12.h,
                 ),

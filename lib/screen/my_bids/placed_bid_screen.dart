@@ -305,6 +305,18 @@ class _PlacedBidScrrenState extends State<PlacedBidScreen> {
                                             ),
                                             ElevatedButton(
                                               onPressed: () async {
+                                                // ✅ ADDED VALIDATION
+                                                if (bids.driverContact == null ||
+                                                    bids.driverContact!.isEmpty ||
+                                                    bids.vehicleNumber == null ||
+                                                    bids.vehicleNumber!.isEmpty) {
+                                                  ToastMessage.show(
+                                                    context,
+                                                    "Driver or vehicle information is missing. Please add details first.",
+                                                  );
+                                                  return;
+                                                }
+
                                                 final success = await widget
                                                     .provider
                                                     .isUserDeleted(

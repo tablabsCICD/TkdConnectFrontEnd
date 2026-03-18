@@ -150,13 +150,27 @@ class _PostLoadView extends StatelessWidget {
               ),
               _gap(),
               _label(S().specialInstruction),
-              _textFieldWithMic(
+              dropDownWithInnerMic(
+                  context: context,
+                  provider: provider,
+                  hint: provider.selectedSI,
+                  field: VoiceField.instruction,
+                  onTap: () async {
+                    final i = await ItemBottomSheet().showIteam(
+                      context,
+                      provider.specialInstructionList,
+                      "Select Special Instruction",
+                    );
+                    provider.selectedSpecialInstruction(i);
+                  },
+                  isMicVisible: true),
+             /* _textFieldWithMic(
                 provider,
                 provider.specialInstructionController,
                 true,
                 "Not available",
                 VoiceField.instruction,
-              ),
+              ),*/
               if (provider.aiError.isNotEmpty)
                 Padding(
                   padding: EdgeInsets.only(top: 6.h),

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:tkd_connect/model/request/reportIncidentRequest.dart';
 import 'package:tkd_connect/model/response/myIncidentResponse.dart';
 import '../../constant/api_constant.dart';
@@ -20,6 +21,8 @@ import '../base_provider.dart';
 class ReportIncidentProvider extends BaseProvider {
   ReportIncidentProvider() : super('Ideal') {
     toggleMyReport(myIncident);
+    getTotalLostAmt();
+    
   }
 
   int selectedPage = 0;
@@ -381,5 +384,33 @@ class ReportIncidentProvider extends BaseProvider {
     isLoadDone = true;
     notifyListeners();
   }
+
+  String _totalLostAmt = '';
+  String get totalLostAmt => _totalLostAmt;
+  Future<void> getTotalLostAmt() async {
+
+    try {
+      final url = ApiConstant.totalAmountLost;
+      debugPrint('Total Lost Amount API: $url');
+
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+        // ✅ Convert to string safely
+        _totalLostAmt = jsonData['data']?.toString() ?? '0';
+      } else {
+        debugPrint('❌ API failed: ${response.statusCode}');
+        _totalLostAmt = '0';
+      }
+    } catch (e) {
+      debugPrint('❌ Exception in getTotalLostAmt: $e');
+      _totalLostAmt = '0';
+    }
+
+    notifyListeners();
+  }
+
 }
 

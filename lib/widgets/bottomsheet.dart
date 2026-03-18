@@ -16,7 +16,7 @@ class ItemBottomSheet{
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 200.h,
+          height: 250.h,
           margin: const EdgeInsets.all(10),
           child: Center(
             

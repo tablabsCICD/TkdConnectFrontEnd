@@ -260,7 +260,7 @@ class HomeScreenProvider extends BaseProvider{
     ApiResponse apiResponse= await ApiHelper().apiPutDat(myUrl);
     if(apiResponse.status==200){
       ToastMessage.show(context, "Your Post Completed Successfully");
-      context.read<DriverTrackingProvider>().stopTracking();
+      context.read<TrackingProvider>().stopVehicle(id.toString());
       callDashboradApi(context,0);
       notifyListeners();
     }else{

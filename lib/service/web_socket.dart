@@ -1,141 +1,146 @@
-
 import 'dart:convert';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 
+import 'offline_location_store.dart';
+
+
 class WebSocketService {
-  StompClient? _stompClient;
-  bool _isConnected = false;
+  StompClient? _client;
+  bool _connected = false;
+  bool get isConnected => _connected;
 
-  bool get isConnected => _isConnected;
+  final Map<String, Function(String)> _subscriptions = {};
+  final List<Map<String, dynamic>> _pendingMessages = [];
 
-  String? _lastMessage; // 🔁 Prevent duplicate processing
-
-  /// 🔹 Connect to STOMP WebSocket
   Future<void> connect() async {
-    if (_isConnected) return;
+    if (_connected) return;
 
-    _stompClient = StompClient(
+    _client = StompClient(
       config: StompConfig(
         url:
-        'ws://ec2-13-201-5-93.ap-south-1.compute.amazonaws.com:8080/tracking/tracking/ws-location/websocket',
-
+        'wss://api.tkdost.com/tkd2/ws-location/websocket',
         onConnect: _onConnect,
-
-        onWebSocketError: (error) {
-          print('❌ WS ERROR: $error');
-          _isConnected = false;
+        onDisconnect: (_) {
+          _connected = false;
+          print("🔌 WS Disconnected");
         },
-
-        onStompError: (frame) {
-          print('❌ STOMP ERROR: ${frame.body}');
-          _isConnected = false;
+        onWebSocketError: (e) {
+          _connected = false;
+          print("❌ WS Error: $e");
         },
-
-        onDisconnect: (frame) {
-          print('🔌 STOMP DISCONNECTED');
-          _isConnected = false;
-        },
-
-        /// 🔁 Auto reconnect
         reconnectDelay: const Duration(seconds: 5),
-
-        /// ❤️ Heartbeat to keep connection alive
         heartbeatIncoming: const Duration(seconds: 10),
         heartbeatOutgoing: const Duration(seconds: 10),
       ),
     );
 
-    _stompClient!.activate();
+    _client!.activate();
   }
 
-  /// 🔹 Called when connection is established
-  void _onConnect(StompFrame frame) {
-    print("✅ STOMP Connected");
-    _isConnected = true;
+  Future<void> _onConnect(StompFrame frame) async {
+    print("✅ WS Connected");
+    _connected = true;
+
+    // 🔁 Re-subscribe all topics
+    _subscriptions.forEach((dest, cb) {
+      _client!.subscribe(
+        destination: dest,
+        callback: (frame) {
+          if (frame.body != null) cb(frame.body!);
+        },
+      );
+    });
+
+    // 📤 Flush queued messages
+    for (final msg in _pendingMessages) {
+      _client!.send(
+        destination: msg['destination'],
+        body: msg['body'],
+      );
+    }
+    _pendingMessages.clear();
+
+    // 📤 Sync offline cached data
+    final cached = OfflineLocationStore.getAll();
+    for (final item in await cached) {
+      _client!.send(
+        destination: "/app/vehicle/location",
+        body: jsonEncode(item),
+      );
+    }
+    await OfflineLocationStore.clear();
+    print("📤 Offline data synced");
   }
 
   // ----------------------------------------------------------
-  // 📡 Subscribe to topic
+  // 📡 SUBSCRIBE
   // ----------------------------------------------------------
   void subscribe({
     required String destination,
     required Function(String message) onMessage,
   }) {
-    if (_stompClient == null) {
-      print("⚠️ STOMP client not initialized.");
-      return;
+    _subscriptions[destination] = onMessage;
+
+    if (_client != null && _client!.connected) {
+      _client!.subscribe(
+        destination: destination,
+        callback: (frame) {
+          if (frame.body != null) onMessage(frame.body!);
+        },
+      );
     }
-
-    if (!_stompClient!.connected) {
-      print("⚠️ STOMP not connected yet. Retrying subscribe...");
-      Future.delayed(const Duration(seconds: 2), () {
-        subscribe(destination: destination, onMessage: onMessage);
-      });
-      return;
-    }
-
-    _stompClient!.subscribe(
-      destination: destination,
-      callback: (StompFrame frame) {
-        if (frame.body == null) return;
-
-        final message = frame.body!;
-
-        /// 🔁 Prevent duplicate messages
-        if (_lastMessage == message) return;
-        _lastMessage = message;
-
-        onMessage(message);
-      },
-    );
-
-    print("📡 Subscribed to $destination");
   }
 
   // ----------------------------------------------------------
-  // 📤 Send location to backend
+  // 📤 SEND LOCATION (UNCHANGED LOGIC + OFFLINE QUEUE)
   // ----------------------------------------------------------
-  void sendLocation({
+  Future<void> sendLocation({
     required String postId,
-    required String vehicleId,
-    required String driverNumber,
-    required double lat,
-    required double lng
-  }) {
-    if (!_isConnected || _stompClient == null || !_stompClient!.connected) {
-      print("⚠️ STOMP not connected. Skipping send.");
+    required String vehicleNumber,
+    required String driverContact,
+    required String postOwnerNumber,
+    required String quoteOwnerNumber,
+    required double latitude,
+    required double longitude,
+    required double speed,
+  }) async {
+    final payload = {
+
+      "postId": postId,
+      "vehicleNumber": vehicleNumber,
+      "driverContact": driverContact,
+      "postOwnerNumber": postOwnerNumber,
+      "quoteOwnerNumber": quoteOwnerNumber,
+      "latitude": latitude,
+      "longitude": longitude,
+      "speed": speed,
+    };
+
+    final body = jsonEncode(payload);
+
+    if (!_connected || _client == null || !_client!.connected) {
+      print("📦 WS offline → queued & saved locally");
+      _pendingMessages.add({
+        "destination": "/app/vehicle/location",
+        "body": body,
+      });
+
+      await OfflineLocationStore.save(payload);
       return;
     }
 
-    final data = jsonEncode({
-      "postId": postId,
-      "vehicleId": vehicleId,
-      "driverNumber": driverNumber,
-      "latitude": lat,
-      "longitude": lng,
-      "timestamp": DateTime.now().toIso8601String(),
-    });
-
-    _stompClient!.send(
+    _client!.send(
       destination: "/app/vehicle/location",
-      body: data,
+      body: body,
     );
 
-    print("📤 Sent location: $data");
+    print("📤 WS Sent: $body");
   }
 
-  // ----------------------------------------------------------
-  // 🔌 Disconnect cleanly
-  // ----------------------------------------------------------
   void dispose() {
-    try {
-      _stompClient?.deactivate();
-      _isConnected = false;
-      print("🔌 STOMP Closed");
-    } catch (e) {
-      print("STOMP Close Error: $e");
-    }
+    _client?.deactivate();
+    _connected = false;
   }
 }
