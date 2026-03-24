@@ -96,10 +96,6 @@ class TrackingProvider extends ChangeNotifier with WidgetsBindingObserver {
         "quoteOwnerNumber": quoteOwnerNumber,
       });
     }
-
-
-
-
     notifyListeners();
   }
 
