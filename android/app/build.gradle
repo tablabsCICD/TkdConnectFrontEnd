@@ -21,20 +21,20 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = 105
+def flutterVersionCode = 107
 if (flutterVersionCode == null) {
-    flutterVersionCode = '105'
+    flutterVersionCode = '107'
 }
 
-def flutterVersionName = '3.0.25'
+def flutterVersionName = '3.0.27'
 if (flutterVersionName == null) {
-    flutterVersionName = '3.0.25'
+    flutterVersionName = '3.0.27'
 }
 
 android {
     namespace = "com.example.tkd_connect"
     compileSdk = 36
-    ndkVersion = "29.0.14206865"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

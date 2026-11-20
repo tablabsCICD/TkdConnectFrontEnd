@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:tkd_connect/constant/api_constant.dart';
 import 'package:tkd_connect/model/api_response.dart';
@@ -203,6 +204,8 @@ class EditProfileProvider extends BaseProvider{
     if(apiResponse.status==200){
       LocalSharePreferences localSharePreferences=LocalSharePreferences();
       localSharePreferences.setString(AppConstant.LOGIN_KEY, jsonEncode(apiResponse.response));
+      User user = User.fromJson(apiResponse.response);
+      localSharePreferences.setInt(AppConstant.CURRENT_USERTYPE, user.content!.first.transporterOrAgent!);
       ToastMessage.show(context, "Profile updated");
       //Navigator.pop(context,1);
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => true);

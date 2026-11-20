@@ -3,13 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tkd_connect/constant/app_constant.dart';
 import 'package:tkd_connect/model/response/job_list.dart';
 import 'package:tkd_connect/provider/jobs/job_list_provider.dart';
 import 'package:tkd_connect/utils/colors.dart';
 import 'package:tkd_connect/utils/utils.dart';
 import 'package:tkd_connect/widgets/card/base_widgets.dart';
-  // << ADDED
 
 import '../../constant/images.dart';
 import '../../generated/l10n.dart';
@@ -17,19 +15,118 @@ import '../../model/response/userdata.dart';
 import '../../route/app_routes.dart';
 import '../../utils/sharepreferences.dart';
 import '../../widgets/common_app_bar.dart';
-import '../../widgets/textview.dart';
 
 class JobListScreen extends StatefulWidget {
   const JobListScreen({super.key});
+
+  static String formatExperience(String? raw) {
+    if (raw == null) return "Exp: Not Specified";
+    String text = raw.trim();
+    if (text.isEmpty ||
+        text.toLowerCase() == "null" ||
+        text.toLowerCase() == "no info" ||
+        text.toLowerCase() == "na" ||
+        text.toLowerCase() == "n/a" ||
+        text.toLowerCase() == "none") {
+      return "Exp: Not Specified";
+    }
+
+    // Strip existing prefix if present to standardize
+    if (text.toLowerCase().startsWith("exp:")) {
+      text = text.substring("exp:".length).trim();
+    } else if (text.toLowerCase().startsWith("exp:")) {
+      text = text.substring("exp:".length).trim();
+    }
+
+    if (text.toLowerCase() == "fresher") {
+      return "Exp: Fresher";
+    }
+
+    // Normalize dashes and hyphens
+    text = text.replaceAll("–", "-").replaceAll("—", "-");
+
+    // Check for range patterns: e.g. "0 - 2", "1 Year - 1.5 Year", "Fresher - 1 Year"
+    if (text.contains("-")) {
+      List<String> parts = text.split("-").map((p) => p.trim()).toList();
+      if (parts.length == 2 && parts[0].isNotEmpty && parts[1].isNotEmpty) {
+        String from = parts[0];
+        String to = parts[1];
+
+        String cleanFrom = from
+            .replaceAll(
+                RegExp(r'\s*(years?|yrs?)\.?\s*$', caseSensitive: false), '')
+            .trim();
+        String cleanTo = to
+            .replaceAll(
+                RegExp(r'\s*(years?|yrs?)\.?\s*$', caseSensitive: false), '')
+            .trim();
+
+        if (cleanFrom.toLowerCase() == "fresher") {
+          return "Exp: Fresher–$cleanTo ${cleanTo == '1' ? 'Year' : 'Years'}";
+        }
+
+        if (cleanFrom == cleanTo) {
+          return "Exp: $cleanFrom ${cleanFrom == '1' ? 'Year' : 'Years'}";
+        }
+
+        String unit = (cleanTo == '1' && cleanFrom == '0') ? 'Year' : 'Years';
+        return "Exp: $cleanFrom–$cleanTo $unit";
+      }
+    }
+
+    // Single value with + (e.g. "5+", "5+ Years")
+    String cleaned = text
+        .replaceAll(
+            RegExp(r'\s*(years?|yrs?)\.?\s*$', caseSensitive: false), '')
+        .trim();
+
+    if (cleaned.endsWith("+")) {
+      return "Exp: $cleaned Years";
+    }
+
+    // Numeric single value (e.g. "2", "1")
+    if (RegExp(r'^\d+(\.\d+)?$').hasMatch(cleaned)) {
+      return "Exp: $cleaned ${cleaned == '1' ? 'Year' : 'Years'}";
+    }
+
+    // Custom non-standard text: ensure "Experience: " prefix and proper suffix
+    if (!text.toLowerCase().contains("year") &&
+        !text.toLowerCase().contains("fresher")) {
+      return "Experience: $text Years";
+    }
+
+    return "Experience: $text";
+  }
 
   @override
   State<JobListScreen> createState() => _JobListState();
 }
 
 class _JobListState extends State<JobListScreen> {
-
-  List<String> expList = ["Fresher","6 Month","1 Year","1.5 Year","2 Year","2.5 Year","3 Year","3.5 Year","4 Year","4.5  Year","5 Year","5.5 Year","6 Year"];
-  List<String> salaryList = ['1LPA','1PLA to 2LPA','2PLA to 3LPA','4PLA to 5LPA','6PLA to 7LPA','8PLA to 9LPA','10PLA to Above',];
+  List<String> expList = [
+    "Fresher",
+    "6 Month",
+    "1 Year",
+    "1.5 Year",
+    "2 Year",
+    "2.5 Year",
+    "3 Year",
+    "3.5 Year",
+    "4 Year",
+    "4.5  Year",
+    "5 Year",
+    "5.5 Year",
+    "6 Year"
+  ];
+  List<String> salaryList = [
+    '1LPA',
+    '1PLA to 2LPA',
+    '2PLA to 3LPA',
+    '4PLA to 5LPA',
+    '6PLA to 7LPA',
+    '8PLA to 9LPA',
+    '10PLA to Above',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +136,6 @@ class _JobListState extends State<JobListScreen> {
         backgroundColor: ThemeColor.baground,
         body: Column(
           children: [
-
             // ✅ APP BAR
             Consumer<JobListProvider>(
               builder: (context, provider, _) {
@@ -70,11 +166,13 @@ class _JobListState extends State<JobListScreen> {
                     },
                     child: ListView.builder(
                       controller: provider.scrollController,
+                      padding: EdgeInsets.only(bottom: 60.h),
                       itemCount: provider.listJobs.length,
                       itemBuilder: (context, i) {
                         final jobData = provider.listJobs[i];
                         return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           child: jobCard(jobData),
                         );
                       },
@@ -85,16 +183,105 @@ class _JobListState extends State<JobListScreen> {
             ),
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Consumer<JobListProvider>(
+          builder: (context, provider, child) {
+            return Visibility(
+              visible: true,
+              child: InkWell(
+                onTap: () async {
+                  User use = await LocalSharePreferences().getLoginData();
+                  if (use.content != null &&
+                      use.content!.isNotEmpty &&
+                      use.content!.first.isPaid != 0) {
+                    if (!context.mounted) return;
+                    Object? val =
+                        await Navigator.pushNamed(context, AppRoutes.createjob);
+                    if (val != null) {
+                      provider.selectedPage = 0;
+                      provider.getAllJobs();
+                      if (provider.scrollController.hasClients) {
+                        provider.scrollController.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        );
+                      }
+                    }
+                  } else {
+                    if (!context.mounted) return;
+                    Navigator.pushNamed(
+                        context, AppRoutes.registration_plan_details);
+                  }
+                },
+                child: Container(
+                  width: 155.w,
+                  height: 38.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                  decoration: ShapeDecoration(
+                    color: ThemeColor.theme_blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        S().postAJob,
+                        style: TextStyle(
+                          color: ThemeColor.progress_color,
+                          fontSize: 12.sp,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      SizedBox(
+                        width: 16.w,
+                        height: 16.w,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 16.w,
+                              height: 16.w,
+                              child: Stack(children: [
+                                SvgPicture.asset(
+                                  Images.add,
+                                  height: 16.h,
+                                  width: 16.w,
+                                )
+                              ]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
+
   jobCard(JobData jobData) {
     return Container(
       width: 335.w,
       padding: EdgeInsets.all(12.r),
       decoration: ShapeDecoration(
         color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
         shadows: [
           BoxShadow(
             color: const Color(0x114A5568),
@@ -108,25 +295,28 @@ class _JobListState extends State<JobListScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Container(
-              width: 70.w,
-              height: 18.h,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
               decoration: ShapeDecoration(
                 color: const Color(0xFFD25D5D),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.r)),
-              ),
-              child: Center(
-                child: Text(
-                  jobData.postJob?.experience != null
-                      ? "Exp: ${jobData.postJob!.experience} Year"
-                      : "No Info",
-                  style: TextStyle(color: Colors.white, fontSize: 8.sp),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
+              ),
+              child: Text(
+                JobListScreen.formatExperience(jobData.postJob?.experience),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10.sp,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.2,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
-
+          SizedBox(height: 4.h),
           BaseWidget().profileWithUser(
             "",
             jobData.name ?? "No Info",
@@ -135,19 +325,16 @@ class _JobListState extends State<JobListScreen> {
             transporterOrAgent: jobData.transporterOrAgent ?? 1,
             ratings: 4.5,
             isJob: true,
-            email: jobData.postJob!.emailId??""
+            email: jobData.postJob?.emailId ?? "",
           ),
-
-          BaseWidget().jobHeading(jobData.postJob!.salary!),
-
+          BaseWidget().jobHeading(jobData.postJob?.salary ?? "Not Disclosed"),
           BaseWidget().heading(
-            jobData.postJob!.jobDepartment!,
+            jobData.postJob?.jobDepartment ?? "",
             jobData.postingDate == null
                 ? ""
                 : jobData.postingDate!.split(" ").first,
-            jobData.postJob!.jobDescription!,
+            jobData.postJob?.jobDescription ?? "",
           ),
-
           jobApply(jobData),
         ],
       ),
@@ -197,7 +384,6 @@ class _JobListState extends State<JobListScreen> {
     );
   }
 
-
   void _openFilters(BuildContext context) {
     final provider = context.read<JobListProvider>();
 
@@ -222,14 +408,14 @@ class _JobListState extends State<JobListScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   // ✅ HEADER
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Filter Jobs",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
                         icon: Icon(Icons.close),
@@ -252,7 +438,8 @@ class _JobListState extends State<JobListScreen> {
                   SizedBox(height: 14),
 
                   // ✅ DEPARTMENT
-                  Text("Department", style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text("Department",
+                      style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(height: 6),
                   TextField(
                     controller: provider.departmentController,
@@ -263,16 +450,17 @@ class _JobListState extends State<JobListScreen> {
                   SizedBox(height: 14),
 
                   // ✅ EXPERIENCE
-                  Text("Experience", style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text("Experience",
+                      style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(height: 6),
                   DropdownButtonFormField(
-                    value: provider.selectedExperience,
+                    initialValue: provider.selectedExperience,
                     decoration: _filterInput("Select experience"),
                     items: expList
                         .map((e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    ))
+                              value: e,
+                              child: Text(e),
+                            ))
                         .toList(),
                     onChanged: (v) {
                       setStateSB(() => provider.selectedExperience = v);
@@ -285,13 +473,13 @@ class _JobListState extends State<JobListScreen> {
                   Text("Salary", style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(height: 6),
                   DropdownButtonFormField(
-                    value: provider.selectedSalary,
+                    initialValue: provider.selectedSalary,
                     decoration: _filterInput("Select salary"),
                     items: salaryList
                         .map((e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    ))
+                              value: e,
+                              child: Text(e),
+                            ))
                         .toList(),
                     onChanged: (v) {
                       setStateSB(() => provider.selectedSalary = v);
@@ -301,7 +489,8 @@ class _JobListState extends State<JobListScreen> {
                   SizedBox(height: 14),
 
                   // ✅ DATE
-                  Text("Posting Date", style: TextStyle(fontWeight: FontWeight.w600)),
+                  Text("Posting Date",
+                      style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(height: 6),
                   InkWell(
                     onTap: () async {
@@ -317,7 +506,8 @@ class _JobListState extends State<JobListScreen> {
                       }
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12, vertical: 14),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade400),
                         borderRadius: BorderRadius.circular(12),
@@ -330,9 +520,9 @@ class _JobListState extends State<JobListScreen> {
                             provider.selectedDate == null
                                 ? "Select date"
                                 : provider.selectedDate
-                                .toString()
-                                .split(" ")
-                                .first,
+                                    .toString()
+                                    .split(" ")
+                                    .first,
                           ),
                         ],
                       ),
@@ -345,7 +535,6 @@ class _JobListState extends State<JobListScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       TextButton(
                         onPressed: () {
                           provider.clearFilters();
@@ -356,7 +545,6 @@ class _JobListState extends State<JobListScreen> {
                           style: TextStyle(color: Colors.red),
                         ),
                       ),
-
                       ElevatedButton(
                         onPressed: () {
                           provider.applyFilters();
@@ -395,5 +583,4 @@ class _JobListState extends State<JobListScreen> {
       contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
     );
   }
-
 }

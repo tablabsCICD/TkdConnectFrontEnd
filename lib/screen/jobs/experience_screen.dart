@@ -265,7 +265,7 @@ class ExperienceScreen extends StatelessWidget{
           Expanded(
             child: InkWell(
               onTap: (){
-               provider.changeTab();
+               provider.setTab(true);
               },
               child: Container(
                 height: double.infinity,
@@ -298,7 +298,7 @@ class ExperienceScreen extends StatelessWidget{
           Expanded(
             child: InkWell(
               onTap: (){
-               provider.changeTab();
+               provider.setTab(false);
               },
               child: Container(
                 height: double.infinity,

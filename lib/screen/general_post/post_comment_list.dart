@@ -401,7 +401,7 @@ class _PostCommentListState extends State<PostCommentList> {
               Container(
                   transform: Matrix4.translationValues(0.0, -25.0.h, 00),
                   child: BaseWidget()
-                      .carouseImage(context,List<String>.from(load.images??[]))),
+                      .carouseImage(context, load.images?.map((e) => e.toString()).toList() ?? [])),
               SizedBox(
                 height: 9.h,
               ),

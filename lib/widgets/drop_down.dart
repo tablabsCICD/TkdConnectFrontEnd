@@ -5,8 +5,9 @@ import 'package:tkd_connect/constant/images.dart';
 class DropDown extends StatelessWidget{
  final Function onClick;
  final String hint;
+ final double? width;
 
-  const DropDown({super.key, required this.onClick, required this.hint});
+  const DropDown({super.key, required this.onClick, required this.hint, this.width});
 
 
   @override
@@ -17,7 +18,7 @@ class DropDown extends StatelessWidget{
 
       },
      child: Container(
-       width: 335,
+       width: width ?? 335,
        height: 52,
        padding: const EdgeInsets.symmetric(horizontal: 12),
        decoration: ShapeDecoration(
@@ -44,7 +45,7 @@ class DropDown extends StatelessWidget{
                      child: Text(
                        hint,
                        style: TextStyle(
-                         color: hint.allMatches("Select One")==0?const Color(0x662C363F):Colors.black,
+                         color: hint.contains("Select One") ? const Color(0x662C363F) : Colors.black,
                          fontSize: 14,
                          fontFamily: 'Poppins',
                          fontWeight: FontWeight.w400,

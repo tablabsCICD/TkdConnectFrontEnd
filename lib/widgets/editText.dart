@@ -8,12 +8,14 @@ class EditText extends StatelessWidget {
   final double height;
   final String hint ;
   final TextEditingController controller;
-  TextInputType? keybordType=TextInputType.text;
-  Function(String val)? onChange =(val){};
-  Function()? onTap =(){};
-  bool? readOnly=false;
+  final TextInputType? keybordType;
+  final Function(String val)? onChange;
+  final Function()? onTap;
+  final bool? readOnly;
+  final TextInputAction? textInputAction;
+  final Function(String val)? onSubmitted;
 
-   EditText({this.readOnly=false,this.onChange,this.onTap,super.key,this.keybordType ,required this.width, required this.height, required this.hint, required this.controller} );
+   const EditText({this.readOnly=false,this.onChange,this.onTap,super.key,this.keybordType=TextInputType.text,required this.width, required this.height, required this.hint, required this.controller, this.textInputAction, this.onSubmitted} );
 
 
 
@@ -56,6 +58,18 @@ class EditText extends StatelessWidget {
                     },
                     readOnly: readOnly!,
                     keyboardType: keybordType,
+                    textInputAction: textInputAction,
+                    onTapOutside: (event) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    onEditingComplete: () {
+                      FocusScope.of(context).unfocus();
+                    },
+                    onSubmitted: (val) {
+                      if (onSubmitted != null) {
+                        onSubmitted!(val);
+                      }
+                    },
                     decoration: InputDecoration(
                       hintText: hint,
 

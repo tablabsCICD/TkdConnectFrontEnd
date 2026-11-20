@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate {
 GMSServices.provideAPIKey("AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30AIzaSyAm332fBuy8QoCC6ZFv7pizIqdmaT-jz30")
 

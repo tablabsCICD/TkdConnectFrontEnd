@@ -23,6 +23,13 @@ class ListExpProvider extends BaseProvider{
     notifyListeners();
   }
 
+  setTab(bool isFrom) {
+    if (onFrom != isFrom) {
+      onFrom = isFrom;
+      notifyListeners();
+    }
+  }
+
 
   void selectTab(int index) {
     if(onFrom){
