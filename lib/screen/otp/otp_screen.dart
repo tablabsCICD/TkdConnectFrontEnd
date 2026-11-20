@@ -122,6 +122,7 @@ class _OTPScreenState extends State<OTPScreen>
           await prefs.setBool(AppConstant.LOGIN_BOOl, true);
           await prefs.setString(
               AppConstant.LOGIN_KEY, jsonEncode(req.response));
+          await prefs.setInt(AppConstant.CURRENT_USERTYPE, user.content![0].transporterOrAgent!);
 
           Navigator.pushNamedAndRemoveUntil(
             context,

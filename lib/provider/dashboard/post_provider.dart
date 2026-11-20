@@ -534,7 +534,7 @@ class PostLoadProvider extends BaseProvider {
   }
 
   bool aiValidateBeforePost() {
-    if (sourceCity == "Select One" || destinationCity == "Select One") {
+    if (sourceCity == "Select Source City" || destinationCity == "Select Destination City") {
       aiError = "Please select source and destination city";
       return false;
     }
@@ -997,10 +997,10 @@ class PostLoadProvider extends BaseProvider {
     if (selectedRequriment == "Select One") {
       ToastMessage.show(context, "Please Select Load Type");
     } else {
-      if (sourceCity == "Select One") {
+      if (sourceCity == "Select Source City") {
         ToastMessage.show(context, "Please Select From city");
       } else {
-        if (destinationCity == "Select One") {
+        if (destinationCity == "Select Destination City") {
           ToastMessage.show(context, "Please Select To city");
         } else {
           if (selectedCargo == "Select One") {

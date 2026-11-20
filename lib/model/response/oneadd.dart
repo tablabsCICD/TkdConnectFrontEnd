@@ -115,11 +115,26 @@ class Data {
     website = json['website'];
     mobileOrLandline = json['mobileOrLandline'];
 
-    category = json['category'];
-    title = json['title'];
-    mainTag = json['mainTag'];
-    images = json['images'].cast<String>();
-    type = json['type'];
+    category = json['category']?.toString();
+    title = json['title']?.toString();
+    mainTag = json['mainTag']?.toString();
+    if (json['images'] != null) {
+      if (json['images'] is List) {
+        images = (json['images'] as List).map((e) {
+          if (e is Map) {
+            return (e['url'] ?? e['imageUrl'] ?? e['image'] ?? e['filePath'] ?? e.toString()).toString();
+          }
+          return e?.toString() ?? '';
+        }).where((s) => s.isNotEmpty).toList();
+      } else if (json['images'] is String && (json['images'] as String).isNotEmpty) {
+        images = [json['images'] as String];
+      } else {
+        images = [];
+      }
+    } else {
+      images = [];
+    }
+    type = json['type']?.toString();
   }
 
   Map<String, dynamic> toJson() {

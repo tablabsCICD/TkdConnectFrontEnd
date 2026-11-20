@@ -165,68 +165,84 @@ class TruckLoad {
   late final String? emailId;
 
   TruckLoad.fromJson(Map<String, dynamic> json){
-    id = json['id']?? 0;
-    userId = json['userId']?? 0;
-    type = json['type']?? '';
-    postingTime = json['postingTime']?? '';
-    companyName = json['companyName']?? '';
-    nameOfPerson = json['nameOfPerson']?? '';
-    companyRating = json['companyRating']?? 0.0;
-    content = json['content']?? '';
-    topicName = json['topicName']?? '';
-    tableName = json['tableName']?? '';
-    companyLogo = json['companyLogo']?? '';
-    partLoadOrNot = json['partLoadOrNot']?? 0;
-    reminderUserName = json['reminderUserName']?? '';
-    sharableLink = json['sharableLink']?? '';
-    deviceId = json['deviceId']?? '';
-    ratings = json['ratings']?? 0.0;
-    mobileNumber = json['mobileNumber']?? 0;
-    source = json['source']?? '';
-    destination = json['destination']?? '';
-    mainTag = json['mainTag']?? '';
-    privatePost = json['privatePost']?? 0;
-    makerName = json['makerName']?? '';
-    modelName = json['modelName']?? '';
-    mfgYear = json['mfgYear']?? '';
-    estPrice = json['estPrice']?? '';
-    dnd = json['dnd']?? 0;
-    transporterOrAgent = json['transporterOrAgent']?? 0;
+    id = json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0;
+    userId = json['userId'] is int ? json['userId'] : int.tryParse(json['userId']?.toString() ?? '0') ?? 0;
+    type = json['type']?.toString() ?? '';
+    postingTime = json['postingTime']?.toString() ?? '';
+    companyName = json['companyName']?.toString() ?? '';
+    nameOfPerson = json['nameOfPerson']?.toString() ?? '';
+    companyRating = json['companyRating'] ?? 0.0;
+    content = json['content']?.toString() ?? '';
+    topicName = json['topicName']?.toString() ?? '';
+    tableName = json['tableName']?.toString() ?? '';
+    companyLogo = json['companyLogo']?.toString() ?? '';
+    partLoadOrNot = json['partLoadOrNot'] is int ? json['partLoadOrNot'] : int.tryParse(json['partLoadOrNot']?.toString() ?? '0') ?? 0;
+    reminderUserName = json['reminderUserName']?.toString() ?? '';
+    sharableLink = json['sharableLink']?.toString() ?? '';
+    deviceId = json['deviceId']?.toString() ?? '';
+    ratings = json['ratings'] is num ? (json['ratings'] as num).toDouble() : double.tryParse(json['ratings']?.toString() ?? '0.0') ?? 0.0;
+    mobileNumber = json['mobileNumber'] is int ? json['mobileNumber'] : int.tryParse(json['mobileNumber']?.toString() ?? '0') ?? 0;
+    source = json['source']?.toString() ?? '';
+    destination = json['destination']?.toString() ?? '';
+    mainTag = json['mainTag']?.toString() ?? '';
+    privatePost = json['privatePost'] is int ? json['privatePost'] : int.tryParse(json['privatePost']?.toString() ?? '0') ?? 0;
+    makerName = json['makerName']?.toString() ?? '';
+    modelName = json['modelName']?.toString() ?? '';
+    mfgYear = json['mfgYear']?.toString() ?? '';
+    estPrice = json['estPrice']?.toString() ?? '';
+    dnd = json['dnd'] is int ? json['dnd'] : int.tryParse(json['dnd']?.toString() ?? '0') ?? 0;
+    transporterOrAgent = json['transporterOrAgent'] is int ? json['transporterOrAgent'] : int.tryParse(json['transporterOrAgent']?.toString() ?? '0') ?? 0;
 
-    vehicleSize = json['vehicleSize']?? '';
-    association = json['association']?? '';
-    isPaid = json['isPaid']?? 0;
-    isverified = json['isverified']?? 0;
+    vehicleSize = json['vehicleSize']?.toString() ?? '';
+    association = json['association']?.toString() ?? '';
+    isPaid = json['isPaid'] is int ? json['isPaid'] : int.tryParse(json['isPaid']?.toString() ?? '0') ?? 0;
+    isverified = json['isverified'] is int ? json['isverified'] : int.tryParse(json['isverified']?.toString() ?? '0') ?? 0;
 
-    website = json['website']?? '';
+    website = json['website']?.toString() ?? '';
 
-    alterativeNumber = json['alterativeNumber']?? '';
-    companyDetailsName = json['companyDetailsName']?? '';
-    isVerifiedByCompany = json['isVerifiedByCompany']?? '';
-    typeOfPayment = json['typeOfPayment']?? '';
-    fullLoadChoice = json['fullLoadChoice']?? '';
-    loadWeight = json['vehicleWeight']?? '';
-    typeOfCargo = json['cargoType']?? '';
-    otherDetails = json['otherDetails']?? '';
-    likes=json['likes']??0;
-    comment=json['comment']??[];
-    postImages=json['postImages']??[];
-    images=json['images']??[];
-    userList=json['userList']??'';
-    expireDate=json['expireDate']??'';
-    repeatEndDate=json['repeatEndDate']??0;
-    repeatStartDate=json['repeatStartDate']??0;
-    mobileOrLandline=json['mobileOrLandline']??'';
-    isSharedInGroup=json['isSharedInGroup']??false;
-    isOpenForBid=json['isOpenForBid']??1;
-    isRepeat = json['isRepeat']??0;
-    ispostOwnerVerifiedForTrack = json['ispostOwnerVerifiedForTrack'] ?? 0;
-    isQuoteOwnerVerifiedForTrack = json['isQuoteOwnerVerifiedForTrack'] ?? 0;
-    isCompleted = json['isCompleted']??0;
-    experience = json['experience']??'';
-    department = json['department']??'';
-    vehicleRegistrationNumber = json['vehicleRegistrationNumber']??"";
-    emailId = json["emailId"]??"";
+    alterativeNumber = json['alterativeNumber']?.toString() ?? '';
+    companyDetailsName = json['companyDetailsName']?.toString() ?? '';
+    isVerifiedByCompany = json['isVerifiedByCompany']?.toString() ?? '';
+    typeOfPayment = json['typeOfPayment']?.toString() ?? '';
+    fullLoadChoice = json['fullLoadChoice']?.toString() ?? '';
+    loadWeight = json['vehicleWeight']?.toString() ?? '';
+    typeOfCargo = json['cargoType']?.toString() ?? '';
+    otherDetails = json['otherDetails']?.toString() ?? '';
+    likes = json['likes'] is int ? json['likes'] : int.tryParse(json['likes']?.toString() ?? '0') ?? 0;
+    comment = json['comment'] is List ? json['comment'] : [];
+    postImages = _parseImages(json['postImages']);
+    images = _parseImages(json['images']);
+    userList = json['userList']?.toString() ?? '';
+    expireDate = json['expireDate']?.toString() ?? '';
+    repeatEndDate = json['repeatEndDate'] is int ? json['repeatEndDate'] : int.tryParse(json['repeatEndDate']?.toString() ?? '0') ?? 0;
+    repeatStartDate = json['repeatStartDate'] is int ? json['repeatStartDate'] : int.tryParse(json['repeatStartDate']?.toString() ?? '0') ?? 0;
+    mobileOrLandline = json['mobileOrLandline']?.toString() ?? '';
+    isSharedInGroup = json['isSharedInGroup'] == true || json['isSharedInGroup'] == 1;
+    isOpenForBid = json['isOpenForBid'] is int ? json['isOpenForBid'] : int.tryParse(json['isOpenForBid']?.toString() ?? '1') ?? 1;
+    isRepeat = json['isRepeat'] is int ? json['isRepeat'] : int.tryParse(json['isRepeat']?.toString() ?? '0') ?? 0;
+    ispostOwnerVerifiedForTrack = json['ispostOwnerVerifiedForTrack'] is int ? json['ispostOwnerVerifiedForTrack'] : int.tryParse(json['ispostOwnerVerifiedForTrack']?.toString() ?? '0') ?? 0;
+    isQuoteOwnerVerifiedForTrack = json['isQuoteOwnerVerifiedForTrack'] is int ? json['isQuoteOwnerVerifiedForTrack'] : int.tryParse(json['isQuoteOwnerVerifiedForTrack']?.toString() ?? '0') ?? 0;
+    isCompleted = json['isCompleted'] is int ? json['isCompleted'] : int.tryParse(json['isCompleted']?.toString() ?? '0') ?? 0;
+    experience = json['experience']?.toString() ?? '';
+    department = json['department']?.toString() ?? '';
+    vehicleRegistrationNumber = json['vehicleRegistrationNumber']?.toString() ?? '';
+    emailId = json["emailId"]?.toString() ?? '';
+  }
+
+  static List<dynamic> _parseImages(dynamic rawImages) {
+    if (rawImages == null) return [];
+    if (rawImages is List) {
+      return rawImages.map((e) {
+        if (e is Map) {
+          return (e['url'] ?? e['imageUrl'] ?? e['image'] ?? e['filePath'] ?? e.toString()).toString();
+        }
+        return e?.toString() ?? '';
+      }).where((s) => s.isNotEmpty).toList();
+    }
+    if (rawImages is String && rawImages.isNotEmpty) {
+      return [rawImages];
+    }
+    return [];
   }
 
   Map<String, dynamic> toJson() {

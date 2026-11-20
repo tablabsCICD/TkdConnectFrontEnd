@@ -400,29 +400,38 @@ class HomeScreenProvider extends BaseProvider{
 
 
   callAddDiloag(BuildContext context) async {
-    http.Response response = await http.get(Uri.parse("${ApiConstant.BASE_URL}my-ads/getOne"));
+    try {
+      http.Response response = await http.get(Uri.parse("${ApiConstant.BASE_URL}my-ads/getOne"));
 
-    if (response.statusCode == 200) {
-      Advertisement advertisement = Advertisement.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        Advertisement advertisement = Advertisement.fromJson(jsonDecode(response.body));
 
-      if (!context.mounted) return; // ⛑️ Optional safety check
+        if (!context.mounted) return;
+        if (advertisement.data == null ||
+            advertisement.data!.images == null ||
+            advertisement.data!.images!.isEmpty) {
+          return;
+        }
 
-      showDialog(
-        context: context,
-        builder: (dialogContext) {
-          Future.delayed(const Duration(seconds: 5), () {
-            if (dialogContext.mounted) {
-              Navigator.of(dialogContext).pop(true); // ✅ use dialogContext and mounted
-            }
-          });
+        showDialog(
+          context: context,
+          builder: (dialogContext) {
+            Future.delayed(const Duration(seconds: 5), () {
+              if (dialogContext.mounted) {
+                Navigator.of(dialogContext).pop(true);
+              }
+            });
 
-          return AllCards().imageDialogOneAdd(
-            advertisement.data!.companyName??'-',
-            dialogContext,
-            advertisement.data!.images!.first,
-          );
-        },
-      );
+            return AllCards().imageDialogOneAdd(
+              advertisement.data!.companyName ?? '-',
+              dialogContext,
+              advertisement.data!.images!.first,
+            );
+          },
+        );
+      }
+    } catch (e) {
+      debugPrint("Error in callAddDiloag: $e");
     }
   }
 }

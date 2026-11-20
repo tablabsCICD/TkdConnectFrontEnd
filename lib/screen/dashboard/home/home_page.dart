@@ -283,9 +283,9 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
     return Consumer<HomeScreenProvider>(
       builder: (context, provider, child) {
         return Container(
-          width: 375.w,
+          width: double.infinity,
           height: provider.filterisVisible ? 202.h : 136.h,
-          padding: EdgeInsets.symmetric(horizontal: 24.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           decoration: ShapeDecoration(
             color: ThemeColor.red,
             shape: const RoundedRectangleBorder(
@@ -303,100 +303,114 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(onTap: (){Navigator.of(context).pop();},child: Icon(Icons.arrow_back_ios,color: Colors.white,),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      switchNewAppOldApp(),
-                      SizedBox(width: 10.5.w),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.report_problem_outlined,
-                          color: Colors.white,
-                          size: 25,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Flexible(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        switchNewAppOldApp(),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(
+                            Icons.report_problem_outlined,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          onPressed: () => _showPopup(context),
                         ),
-                        onPressed: () => _showPopup(context),
-                      ),
-                      SizedBox(width: 5.w),
+                        SizedBox(width: 8.w),
 
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.search),
-                        child: SvgPicture.asset(
-                          Images.search_normal,
-                          color: Colors.white,
-                          width: 24.w,
-                          height: 24.h,
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(context, AppRoutes.search),
+                          child: SvgPicture.asset(
+                            Images.search_normal,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                            width: 22.w,
+                            height: 22.h,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 15.5.w),
+                        SizedBox(width: 12.w),
 
-                      InkWell(
-                        onTap: () =>
-                            Navigator.pushNamed(context, AppRoutes.notificationlist),
-                        child: SvgPicture.asset(
-                          Images.notification,
-                          color: Colors.white,
-                          width: 24.w,
-                          height: 24.h,
+                        InkWell(
+                          onTap: () =>
+                              Navigator.pushNamed(context, AppRoutes.notificationlist),
+                          child: SvgPicture.asset(
+                            Images.notification,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                            width: 22.w,
+                            height: 22.h,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 15.5.w),
+                        SizedBox(width: 12.w),
 
-                      /// Profile section
-                      InkWell(
-                        onTap: () =>
-                            Navigator.pushNamed(context, AppRoutes.editprofile),
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () => Navigator.pushNamed(
-                                  context, AppRoutes.editprofile),
-                              child: BaseWidget().getImageclip(
+                        /// Profile section
+                        InkWell(
+                          onTap: () =>
+                              Navigator.pushNamed(context, AppRoutes.editprofile),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              BaseWidget().getImageclip(
                                 provider.imageUrl,
                                 height: 40.h,
                                 width: 40.w,
                               ),
-                            ),
-                            Container(
-                              transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
-                              width: 42.w,
-                              height: 12.h,
-                              padding: EdgeInsets.symmetric(horizontal: 4.h),
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
+                              Container(
+                                transform: Matrix4.translationValues(0.0, -10.0.h, 0.0),
+                                width: 42.w,
+                                height: 12.h,
+                                padding: EdgeInsets.symmetric(horizontal: 4.h),
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      Utils().getSelectedPackageImage(provider.ispaid),
+                                      height: 8.h,
+                                      width: 8.w,
+                                    ),
+                                    SizedBox(width: 1.w),
+                                    Text(
+                                      Utils().getSelectedPackageName(provider.ispaid),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 8.sp,
+                                        fontFamily: AppConstant.FONTFAMILY,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    Utils().getSelectedPackageImage(provider.ispaid),
-                                    height: 8.h,
-                                    width: 8.w,
-                                  ),
-                                  SizedBox(width: 1.w),
-                                  Text(
-                                    Utils().getSelectedPackageName(provider.ispaid),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 8.sp,
-                                      fontFamily: AppConstant.FONTFAMILY,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 15.5.w),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -415,79 +429,7 @@ class HomeScreen extends StatelessWidget implements DeletePostInf
   }
 
   switchNewAppOldApp() {
-    return SizedBox(
-      width: 136.w,
-      height: 28.h,
-      //clipBehavior: Clip.antiAlias,
-      // decoration: ShapeDecoration(
-      //   color: ThemeColor.border_grey,
-      //   shape: RoundedRectangleBorder(
-      //     side: BorderSide(color: ThemeColor.red),
-      //     borderRadius: BorderRadius.circular(8.r),
-      //   ),
-      // ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-            visible: false,
-            child: Expanded(
-              child: Container(
-                height: double.infinity,
-                width: 68.w,
-                padding: EdgeInsets.symmetric(horizontal: 12.h),
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: ThemeColor.border_grey),
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    'New app',
-                    style: TextStyle(
-                      color: ThemeColor.red,
-                      fontSize: 10.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Visibility(
-              visible: false,
-              child: Container(
-                height: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 12.h),
-                decoration: ShapeDecoration(
-                  color: ThemeColor.red,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: ThemeColor.border_grey),
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    'Old app',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10.sp,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: -0.24,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    return const SizedBox.shrink();
   }
 
   dropDown() {

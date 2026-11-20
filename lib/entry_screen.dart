@@ -9,11 +9,9 @@ import 'package:tkd_connect/model/response/version.dart';
 import 'package:tkd_connect/network/api_helper.dart';
 import 'package:tkd_connect/route/app_routes.dart';
 import 'package:tkd_connect/screen/deeplink/deeplink_service.dart';
-import 'package:tkd_connect/screen/deeplink/deeplinkscreen.dart';
 import 'package:tkd_connect/utils/sharepreferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'generated/l10n.dart';
-import 'package:flutter/services.dart';
 
 class EntryScreen extends StatefulWidget {
   const EntryScreen({super.key});
@@ -32,20 +30,26 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
   final DeepLinkService _deepLinkService = DeepLinkService();
 
-  // ---------------- ADDED FLAGS ----------------
   bool _hasShownDisclosure = false;
-  // ---------------------------------------------
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // showProminentDisclosureDialog();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!_hasShownDisclosure) {
         _hasShownDisclosure = true;
-        showProminentDisclosureDialog(); // 🔥 POLICY REQUIRED
+
+        int userType = await getUserType();
+        debugPrint("✅userType: $userType");
+        if (userType == 6) {
+          // ✅ Only drivers see disclosure
+          showProminentDisclosureDialog();
+        } else {
+          // ✅ Others skip background flow
+          requestAllPermissions();
+        }
       }
     });
   }
@@ -65,7 +69,13 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  // ------------------- PROMINENT DISCLOSURE DIALOG -------------------
+  // ---------------- GET USER TYPE ----------------
+  Future<int> getUserType() async {
+    LocalSharePreferences prefs = LocalSharePreferences();
+    return await prefs.getInt(AppConstant.CURRENT_USERTYPE) ?? 0;
+  }
+
+  // ---------------- DISCLOSURE ----------------
   void showProminentDisclosureDialog() {
     showDialog(
       context: context,
@@ -80,18 +90,15 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
             child: Text(
               "TKD Connect collects location data, including in the background, "
                   "to provide live route tracking between source and destination for accepted quotes. "
-                  "This ensures accurate route updates and delivery tracking even when the app is closed "
-                  "or not in active use.\n\n"
-                  "Location data is used only for tracking and delivery purposes and is never shared "
-                  "with third parties.",
-              style: TextStyle(fontSize: 15),
+                  "This ensures accurate route updates and delivery tracking even when the app is closed.\n\n"
+                  "Location data is used only for tracking and delivery purposes.",
             ),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                requestForegroundLocation(); // 🔥 STEP 1
+                requestForegroundLocation();
               },
               child: const Text("Continue"),
             ),
@@ -101,25 +108,33 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  // ------------------- FOREGROUND LOCATION -------------------
+  // ---------------- FOREGROUND LOCATION ----------------
   Future<void> requestForegroundLocation() async {
     PermissionStatus status =
     await Permission.locationWhenInUse.request();
 
     if (status.isGranted) {
-      requestBackgroundLocation(); // 🔥 STEP 2
+      int userType = await getUserType();
+
+      if (userType == AppConstant.USER_DRIVER) {
+        // ✅ Driver → ask background
+        requestBackgroundLocation();
+      } else {
+        // ✅ Others → skip background
+        requestAllPermissions();
+      }
     } else {
       openAppSettings();
     }
   }
 
-  // ------------------- BACKGROUND LOCATION -------------------
+  // ---------------- BACKGROUND LOCATION ----------------
   Future<void> requestBackgroundLocation() async {
     PermissionStatus status =
     await Permission.locationAlways.request();
 
     if (status.isGranted) {
-      requestAllPermissions(); // 🔥 KEEP YOUR EXISTING FLOW
+      requestAllPermissions();
     } else {
       showBackgroundPermissionDialog();
     }
@@ -133,8 +148,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
         return AlertDialog(
           title: const Text("Allow Background Location"),
           content: const Text(
-            "Please allow 'All the time' location access so we can track deliveries "
-                "in real-time even when the app is closed.",
+            "Please allow 'All the time' location access so we can track deliveries in real-time.",
           ),
           actions: [
             TextButton(
@@ -149,13 +163,13 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
     );
   }
 
-  // ------------------- YOUR EXISTING CODE (UNCHANGED) -------------------
+  // ---------------- OTHER PERMISSIONS ----------------
   Future<void> requestAllPermissions() async {
     await Permission.locationWhenInUse.request();
-    await Permission.locationAlways.request();
     await Permission.notification.request();
 
     String permissionStatus = await checkNotificationPermissionStatus();
+
     if ([permGranted, permProvisional].contains(permissionStatus)) {
       fetchVersionAndNavigate();
     } else {
@@ -165,71 +179,61 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
   Future<String> checkNotificationPermissionStatus() async {
     PermissionStatus status = await Permission.notification.status;
-    if (status.isGranted) {
-      return permGranted;
-    } else if (status.isDenied) {
-      return permDenied;
-    } else if (status.isRestricted || status.isPermanentlyDenied) {
+
+    if (status.isGranted) return permGranted;
+    if (status.isDenied) return permDenied;
+    if (status.isRestricted || status.isPermanentlyDenied) {
       return permUnknown;
-    } else {
-      return permProvisional;
     }
+    return permProvisional;
   }
 
   void showPermissionDialog() {
-    showDialog<String>(
+    showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text(
           'Notification Permission',
           style: TextStyle(
-            fontSize: 18,
             fontFamily: GoogleFonts.poppins().fontFamily,
             fontWeight: FontWeight.w600,
           ),
         ),
         content: Text(
-          'Please enable notification permissions to receive important alerts and updates.',
+          'Please enable notification permissions to receive updates.',
           style: TextStyle(
-            fontSize: 16,
             fontFamily: GoogleFonts.poppins().fontFamily,
-            fontWeight: FontWeight.w500,
           ),
         ),
         actions: [
           TextButton(
             onPressed: () async {
               await Permission.notification.request();
-              Navigator.of(context, rootNavigator: true).pop();
-              String permissionStatus =
-              await checkNotificationPermissionStatus();
-              if ([permGranted, permProvisional]
-                  .contains(permissionStatus)) {
-                fetchVersionAndNavigate();
-              } else {
-                fetchVersionAndNavigate();
-              }
+              Navigator.pop(context);
+              fetchVersionAndNavigate();
             },
-            child: const Text('Enable Permission'),
+            child: const Text('Enable'),
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.pop(context);
               fetchVersionAndNavigate();
             },
-            child: const Text('Close'),
+            child: const Text('Skip'),
           ),
         ],
       ),
     );
   }
 
+  // ---------------- VERSION CHECK ----------------
   Future<void> fetchVersionAndNavigate() async {
-    ApiResponse response =
-    await ApiHelper().apiWithoutDilogDecodeGet(
-        ApiConstant.GET_CURRENT_VERSION);
+    ApiResponse response = await ApiHelper()
+        .apiWithoutDilogDecodeGet(ApiConstant.GET_CURRENT_VERSION);
+
     Version version = Version.fromJson(response.response);
+
     if (version.version == AppConstant.APP_VERSION) {
       navigateToNextScreen();
     } else {
@@ -239,34 +243,36 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
 
   void navigateToNextScreen() async {
     LocalSharePreferences prefs = LocalSharePreferences();
+
     bool isLoggedIn = await prefs.getBool(AppConstant.LOGIN_BOOl);
     String langCode = await prefs.getLangCode();
 
     if (isLoggedIn) {
       S.load(Locale(langCode));
+
       if (!_deepLinkService.isDeepLinkActive) {
         Navigator.pushReplacementNamed(context, "/home");
       }
     } else {
       if (langCode == "no") {
-        Navigator.pushReplacementNamed(
-            context, AppRoutes.select_lang);
+        Navigator.pushReplacementNamed(context, AppRoutes.select_lang);
       } else {
         S.load(Locale(langCode));
-        Navigator.pushReplacementNamed(context,
-            AppRoutes.registration_personal_details);
+        Navigator.pushReplacementNamed(
+            context, AppRoutes.registration_personal_details);
       }
     }
   }
 
+  // ---------------- UPDATE ----------------
   void showUpdateDialog() {
-    showDialog<String>(
+    showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: const Text('TKD Connect Update'),
         content: const Text(
-          'A new version of TKD Connect is available. Please update the app from the Play Store to continue using all features.',
+          'A new version is available. Please update the app.',
         ),
         actions: [
           TextButton(
@@ -279,8 +285,7 @@ class _EntryScreen extends State<EntryScreen> with WidgetsBindingObserver {
   }
 
   void redirectToPlayStore() {
-    final Uri url =
-    Uri.parse('market://details?id=com.pdk.tkd');
+    final Uri url = Uri.parse('market://details?id=com.pdk.tkd');
     launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
