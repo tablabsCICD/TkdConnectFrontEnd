@@ -666,7 +666,7 @@ class AllCards {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget()
-                  .carouseImage(context,List<String>.from(load.images??[]))),
+                  .carouseImage(context, load.images?.map((e) => e.toString()).toList() ?? [])),
           SizedBox(
             height: 9.h,
           ),
@@ -781,7 +781,7 @@ class AllCards {
     } else if (load.postImages!.length == 1) {
       return Column(
         children: [
-          BaseWidget().image(image: load.postImages!.first),
+          BaseWidget().image(image: load.postImages!.first.toString()),
           SizedBox(
             height: 9.h,
           ),
@@ -797,7 +797,7 @@ class AllCards {
           Container(
               transform: Matrix4.translationValues(0.0, -25.0.h, 00),
               child: BaseWidget()
-                  .carouseImage(context,List<String>.from(load.images??[]))),
+                  .carouseImage(context, load.images?.map((e) => e.toString()).toList() ?? [])),
           SizedBox(
             height: 9.h,
           ),
@@ -816,7 +816,12 @@ class AllCards {
         showDialog(
           context: context,
           builder: (_) => imageDialogAdd(
-              load.companyName, load.postImages!.first, context, load),
+              load.companyName,
+              (load.postImages != null && load.postImages!.isNotEmpty)
+                  ? load.postImages!.first.toString()
+                  : '',
+              context,
+              load),
         );
       },
       child: Container(
@@ -887,9 +892,12 @@ class AllCards {
   cardSellBuyPost(int index, BuildContext context, TruckLoad load,
       {int userId = 0}) {
     final List<String> imageUrls = [];
-    if (load.images != null && load.images!.isNotEmpty && load.images != "") {
+    if (load.images != null && load.images!.isNotEmpty) {
       for (var img in load.images!) {
-        if (img != null && img.trim().isNotEmpty) imageUrls.add(img.trim());
+        if (img != null) {
+          final str = img.toString().trim();
+          if (str.isNotEmpty) imageUrls.add(str);
+        }
       }
     }
     return Container(
@@ -1289,7 +1297,7 @@ class AllCards {
 
 
   imageLoadAddA(TruckLoad load, BuildContext context) {
-    if (load.postImages!.isEmpty||load.postImages == '') {
+    if (load.postImages == null || load.postImages!.isEmpty) {
       return const Column(
         children: [
           SizedBox(
@@ -1303,7 +1311,7 @@ class AllCards {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: CachedNetworkImage(
-              imageUrl: load.postImages!.first,
+              imageUrl: load.postImages!.first.toString(),
               placeholder: (context, url) =>
                   SvgPicture.asset("assets/svg/logo.svg"),
               errorWidget: (context, url, error) => ClipRRect(

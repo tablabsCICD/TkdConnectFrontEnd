@@ -20,6 +20,12 @@ class LocalSharePreferences{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(key,val);
   }
+
+  setInt(String key,int val)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(key,val);
+  }
+
   Future<String> getString(String key)async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.getString(key)==null){
@@ -80,6 +86,14 @@ class LocalSharePreferences{
   Future<void> remove(String key) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(key);
+  }
+
+  Future<dynamic> getInt(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.getInt(key)==null){
+      return 0;
+    }
+    return  prefs.getInt(key)!;
   }
 
 }
